@@ -949,8 +949,9 @@
                 </nav>
                 @endif
             </header>
-            <hr class="custom-hr">
+            
         </div>
+        <hr class="custom-hr">
     </div>
 
     <!-- Contents -->

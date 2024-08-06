@@ -5,8 +5,10 @@
 
 .custom-hr {
     border: none;
-    border-bottom: 1px solid #9B9A9E; /* Light gray color for the line */
-    margin: 0rem 0; /* vertical spacing */
+    border-bottom: 3px solid #9B9A9E; /* Light gray color for the line */
+    margin-right: 0; 
+    margin-left: 0;
+    margin-top: 0;
   }
   
   
