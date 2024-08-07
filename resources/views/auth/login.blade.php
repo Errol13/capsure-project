@@ -6,7 +6,7 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class>
-                <div class="card-header text-center py-4 fs-1 fw-bold">{{ __('Login') }}</div>
+                <div class="card-header text-center py-4 fs-1 fw-bold">{{ __('Log In') }}</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
@@ -49,7 +49,7 @@
                         </div>
                         <p class="text-start">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
                         <div class="row-md-6 d-grid gap-3">
-                                <button type="submit" class="btn-auth">
+                                <button type="submit" class="btn-auth rounded-pill border-white">
                                     {{ __('Login') }}
                                 </button>
                                 <div class="row mb-4 gap-3">
