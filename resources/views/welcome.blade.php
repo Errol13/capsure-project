@@ -911,10 +911,10 @@
     </style>
 </head>
 
-<body class="font-sans antialiased dark:bg-black dark:text-white/50">
-    <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
+<body class="font-sans antialiased">
+    <div class="bg-white-50 text-black/50">
         <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-            <header class="grid grid-cols-2 items-center gap-2 py-10 lg:grid-cols-3">
+            <header class="grid grid-cols-2 items-center gap-2 py-3 lg:grid-cols-3">
 
                 <div class="flex lg:justify-center lg:col-start-1">
                     <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" style="height: 40px; width: auto;" class=" w-auto sm:h-6 md:h-8 lg:h-6">
