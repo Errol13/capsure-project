@@ -17,8 +17,8 @@
 
     <!-- Styles -->
     <!--bootstrap-->
-    <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         /* ! tailwindcss v3.4.1 | MIT License | https://tailwindcss.com */
@@ -941,7 +941,7 @@
                     </a>
 
                     @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="fs-6 fs-md-5 fs-lg-4  font-semibold btn-purple rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
+                    <a href="{{ route('choose') }}" class="fs-6 fs-md-5 fs-lg-4  font-semibold btn-purple rounded-md px-3 py-2 text-white ring-1 ring-transparent transition hover:text-white/70 focus:outline-none focus-visible:ring-[#FF2D20] dark:text-white dark:hover:text-white/80 dark:focus-visible:ring-white">
                         SIGN UP
                     </a>
                     @endif
