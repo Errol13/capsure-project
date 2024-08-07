@@ -6,6 +6,15 @@
     color: white;
 }
 
+.btn-auth{
+background-color: #91216C;
+    color: white;
+    max-width: 500px;
+    max-height: 100px;
+    height:40px;
+    width: 400px;
+}
+
 .text-center .btn-auth{
     background-color: #91216C;
     color: white;
