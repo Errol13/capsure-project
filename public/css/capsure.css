@@ -1,6 +1,24 @@
+
+/*Buttons and Horizontal Lines Styles */
+
 .btn-purple{
     background-color: #91216C;
     color: white;
+}
+
+.text-center .btn-auth{
+    background-color: #91216C;
+    color: white;
+    max-width: 500px;
+    max-height: 100px;
+    height:40px;
+    width: 400px;
+}
+
+.btn-auth:disabled {
+    background-color: rgba(145, 33, 108, 0.5); /* 50% transparent color */
+    border-color: none; 
+    cursor: default; /* Change cursor to indicate the button is not clickable */
 }
 
 .custom-hr {
@@ -10,6 +28,71 @@
     margin-left: 0;
     margin-top: 0;
   }
-  
+
+  /*Text Colors */
+
+.text-purple{
+    color: #91216C;
+}
+
+
+/* Box styles */
+.box {
+    background-color: white;
+    width: 250px;
+    height: 250px;
+    max-width: 350px;
+    padding: 2rem;
+    border: 0.2px solid #d8d8da;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    margin: 1rem;
+    transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 767px) {
+    .box {
+        max-width: 250px;
+        height: 200px;
+        padding: 1rem;
+    }
+    .first-box {
+        margin-bottom: 1rem;
+    }
+}
+
+@media (max-width: 575px) {
+    .box {
+        max-width: 200px;
+        height: 200px;
+        padding: 0.5rem;
+    }
+    .first-box {
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Image styling */
+.box img {
+    width: 120px;
+    height: 120px;
+    object-fit: contain;
+}
+
+/* Styles for the selected state */
+.box.selected {
+    border-color: #CF4EA4; /* Border color when selected */
+}
+
+.box.selected .box-content {
+    border: 1px solid #CF4EA4;
+    background-color: #F3E5F5; /* Light purple background for selected content */
+}
+
+.box.selected img {
+    filter: brightness(0) saturate(100%) invert(32%) sepia(94%) saturate(749%) hue-rotate(288deg) brightness(106%) contrast(93%); /* Adjust color to purple */
+}
+
+
   
   
