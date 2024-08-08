@@ -1,59 +1,178 @@
-
 /*Buttons and Horizontal Lines Styles */
 
-.btn-purple{
+.btn-purple {
     background-color: #91216C;
     color: white;
+    text-decoration: none;
 }
 
-.btn-auth{
-background-color: #91216C;
+.navbar-nav .nav-item {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+    /* Space between button and other links */
+    margin-right: 20px;
+}
+
+.btn-auth {
+    background-color: #91216C;
     color: white;
     max-width: 500px;
     max-height: 100px;
-    height:40px;
+    height: 40px;
     width: 400px;
 }
 
-.text-center .btn-auth{
+.text-center .btn-auth {
     background-color: #91216C;
     color: white;
     max-width: 500px;
     max-height: 100px;
-    height:40px;
+    height: 40px;
     width: 400px;
 }
 
 .btn-auth:disabled {
-    background-color: rgba(145, 33, 108, 0.5); /* 50% transparent color */
-    border-color: none; 
-    cursor: default; /* Change cursor to indicate the button is not clickable */
+    background-color: rgba(145, 33, 108, 0.5);
+    /* 50% transparent color */
+    border-color: none;
+    cursor: default;
+    /* Change cursor to indicate the button is not clickable */
 }
 
 .custom-hr {
     border: none;
-    border-bottom: 3px solid #9B9A9E; /* Light gray color for the line */
-    margin-right: 0; 
+    border-bottom: 3px solid #9B9A9E;
+    /* Light gray color for the line */
+    margin-right: 0;
     margin-left: 0;
     margin-top: 0;
-  }
+}
 
-  /*Text Colors */
+/*Text Colors */
 
-.text-purple{
+.text-purple {
     color: #91216C;
 }
 
-.box-wp{
-    background-image: url('assets/bg_center.svg');
-    background-size: cover;
+/*Welcome Page*/
+
+.hero {
+    background: url('/assets/bg_center.svg');
+    opacity: 90%;
+    background-size: contain;
     background-position: center;
     background-repeat: no-repeat;
-   
-    padding: 2px;
-    border: none;
-    border-radius: 75%;
+    color: #181717;
+    padding: 30px;
+    padding-right: 240px;
+    padding-left: 240px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+
+    width: 100%;
+    /* or specific width like 1200px */
+    height: 240px;
 }
+
+
+
+.hero .input-group {
+    width: 600px;
+    max-width: 100%;
+    margin: 0 auto;
+    /* Centers the input group*/
+}
+
+.hero .form-control {
+    height: 60px;
+}
+
+.hero .btn {
+    height: 60px;
+    border: none;
+    background-color: white;
+}
+
+/* Responsive styles for smaller screens */
+@media (max-width: 767px) {
+    .hero {
+        width: 100%;
+    }
+
+    .hero .input-group {
+        max-width: 100%;
+        width: 400px;
+        margin: 0 auto;
+        /* Centers the input group*/
+    }
+
+    .hero h1 {
+        font-size: 1.5rem;
+        /* Adjust font size for smaller screens */
+    }
+
+    .hero .form-control {
+        height: 60px;
+    }
+
+    .hero .btn {
+        height: 60px;
+        border: none;
+        background-color: white;
+    }
+}
+
+@media (max-width: 575px) {
+    .hero {
+        width: 100%;
+        padding-right: 15px;
+        padding-left: 15px;
+        margin-top: 0;
+    }
+
+    .hero .input-group {
+        margin: 0 auto;
+        /* Centers the input group */
+    }
+
+    .hero .form-control {
+        height: 40px;
+        margin: 0;
+    }
+
+    .hero .btn {
+        height: 40px;
+    }
+
+    .sm-mgn-rmv {
+        margin-top: 40px;
+        margin-bottom: 0px;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+}
+
+.service{
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+.service img {
+    max-width: 100%; /* Ensure image is responsive */
+    height: fit-content; /* Maintain aspect ratio */
+}
+
+.service-body {
+    margin-top: 0; /* Space between image and text */
+}
+
+.service-text {
+    font-size: 1rem; /* Adjust text size */
+    margin: 0; /* Remove default margin */
+}
+
+
+
 
 /* Box styles */
 .box {
@@ -63,9 +182,10 @@ background-color: #91216C;
     max-width: 350px;
     padding: 2rem;
     border: 0.2px solid #d8d8da;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 1rem;
-    transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
+    transition: border-color 0.3s ease, background-color 0.3s ease;
+    /* Smooth transition */
 }
 
 
@@ -77,6 +197,7 @@ background-color: #91216C;
         height: 200px;
         padding: 1rem;
     }
+
     .first-box {
         margin-bottom: 1rem;
     }
@@ -88,6 +209,7 @@ background-color: #91216C;
         height: 200px;
         padding: 0.5rem;
     }
+
     .first-box {
         margin-bottom: 0.5rem;
     }
@@ -102,18 +224,17 @@ background-color: #91216C;
 
 /* Styles for the selected state */
 .box.selected {
-    border-color: #CF4EA4; /* Border color when selected */
+    border-color: #CF4EA4;
+    /* Border color when selected */
 }
 
 .box.selected .box-content {
     border: 1px solid #CF4EA4;
-    background-color: #F3E5F5; /* Light purple background for selected content */
+    background-color: #F3E5F5;
+    /* Light purple background for selected content */
 }
 
 .box.selected img {
-    filter: brightness(0) saturate(100%) invert(32%) sepia(94%) saturate(749%) hue-rotate(288deg) brightness(106%) contrast(93%); /* Adjust color to purple */
+    filter: brightness(0) saturate(100%) invert(32%) sepia(94%) saturate(749%) hue-rotate(288deg) brightness(106%) contrast(93%);
+    /* Adjust color to purple */
 }
-
-
-  
-  
