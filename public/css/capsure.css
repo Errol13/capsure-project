@@ -47,7 +47,7 @@ background-color: #91216C;
 .box-wp{
     background-image: url('assets/bg_center.svg');
     background-size: cover;
-    /*background-position: center;*/
+    background-position: center;
     background-repeat: no-repeat;
    
     padding: 2px;
