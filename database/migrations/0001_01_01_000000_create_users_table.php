@@ -27,8 +27,8 @@ return new class extends Migration
             $table->string('contact_number',11);
             $table->boolean('isNumberVerified')->default(false);
             $table->text('profile_image');
-            $table->boolean('boolean');
-            $table->string('varchar',50);
+            $table->boolean('isVerified');
+            $table->string('user_type',50);
             $table->rememberToken();
             $table->timestamps();
         });
