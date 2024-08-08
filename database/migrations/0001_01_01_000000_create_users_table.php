@@ -20,6 +20,15 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamp('date_joined');
+            $table->integer('age',5);
+            $table->varchar('street');
+            $table->varchar('barangay');
+            $table->varchar('city');
+            $table->varchar('contact_number',11);
+            $table->boolean('isNumberVerified')->default(false);
+            $table->text('profile_image');
+            $table->boolean('boolean');
+            $table->varchar('varchar',50);
             $table->rememberToken();
             $table->timestamps();
         });

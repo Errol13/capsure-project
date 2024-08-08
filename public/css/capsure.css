@@ -44,12 +44,22 @@ background-color: #91216C;
     color: #91216C;
 }
 
+.box-wp{
+    background-image: url('assets/bg_center.svg');
+    background-size: cover;
+    /*background-position: center;*/
+    background-repeat: no-repeat;
+   
+    padding: 2px;
+    border: none;
+    border-radius: 75%;
+}
 
 /* Box styles */
 .box {
     background-color: white;
-    width: 250px;
-    height: 250px;
+    width: 280px;
+    height: 280px;
     max-width: 350px;
     padding: 2rem;
     border: 0.2px solid #d8d8da;
@@ -57,6 +67,8 @@ background-color: #91216C;
     margin: 1rem;
     transition: border-color 0.3s ease, background-color 0.3s ease; /* Smooth transition */
 }
+
+
 
 /* Responsive styles for smaller screens */
 @media (max-width: 767px) {

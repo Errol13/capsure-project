@@ -949,14 +949,32 @@
                 </nav>
                 @endif
             </header>
-            
+
         </div>
         <hr class="custom-hr">
     </div>
 
     <!-- Contents -->
     <div class="flex items-center justify-center h-full">
-        <h4 style="font-size: 2.75rem; font-weight: 600;" class="my-8">Capture the Moments Surely</h4>
+        <!--Center Welcomepage -->
+        <div class="box-wp">
+            <div class="row">
+                <div class="col-sm-8 col-md-6 col-lg-4">
+                    <h4 style="font-size: 2.75rem; font-weight: 600;" class="my-8">Capture the Moments Surely</h4>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-8 col-md-6 col-lg-4">
+                        <div class="search-bar">
+                        <input type="text" class="form-control" placeholder="What service do you need?">
+                        <button type="button" class="btn btn-primary">
+                        <i class="bi bi-search"></i>
+                        </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
 </body>

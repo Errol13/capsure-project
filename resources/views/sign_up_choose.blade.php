@@ -9,7 +9,7 @@
         <!-- First Box -->
         <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center mb-4 p-4 "  id="box1">
             <div class="text-center p-2 p-md-4 border-3 rounded-5 box box-content" data-page="client">
-                <img src="{{ asset('assets/Account.svg') }}" type="image/svg+xml" alt="Image 1" class="p-4 img-fluid mb-2">
+                <img src="{{ asset('assets/Account.svg') }}" type="image/svg+xml" alt="Image 1" class="mt-4 p-4 img-fluid mb-2">
                 <p class="pt-4">Client</p>
             </div>
         </div>
@@ -17,7 +17,7 @@
         <!-- Second Box -->
         <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center mb-4 p-4"  id="box2">
             <div class=" box text-center p-2 p-md-4 border-3 rounded-5  box-content" data-page="freelancer">
-                <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class=" p-4 img-fluid mb-2">
+                <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class=" mt-4 p-4 img-fluid mb-2">
                 <p class="pt-4">Freelancer</p>
             </div>
         </div>
