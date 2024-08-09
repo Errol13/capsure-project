@@ -26,10 +26,10 @@
 .text-center .btn-auth {
     background-color: #91216C;
     color: white;
-    max-width: 500px;
-    max-height: 100px;
-    height: 40px;
-    width: 400px;
+    max-width: 200px;
+    max-height: 50px;
+    height: 30px;
+    width: 200px;
 }
 
 .btn-auth:disabled {
@@ -153,22 +153,28 @@
 
 }
 
-.service{
+.service {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
 }
+
 .service img {
-    max-width: 100%; /* Ensure image is responsive */
-    height: fit-content; /* Maintain aspect ratio */
+    max-width: 100%;
+    /* Ensure image is responsive */
+    height: fit-content;
+    /* Maintain aspect ratio */
 }
 
 .service-body {
-    margin-top: 0; /* Space between image and text */
+    margin-top: 0;
+    /* Space between image and text */
 }
 
 .service-text {
-    font-size: 1rem; /* Adjust text size */
-    margin: 0; /* Remove default margin */
+    font-size: 1rem;
+    /* Adjust text size */
+    margin: 0;
+    /* Remove default margin */
 }
 
 
@@ -177,10 +183,10 @@
 /* Box styles */
 .box {
     background-color: white;
-    width: 280px;
-    height: 280px;
-    max-width: 350px;
-    padding: 2rem;
+    max-width: 250px;
+    height: 200px;
+    width: 150px;
+    padding: 0.35rem;
     border: 0.2px solid #d8d8da;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 1rem;
@@ -188,37 +194,15 @@
     /* Smooth transition */
 }
 
-
-
-/* Responsive styles for smaller screens */
-@media (max-width: 767px) {
-    .box {
-        max-width: 250px;
-        height: 200px;
-        padding: 1rem;
-    }
-
-    .first-box {
-        margin-bottom: 1rem;
-    }
+.first-box {
+    margin-bottom: 1rem;
 }
 
-@media (max-width: 575px) {
-    .box {
-        max-width: 200px;
-        height: 200px;
-        padding: 0.5rem;
-    }
-
-    .first-box {
-        margin-bottom: 0.5rem;
-    }
-}
 
 /* Image styling */
 .box img {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     object-fit: contain;
 }
 
@@ -238,3 +222,75 @@
     filter: brightness(0) saturate(100%) invert(32%) sepia(94%) saturate(749%) hue-rotate(288deg) brightness(106%) contrast(93%);
     /* Adjust color to purple */
 }
+
+
+/*dito Phoebe lahat ng styles for large to medium screens ilagay*/
+
+@media (min-width: 1400px) {
+    /* Styles for large desktops */
+}
+
+
+@media (min-width: 1200px) {
+    /* Styles for desktops */
+}
+
+
+@media (min-width: 992px) {
+    /* Styles for small laptops */
+
+}
+
+
+/* Responsive styles for Tablets (≥ 768px) screens */
+@media (min-width: 768px) {
+
+    .btn-auth {
+        background-color: #91216C;
+        color: white;
+        max-width: 500px;
+        max-height: 100px;
+        height: 40px;
+        width: 400px;
+    }
+    
+    .text-center .btn-auth {
+        background-color: #91216C;
+        color: white;
+        max-width: 500px;
+        max-height: 100px;
+        height: 40px;
+        width: 400px;
+    }
+
+    .box {
+        width: 280px;
+        height: 280px;
+        max-width: 350px;
+        padding: 2rem;
+
+    }
+
+    .first-box {
+        margin-bottom: 2rem;
+    }
+
+    /* Image styling */
+    .box img {
+        width: 120px;
+        height: 120px;
+        object-fit: contain;
+    }
+}
+
+
+@media (min-width: 576px) {
+    /* Styles for small tablets and larger phones */
+}
+
+
+
+
+
+
+

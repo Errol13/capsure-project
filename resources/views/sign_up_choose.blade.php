@@ -7,31 +7,31 @@
 
         <h5 class="fs-1 font-bold text-center p-2"> Choose to Sign Up </h5>
         <!-- First Box -->
-        <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center mb-4 p-4 "  id="box1">
+        <div class="col-12 col-md-4 col-lg-4  d-flex flex-column align-items-center mb-1 mb-md-4 p-1 p-md-4"  id="box1">
             <div class="text-center p-2 p-md-4 border-3 rounded-5 box box-content" data-page="client">
                 <img src="{{ asset('assets/Account.svg') }}" type="image/svg+xml" alt="Image 1" class="mt-4 p-4 img-fluid mb-2">
-                <p class="pt-4">Client</p>
+                <p class="pt-1 pt-md-4">Client</p>
             </div>
         </div>
 
         <!-- Second Box -->
-        <div class="col-sm-6 col-md-4 d-flex flex-column align-items-center mb-4 p-4"  id="box2">
+        <div class="col-12 col-md-4 col-lg-4 d-flex flex-column align-items-center mb-md-4 p-1 p-md-4 "  id="box2">
             <div class=" box text-center p-2 p-md-4 border-3 rounded-5  box-content" data-page="freelancer">
                 <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class=" mt-4 p-4 img-fluid mb-2">
-                <p class="pt-4">Freelancer</p>
+                <p class="pt-2 pt-md-4">Freelancer</p>
             </div>
         </div>
 
         <!--Continue -->
         <div class="text-center mb-4">
-            <button type="button" class="btn-auth  rounded-pill" id="continueBtn" disabled>
+            <button type="button" class="btn-auth mt-2 mt-md-3 rounded-pill" id="continueBtn" disabled>
                 Continue
             </button>
 
             <div class="mt-4">
                 <div class="d-flex justify-content-center align-items-center">
                     <p class="mb-0 me-2">Already have an account?</p>
-                    <a href="#" class="text-purple">Log in</a>
+                    <a href="#" class="text-purple fs-6">Log in</a>
                 </div>
             </div>
 
@@ -67,7 +67,7 @@
         continueBtn.addEventListener('click', () => {
             if (selectedPage) {
                 // Redirect based on the selected page
-                window.location.href = selectedPage === 'client' ? '/client-signup' : '/freelancer-signup';
+                window.location.href = selectedPage === 'client' ? '/register' : '/freelancer-signup';
             }
         });
     });
