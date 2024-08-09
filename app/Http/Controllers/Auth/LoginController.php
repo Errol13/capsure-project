@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -22,10 +23,25 @@ class LoginController extends Controller
 
     /**
      * Where to redirect users after login.
-     *
-     * @var string
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
      */
-    protected $redirectTo = '/home';
+    protected function authenticated(Request $request, $user)
+    {
+        // Check the user type and redirect accordingly
+        if ($user->user_type == 'client') {
+            return redirect()->route('client-homepage');
+        } elseif ($user->user_type == 'freelancer') {
+            return redirect()->route('home');
+        } elseif ($user->user_type == 'admin') {
+            return redirect()->route('home');
+        }
+
+        // Default redirect if no user_type matches
+        return redirect('/home');
+    }
+
 
     /**
      * Create a new controller instance.

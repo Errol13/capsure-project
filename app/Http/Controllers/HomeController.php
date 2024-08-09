@@ -25,7 +25,7 @@ class HomeController extends Controller
 {
     if ($request->routeIs('client-homepage')) {
         // Logic for the client homepage
-        return view('client.c_homepage');
+        return view('client.c_home');
     } else {
         // Default logic 
         return view('home');
