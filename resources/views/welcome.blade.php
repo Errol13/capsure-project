@@ -5,7 +5,7 @@
 <!-- Contents -->
 <div class="flex items-center justify-center h-full">
     <!--Hero Section -->
-    <section class="hero text-center rounded-3 mt-4 col-md-12 col-lg-12 col-sm-12 ">
+    <section class="hero text-center rounded-5 mt-4 col-md-12 col-lg-12 col-sm-12 ">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-12 col-lg-12 col-sm-12">

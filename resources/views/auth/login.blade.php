@@ -1,10 +1,9 @@
 @extends('layouts.app')
 
-
 @section('content')
-<div class="container">
+<div class="container px-5">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-12 col-md-4 col-lg-4">
             <div class>
                 <div class="card-header text-center py-4 fs-1 fw-bold">{{ __('Log In') }}</div>
 
@@ -35,7 +34,6 @@
                                 @enderror
                             </div>
                         </div>
-
                         <div class="row mb-5">
                         <div class="row-md-6">
                                 <div class="form-check">
@@ -48,13 +46,13 @@
                             </div>
                         </div>
                         <p class="text-start">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
-                        <div class="row-md-6 d-grid gap-3">
+                        <div class="row-md-4 gap-3">
                                 <button type="submit" class="btn-auth rounded-pill border-white">
                                     {{ __('Login') }}
                                 </button>
                                 <div class="row mb-4 gap-3">
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <a class="btn-link text-center mt-4" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
                                     </a>
                                 @endif

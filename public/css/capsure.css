@@ -1,3 +1,56 @@
+/* Font Styles */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sedan:ital@0;1&display=swap');
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+  }  
+
+  .poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+  }
+  
+
+.poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+
+.sedan-regular-italic {
+    font-family: "Sedan", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+.sedan-regular {
+    font-family: "Sedan", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+.open-sans-reg {
+    font-family: "Open Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+    font-variation-settings:
+      "wdth" 100;
+  }
+
+
 /*Buttons and Horizontal Lines Styles */
 
 .btn-purple {
@@ -12,6 +65,10 @@
     margin-left: 10px;
     /* Space between button and other links */
     margin-right: 20px;
+}
+
+.btn-link {
+    color: #91216C;
 }
 
 .btn-auth {
@@ -47,6 +104,16 @@
     margin-right: 0;
     margin-left: 0;
     margin-top: 0;
+}
+
+.btn-create {
+    background-color: white;
+    color: black;
+    max-width: 500px;
+    max-height: 100px;
+    height: 40px;
+    width: 200px;
+    align-items: center;
 }
 
 /*Text Colors */
@@ -92,6 +159,73 @@
     border: none;
     background-color: white;
 }
+
+/* Client Homepage */
+
+.search-container {
+    background-image: url('/assets/bg_homepage.svg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    border-radius: 20px; 
+}
+
+.input-group {
+    border-radius: 50px; /* Fully rounded input */
+    padding: 10px 15px;
+}
+
+.form-control {
+    border: none; /* Removes the default border */
+    border-radius: 50px;
+}
+
+.input-group-text {
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.create-event-btn {
+    margin-top: 10px;
+    background-color: #ffffff; /* White background for button */
+    color: #000; /* Black text color */
+    font-weight: bold;
+    border: none;
+    padding: 10px 20px;
+}
+
+.create-event-btn i {
+    margin-left: 5px; /* Space between text and icon */
+}
+
+.create-event-btn .inside-icon {
+    height: 25px; /* Adjust the size as needed */
+    margin-right: 5px;
+}
+
+.shadow-btn {
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
+}
+
+.solo-service-cont {
+    width: 310px;
+    height: 370px;
+    border-width: 1px;
+    border-radius: 30px;
+    border-color: #000;
+}
+
+/* Ensure the container aligns items correctly */
+.col {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* Distributes space between items */
+}
+
+.view-all {
+    margin-left: auto; /* Pushes the element to the far right */
+}
+
 
 /* Responsive styles for smaller screens */
 @media (max-width: 767px) {
