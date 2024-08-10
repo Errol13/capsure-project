@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -23,29 +24,13 @@ class RegisterController extends Controller
 
     use RegistersUsers;
 
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
     protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest');
     }
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param  array  $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
     protected function validator(array $data)
     {
         return Validator::make($data, [
@@ -55,18 +40,72 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
-    protected function create(array $data)
+   /* protected function create(array $data)
+    {
+        // Default user creation method
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'user_type' => 'default', 
+        ]);
+    }*/
+
+    // Show client registration form
+    public function showClientRegisterForm()
+    {
+        return view('auth.signup_client');
+    }
+
+    // Show freelancer registration form
+    public function showFreelancerRegisterForm()
+    {
+        return view('auth.signup_freelancer');
+    }
+
+    // Handle client registration
+    protected function registerClient(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->createClient($request->all());
+
+        $this->guard()->login($user);
+
+        return redirect($this->redirectPath());
+    }
+
+    // Handle freelancer registration
+    protected function registerFreelancer(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        $user = $this->createFreelancer($request->all());
+
+        $this->guard()->login($user);
+
+        return redirect($this->redirectPath());
+    }
+
+    // Create client
+    protected function createClient(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'user_type' => 'client', 
+        ]);
+    }
+
+    // Create freelancer
+    protected function createFreelancer(array $data)
+    {
+        return User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+            'user_type' => 'freelancer', 
         ]);
     }
 }

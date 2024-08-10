@@ -120,6 +120,43 @@
 
 .text-purple {
     color: #91216C;
+    text-decoration: none;
+}
+
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+/*Sign Up Page*/
+.bg-signup{
+    position: absolute;
+    z-index: -1;
+    background: url('/assets/sign up.svg');
+    opacity: 90%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 10px;
+    padding-right: 5px;
+    padding-left: 5px;
+    top: 0;
+    left:0;
+    width: 100%;
+    height: calc(100% + 40px);
+    display: flex;
+    align-items: center; /* Center content vertically */
+    justify-content: center; /* Center content horizontally */
+    position: fixed;
+}
+
+.txt-smaller{
+    font-size: 12px;
+}
+
+select#day, select#month, select#year {
+    background-color: #f8f9fa; /* Light gray background */
+    color: #6c757d;           /* Dark gray text */
 }
 
 /*Welcome Page*/
@@ -137,7 +174,6 @@
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
 
     width: 100%;
-    /* or specific width like 1200px */
     height: 240px;
 }
 
@@ -403,12 +439,20 @@
 /* Responsive styles for Tablets (≥ 768px) screens */
 @media (min-width: 768px) {
 
+    /*sign up */
+    .bg-signup {
+        padding: 30px;
+        padding-right: 240px;
+        padding-left: 240px;
+    }
+
+
     .fs-cstm-5 {
         font-size: 1.15rem; 
     }
 
     .fs-cstm-6 {
-        font-size: 0.15rem; 
+        font-size: 0.75rem; 
     }
 
     .btn-auth {

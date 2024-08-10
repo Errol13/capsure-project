@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container px-5">
+<div class="container px-5 poppins-light">
     <div class="row justify-content-center">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <div class>
                 <div class="card-header text-center py-4 fs-1 fw-bold">{{ __('Log In') }}</div>
 
@@ -45,19 +45,19 @@
                                 </div>
                             </div>
                         </div>
-                        <p class="text-start">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
-                        <div class="row-md-6 d-grid gap-3">
+                        <p class="text-center fs-cstm-6">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
+                        <div class="row row-md-6 d-grid gap-3">
                                 <button type="submit" class="btn-auth rounded-pill border-white">
                                     {{ __('Login') }}
                                 </button>
                             </div>
                                 <div class="row mb-4 gap-3">
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
+                                    <a class="btn btn-link text-black" href="{{ route('password.request') }}">
+                                        {{ __('Forgot your password?') }}
                                     </a>
                                 @endif
-                                <p class="text-center">Don't have an account yet?<a href="{{ route('register') }}" class="text-purple fs-6 ms-1">Sign Up</a>
+                                <p class="text-center">Don't have an account yet?<a href="{{ route('choose') }}" class="text-purple fs-6 ms-1">Sign Up</a>
                             </div>
                         </div>
                     </form>

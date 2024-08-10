@@ -67,7 +67,7 @@
         continueBtn.addEventListener('click', () => {
             if (selectedPage) {
                 // Redirect based on the selected page
-                window.location.href = selectedPage === 'client' ? '/register' : '/freelancer-signup';
+                window.location.href = selectedPage === 'client' ? '/register/client' : '/register/freelancer';
             }
         });
     });
