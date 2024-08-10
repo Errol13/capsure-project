@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -7,7 +8,14 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]); // Disable default registration route
+
+// Custom registration routes
+Route::get('/register/client', [RegisterController::class, 'showClientRegisterForm'])->name('register.client');
+Route::get('/register/freelancer', [RegisterController::class, 'showFreelancerRegisterForm'])->name('register.freelancer');
+
+Route::post('/register/client', [RegisterController::class, 'registerClient'])->name('register.client.post');
+Route::post('/register/freelancer', [RegisterController::class, 'registerFreelancer'])->name('register.freelancer.post');
 
 #User Auth Routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

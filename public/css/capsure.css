@@ -120,6 +120,7 @@
 
 .text-purple {
     color: #91216C;
+    text-decoration: none;
 }
 
 body, html {
@@ -421,12 +422,13 @@ select#day, select#month, select#year {
         padding-left: 240px;
     }
 
+
     .fs-cstm-5 {
         font-size: 1.15rem; 
     }
 
     .fs-cstm-6 {
-        font-size: 0.15rem; 
+        font-size: 0.75rem; 
     }
 
     .btn-auth {
