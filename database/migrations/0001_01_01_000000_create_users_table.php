@@ -24,10 +24,10 @@ return new class extends Migration
             $table->string('street');
             $table->string('barangay');
             $table->string('city');
-            $table->string('contact_number',11);
+            $table->string('contact_number',11)->nullable();
             $table->boolean('isNumberVerified')->default(false);
-            $table->text('profile_image');
-            $table->boolean('isVerified');
+            $table->text('profile_image')->nullable();
+            $table->boolean('isVerified')->default(false);
             $table->string('user_type',50);
             $table->rememberToken();
             $table->timestamps();
