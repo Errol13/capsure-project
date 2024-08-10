@@ -28,10 +28,10 @@
                 Continue
             </button>
 
-            <div class="mt-4">
+            <div class="mt-2 mt-md-2">
                 <div class="d-flex justify-content-center align-items-center">
                     <p class="mb-0 me-2">Already have an account?</p>
-                    <a href="#" class="text-purple fs-6">Log in</a>
+                    <a href="{{ route('login') }}" class="text-purple fs-6">Log in</a>
                 </div>
             </div>
 
