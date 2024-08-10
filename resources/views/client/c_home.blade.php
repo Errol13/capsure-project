@@ -28,22 +28,35 @@
         </div>
         <!-- Solo Freelancers Services -->
         <div class="row">
-            <div class="col mb-4 d-flex align-items-center justify-content-between">
+            <div class="col-align mb-4 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
                     <img src="assets/solo.svg" class="inside-icon me-1">
                     <h3 class="poppins-regular fs-3 mb-0">Solo Freelancers</h3>
                 </div>
-                <p class="poppins-light fs-5 mb-0 btn-link view-all">View All</p>
+                <p class="poppins-light fs-5 mb-0 btn-link right-side">View All</p>
             </div>
 
 
             <!-- Services -->
-            <div class="card" style="width: 18rem;">
-              <h5 class="card-title">Card title</h5>  
-              <img src="/assets/cover.svg" class="card-img-top" alt="image daw">
-                <div class="card-body">
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+            <div class="card mx-2 shadow-box" style="width: 18rem;">
+                <div class="col-align">
+                    <h5 class="card-title poppins-medium mt-1">Photographer</h5>
+                    <h5 class="poppins-medium fs-5 mb-0 right-side">₱500/hr</h5>
+                </div>
+                <img src="/assets/cover.svg" class="card-img-top" alt="cover">
+
+                <div class="card-body open-sans-reg">
+                    <div class="col-align mb-4 d-flex align-items-center justify-content-between">
+                        <img src="/assets/profilepic.svg" class="card-img" alt="profile">
+                        <div class="row">
+                            <p class="card-text open sans-reg">Daisy Maureen Dimasuay</p>
+                            <p class="card-text open-sans-light">Naga City</p>
+                        </div>
+                    </div>
+                    <div class="col-align">
+                    <a href="#" class="see-prof-btn open-sans-reg">See Profile</a>
+                    <img src="assets/bookmark.svg" alt="Bookmark" class="bookmark-icon right-side">
+                </div>
                 </div>
             </div>
         </div>
