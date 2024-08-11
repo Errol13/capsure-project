@@ -1,4 +1,4 @@
-/* Font Styles */
+/* Font Styles <------------------------------*/
 
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
@@ -51,7 +51,7 @@
   }
 
 
-/*Buttons and Horizontal Lines Styles */
+/*Buttons and Horizontal Lines Styles <-------------------------------- */
 
 .btn-purple {
     background-color: #91216C;
@@ -116,7 +116,7 @@
     align-items: center;
 }
 
-/*Text Colors */
+/*Text Colors <---------------------------------------*/
 
 .text-purple {
     color: #91216C;
@@ -128,7 +128,7 @@ body, html {
     margin: 0;
 }
 
-/*Sign Up Page*/
+/*Sign Up Page <------------------------------------------------------------------------------------------------------*/
 .bg-signup{
     position: absolute;
     z-index: -1;
@@ -159,7 +159,7 @@ select#day, select#month, select#year {
     color: #6c757d;           /* Dark gray text */
 }
 
-/*Welcome Page*/
+/*Welcome Page <-------------------------------------------------------------------------------------------------------*/
 
 .hero {
     background: url('/assets/bg_center.svg');
@@ -196,7 +196,7 @@ select#day, select#month, select#year {
     background-color: white;
 }
 
-/* Client Homepage */
+/* Client Homepage <-------------------------------------------------------------------------------------------------*/
 
 .search-container {
     background-image: url('/assets/bg_homepage.svg');
@@ -240,27 +240,21 @@ select#day, select#month, select#year {
 }
 
 .shadow-btn {
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
-}
-
-.see-prof-btn {
-    margin-top: 10px;
-    color: #91216C; /* Text color */
-    padding: 10px 45px;
-    border: 1px solid #91216C;
-    border-radius: 12px;
-    text-decoration: none;
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
 }
 
 .bookmark-icon {
-    margin-left: 30px; /* Space between button and icon */
-    width: 35px; /* Adjust size of the icon */
-    height: 24px;
+
     cursor: pointer; /* Makes the icon clickable */
 }
 
+.carousel-control-prev-icon, .carousel-control-next-icon {
+        background-color: gray;
+        border-radius: 12px;
+    }
+
 .shadow-box {
-    box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
+    box-shadow: 1px 2px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
 }
 
 .solo-service-cont {
@@ -275,11 +269,11 @@ select#day, select#month, select#year {
 .col-align {
     display: flex;
     align-items: center;
-    justify-content: center; /* Distributes space between items */
+    justify-content: center; 
 }
 
 .right-side{
-    margin-left: auto; /* Pushes the element to the far right */
+    margin-left: auto;
 }
 
 .card-img {
@@ -287,7 +281,7 @@ select#day, select#month, select#year {
     width: 57px;
 }
 
-/* Responsive styles for smaller screens */
+/* Responsive styles for smaller screens <--------------------------- */
 @media (max-width: 767px) {
     .hero {
         width: 100%;
@@ -374,7 +368,7 @@ select#day, select#month, select#year {
 
 
 
-/* Box styles */
+/* Box styles <----------------------------------------------- */
 .box {
     background-color: white;
     max-width: 250px;
@@ -436,7 +430,7 @@ select#day, select#month, select#year {
 }
 
 
-/* Responsive styles for Tablets (≥ 768px) screens */
+/* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
 @media (min-width: 768px) {
 
     /*sign up */
