@@ -67,7 +67,7 @@
                         </li>
                         @endif
                         @else
-                        @if (Auth::user()->user_type == 'freelancer')
+                        @if (Auth::user()->user_type == 'client')
                         <!-- Freelancer-specific navbar items -->
                         <li class="nav-item">
                             <a class="nav-link text-black" href="#">SERVICES</a>
@@ -78,7 +78,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-black" href="#">MY TRANSACTION</a>
                         </li>
-                        @elseif (Auth::user()->user_type == 'client')
+                        @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Client-specific navbar items -->
                         <li class="nav-item">
                             <a class="nav-link text-black" href="#">JOB POSTING</a>

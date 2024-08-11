@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\VerifiesEmails;
+use Illuminate\Support\Facades\Auth;
 
 class VerificationController extends Controller
 {
@@ -37,5 +38,21 @@ class VerificationController extends Controller
         $this->middleware('auth');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
+
+    // Override the redirectTo method
+    protected function redirectTo()
+    {
+        $user = Auth::user();
+
+        if ($user) {
+            if ($user->user_type === 'client') {
+                return '/client-homepage';
+            } elseif ($user->user_type === 'freelancer') {
+                return '/freelancer-homepage';
+            }
+        }
+
+        return '/home';
     }
 }

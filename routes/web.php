@@ -8,7 +8,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Auth::routes(['register' => false]); // Disable default registration route
+Auth::routes([
+    'register' => false,  // Disable default registration route
+    'verify' => true      // Enable email verification routes
+]);
 
 // Custom registration routes
 Route::get('/register/client', [RegisterController::class, 'showClientRegisterForm'])->name('register.client');
@@ -21,4 +24,6 @@ Route::post('/register/freelancer', [RegisterController::class, 'registerFreelan
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->name('choose');
 
-Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('client-homepage');
+#Homepages
+Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('client-homepage') ->middleware(['auth', 'verified']);
+Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('freelancer-homepage') ->middleware(['auth', 'verified']);

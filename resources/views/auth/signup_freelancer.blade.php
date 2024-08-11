@@ -28,10 +28,10 @@
 
 <body>
     <div class="bg-signup"></div>
-    <div class="container mt-3 mt-md-4 txt-smaller poppins-light">
+    <div class="container mt-3 mt-md-3 txt-smaller poppins-light">
         <div class="row justify-content-center">
             <div class="col-12 col-md-7">
-                <div class="card rounded bg-white px-4">
+                <div class="card rounded bg-white px-4 ">
                     <div class="card-header border-0 bg-white fs-4 text-center poppins-medium">Sign up as <b class="text-purple poppins-medium">Freelancer</b> <a href="{{ route('choose') }}" class="text-black position-absolute end-0 top-0 m-2">
                             <i class="fas fa-times"></i>
                         </a></div>
@@ -114,81 +114,81 @@
 
                             <!-- Job Title -->
                             <div class="row mb-1">
-                            <div class="col-6 col-md-4">
-                                <label for="job_title" class="form-label">{{ __('Job Title') }}</label>
-                                <input id="job_title" type="text" class="mx-1 form-control @error('job_title') is-invalid @enderror" name="job_title" value="{{ old('job_title') }}" required autocomplete="job_title">
+                                <div class="col-6 col-md-4">
+                                    <label for="job_title" class="form-label">{{ __('Job Title') }}</label>
+                                    <input id="job_title" type="text" class="mx-1 form-control @error('job_title') is-invalid @enderror" name="job_title" value="{{ old('job_title') }}" required autocomplete="job_title">
 
-                                @error('job_title')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
+                                    @error('job_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <!-- Job Category -->
+
+                                <div class="col-6 col-md-4">
+                                    <label for="job_category" class="form-label">{{ __('Job Category') }}</label>
+                                    <select id="job_category" class=" mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="Entertainment" {{ old('job_category') == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
+                                        <option value="Voice Talent" {{ old('job_category') == 'Voice Talent' ? 'selected' : '' }}>Voice Talent</option>
+                                        <option value="Voice Talent" {{ old('job_category') == 'Videography' ? 'selected' : '' }}>Videography</option>
+                                        <option value="Voice Talent" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
+                                        <option value="Voice Talent" {{ old('job_category') == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
+                                        <option value="Voice Talent" {{ old('job_category') == 'Online Services' ? 'selected' : '' }}>Online Services</option>
+
+                                    </select>
+                                    @error('job_category')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <!-- Job Fee -->
+                                <div class=" col-6 col-md-2">
+                                    <label for="job_fee" class="form-label">{{ __('Job Fee') }}</label>
+                                    <input id="job_fee" type="number" step="0.01" class="mx-1 form-control @error('job_fee') is-invalid @enderror" name="job_fee" value="{{ old('job_fee') }}" required autocomplete="job_fee">
+
+                                    @error('job_fee')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <!-- Fee Type -->
+                                <div class="col-6 col-md-2">
+                                    <label for="fee_type" class="form-label">{{ __('Fee Type') }}</label>
+                                    <select id="fee_type" class="mx-0 form-select @error('fee_type') is-invalid @enderror" name="fee_type" required>
+                                        <option value="" disabled selected></option>
+                                        <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
+                                        <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
+                                    </select>
+                                    @error('fee_type')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
                             </div>
 
-                            <!-- Job Category -->
-                            
-                            <div class="col-6 col-md-4">
-                                <label for="job_category" class="form-label">{{ __('Job Category') }}</label>
-                                <select id="job_category" class=" mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="Entertainment" {{ old('job_category') == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
-                                    <option value="Voice Talent" {{ old('job_category') == 'Voice Talent' ? 'selected' : '' }}>Voice Talent</option>
-                                    <option value="Voice Talent" {{ old('job_category') == 'Videography' ? 'selected' : '' }}>Videography</option>
-                                    <option value="Voice Talent" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
-                                    <option value="Voice Talent" {{ old('job_category') == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
-                                    <option value="Voice Talent" {{ old('job_category') == 'Online Services' ? 'selected' : '' }}>Online Services</option>
-                                    
-                                </select>
-                                @error('job_category')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
 
-                            <!-- Job Fee -->
-                            <div class=" col-6 col-md-2">
-                                <label for="job_fee" class="form-label">{{ __('Job Fee') }}</label>
-                                <input id="job_fee" type="number" step="0.01" class="mx-1 form-control @error('job_fee') is-invalid @enderror" name="job_fee" value="{{ old('job_fee') }}" required autocomplete="job_fee">
-
-                                @error('job_fee')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-
-                            <!-- Fee Type -->
-                            <div class="col-6 col-md-2">
-                                <label for="fee_type" class="form-label">{{ __('Fee Type') }}</label>
-                                <select id="fee_type" class="mx-0 form-select @error('fee_type') is-invalid @enderror" name="fee_type" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
-                                    <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
-                                </select>
-                                @error('fee_type')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-                            </div>
-                            </div>
-
-
-                            <!-- Date of Birth -->
+                            <!-- Birthdate -->
                             <p class="fw-bold mb-1"> What's your date of birth? </p>
                             <div class="row mb-1 ">
                                 <div class="col-md-4">
-                                    <label for="month" class="form-label">{{ __('Month') }}</label>
-                                    <select id="month" class="form-select @error('month') is-invalid @enderror" name="month" required>
+                                    <label for="birth_month" class="form-label">{{ __('Month') }}</label>
+                                    <select id="birth_month" class="form-select @error('birth_month') is-invalid @enderror" name="birth_month" required>
                                         <option value="" disabled selected class="text-gray"></option>
                                         @foreach(range(1, 12) as $month)
-                                        <option value="{{ $month }}" {{ old('month') == $month ? 'selected' : '' }}>
+                                        <option value="{{ $month }}" {{ old('birth_month') == $month ? 'selected' : '' }}>
                                             {{ DateTime::createFromFormat('!m', $month)->format('F') }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('month')
+                                    @error('birth_month')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -196,16 +196,16 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="day" class="form-label">{{ __('Day') }}</label>
-                                    <select id="day" class="form-select @error('day') is-invalid @enderror" name="day" required>
+                                    <label for="birth_day" class="form-label">{{ __('Day') }}</label>
+                                    <select id="birth_day" class="form-select @error('birth_day') is-invalid @enderror" name="birth_day" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(1, 31) as $day)
-                                        <option value="{{ $day }}" {{ old('day') == $day ? 'selected' : '' }}>
+                                        <option value="{{ $day }}" {{ old('birth_day') == $day ? 'selected' : '' }}>
                                             {{ $day }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('day')
+                                    @error('birth_day')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -213,16 +213,16 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="year" class="form-label">{{ __('Year') }}</label>
-                                    <select id="year" class="form-select @error('year') is-invalid @enderror" name="year" required>
+                                    <label for="birth_year" class="form-label">{{ __('Year') }}</label>
+                                    <select id="birth_year" class="form-select @error('birth_year') is-invalid @enderror" name="birth_year" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(date('Y') - 100, date('Y')) as $year)
-                                        <option value="{{ $year }}" {{ old('year') == $year ? 'selected' : '' }}>
+                                        <option value="{{ $year }}" {{ old('birth_year') == $year ? 'selected' : '' }}>
                                             {{ $year }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('year')
+                                    @error('birth_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -265,7 +265,6 @@
                                     @enderror
                                 </div>
                             </div>
-
 
 
 

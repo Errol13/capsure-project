@@ -2,10 +2,10 @@
 
 @section('content')
 
-<div class="container">
+<div class="container poppins-light">
     <div class="row justify-content-center">
 
-        <h5 class="fs-1 font-bold text-center p-2"> Choose to Sign Up </h5>
+        <h5 class="fs-1 font-bold text-center p-2 poppins-medium"> Choose to Sign Up </h5>
         <!-- First Box -->
         <div class="col-12 col-md-4 col-lg-4  d-flex flex-column align-items-center mb-1 mb-md-4 p-1 p-md-4"  id="box1">
             <div class="text-center p-2 p-md-4 border-3 rounded-5 box box-content" data-page="client">
