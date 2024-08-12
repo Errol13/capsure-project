@@ -50,7 +50,7 @@
       "wdth" 100;
   }
 
-
+  
 /*Buttons and Horizontal Lines Styles <-------------------------------- */
 
 .btn-purple {
@@ -416,17 +416,25 @@ select#day, select#month, select#year {
 
 @media (min-width: 1400px) {
     /* Styles for large desktops */
+    .mobile-navbar {
+        display: none; 
+    }
 }
 
 
 @media (min-width: 1200px) {
     /* Styles for desktops */
+    .mobile-navbar {
+        display: none; 
+    }
 }
 
 
 @media (min-width: 992px) {
     /* Styles for small laptops */
-
+    .mobile-navbar {
+        display: none; 
+    }
 }
 
 

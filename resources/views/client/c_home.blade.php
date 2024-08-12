@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mb-4 pb-4">
     <div class="row justify-content-center">
 
         <!-- Search Engine and Event Post Button -->
-        <div class="col-md-12 col-lg-12 col-sm-12">
+        <div class="col-md-12 col-lg-12 col-sm-12 py-4">
             <div class="search-container rounded-4">
                 <!-- search bar -->
                 <div class="input-group mt-3 mb-1">
@@ -23,8 +23,8 @@
             </div>
         </div>
 
-        <div class="row mx-4 py-4">
-            <h3 class="poppins-medium fs-1 text-center">Services For You</h3>
+        <div class="row mx-4 py-1">
+            <h3 class="poppins-medium fs-1 text-right">Services For You</h3>
         </div>
 
         <!-- Solo Freelancers Services -->
