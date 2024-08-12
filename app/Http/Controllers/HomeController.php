@@ -22,13 +22,16 @@ class HomeController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index(Request $request)
-{
-    if ($request->routeIs('client-homepage')) {
-        // Logic for the client homepage
-        return view('client.c_home');
-    } else {
-        // Default logic 
-        return view('home');
+    {
+        if ($request->routeIs('client-homepage')) {
+            // Logic for the client homepage
+            return view('client.c_home');
+        } elseif ($request->routeIs('freelancer-homepage')) {
+            // Logic for the freelancer homepage
+            return view('freelancer.f_home');
+        } else {
+            // Default logic
+            return view('home');
+        }
     }
-}
 }

@@ -3,9 +3,14 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Freelancer;
+use App\Models\Service;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -34,22 +39,12 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
     }
-
-   /* protected function create(array $data)
-    {
-        // Default user creation method
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'user_type' => 'default', 
-        ]);
-    }*/
 
     // Show client registration form
     public function showClientRegisterForm()
@@ -64,11 +59,14 @@ class RegisterController extends Controller
     }
 
     // Handle client registration
-    protected function registerClient(Request $request)
+    public function registerClient(Request $request)
     {
         $this->validator($request->all())->validate();
 
         $user = $this->createClient($request->all());
+
+        // Trigger the email verification event
+        event(new Registered($user));
 
         $this->guard()->login($user);
 
@@ -76,11 +74,17 @@ class RegisterController extends Controller
     }
 
     // Handle freelancer registration
-    protected function registerFreelancer(Request $request)
+    public function registerFreelancer(Request $request)
     {
         $this->validator($request->all())->validate();
 
         $user = $this->createFreelancer($request->all());
+
+        // Create the associated service record for the freelancer
+        $this->createService($user->id, $request->all());
+
+        // Trigger the email verification event
+        event(new Registered($user));
 
         $this->guard()->login($user);
 
@@ -90,22 +94,82 @@ class RegisterController extends Controller
     // Create client
     protected function createClient(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $birthdate = "{$data['birth_year']}-{$data['birth_month']}-{$data['birth_day']}";
+        $age = \Carbon\Carbon::parse($birthdate)->age;
+
+        $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_type' => 'client', 
+            'user_type' => 'client',
+            'date_joined' => now(),
+            'birthdate' => $birthdate,
+            'age' => $age,
+            'street' => $data['street'] ?? null,
+            'barangay' => $data['barangay'] ?? null,
+            'city' => $data['city'] ?? null,
+            'contact_number' => $data['contact_number'] ?? null,
         ]);
+
+        Client::create([
+            'user_id' => $user->id,
+        ]);
+
+        return $user;
     }
 
     // Create freelancer
     protected function createFreelancer(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
+        $birthdate = "{$data['birth_year']}-{$data['birth_month']}-{$data['birth_day']}";
+        $age = \Carbon\Carbon::parse($birthdate)->age;
+
+        $user = User::create([
+            'first_name' => $data['first_name'],
+            'last_name' => $data['last_name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
-            'user_type' => 'freelancer', 
+            'user_type' => 'freelancer',
+            'date_joined' => now(),
+            'birthdate' => $birthdate,
+            'age' => $age,
+            'street' => $data['street'] ?? null,
+            'barangay' => $data['barangay'] ?? null,
+            'city' => $data['city'] ?? null,
+            'contact_number' => $data['contact_number'] ?? null,
         ]);
+
+        Freelancer::create([
+            'user_id' => $user->id,
+
+        ]);
+
+        return $user;
+    }
+
+    // Create service record for freelancer
+    protected function createService(int $userId, array $data)
+    {
+        Service::create([
+            'user_id' => $userId,
+            'job_category' => $data['job_category'],
+            'job_title' => $data['job_title'],
+            'fee_type' => $data['fee_type'],
+            'job_fee' => $data['job_fee'],
+        ]);
+    }
+
+    protected function redirectTo()
+    {
+        $user = Auth::user();
+
+        if ($user->user_type === 'client') {
+            return '/client-homepage';
+        } elseif ($user->user_type === 'freelancer') {
+            return '/freelancer-homepage';
+        }
+
+        return '/home'; // Default redirect 
     }
 }

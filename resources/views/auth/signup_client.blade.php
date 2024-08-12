@@ -78,20 +78,20 @@
                                 @enderror
                             </div>
 
-                            <!-- Date of Birth -->
+                            <!-- Birthdate -->
                             <p class="fw-bold mb-1"> What's your date of birth? </p>
                             <div class="row mb-1 ">
                                 <div class="col-md-4">
-                                    <label for="month" class="form-label">{{ __('Month') }}</label>
-                                    <select id="month" class="form-select @error('month') is-invalid @enderror" name="month" required>
-                                        <option value="" disabled selected></option>
+                                    <label for="birth_month" class="form-label">{{ __('Month') }}</label>
+                                    <select id="birth_month" class="form-select @error('birth_month') is-invalid @enderror" name="birth_month" required>
+                                        <option value="" disabled selected class="text-gray"></option>
                                         @foreach(range(1, 12) as $month)
-                                        <option value="{{ $month }}" {{ old('month') == $month ? 'selected' : '' }}>
+                                        <option value="{{ $month }}" {{ old('birth_month') == $month ? 'selected' : '' }}>
                                             {{ DateTime::createFromFormat('!m', $month)->format('F') }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('month')
+                                    @error('birth_month')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -99,16 +99,16 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="day" class="form-label">{{ __('Day') }}</label>
-                                    <select id="day" class="form-select @error('day') is-invalid @enderror" name="day" required>
+                                    <label for="birth_day" class="form-label">{{ __('Day') }}</label>
+                                    <select id="birth_day" class="form-select @error('birth_day') is-invalid @enderror" name="birth_day" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(1, 31) as $day)
-                                        <option value="{{ $day }}" {{ old('day') == $day ? 'selected' : '' }}>
+                                        <option value="{{ $day }}" {{ old('birth_day') == $day ? 'selected' : '' }}>
                                             {{ $day }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('day')
+                                    @error('birth_day')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -116,16 +116,16 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="year" class="form-label">{{ __('Year') }}</label>
-                                    <select id="year" class="form-select @error('year') is-invalid @enderror" name="year" required>
+                                    <label for="birth_year" class="form-label">{{ __('Year') }}</label>
+                                    <select id="birth_year" class="form-select @error('birth_year') is-invalid @enderror" name="birth_year" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(date('Y') - 100, date('Y')) as $year)
-                                        <option value="{{ $year }}" {{ old('year') == $year ? 'selected' : '' }}>
+                                        <option value="{{ $year }}" {{ old('birth_year') == $year ? 'selected' : '' }}>
                                             {{ $year }}
                                         </option>
                                         @endforeach
                                     </select>
-                                    @error('year')
+                                    @error('birth_year')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

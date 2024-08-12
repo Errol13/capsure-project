@@ -2,12 +2,12 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -17,7 +17,8 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
         'email',
         'password',
         'date_joined',
@@ -55,5 +56,20 @@ class User extends Authenticatable
             'date_joined' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function client()
+    {
+        return $this->hasOne(Client::class, 'user_id');
+    }
+
+    public function freelancer()
+    {
+        return $this->hasOne(Freelancer::class, 'user_id');
+    }
+
+    public function service()
+    {
+        return $this->hasOne(Service::class, 'user_id');
     }
 }

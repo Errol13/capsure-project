@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('first_name',255);
             $table->string('last_name',255);
             $table->string('email',255)->unique();
-            $table->boolean('isEmailVerified')->default(false);
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->timestamp('date_joined');
+            $table->date('birthdate');
             $table->integer('age');
             $table->string('street');
             $table->string('barangay');
