@@ -50,7 +50,7 @@
       "wdth" 100;
   }
 
-  
+
 /*Buttons and Horizontal Lines Styles <-------------------------------- */
 
 .btn-purple {
@@ -243,8 +243,7 @@ select#day, select#month, select#year {
     box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
 }
 
-.bookmark-icon {
-
+.fa-search, .fa-filter, .bookmark-icon {
     cursor: pointer; /* Makes the icon clickable */
 }
 
@@ -416,32 +415,43 @@ select#day, select#month, select#year {
 
 @media (min-width: 1400px) {
     /* Styles for large desktops */
-    .mobile-navbar {
-        display: none; 
-    }
+
 }
 
 
 @media (min-width: 1200px) {
     /* Styles for desktops */
-    .mobile-navbar {
-        display: none; 
+  
+    /* client homepage  <----------------------------*/
+    .search-container {
+        display: flex;
+        align-items: center;
+        padding: 0 20px; 
+    }
+
+    .search-bar {
+        flex: 2; 
+        max-width: 70%; 
+    }
+
+    .create-event-btn {
+        flex-shrink: 0; 
+        white-space: nowrap; 
+        margin-left: 50px; 
     }
 }
 
 
 @media (min-width: 992px) {
     /* Styles for small laptops */
-    .mobile-navbar {
-        display: none; 
-    }
+
 }
 
 
 /* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
 @media (min-width: 768px) {
 
-    /*sign up */
+    /*sign up <-------------------------------*/
     .bg-signup {
         padding: 30px;
         padding-right: 240px;
@@ -492,6 +502,24 @@ select#day, select#month, select#year {
         width: 120px;
         height: 120px;
         object-fit: contain;
+    }
+
+    /*client homepage <-----------------------------*/
+    .search-container {
+        display: flex;
+        align-items: center;
+        padding: 0 20px; 
+    }
+
+    .search-bar {
+        flex: 2; 
+        max-width: 70%; 
+    }
+
+    .create-event-btn {
+        flex-shrink: 0; 
+        white-space: nowrap; 
+        margin-left: 50px; 
     }
 }
 

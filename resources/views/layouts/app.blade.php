@@ -28,7 +28,7 @@
 
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md fixed-top navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
@@ -134,7 +134,7 @@
             </div>
         </nav>
 
-        <main class="py-4 my-4">
+        <main class="py-1 mx-1">
             @yield('content')
         </main>
     </div>

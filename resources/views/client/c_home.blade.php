@@ -2,19 +2,94 @@
 
 @section('content')
 <div class="container mb-4 pb-4">
-    <div class="row justify-content-center">
+    <div class="row justify-content-center pb-2">
 
         <!-- Search Engine and Event Post Button -->
         <div class="col-md-12 col-lg-12 col-sm-12 py-4">
             <div class="search-container rounded-4">
                 <!-- search bar -->
-                <div class="input-group mt-3 mb-1">
-                    <input type="text" class="form-control fw-lighter rounded-5" placeholder="What service do you need?">
-                    <span class="input-group-text border-0 bg-transparent position-absolute end-0">
-                        <i class="fas fa-search m-1 fs-5"></i>
-                        <i class="fas fa-filter m-3 fs-5"></i>
+                <div class="input-group search-bar mt-3 mb-3 position-relative">
+                    <input type="text" class="form-control fw-lighter rounded-5 py-1 md-2" placeholder="What service do you need?">
+                    <span class="input-group-text border-0 bg-transparent position-absolute end-0 mx-2 d-flex align-items-center">
+                        <i class="fas fa-search m-2 fs-5"></i>
+                        <i class="fas fa-filter m-2 fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
                     </span>
                 </div>
+
+                <!-- PopUp Filter Options -->
+                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm position-center py-4 my-4 px-2">
+                        <div class="modal-content rounded-4">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5 poppins-medium" id="exampleModalLabel">Filter Options</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form>
+                                    <div class="col mb-3 text-start ms-4">
+                                        <h5 class="poppins-regular">Job Category</h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label><input type="radio" name="category" value="any"> Any Category</label><br>
+                                                <label><input type="radio" name="category" value="art"> Art</label><br>
+                                                <label><input type="radio" name="category" value="entertainment"> Entertainment</label><br>
+                                                <label><input type="radio" name="category" value="photography"> Photography</label><br>
+                                                <label><input type="radio" name="category" value="voice"> Voice Talent</label><br>
+                                                <label><input type="radio" name="category" value="stylist"> Stylist</label><br>
+                                            </div>
+                                            <div class="col">
+                                                <label><input type="radio" name="category" value="food"> Food Service</label><br>
+                                                <label><input type="radio" name="category" value="event"> Event Planner</label><br>
+                                                <label><input type="radio" name="category" value="online"> Online Services</label><br>
+                                                <label><input type="radio" name="category" value="videography"> Videography</label><br>
+                                                <label><input type="radio" name="category" value="handicrafts"> Handicrafts</label><br>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row text-start ms-3">
+                                        <div class="col mb-3">
+                                            <h5 class="poppins-regular">Job Fee Type</h5>
+                                            <label><input type="radio" name="fee-type" value="any-fee" > Any</label><br>
+                                            <label><input type="radio" name="fee-type" value="hour"> per hour</label><br>
+                                            <label><input type="radio" name="fee-type" value="project"> per project</label><br>
+                                        </div>
+                                        <div class="col mb-3">
+                                            <h5 class="poppins-regular">Freelancer Type</h5>
+                                            <label><input type="radio" name="type" value="solo"> Solo</label><br>
+                                            <label><input type="radio" name="type" value="team"> Team</label><br>
+                                        </div>
+                                    </div>
+                                    <div class="row text-start ms-3">
+                                        <div class="col mb-3">
+                                            <h5 class="poppins-regular">Job Fee Range</h5>
+                                            <label><input type="radio" name="fee-range" value="any-range"> Any</label><br>
+                                            <label><input type="radio" name="fee-range" value="100"> ₱100 and below</label><br>
+                                            <label><input type="radio" name="fee-range" value="500"> ₱100 - ₱500</label><br>
+                                            <label><input type="radio" name="fee-range" value="1000"> ₱500 - ₱1000</label><br>
+                                            <label><input type="radio" name="fee-range" value="above"> ₱1000 and above</label><br>
+                                        </div>
+                                        <div class="col mb-3">
+                                            <h5 class="poppins-regular">Rating</h5>
+                                            <label><input type="radio" name="rating" value="any-rate"> Any</label><br>
+                                            <label><input type="radio" name="rating" value="1"> 1-2 stars</label><br>
+                                            <label><input type="radio" name="rating" value="2"> 2-3 stars</label><br>
+                                            <label><input type="radio" name="rating" value="4"> 3-4 stars</label><br>
+                                            <label><input type="radio" name="rating" value="5"> 4-5 stars</label><br>
+                                        </div>
+                                    </div>
+                                    <div class="col mb-3 text-start ms-4">
+                                        <h5 class="poppins-regular">Location</h5>
+                                        <label><input type="text" class="location" style="border-radius: 12px; border-color:gray;" placeholder=" the location"></label><br>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer d-flex justify-content-left">
+                                <button type="button" class="btn btn-primary open-sans-reg" style="background-color: #91216C; color:white; border: none; border-radius: 12px;">Apply Filters</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- create an event -->
                 <button class="create-event-btn shadow-btn mb-3 rounded-pill open-sans-reg ">
                     Create an Event <i class="fas fa-party-horn"></i>
@@ -43,7 +118,7 @@
                 <div class="carousel-inner justify-content-center">
                     <!-- Start of loop to generate cards -->
                     <div class="carousel-item active">
-                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px;">
+                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border: none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
                                 <h5 class="card-title poppins-medium mt-1">Photographer</h5>
                                 <h5 class="poppins-medium fs-5 mb-0 right-side">₱500/hr</h5>
@@ -73,7 +148,7 @@
 
                     <!-- Repeat for additional cards -->
                     <div class="carousel-item active">
-                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px;">
+                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
                                 <h5 class="card-title poppins-medium mt-1">Photographer</h5>
                                 <h5 class="poppins-medium fs-5 mb-0 right-side">₱500/hr</h5>
@@ -114,7 +189,7 @@
             </div>
         </div>
 
-        <hr class="custom-hr py-4">
+        <hr class="custom-hr py-4 my-4">
 
         <!-- Team Freelancers Services -->
         <div class="row py-3">
@@ -132,7 +207,7 @@
                 <div class="carousel-inner justify-content-center">
                     <!-- Start of loop to generate cards -->
                     <div class="carousel-item active">
-                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px;">
+                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="card-body open-sans-reg p-3">
                                 <!-- Package Details Section -->
                                 <div class="d-flex justify-content-between mb-3">
@@ -169,7 +244,7 @@
 
                     <!-- Repeat for additional cards -->
                     <div class="carousel-item active">
-                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px;">
+                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="card-body open-sans-reg p-3">
                                 <!-- Package Details Section -->
                                 <div class="d-flex justify-content-between mb-3">
