@@ -8,38 +8,38 @@
     font-family: "Poppins", sans-serif;
     font-weight: 400;
     font-style: normal;
-  }
+}
 
 .poppins-light {
     font-family: "Poppins", sans-serif;
     font-weight: 300;
     font-style: normal;
-  }  
+}
 
-  .poppins-thin {
+.poppins-thin {
     font-family: "Poppins", sans-serif;
     font-weight: 100;
     font-style: normal;
-  }
-  
+}
+
 
 .poppins-medium {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-style: normal;
-  }
+}
 
 .sedan-regular-italic {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: italic;
-  }
+}
 
 .sedan-regular {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: normal;
-  }
+}
 
 .open-sans-reg {
     font-family: "Open Sans", sans-serif;
@@ -47,8 +47,8 @@
     font-weight: 400;
     font-style: normal;
     font-variation-settings:
-      "wdth" 100;
-  }
+        "wdth" 100;
+}
 
 
 /*Buttons and Horizontal Lines Styles <-------------------------------- */
@@ -123,13 +123,14 @@
     text-decoration: none;
 }
 
-body, html {
+body,
+html {
     height: 100%;
     margin: 0;
 }
 
 /*Sign Up Page <------------------------------------------------------------------------------------------------------*/
-.bg-signup{
+.bg-signup {
     position: absolute;
     z-index: -1;
     background: url('/assets/sign up.svg');
@@ -141,22 +142,28 @@ body, html {
     padding-right: 5px;
     padding-left: 5px;
     top: 0;
-    left:0;
+    left: 0;
     width: 100%;
     height: calc(100% + 40px);
     display: flex;
-    align-items: center; /* Center content vertically */
-    justify-content: center; /* Center content horizontally */
+    align-items: center;
+    /* Center content vertically */
+    justify-content: center;
+    /* Center content horizontally */
     position: fixed;
 }
 
-.txt-smaller{
+.txt-smaller {
     font-size: 12px;
 }
 
-select#day, select#month, select#year {
-    background-color: #f8f9fa; /* Light gray background */
-    color: #6c757d;           /* Dark gray text */
+select#day,
+select#month,
+select#year {
+    background-color: #f8f9fa;
+    /* Light gray background */
+    color: #6c757d;
+    /* Dark gray text */
 }
 
 /*Welcome Page <-------------------------------------------------------------------------------------------------------*/
@@ -203,16 +210,18 @@ select#day, select#month, select#year {
     background-size: cover;
     background-position: center;
     text-align: center;
-    border-radius: 20px; 
+    border-radius: 20px;
 }
 
 .input-group {
-    border-radius: 50px; /* Fully rounded input */
+    border-radius: 50px;
+    /* Fully rounded input */
     padding: 10px 15px;
 }
 
 .form-control {
-    border: none; /* Removes the default border */
+    border: none;
+    /* Removes the default border */
     border-radius: 50px;
 }
 
@@ -223,37 +232,45 @@ select#day, select#month, select#year {
 
 .create-event-btn {
     margin-top: 10px;
-    background-color: #ffffff; /* White background for button */
-    color: #000; /* Black text color */
+    background-color: #ffffff;
+    /* White background for button */
+    color: #000;
+    /* Black text color */
     font-weight: bold;
     border: none;
     padding: 10px 20px;
 }
 
 .create-event-btn i {
-    margin-left: 5px; /* Space between text and icon */
+    margin-left: 5px;
+    /* Space between text and icon */
 }
 
 .create-event-btn .inside-icon {
-    height: 25px; /* Adjust the size as needed */
+    height: 25px;
+    /* Adjust the size as needed */
     margin-right: 5px;
 }
 
 .shadow-btn {
-    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.2);
+    /* Adds shadow to the button */
 }
 
-.fa-search, .fa-filter, .bookmark-icon {
+.bookmark-icon {
+
     cursor: pointer; /* Makes the icon clickable */
 }
 
-.carousel-control-prev-icon, .carousel-control-next-icon {
-        background-color: gray;
-        border-radius: 12px;
-    }
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-color: gray;
+    border-radius: 12px;
+}
 
 .shadow-box {
-    box-shadow: 1px 2px rgba(0, 0, 0, 0.2); /* Adds shadow to the button */
+    box-shadow: 1px 2px rgba(0, 0, 0, 0.2);
+    /* Adds shadow to the button */
 }
 
 .solo-service-cont {
@@ -268,16 +285,34 @@ select#day, select#month, select#year {
 .col-align {
     display: flex;
     align-items: center;
-    justify-content: center; 
+    justify-content: center;
 }
 
-.right-side{
+.right-side {
     margin-left: auto;
 }
 
 .card-img {
     height: 57px;
     width: 57px;
+}
+
+/* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
+
+.btn-seemore {
+    background-color: #91216C;
+    color: white;
+    margin: 0;
+    text-decoration: none;
+}
+
+.btn-seeprof {
+
+    color: #91216C;
+    margin: 0;
+    background-color: white;
+    text-decoration: none;
+    border: 1px solid #91216C;
 }
 
 /* Responsive styles for smaller screens <--------------------------- */
@@ -414,37 +449,29 @@ select#day, select#month, select#year {
 /*dito Phoebe lahat ng styles for large to medium screens ilagay*/
 
 @media (min-width: 1400px) {
-    /* Styles for large desktops */
 
+    /* Styles for large desktops */
+    .mobile-navbar {
+        display: none; 
+    }
 }
 
 
 @media (min-width: 1200px) {
+
     /* Styles for desktops */
-  
-    /* client homepage  <----------------------------*/
-    .search-container {
-        display: flex;
-        align-items: center;
-        padding: 0 20px; 
-    }
-
-    .search-bar {
-        flex: 2; 
-        max-width: 70%; 
-    }
-
-    .create-event-btn {
-        flex-shrink: 0; 
-        white-space: nowrap; 
-        margin-left: 50px; 
+    .mobile-navbar {
+        display: none; 
     }
 }
 
 
 @media (min-width: 992px) {
-    /* Styles for small laptops */
 
+    /* Styles for small laptops */
+    .mobile-navbar {
+        display: none; 
+    }
 }
 
 
@@ -460,11 +487,11 @@ select#day, select#month, select#year {
 
 
     .fs-cstm-5 {
-        font-size: 1.15rem; 
+        font-size: 1.15rem;
     }
 
     .fs-cstm-6 {
-        font-size: 0.75rem; 
+        font-size: 0.75rem;
     }
 
     .btn-auth {
@@ -475,7 +502,7 @@ select#day, select#month, select#year {
         height: 40px;
         width: 450px;
     }
-    
+
     .text-center .btn-auth {
         background-color: #91216C;
         color: white;
@@ -503,34 +530,9 @@ select#day, select#month, select#year {
         height: 120px;
         object-fit: contain;
     }
-
-    /*client homepage <-----------------------------*/
-    .search-container {
-        display: flex;
-        align-items: center;
-        padding: 0 20px; 
-    }
-
-    .search-bar {
-        flex: 2; 
-        max-width: 70%; 
-    }
-
-    .create-event-btn {
-        flex-shrink: 0; 
-        white-space: nowrap; 
-        margin-left: 50px; 
-    }
 }
 
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
 }
-
-
-
-
-
-
-

@@ -5,9 +5,9 @@
 <div class="container poppins-light">
     <div class="row justify-content-center">
 
-        <h5 class="fs-1 font-bold text-center p-2 poppins-medium"> Choose to Sign Up </h5>
+        <h5 class="fs-1 font-bold text-center poppins-medium p-4 mt-4"> Choose to Sign Up </h5>
         <!-- First Box -->
-        <div class="col-12 col-md-4 col-lg-4  d-flex flex-column align-items-center mb-1 mb-md-4 p-1 p-md-4"  id="box1">
+        <div class="col-12 col-md-4 col-lg-4  d-flex flex-column align-items-center mb-1 mb-md-1 p-1 p-md-2"  id="box1">
             <div class="text-center p-2 p-md-4 border-3 rounded-5 box box-content" data-page="client">
                 <img src="{{ asset('assets/Account.svg') }}" type="image/svg+xml" alt="Image 1" class="mt-4 p-4 img-fluid mb-2">
                 <p class="pt-1 pt-md-4">Client</p>
@@ -15,7 +15,7 @@
         </div>
 
         <!-- Second Box -->
-        <div class="col-12 col-md-4 col-lg-4 d-flex flex-column align-items-center mb-md-4 p-1 p-md-4 "  id="box2">
+        <div class="col-12 col-md-4 col-lg-4 d-flex flex-column align-items-center mb-md-1 p-1 p-md-2 "  id="box2">
             <div class=" box text-center p-2 p-md-4 border-3 rounded-5  box-content" data-page="freelancer">
                 <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class=" mt-4 p-4 img-fluid mb-2">
                 <p class="pt-2 pt-md-4">Freelancer</p>

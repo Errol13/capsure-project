@@ -33,7 +33,7 @@ class LoginController extends Controller
         if ($user->user_type == 'client') {
             return redirect()->route('client-homepage');
         } elseif ($user->user_type == 'freelancer') {
-            return redirect()->route('home');
+            return redirect()->route('freelancer-homepage');
         } elseif ($user->user_type == 'admin') {
             return redirect()->route('home');
         }
