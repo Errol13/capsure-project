@@ -131,13 +131,18 @@
                                     <label for="job_category" class="form-label">{{ __('Job Category') }}</label>
                                     <select id="job_category" class=" mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
                                         <option value="" disabled selected></option>
+                                        <option value="Arts" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
                                         <option value="Entertainment" {{ old('job_category') == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
+                                        <option value="Event Planner" {{ old('job_category') == 'Event Planner' ? 'selected' : '' }}>Event Planner</option>
+                                        <option value="Food Service" {{ old('job_category') == 'Food Service' ? 'selected' : '' }}>Food Service</option>
+                                        <option value="Handicrafts" {{ old('job_category') == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
+                                        <option value="Online Services" {{ old('job_category') == 'Online Services' ? 'selected' : '' }}>Online Services</option>
+                                        <option value="Photography" {{ old('job_category') == 'Photography' ? 'selected' : '' }}>Photography</option>
+                                        <option value="Styling" {{ old('job_category') == 'Styling' ? 'selected' : '' }}>Styling</option>
+                                        <option value="Videography" {{ old('job_category') == 'Videography' ? 'selected' : '' }}>Videography</option>
                                         <option value="Voice Talent" {{ old('job_category') == 'Voice Talent' ? 'selected' : '' }}>Voice Talent</option>
-                                        <option value="Voice Talent" {{ old('job_category') == 'Videography' ? 'selected' : '' }}>Videography</option>
-                                        <option value="Voice Talent" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
-                                        <option value="Voice Talent" {{ old('job_category') == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
-                                        <option value="Voice Talent" {{ old('job_category') == 'Online Services' ? 'selected' : '' }}>Online Services</option>
-
+                                         
+                                        
                                     </select>
                                     @error('job_category')
                                     <span class="invalid-feedback" role="alert">
