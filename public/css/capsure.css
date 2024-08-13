@@ -175,15 +175,28 @@ select#year {
     background-position: center;
     background-repeat: no-repeat;
     color: #181717;
-    padding: 30px;
-    padding-right: 240px;
-    padding-left: 240px;
+    padding: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-
     width: 100%;
-    height: 240px;
+    height: 120px;
 }
 
+
+.service-categories {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+}
+
+.freelancers,
+.jobs {
+    display: flex;
+    overflow-x: scroll;
+    padding: 20px;
+}
 
 
 .hero .input-group {
@@ -194,17 +207,63 @@ select#year {
 }
 
 .hero .form-control {
-    height: 60px;
+    height: 40px;
 }
 
 .hero .btn {
-    height: 60px;
+    height: 40px;
     border: none;
     background-color: white;
 }
 
+.custom-mob-card {
+    box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5);
+    border: none;
+    flex: 0 0 calc(25% - 1rem);
+}
+
+
+.custom-card {
+    flex: 0 0 calc(20% - 1rem);
+    margin-bottom: 1rem;
+    margin: 0;
+    box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
+    border: none;
+
+}
+
+
+.service-pic-size {
+    height: 120px;
+    width: 100px;
+    object-fit: contain;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.custom-card .card-body {
+    padding-top: 5px;
+    /* Adjust the top padding to reduce space */
+    padding-bottom: 10px;
+    /* Adjust the bottom padding */
+    margin-top: -40px;
+    /* If needed, adjust the margin to move the text closer to the image */
+}
+
+.carousel-item .col-4 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+    /* Three cards per row */
+}
+
+
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/
 
+.navbar-nav .active {
+    margin-top: 2px;
+    border-bottom: #91216C solid 3px;
+    padding: 0;
+ }
 .search-container {
     background-image: url('/assets/bg_homepage.svg');
     background-size: cover;
@@ -259,7 +318,8 @@ select#year {
 
 .bookmark-icon {
 
-    cursor: pointer; /* Makes the icon clickable */
+    cursor: pointer;
+    /* Makes the icon clickable */
 }
 
 .carousel-control-prev-icon,
@@ -315,65 +375,6 @@ select#year {
     border: 1px solid #91216C;
 }
 
-/* Responsive styles for smaller screens <--------------------------- */
-@media (max-width: 767px) {
-    .hero {
-        width: 100%;
-    }
-
-    .hero .input-group {
-        max-width: 100%;
-        width: 400px;
-        margin: 0 auto;
-        /* Centers the input group*/
-    }
-
-    .hero h1 {
-        font-size: 1.5rem;
-        /* Adjust font size for smaller screens */
-    }
-
-    .hero .form-control {
-        height: 60px;
-    }
-
-    .hero .btn {
-        height: 60px;
-        border: none;
-        background-color: white;
-    }
-}
-
-@media (max-width: 575px) {
-    .hero {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-top: 0;
-    }
-
-    .hero .input-group {
-        margin: 0 auto;
-        /* Centers the input group */
-    }
-
-    .hero .form-control {
-        height: 40px;
-        margin: 0;
-    }
-
-    .hero .btn {
-        height: 40px;
-    }
-
-    .sm-mgn-rmv {
-        margin-top: 40px;
-        margin-bottom: 0px;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-}
 
 .service {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -452,7 +453,7 @@ select#year {
 
     /* Styles for large desktops */
     .mobile-navbar {
-        display: none; 
+        display: none;
     }
 }
 
@@ -461,7 +462,7 @@ select#year {
 
     /* Styles for desktops */
     .mobile-navbar {
-        display: none; 
+        display: none;
     }
 }
 
@@ -470,13 +471,13 @@ select#year {
 
     /* Styles for small laptops */
     .mobile-navbar {
-        display: none; 
+        display: none;
     }
 }
 
 
 /* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
-@media (min-width: 768px) {
+@media (width >=768px) {
 
     /*sign up <-------------------------------*/
     .bg-signup {
@@ -530,9 +531,64 @@ select#year {
         height: 120px;
         object-fit: contain;
     }
+
+    /*WelcomePage*/
+    .hero {
+        padding: 30px;
+        padding-right: 240px;
+        padding-left: 240px;
+        height: 240px;
+    }
+
+    .hero .input-group {
+        width: 600px;
+    }
+
+    .hero .form-control {
+        height: 60px;
+    }
+
+    .hero .btn {
+        height: 60px;
+    }
+
+    .size-bigger {
+        font-size: 3.5rem;
+    }
+
+    #mobileCarousel {
+        display: none;
+    }
+
+    #desktop-wc-view {
+        display: flex;
+    }
 }
 
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
+
+}
+
+@media(width <576px){
+    
+      
+      .carousel-item {
+        width: 100%; /* Make sure the carousel items take full width */
+        height: 300px; /* Set a fixed minimum height for consistency */
+      }
+
+      .card.custom-mob-card {
+        width: 100%; /* Ensure cards take full width of the column */
+        height: 100%; /* Ensure cards stretch to fill available space */
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .custom-mob-card .card-body .card-text {
+        margin-top: -20px;
+        /* If needed, adjust the margin to move the text closer to the image */
+    }
+      
 }

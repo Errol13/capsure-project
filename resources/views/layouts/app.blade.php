@@ -30,9 +30,24 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
                 </a>
+                @endguest
+
+                @auth
+                @if (Auth::user()->user_type == 'client')
+                <a class="navbar-brand" href="{{ url('/client-homepage') }}">
+                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                </a>
+                @elseif (Auth::user()->user_type == 'freelancer')
+                <a class="navbar-brand" href="{{ url('/freelancer-homepage') }}">
+                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                </a>
+                @endif
+                @endauth
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,7 +67,7 @@
 
                         <!--Tutorial Link -->
                         <li class="nav-item">
-                            <a class="nav-link fw-bold text-black" href="#">HOW IT WORKS</a>
+                            <a class="nav-link fw-bold text-black " href="#">HOW IT WORKS</a>
                         </li>
 
                         @if (Route::has('login'))
@@ -70,13 +85,13 @@
                         @if (Auth::user()->user_type == 'client')
                         <!-- Freelancer-specific navbar items -->
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">SERVICES</a>
+                            <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-black" href="#">MY EVENT POST</a>
+                            <a class="nav-link  text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY EVENT POST</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
                         </li>
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Client-specific navbar items -->
@@ -92,17 +107,17 @@
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bell"></i>
                             </a>
