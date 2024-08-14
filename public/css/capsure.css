@@ -386,7 +386,6 @@ select#year {
 }
 
 
-
 /* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
 
 .btn-seemore {
@@ -568,19 +567,35 @@ select#year {
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
+    .mobile-navbar {
+        display: none;
+    }
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
+<<<<<<< HEAD
+
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
+<<<<<<< HEAD
     
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -690,11 +705,13 @@ select#year {
         height: 200px;
         overflow: hidden;
     }
+
+    
     
 }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
-
-/* Client homepage <-------------------------------------------------------*/
+    /* Client homepage <-------------------------------------------------------*/
 .search-container {
     display: flex;
     justify-content: center;
@@ -763,8 +780,17 @@ select#year {
 }
 
 
+
+}
+
+
+
+
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
+<<<<<<< HEAD
+}
+=======
 
 }
 
@@ -788,4 +814,5 @@ select#year {
         /* If needed, adjust the margin to move the text closer to the image */
     }
       
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }

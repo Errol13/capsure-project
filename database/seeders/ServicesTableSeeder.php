@@ -13,24 +13,50 @@ class ServicesTableSeeder extends Seeder
      */
     public function run(): void
     {
-       // Get IDs of users with user_type 'freelancer'
-       $freelancerIds = DB::table('users')
-       ->where('user_type', 'freelancer')
-       ->pluck('id');
+        // Get IDs of users with user_type 'freelancer'
+        $freelancerIds = DB::table('users')
+            ->where('user_type', 'freelancer')
+            ->pluck('id');
 
-   // Insert services for each freelancer
-   foreach ($freelancerIds as $freelancerId) {
-       DB::table('services')->insert([
-           [
-               'user_id' => $freelancerId,
-               'job_category' => 'Videography', 
-               'job_title' => 'Videographer',
-               'fee_type' => '/project',
-               'isAvailable' => true,
-               'job_fee' => 500.00,
-           ],
-           
-       ]);
-   }
+        // Prepare data for bulk insert
+        $services = [];
+
+        foreach ($freelancerIds as $freelancerId) {
+            // multiple services for some freelancers
+            $services[] = [
+                'user_id' => $freelancerId,
+                'job_category' => 'Videography',
+                'job_title' => 'Videographer',
+                'fee_type' => '/project',
+                'isAvailable' => true,
+                'job_fee' => 500.00,
+            ];
+
+            // Add more services for certain freelancers
+            if ($freelancerId % 2 == 0) { //every 2nd freelancer gets an additional service
+                $services[] = [
+                    'user_id' => $freelancerId,
+                    'job_category' => 'Photography',
+                    'job_title' => 'Photographer',
+                    'fee_type' => '/hour',
+                    'isAvailable' => true,
+                    'job_fee' => 300.00,
+                ];
+            }
+
+            if ($freelancerId % 5 == 0) { //every 5th freelancer gets another service
+                $services[] = [
+                    'user_id' => $freelancerId,
+                    'job_category' => 'Art',
+                    'job_title' => 'Portrait Artist',
+                    'fee_type' => '/project',
+                    'isAvailable' => false,
+                    'job_fee' => 1250.00,
+                ];
+            }
+        }
+
+        // Bulk insert services
+        DB::table('services')->insert($services);
     }
 }
