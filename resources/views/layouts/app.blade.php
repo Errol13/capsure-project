@@ -19,7 +19,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
 
 
     <!-- Scripts -->
@@ -30,9 +31,24 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+                @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
                 </a>
+                @endguest
+
+                @auth
+                @if (Auth::user()->user_type == 'client')
+                <a class="navbar-brand" href="{{ url('/client-homepage') }}">
+                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                </a>
+                @elseif (Auth::user()->user_type == 'freelancer')
+                <a class="navbar-brand" href="{{ url('/freelancer-homepage') }}">
+                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                </a>
+                @endif
+                @endauth
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -52,7 +68,7 @@
 
                         <!--Tutorial Link -->
                         <li class="nav-item">
-                            <a class="nav-link fw-bold text-black" href="#">HOW IT WORKS</a>
+                            <a class="nav-link fw-bold text-black " href="#">HOW IT WORKS</a>
                         </li>
 
                         @if (Route::has('login'))
@@ -70,13 +86,13 @@
                         @if (Auth::user()->user_type == 'client')
                         <!-- Client-specific navbar items -->
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">SERVICES</a>
+                            <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link  text-black" href="#">MY EVENT POST</a>
+                            <a class="nav-link  text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY EVENT POST</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-black" href="#">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
                         </li>
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
@@ -92,17 +108,18 @@
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
+                        <li class="nav-item mx-1">
                         <li class="nav-item d-sm-none">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('client-bookmark') }}">
+                            <a class="nav-link" href="#">
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item mx-1">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bell"></i>
                             </a>
@@ -116,6 +133,8 @@
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                <a class="dropdown-item" href="#">Setting</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault();
                          document.getElementById('logout-form').submit();">

@@ -111,7 +111,7 @@ class RegisterController extends Controller
             'city' => $data['city'] ?? null,
             'contact_number' => $data['contact_number'] ?? null,
         ]);
-
+        
         Client::create([
             'user_id' => $user->id,
         ]);

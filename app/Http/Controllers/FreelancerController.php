@@ -34,16 +34,7 @@ class FreelancerController extends Controller
         return view('freelancers.show', compact('freelancer'));
     }
 
-    /**
-     * Show the form for creating a new freelancer.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        // Return the view for creating a new freelancer
-        return view('freelancers.create');
-    }
+    
 
     /**
      * Store a newly created freelancer in the database.

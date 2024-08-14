@@ -189,15 +189,28 @@ select#year {
     background-position: center;
     background-repeat: no-repeat;
     color: #181717;
-    padding: 30px;
-    padding-right: 240px;
-    padding-left: 240px;
+    padding: 10px;
+    padding-right: 10px;
+    padding-left: 10px;
     text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-
     width: 100%;
-    height: 240px;
+    height: 120px;
 }
 
+
+.service-categories {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+    padding: 20px;
+}
+
+.freelancers,
+.jobs {
+    display: flex;
+    overflow-x: scroll;
+    padding: 20px;
+}
 
 
 .hero .input-group {
@@ -208,17 +221,63 @@ select#year {
 }
 
 .hero .form-control {
-    height: 60px;
+    height: 40px;
 }
 
 .hero .btn {
-    height: 60px;
+    height: 40px;
     border: none;
     background-color: white;
 }
 
+.custom-mob-card {
+    box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5);
+    border: none;
+    flex: 0 0 calc(25% - 1rem);
+}
+
+
+.custom-card {
+    flex: 0 0 calc(20% - 1rem);
+    margin-bottom: 1rem;
+    margin: 0;
+    box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
+    border: none;
+
+}
+
+
+.service-pic-size {
+    height: 120px;
+    width: 100px;
+    object-fit: contain;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.custom-card .card-body {
+    padding-top: 5px;
+    /* Adjust the top padding to reduce space */
+    padding-bottom: 10px;
+    /* Adjust the bottom padding */
+    margin-top: -40px;
+    /* If needed, adjust the margin to move the text closer to the image */
+}
+
+.carousel-item .col-4 {
+    flex: 0 0 auto;
+    width: 33.3333%;
+    /* Three cards per row */
+}
+
+
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/
 
+.navbar-nav .active {
+    margin-top: 2px;
+    border-bottom: #91216C solid 3px;
+    padding: 0;
+ }
 .search-container {
     background-image: url('/assets/bg_homepage.svg');
     background-size: cover;
@@ -273,7 +332,8 @@ select#year {
 
 .bookmark-icon {
 
-    cursor: pointer; /* Makes the icon clickable */
+    cursor: pointer;
+    /* Makes the icon clickable */
 }
 
 .bookmarks-container {
@@ -339,6 +399,7 @@ select#year {
     border: 1px solid #91216C;
 }
 
+<<<<<<< HEAD
 .btn-seeprof:hover {
     background-color: #91216C; /* Change to a different color on hover */
     color: white; 
@@ -417,6 +478,8 @@ select#year {
     }
 
 }
+=======
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
 .service {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -488,32 +551,124 @@ select#year {
     /* Adjust color to purple */
 }
 
+/*Profile Page */
+.profile-container {
+    width: 150px; 
+    height: 150px;
+    overflow: hidden;
+}
+
+.profile-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain; 
+}
+
+.fs-sm-name {
+    font-size: 1.5rem; /* Font size for small screens */
+}
+
+.fs-sm {
+    font-size: 0.875rem; /* Font size for small screens */
+}
+
+.fs-smaller {
+    font-size: 0.675rem; /* Font size for small screens */
+}
+
+.verify-icon{
+    color: #8FE2ED;
+}
+
+.light-color-prof{
+   color: #66645E;
+}
+
+.star-rating {
+    font-size: 0.85rem; 
+    color: #1c1c1d; /* Default color for empty stars */
+    display: inline-block;
+}
+
+.star-rating i {
+    cursor: pointer;
+}
+
+.star-rating i.filled {
+    color: #ffd700; /* Color for filled stars */
+}
+
+.btn-chat{
+    background-color: #E1C1D7;
+    color: black;
+    text-decoration: none;
+}
+
+.btn-report {
+    color: rgb(245, 133, 133);
+    margin: 0;
+    background-color: white;
+    text-decoration: none;
+    border: 1px solid rgb(245, 133, 133);
+}
+
+.fs-sm-cont {
+    font-size: 0.55rem; 
+}
+
+.terms-container{
+    background-color: #F7F7F7;
+}
+
+
+
+
+
+
 
 /*dito Phoebe lahat ng styles for large to medium screens ilagay*/
 
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
+<<<<<<< HEAD
 
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
+<<<<<<< HEAD
 
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
+<<<<<<< HEAD
     
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 /* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
-@media (min-width: 768px) {
+@media (width >=768px) {
 
     /*sign up <-------------------------------*/
     .bg-signup {
@@ -567,6 +722,64 @@ select#year {
         height: 120px;
         object-fit: contain;
     }
+<<<<<<< HEAD
+=======
+
+    /*WelcomePage*/
+    .hero {
+        padding: 30px;
+        padding-right: 240px;
+        padding-left: 240px;
+        height: 240px;
+    }
+
+    .hero .input-group {
+        width: 600px;
+    }
+
+    .hero .form-control {
+        height: 60px;
+    }
+
+    .hero .btn {
+        height: 60px;
+    }
+
+    .size-bigger {
+        font-size: 3.5rem;
+    }
+
+    #mobileCarousel {
+        display: none;
+    }
+
+    #desktop-wc-view {
+        display: flex;
+    }
+
+    /*ProfilePage */
+    .fs-md {
+        font-size: 1rem; 
+    }
+
+    .fs-md-name {
+        font-size: 2.25rem; 
+    }
+    
+    .fs-lg {
+        font-size: 1.25rem; 
+    }
+
+    .profile-container {
+        width: 200px; 
+        height: 200px;
+        overflow: hidden;
+    }
+
+    
+    
+}
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
     /* Client homepage <-------------------------------------------------------*/
     .search-container {
@@ -633,5 +846,31 @@ select#year {
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
+<<<<<<< HEAD
 }
+=======
+
+}
+
+@media(width <576px){
+    
+      
+      .carousel-item {
+        width: 100%; /* Make sure the carousel items take full width */
+        height: 300px; /* Set a fixed minimum height for consistency */
+      }
+
+      .card.custom-mob-card {
+        width: 100%; /* Ensure cards take full width of the column */
+        height: 100%; /* Ensure cards stretch to fill available space */
+        display: flex;
+        flex-direction: column;
+      }
+      
+      .custom-mob-card .card-body .card-text {
+        margin-top: -20px;
+        /* If needed, adjust the margin to move the text closer to the image */
+    }
+      
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
