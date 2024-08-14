@@ -161,7 +161,7 @@
             </div>
 
             <!-- Pagination -->
-            <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4">
+            <nav aria-label="Page navigation example" class="d-flex justify-content-center mt-4 mb-5">
                 <ul class="pagination">
                     <li class="page-item">
                         <a class="page-link" href="#" aria-label="Previous">
