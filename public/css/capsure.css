@@ -585,18 +585,26 @@ select#year {
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
+<<<<<<< HEAD
+
+=======
     .mobile-navbar {
         display: none;
     }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
+<<<<<<< HEAD
+    
+=======
     .mobile-navbar {
         display: none;
     }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -707,11 +715,10 @@ select#year {
         overflow: hidden;
     }
 
-    .socmed-container {
-        width: 50px;
-        height: 50px;
-        overflow: hidden;
-    }
+    
+    
+}
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
     /* Client homepage <-------------------------------------------------------*/
 .search-container {
@@ -787,15 +794,16 @@ select#year {
 
 
 
-/* bookmarks */
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
+<<<<<<< HEAD
+}
+=======
+
 }
 
 @media(width <576px){
-    
-      
       .carousel-item {
         width: 100%; /* Make sure the carousel items take full width */
         height: 300px; /* Set a fixed minimum height for consistency */
@@ -814,9 +822,6 @@ select#year {
         margin-top: -20px;
         /* If needed, adjust the margin to move the text closer to the image */
     }
-
-    #nav-item-mobile {
-        display: none;
-    }
-
+      
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
