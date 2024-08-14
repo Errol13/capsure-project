@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="container">
+<div class="container  open-sans-reg">
     <div class="row">
 
         <!--First Column -->
@@ -15,35 +15,92 @@
             </div>
 
             <!--Address and Contacts -->
-            <div class="row my-3 text-center mb-1">
-                <div class="col-auto me-0 ms-4 ms-md-5 d-flex justify-content-center align-items-center">
-                    <i class="fs-smaller fs-md fas fa-location-dot"></i>
-                </div>
-
-                <div class="col ms-0 d-flex align-items-center">
-                    <p class="mb-0 fs-sm-cont fs-md word-wrap">{{$user->street}} {{$user->barangay}} {{$user->city}}</p>
-                </div>
-            </div>
-
-            <div class="row my-0 text-center mb-1 ">
-                <div class="col-auto  me-0 ms-4 ms-md-5 d-flex justify-content-center align-items-center">
-                    <i class=" fs-smaller fs-md fas fa-sharp fa-thin fa-envelope" style="color: #0a0a0a;"></i>
-                </div>
-
-                <div class="col ms-0 col-md-8 d-flex align-items-center">
-                    <p class="mb-0 fs-sm-cont fs-md ">{{$user->email}}</p>
+            <div class="row my-3 text-center mb-1 ms-md-4">
+                <div class="col-12 d-flex align-items-center justify-content-start">
+                    <div class="d-flex align-items-center">
+                        <i class="fs-smaller fs-md fas fa-location-dot"></i>
+                    </div>
+                    <div class="ms-2 ms-md-3">
+                        <p class="mb-0 fs-sm-cont fs-md word-wrap text-start">{{$user->street}} {{$user->barangay}} {{$user->city}}</p>
+                    </div>
                 </div>
             </div>
 
-            <div class="row my-1 text-center mb-1 ">
-                <div class="col-auto me-0 ms-4 ms-md-5 d-flex justify-content-center align-items-center">
-                    <i class="fs-smaller fs-md fas fa-solid fa-phone"></i>
-                </div>
-
-                <div class="col ms-0 d-flex align-items-center">
-                    <p class="mb-0 fs-sm-cont fs-md">{{$user->contact_number}}</p>
+            <div class="row my-0 text-center mb-1 ms-md-4">
+                <div class="col-12 d-flex align-items-center justify-content-start">
+                    <div class="d-flex align-items-center">
+                        <i class="fs-smaller fs-md fas fa-sharp fa-thin fa-envelope" style="color: #0a0a0a;"></i>
+                    </div>
+                    <div class="ms-2 ms-md-3">
+                        <p class="mb-0 fs-sm-cont fs-md text-start">{{$user->email}}</p>
+                    </div>
                 </div>
             </div>
+
+            <div class="row my-1 text-center mb-1 ms-md-4">
+                <div class="col-12 d-flex align-items-center justify-content-start">
+                    <div class="d-flex align-items-center">
+                        <i class="fs-smaller fs-md fas fa-solid fa-phone"></i>
+                    </div>
+                    <div class="ms-2 ms-md-3">
+                        <p class="mb-0 fs-sm-cont fs-md text-start">{{$user->contact_number}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!--Social Media Accounts -->
+            <div class="row my-1 text-center mb-1 mt-3">
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <div class="d-flex align-items-center">
+                        <a href="#">
+                            <img class="socmed-container" src="{{ asset('assets/Facebook.svg') }}" alt="Facebook">
+                        </a>
+                    </div>
+                    <div class="ms-1 ">
+                        <a href="#">
+                            <img class="socmed-container" src="{{ asset('assets/LinkedIn.svg') }}" alt="Linkedin">
+                        </a>
+                    </div>
+                    <div class="ms-1">
+                        <a href="#">
+                            <img class="socmed-container" src="{{ asset('assets/Instagram.svg') }}" alt="Instagram">
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!--Awards and Certifications -->
+            <p class="mt-3 fs-sm fs-md poppins-medium text-center">Awards & Certifications</p>
+
+            <div class="row my-1 text-center mb-1 ms-md-4">
+                @if($user->freelancer->certificates->isEmpty())
+                <div class="col-12 d-flex align-items-center justify-content-start">
+                    <div class="d-flex align-items-center">
+                        <img class="socmed-container" src="{{ asset('assets/Prize.svg') }}" alt="Certificate">
+                    </div>
+                    <div class="ms-2 ms-md-3">
+                        <p class="mb-0 fs-sm-cont fs-md text-start text-muted">No Awards</p>
+                    </div>
+                </div>
+                @else
+                @foreach($user->freelancer->certificates as $certificate)
+                <div class="col-12 d-flex align-items-center justify-content-start">
+                    <div class="d-flex align-items-center">
+                        <img class="socmed-container" src="{{ asset('assets/Prize.svg') }}" alt="Certificate">
+                    </div>
+                    <div class="col">
+                        <div class="ms-2 ms-md-3">
+                            <p class="mb-0 fs-sm-cont fs-md text-start">{{ $certificate->title }}</p>
+                        </div>
+                        <div class="ms-2 ms-md-3">
+                            <p class="mb-0 fs-sm-cont fs-md text-start">{{ $certificate->date }}</p>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                @endif
+            </div>
+
         </div>
 
         <!--Second Column -->
@@ -64,14 +121,14 @@
                 </div>
                 <p class="mt-0 m-0 open-sans-reg light-color-prof">{{$user->age}} years old</p>
                 <p class="fs-6 mb-0 mt-2 open-sans-reg light-color-prof ">Rating</p>
-                @if($user->freelancer->avg_rating != 0)
+                @if($user->freelancer->avg_rating == 0)
                 <p class="fs-6 open-sans-reg light-color-prof mt-1 fst-italic text-muted">No ratings yet</p>
                 @else
                 <!-- Star Rating Container -->
                 <div class="star-rating mt-0 mt-md-1">
                     <div class="row">
                         <div class="col-auto">
-                            <p class="mb-0">{{ number_format($user->freelancer->avg_rating, 1) }}</p>
+                            <p class="mb-0 fs-sm fs-md">{{ number_format($user->freelancer->avg_rating, 1) }}</p>
                         </div>
                         <div class="col">
                             <div class="d-flex align-items-center mt-1">
@@ -85,7 +142,7 @@
                 @endif
 
                 <!--Hire Chat Report -->
-                <div class="d-flex justify-content-start align-items-start mt-2 mt-md-4">
+                <div class="d-flex justify-content-start align-items-start mt-2 mt-md-3">
                     <a href="#" class="text-center btn-seemore rounded-1 px-3 py-1 px-md-5 me-3 me-md-4 poppins-light fs-sm">HIRE</a>
                     <a href="#" class=" rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">CHAT</a>
                     <a href="#" class=" rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm ">Report</a>
@@ -119,9 +176,15 @@
                 <!--Terms of Service-->
                 <p class="mt-3 fs-sm fs-md poppins-medium">Terms of Service</p>
                 <div class="container terms-container rounded">
+                    @if($user->freelancer->terms_and_conditions != null)
                     <p class="text-start fs-smaller fs-md mt-2 ">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+                        {{$user->freelancer->terms_and_conditions}}
                     </p>
+                    @else
+                    <p class="text-start fs-smaller fs-md mt-2">
+                        The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. The freelancer will deliver the services with reasonable skill, care, and diligence.
+                    </p>
+                    @endif
                 </div>
 
             </div>

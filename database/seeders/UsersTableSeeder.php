@@ -58,7 +58,7 @@ class UsersTableSeeder extends Seeder
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ],
-                // Add more users as needed
+                // Add more users 
             ];
 
         DB::table('users')->insert($users);
@@ -68,7 +68,7 @@ class UsersTableSeeder extends Seeder
             [
                 'user_id' => 1, 
             ],
-            // Add more clients if needed
+            // Add more clients 
         ]);
 
         // Seeding freelancers table
@@ -76,7 +76,7 @@ class UsersTableSeeder extends Seeder
             [
                 'user_id' => 2, 
             ],
-            // Add more freelancers if needed
+            // Add more freelancers
         ]);
     }
 }

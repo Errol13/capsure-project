@@ -512,8 +512,16 @@ select#year {
 }
 
 .terms-container{
-    background-color: #F7F7F7;
+    background-color: #f1ecec;
 }
+
+.socmed-container {
+    width: 30px; 
+    height: 30px;
+    overflow: hidden;
+    object-fit: contain; 
+}
+
 
 
 
@@ -654,6 +662,12 @@ select#year {
     .profile-container {
         width: 200px; 
         height: 200px;
+        overflow: hidden;
+    }
+
+    .socmed-container {
+        width: 50px; 
+        height: 50px;
         overflow: hidden;
     }
 
