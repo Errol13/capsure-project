@@ -386,7 +386,6 @@ select#year {
 }
 
 
-
 /* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
 
 .btn-seemore {
@@ -705,11 +704,7 @@ select#year {
         overflow: hidden;
     }
 
-
-
-}
-
-/* Client homepage <-------------------------------------------------------*/
+    /* Client homepage <-------------------------------------------------------*/
 .search-container {
     display: flex;
     justify-content: center;
@@ -776,6 +771,12 @@ select#year {
 .modal-body input[type="radio"] {
     margin-right: 10px;
 }
+
+
+
+}
+
+
 
 /* bookmarks */
 
