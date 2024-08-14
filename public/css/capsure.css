@@ -555,6 +555,15 @@ select#year {
     object-fit: contain;
 }
 
+.txt-review{
+    color: #91216C;
+}
+
+.rvw-container{
+    background-color: #f1ecec;
+    border: 1px solid #91216C ;
+}
+
 
 
 
