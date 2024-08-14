@@ -84,7 +84,7 @@
                         @endif
                         @else
                         @if (Auth::user()->user_type == 'client')
-                        <!-- Freelancer-specific navbar items -->
+                        <!-- Client-specific navbar items -->
                         <li class="nav-item">
                             <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
@@ -95,7 +95,7 @@
                             <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
                         </li>
                         @elseif (Auth::user()->user_type == 'freelancer')
-                        <!-- Client-specific navbar items -->
+                        <!-- Freelancer-specific navbar items -->
                         <li class="nav-item">
                             <a class="nav-link text-black" href="#">JOB POSTING</a>
                         </li>
@@ -109,11 +109,12 @@
 
                         <!-- Common navbar items for both freelancers and clients -->
                         <li class="nav-item mx-1">
+                        <li class="nav-item d-sm-none">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bookmark"></i>
                             </a>
@@ -152,10 +153,40 @@
             </div>
         </nav>
 
-        <main class="py-1 mx-1">
+        <main class="py-1 mx-1 pb-4 mb-2">
             @yield('content')
         </main>
     </div>
+    <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-3 navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <div class="container justify-content-center">
+            <div class="row w-100">
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <div>Services</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
+                        <div>My Event Post</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/transaction.svg" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
+                        <div>My Transaction</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/chat.svg" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                        <div>Messages</div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
 </body>
 
 </html>

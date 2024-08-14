@@ -18,7 +18,7 @@
 
                 <!-- PopUp Filter Options -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-sm position-center py-4 my-4 px-2">
+                    <div class="modal-dialog d-flex modal-sm-lg position-center py-4 my-4 px-2">
                         <div class="modal-content rounded-4">
                             <div class="modal-header">
                                 <h1 class="modal-title fs-5 poppins-medium" id="exampleModalLabel">Filter Options</h1>
@@ -49,7 +49,7 @@
                                     <div class="row text-start ms-3">
                                         <div class="col mb-3">
                                             <h5 class="poppins-regular">Job Fee Type</h5>
-                                            <label><input type="radio" name="fee-type" value="any-fee" > Any</label><br>
+                                            <label><input type="radio" name="fee-type" value="any-fee"> Any</label><br>
                                             <label><input type="radio" name="fee-type" value="hour"> per hour</label><br>
                                             <label><input type="radio" name="fee-type" value="project"> per project</label><br>
                                         </div>
@@ -79,7 +79,7 @@
                                     </div>
                                     <div class="col mb-3 text-start ms-4">
                                         <h5 class="poppins-regular">Location</h5>
-                                        <label><input type="text" class="location" style="border-radius: 12px; border-color:gray;" placeholder=" the location"></label><br>
+                                        <label><input type="text" class="location" style="border-radius: 12px; border-color:gray;" placeholder=" Put the location here"></label><br>
                                     </div>
                                 </form>
                             </div>
@@ -102,7 +102,7 @@
             <h3 class="poppins-medium fs-1 text-right">Services For You</h3>
         </div>
 
-        <!-- Solo Freelancers Services -->
+        <!-- Solo Freelancers Services -------------------------------------------------------------------------------------------->
         <div class="row">
             <div class="col-align mb-4 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
@@ -113,11 +113,10 @@
             </div>
 
 
-            <!-- Carousel Services -->
-            <div id="cardCarousel" class="carousel slide" data-bs-ride="carousel">
+            <!-- Carousel for Mobile View -->
+            <div id="cardCarousel" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
                 <div class="carousel-inner justify-content-center">
-                    <!-- Start of loop to generate cards -->
-                    <div class="carousel-item active">
+                    <div class="carousel-item active py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border: none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
                                 <h5 class="card-title poppins-medium mt-1">Photographer</h5>
@@ -147,7 +146,7 @@
                     </div>
 
                     <!-- Repeat for additional cards -->
-                    <div class="carousel-item active">
+                    <div class="carousel-item active py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
                                 <h5 class="card-title poppins-medium mt-1">Photographer</h5>
@@ -187,11 +186,103 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+
+            <!-- Grid Layout for Larger Screens -->
+            <?php
+            // Sample card data
+            $cards = [
+                [
+                    'title' => 'Photographer',
+                    'rate' => '₱500/hr',
+                    'profile' => '/assets/profilepic.svg',
+                    'cover' => '/assets/cover.svg',
+                    'name' => 'Daisy Maureen Dimasuay',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+                // Add more card arrays as needed
+                [
+                    'title' => 'Photographer',
+                    'rate' => '₱500/hr',
+                    'profile' => '/assets/profilepic.svg',
+                    'cover' => '/assets/cover.svg',
+                    'name' => 'Daisy Maureen Dimasuay',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+
+                [
+                    'title' => 'Photographer',
+                    'rate' => '₱500/hr',
+                    'profile' => '/assets/profilepic.svg',
+                    'cover' => '/assets/cover.svg',
+                    'name' => 'Daisy Maureen Dimasuay',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+
+                [
+                    'title' => 'Photographer',
+                    'rate' => '₱500/hr',
+                    'profile' => '/assets/profilepic.svg',
+                    'cover' => '/assets/cover.svg',
+                    'name' => 'Daisy Maureen Dimasuay',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+            ];
+
+            ?>
+
+            <!-- Grid Layout for Larger Screens -->
+            <div class="card-grid d-none d-md-flex flex-wrap justify-content-center">
+                <?php foreach ($cards as $card): ?>
+                    <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
+                        <div class="col-align px-2 mt-1">
+                            <h5 class="card-title poppins-medium mt-1"><?php echo htmlspecialchars($card['title']); ?></h5>
+                            <h5 class="poppins-medium fs-5 mb-0 right-side"><?php echo htmlspecialchars($card['rate']); ?></h5>
+                        </div>
+                        <img src="<?php echo htmlspecialchars($card['cover']); ?>" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                        <div class="card-body open-sans-reg p-3">
+                            <div class="d-flex align-items-center mb-2">
+                                <img src="<?php echo htmlspecialchars($card['profile']); ?>" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                                <div class="ms-3">
+                                    <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;"><?php echo htmlspecialchars($card['name']); ?></p>
+                                    <p class="card-text open-sans-light small mb-0"><?php echo htmlspecialchars($card['location']); ?></p>
+                                    <p class="card-text open-sans-light small text-success mb-0"><?php echo htmlspecialchars($card['projects']); ?></p>
+                                </div>
+                                <div class="ms-auto d-flex align-items-center">
+                                    <span class="text-warning me-1">★</span>
+                                    <span class="fw-bold"><?php echo htmlspecialchars($card['rating']); ?></span>
+                                    <span class="text-muted small ms-1"><?php echo htmlspecialchars($card['reviews']); ?></span>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <a href="#" class="btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
+                                <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+
         </div>
 
         <hr class="custom-hr py-4 my-4">
 
-        <!-- Team Freelancers Services -->
+        <!-- Team Freelancers Services -------------------------------------------------------------------------------------->
         <div class="row py-3">
             <div class="col-align mb-4 d-flex align-items-center justify-content-between">
                 <div class="d-flex align-items-center">
@@ -202,11 +293,11 @@
             </div>
 
 
-            <!-- Services -->
+            <!-- Carousel for Mobile View -->
             <div id="cardCarouselteam" class="carousel slide" data-bs-ride="carouselteam">
                 <div class="carousel-inner justify-content-center">
                     <!-- Start of loop to generate cards -->
-                    <div class="carousel-item active">
+                    <div class="carousel-item active py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="card-body open-sans-reg p-3">
                                 <!-- Package Details Section -->
@@ -214,7 +305,7 @@
                                     <h5 class="card-title poppins-medium mb-0">Party Package</h5>
                                     <h5 class="poppins-medium fs-5 mb-0">₱50,000</h5>
                                 </div>
-                                <ul class="list-unstyled mb-3 px-3 py-3" style="background-color: #F6F2F2;">
+                                <ul class="list-unstyled mb-3 px-3 py-3" style="background-color: #F6F2F2; max-height: 200opx;">
                                     <li>Photographer</li>
                                     <li>Make-up Artist</li>
                                     <li>2 Hosts</li>
@@ -243,7 +334,7 @@
                     </div>
 
                     <!-- Repeat for additional cards -->
-                    <div class="carousel-item active">
+                    <div class="carousel-item active py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="card-body open-sans-reg p-3">
                                 <!-- Package Details Section -->
@@ -290,8 +381,105 @@
                     </button>
                 </div>
             </div>
+
+            <!-- Grid Layout for Larger Screens -->
+            <?php
+            // Sample card data
+            $cards = [
+                [
+                    'title' => 'Party Package',
+                    'price' => '₱50,000',
+                    'services' => ['Photographer', 'Make-up Artist', '2 Hosts'],
+                    'profilePic' => '/assets/profilepic.svg',
+                    'name' => 'Party Needs',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+                // Add more card arrays as needed
+                [
+                    'title' => 'Party Package',
+                    'price' => '₱50,000',
+                    'services' => ['Photographer', 'Make-up Artist', '2 Hosts'],
+                    'profilePic' => '/assets/profilepic.svg',
+                    'name' => 'Party Needs',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+
+                [
+                    'title' => 'Party Package',
+                    'price' => '₱50,000',
+                    'services' => ['Photographer', 'Make-up Artist', '2 Hosts'],
+                    'profilePic' => '/assets/profilepic.svg',
+                    'name' => 'Party Needs',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+
+                [
+                    'title' => 'Party Package',
+                    'price' => '₱50,000',
+                    'services' => ['Photographer', 'Make-up Artist', '2 Hosts'],
+                    'profilePic' => '/assets/profilepic.svg',
+                    'name' => 'Party Needs',
+                    'location' => 'Naga City',
+                    'projects' => '10 Projects done',
+                    'rating' => '4.9',
+                    'reviews' => '(10)',
+                    'bookmark' => 'assets/bookmark.svg'
+                ],
+            ];
+
+            ?>
+
+            <!-- Grid Layout for Larger Screens -->
+            <div class="card-grid d-none d-md-flex flex-wrap justify-content-center">
+                <?php foreach ($cards as $card): ?>
+                    <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
+                        <div class="card-body open-sans-reg p-3">
+                            <!-- Package Details Section -->
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="card-title poppins-medium mb-0"><?php echo htmlspecialchars($card['title']); ?></h5>
+                                <h5 class="poppins-medium fs-5 mb-0"><?php echo htmlspecialchars($card['price']); ?></h5>
+                            </div>
+                            <ul class="list-unstyled mb-3 px-3 py-3" style="background-color: #F6F2F2;">
+                                <?php foreach ($card['services'] as $service): ?>
+                                    <li><?php echo htmlspecialchars($service); ?></li>
+                                <?php endforeach; ?>
+                            </ul>
+                            <div class="d-flex align-items-center">
+                                <img src="<?php echo htmlspecialchars($card['profilePic']); ?>" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                                <div class="ms-3 d-flex justify-content-between w-100 align-items-center">
+                                    <div>
+                                        <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1.2;"><?php echo htmlspecialchars($card['name']); ?></p>
+                                        <p class="card-text open-sans-light small mb-0" style="line-height: 1.2;"><?php echo htmlspecialchars($card['location']); ?></p>
+                                        <p class="card-text open-sans-light small text-success mb-0" style="line-height: 1.4;"><?php echo htmlspecialchars($card['projects']); ?></p>
+                                    </div>
+                                    <div class="ms-auto text-end">
+                                        <span class="text-warning me-1">★</span>
+                                        <span class="fw-bold"><?php echo htmlspecialchars($card['rating']); ?></span>
+                                        <span class="text-muted small ms-1"><?php echo htmlspecialchars($card['reviews']); ?></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="d-flex justify-content-between align-items-center mt-3">
+                                <a href="#" class="see-prof-btn btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
+                                <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon">
+                            </div>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
-
-
-    @endsection('content')
+</div>
+@endsection('content')
