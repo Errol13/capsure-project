@@ -568,39 +568,19 @@ select#year {
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
-<<<<<<< HEAD
-
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-<<<<<<< HEAD
-
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
-<<<<<<< HEAD
     
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -659,8 +639,6 @@ select#year {
         height: 120px;
         object-fit: contain;
     }
-<<<<<<< HEAD
-=======
 
     /*WelcomePage*/
     .hero {
@@ -712,11 +690,9 @@ select#year {
         height: 200px;
         overflow: hidden;
     }
-
-    
     
 }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
+
 
 /* Client homepage <-------------------------------------------------------*/
 .search-container {
@@ -786,19 +762,13 @@ select#year {
     margin-right: 10px;
 }
 
-/* bookmarks */
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
-<<<<<<< HEAD
-}
-=======
 
 }
 
 @media(width <576px){
-    
-      
       .carousel-item {
         width: 100%; /* Make sure the carousel items take full width */
         height: 300px; /* Set a fixed minimum height for consistency */
@@ -818,5 +788,4 @@ select#year {
         /* If needed, adjust the margin to move the text closer to the image */
     }
       
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
