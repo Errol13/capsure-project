@@ -396,7 +396,7 @@ select#year {
 }
 
 .btn-seeprof {
-    color: #91216C; 
+    color: #91216C;
     margin: 0;
     background-color: white;
     text-decoration: none;
@@ -555,13 +555,13 @@ select#year {
     object-fit: contain;
 }
 
-.txt-review{
+.txt-review {
     color: #91216C;
 }
 
-.rvw-container{
+.rvw-container {
     background-color: #f1ecec;
-    border: 1px solid #91216C ;
+    border: 1px solid #91216C;
 }
 
 
@@ -585,26 +585,18 @@ select#year {
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-<<<<<<< HEAD
-
-=======
     .mobile-navbar {
         display: none;
     }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
-<<<<<<< HEAD
-    
-=======
     .mobile-navbar {
         display: none;
     }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -715,99 +707,92 @@ select#year {
         overflow: hidden;
     }
 
-    
-    
-}
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
-
     /* Client homepage <-------------------------------------------------------*/
-.search-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 0 10px;
-}
+    .search-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 10px;
+    }
 
-.search-bar {
-    flex: 2;
-    max-width: 70%;
-}
+    .search-bar {
+        flex: 2;
+        max-width: 70%;
+    }
 
-.create-event-btn {
-    flex-shrink: 0;
-    white-space: nowrap;
-    margin-left: 10px;
-}
+    .create-event-btn {
+        flex-shrink: 0;
+        white-space: nowrap;
+        margin-left: 10px;
+    }
 
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 3 columns */
-    grid-gap: 20px;
-}
+    .card-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        /* 3 columns */
+        grid-gap: 20px;
+    }
 
-/* Hide the carousel on larger screens */
-#cardCarousel,
-#cardCarouselteam {
-    display: none;
-}
+    /* Hide the carousel on larger screens */
+    #cardCarousel,
+    #cardCarouselteam {
+        display: none;
+    }
 
-.modal-sm .modal-dialog {
-    max-width: 70%;
-    margin: 3rem auto;
-    /*Increase margin for larger screens */
-    border-radius: 15px;
-}
+    .modal-sm .modal-dialog {
+        max-width: 70%;
+        margin: 3rem auto;
+        /*Increase margin for larger screens */
+        border-radius: 15px;
+    }
 
-.modal-header h1 {
-    font-size: 1.75rem;
-    /* Increase the font size */
-}
+    .modal-header h1 {
+        font-size: 1.75rem;
+        /* Increase the font size */
+    }
 
-.modal-content {
-    padding: 10px;
-    max-height: calc(100vh - 3.5rem);
-    /* Ensure modal fits within viewport */
-    overflow-y: hidden;
-    /* Prevent scrolling */
-}
+    .modal-content {
+        padding: 10px;
+        max-height: calc(100vh - 3.5rem);
+        /* Ensure modal fits within viewport */
+        overflow-y: hidden;
+        /* Prevent scrolling */
+    }
 
-.modal-body .row {
-    margin-bottom: 1rem;
-    display: flex;
-    flex-wrap: wrap;
-}
+    .modal-body .row {
+        margin-bottom: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+    }
 
-.modal-body .col {
-    flex: 1 1 45%;
-    /* Adjust each column to take up 45% of width */
-    margin-bottom: 1rem;
-}
+    .modal-body .col {
+        flex: 1 1 45%;
+        /* Adjust each column to take up 45% of width */
+        margin-bottom: 1rem;
+    }
 
-.modal-body input[type="radio"] {
-    margin-right: 10px;
-}
-
-
+    .modal-body input[type="radio"] {
+        margin-right: 10px;
+    }
 
 }
+
 
 
 
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
-<<<<<<< HEAD
-}
-=======
 
 }
 
-@media(width <576px){
-      .carousel-item {
-        width: 100%; /* Make sure the carousel items take full width */
-        height: 300px; /* Set a fixed minimum height for consistency */
-      }
+@media(width <576px) {
+    .carousel-item {
+        width: 100%;
+        /* Make sure the carousel items take full width */
+        height: 300px;
+        /* Set a fixed minimum height for consistency */
+    }
 
     .card.custom-mob-card {
         width: 100%;
@@ -822,6 +807,5 @@ select#year {
         margin-top: -20px;
         /* If needed, adjust the margin to move the text closer to the image */
     }
-      
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
+
 }
