@@ -23,13 +23,13 @@ class ServicesTableSeeder extends Seeder
        DB::table('services')->insert([
            [
                'user_id' => $freelancerId,
-               'job_category' => 'Videography', // Replace with actual service names or logic
+               'job_category' => 'Videography', 
                'job_title' => 'Videographer',
                'fee_type' => '/project',
                'isAvailable' => true,
                'job_fee' => 500.00,
            ],
-           // Add more services as needed
+           
        ]);
    }
     }

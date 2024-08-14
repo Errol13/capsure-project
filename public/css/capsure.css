@@ -56,16 +56,19 @@
 .navbar-nav .nav-link {
     flex: 1;
     padding: 0.5rem;
-  }
+}
 
-  .icon-img {
-    width: 24px; /* Adjust icon size as needed */
-    height: 24px; /* Adjust icon size as needed */
-  }
+.icon-img {
+    width: 24px;
+    /* Adjust icon size as needed */
+    height: 24px;
+    /* Adjust icon size as needed */
+}
 
-  .navbar-nav .nav-link span {
-    font-size: 0.75rem; /* Adjust label size as needed */
-  }
+.navbar-nav .nav-link span {
+    font-size: 0.75rem;
+    /* Adjust label size as needed */
+}
 
 .btn-purple {
     background-color: #91216C;
@@ -277,7 +280,8 @@ select#year {
     margin-top: 2px;
     border-bottom: #91216C solid 3px;
     padding: 0;
- }
+}
+
 .search-container {
     background-image: url('/assets/bg_homepage.svg');
     background-size: cover;
@@ -339,7 +343,8 @@ select#year {
 .bookmarks-container {
     display: grid;
     gap: 16px;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column width as needed */
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    /* Adjust column width as needed */
     padding: 16px;
 }
 
@@ -392,7 +397,7 @@ select#year {
 }
 
 .btn-seeprof {
-    /* color: #91216C; */
+    color: #91216C; 
     margin: 0;
     background-color: white;
     text-decoration: none;
@@ -472,7 +477,7 @@ select#year {
 
 /*Profile Page */
 .profile-container {
-    width: 150px; 
+    width: 150px;
     height: 150px;
     overflow: hidden;
 }
@@ -480,32 +485,36 @@ select#year {
 .profile-container img {
     width: 100%;
     height: 100%;
-    object-fit: contain; 
+    object-fit: contain;
 }
 
 .fs-sm-name {
-    font-size: 1.5rem; /* Font size for small screens */
+    font-size: 1.5rem;
+    /* Font size for small screens */
 }
 
 .fs-sm {
-    font-size: 0.875rem; /* Font size for small screens */
+    font-size: 0.875rem;
+    /* Font size for small screens */
 }
 
 .fs-smaller {
-    font-size: 0.675rem; /* Font size for small screens */
+    font-size: 0.675rem;
+    /* Font size for small screens */
 }
 
-.verify-icon{
+.verify-icon {
     color: #8FE2ED;
 }
 
-.light-color-prof{
-   color: #66645E;
+.light-color-prof {
+    color: #66645E;
 }
 
 .star-rating {
-    font-size: 0.85rem; 
-    color: #1c1c1d; /* Default color for empty stars */
+    font-size: 0.85rem;
+    color: #1c1c1d;
+    /* Default color for empty stars */
     display: inline-block;
 }
 
@@ -514,10 +523,11 @@ select#year {
 }
 
 .star-rating i.filled {
-    color: #ffd700; /* Color for filled stars */
+    color: #ffd700;
+    /* Color for filled stars */
 }
 
-.btn-chat{
+.btn-chat {
     background-color: #E1C1D7;
     color: black;
     text-decoration: none;
@@ -532,12 +542,20 @@ select#year {
 }
 
 .fs-sm-cont {
-    font-size: 0.55rem; 
+    font-size: 0.55rem;
 }
 
-.terms-container{
-    background-color: #F7F7F7;
+.terms-container {
+    background-color: #f1ecec;
 }
+
+.socmed-container {
+    width: 30px;
+    height: 30px;
+    overflow: hidden;
+    object-fit: contain;
+}
+
 
 
 
@@ -550,21 +568,39 @@ select#year {
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
+<<<<<<< HEAD
 
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-    
+<<<<<<< HEAD
+
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
+<<<<<<< HEAD
     
+=======
+    .mobile-navbar {
+        display: none;
+    }
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -623,7 +659,8 @@ select#year {
         height: 120px;
         object-fit: contain;
     }
-
+<<<<<<< HEAD
+=======
 
     /*WelcomePage*/
     .hero {
@@ -659,112 +696,127 @@ select#year {
 
     /*ProfilePage */
     .fs-md {
-        font-size: 1rem; 
+        font-size: 1rem;
     }
 
     .fs-md-name {
-        font-size: 2.25rem; 
+        font-size: 2.25rem;
     }
-    
+
     .fs-lg {
-        font-size: 1.25rem; 
+        font-size: 1.25rem;
     }
 
     .profile-container {
-        width: 200px; 
+        width: 200px;
         height: 200px;
         overflow: hidden;
-    } 
+    }
+
+    
+    
+}
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
+
+/* Client homepage <-------------------------------------------------------*/
+.search-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px;
 }
 
-    /* Client homepage <-------------------------------------------------------*/
-    .search-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 0 10px;
-    }
+.search-bar {
+    flex: 2;
+    max-width: 70%;
+}
 
-    .search-bar {
-        flex: 2;
-        max-width: 70%; 
-    }
+.create-event-btn {
+    flex-shrink: 0;
+    white-space: nowrap;
+    margin-left: 10px;
+}
 
-    .create-event-btn {
-        flex-shrink: 0;
-        white-space: nowrap; 
-        margin-left: 10px;
-    }
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    /* 3 columns */
+    grid-gap: 20px;
+}
 
-    .card-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr); /* 3 columns */
-        grid-gap: 20px;
-    }
+/* Hide the carousel on larger screens */
+#cardCarousel,
+#cardCarouselteam {
+    display: none;
+}
 
-    /* Hide the carousel on larger screens */
-    #cardCarousel, #cardCarouselteam {
-        display: none;
-    }
+.modal-sm .modal-dialog {
+    max-width: 70%;
+    margin: 3rem auto;
+    /*Increase margin for larger screens */
+    border-radius: 15px;
+}
 
-    .modal-sm .modal-dialog {
-        max-width: 70%;
-        margin: 3rem auto; /*Increase margin for larger screens */
-        border-radius: 15px; 
-    }
+.modal-header h1 {
+    font-size: 1.75rem;
+    /* Increase the font size */
+}
 
-    .modal-header h1 {
-        font-size: 1.75rem; /* Increase the font size */
-    }
+.modal-content {
+    padding: 10px;
+    max-height: calc(100vh - 3.5rem);
+    /* Ensure modal fits within viewport */
+    overflow-y: hidden;
+    /* Prevent scrolling */
+}
 
-    .modal-content {
-        padding: 10px;
-         max-height: calc(100vh - 3.5rem); /* Ensure modal fits within viewport */
-        overflow-y: hidden; /* Prevent scrolling */
-    }
+.modal-body .row {
+    margin-bottom: 1rem;
+    display: flex;
+    flex-wrap: wrap;
+}
 
-    .modal-body .row {
-        margin-bottom: 1rem;  
-        display: flex;
-        flex-wrap: wrap;
-    }
+.modal-body .col {
+    flex: 1 1 45%;
+    /* Adjust each column to take up 45% of width */
+    margin-bottom: 1rem;
+}
 
-    .modal-body .col {
-        flex: 1 1 45%; /* Adjust each column to take up 45% of width */
-        margin-bottom: 1rem;
-    }
+.modal-body input[type="radio"] {
+    margin-right: 10px;
+}
 
-    .modal-body input[type="radio"] {
-        margin-right: 10px;
-    }
-
-    /* bookmarks */
+/* bookmarks */
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
-
+<<<<<<< HEAD
+}
+=======
 
 }
 
 @media(width <576px){
     
-
+      
       .carousel-item {
         width: 100%; /* Make sure the carousel items take full width */
         height: 300px; /* Set a fixed minimum height for consistency */
       }
 
-      .card.custom-mob-card {
-        width: 100%; /* Ensure cards take full width of the column */
-        height: 100%; /* Ensure cards stretch to fill available space */
+    .card.custom-mob-card {
+        width: 100%;
+        /* Ensure cards take full width of the column */
+        height: 100%;
+        /* Ensure cards stretch to fill available space */
         display: flex;
         flex-direction: column;
-      }
-      
-      .custom-mob-card .card-body .card-text {
+    }
+
+    .custom-mob-card .card-body .card-text {
         margin-top: -20px;
         /* If needed, adjust the margin to move the text closer to the image */
     }
       
-
+>>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }

@@ -85,41 +85,41 @@
                         @else
                         @if (Auth::user()->user_type == 'client')
                         <!-- Client-specific navbar items -->
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile" >
                             <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link  text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY EVENT POST</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
                         </li>
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">JOB POSTING</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">MY JOBS</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">MY TRANSACTION</a>
                         </li>
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
-                        <li class="nav-item mx-1">
-                        <li class="nav-item d-sm-none">
+                        
+                        <li class="nav-item me-md-0" id="nav-item-mobile">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item me-md-0">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </li>
-                        <li class="nav-item mx-1">
+                        <li class="nav-item mx-1 ms-md-2">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-bell"></i>
                             </a>
