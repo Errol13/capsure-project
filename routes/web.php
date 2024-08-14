@@ -27,3 +27,6 @@ Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->
 #Homepages
 Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('client-homepage') ->middleware(['auth', 'verified']);
 Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('freelancer-homepage') ->middleware(['auth', 'verified']);
+
+#Profile
+Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
