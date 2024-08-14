@@ -24,8 +24,19 @@ class Freelancer extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function service()
+    public function services()
     {
         return $this->hasMany(Service::class, 'user_id');
+    }
+    
+
+    public function certificates()
+    {
+        return $this->hasMany(Certificates::class, 'user_id');
+    }
+
+    public function portfolios()
+    {
+        return $this->hasMany(Portfolio::class, 'user_id');
     }
 }

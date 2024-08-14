@@ -72,4 +72,8 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasOne(Service::class, 'user_id');
     }
+
+    public function socmed(){
+        return $this->hasMany(SocialMediaAccount::class, 'user_id');
+    }
 }

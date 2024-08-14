@@ -23,7 +23,7 @@ class ClientController extends Controller
     /**
      * Display the specified client.
      *
-     * @param  int  $id
+     * @param  int  
      * @return \Illuminate\View\View
      */
     public function show($id)
