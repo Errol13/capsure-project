@@ -399,87 +399,6 @@ select#year {
     border: 1px solid #91216C;
 }
 
-<<<<<<< HEAD
-.btn-seeprof:hover {
-    background-color: #91216C; /* Change to a different color on hover */
-    color: white; 
-}
-
-/* Responsive styles for smaller screens <--------------------------- */
-@media (max-width: 767px) {
-    .hero {
-        width: 100%;
-    }
-
-    .hero .input-group {
-        max-width: 100%;
-        width: 400px;
-        margin: 0 auto;
-        /* Centers the input group*/
-    }
-
-    .hero h1 {
-        font-size: 1.5rem;
-        /* Adjust font size for smaller screens */
-    }
-
-    .hero .form-control {
-        height: 60px;
-    }
-
-    .hero .btn {
-        height: 60px;
-        border: none;
-        background-color: white;
-    }
-
-    .card-grid {
-        display: none;
-    }
-
-    .bookmark-card {
-        display: grid;
-    }
-
-    .modal-sm .modal-dialog {
-        max-width: 100%;
-        margin: 1.75rem auto;
-        border-radius: 12px;
-    }
-}
-
-@media (max-width: 575px) {
-    .hero {
-        width: 100%;
-        padding-right: 15px;
-        padding-left: 15px;
-        margin-top: 0;
-    }
-
-    .hero .input-group {
-        margin: 0 auto;
-        /* Centers the input group */
-    }
-
-    .hero .form-control {
-        height: 40px;
-        margin: 0;
-    }
-
-    .hero .btn {
-        height: 40px;
-    }
-
-    .sm-mgn-rmv {
-        margin-top: 40px;
-        margin-bottom: 0px;
-        padding-top: 0;
-        padding-bottom: 0;
-    }
-
-}
-=======
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
 .service {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -631,39 +550,21 @@ select#year {
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
-<<<<<<< HEAD
 
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-<<<<<<< HEAD
-
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
+    
 }
 
 
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
-<<<<<<< HEAD
     
-=======
-    .mobile-navbar {
-        display: none;
-    }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 }
 
 
@@ -722,8 +623,7 @@ select#year {
         height: 120px;
         object-fit: contain;
     }
-<<<<<<< HEAD
-=======
+
 
     /*WelcomePage*/
     .hero {
@@ -774,12 +674,8 @@ select#year {
         width: 200px; 
         height: 200px;
         overflow: hidden;
-    }
-
-    
-    
+    } 
 }
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
 
     /* Client homepage <-------------------------------------------------------*/
     .search-container {
@@ -846,15 +742,13 @@ select#year {
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
-<<<<<<< HEAD
-}
-=======
+
 
 }
 
 @media(width <576px){
     
-      
+
       .carousel-item {
         width: 100%; /* Make sure the carousel items take full width */
         height: 300px; /* Set a fixed minimum height for consistency */
@@ -872,5 +766,5 @@ select#year {
         /* If needed, adjust the margin to move the text closer to the image */
     }
       
->>>>>>> d1794c211f273d7d4963abe88694b7c442ed517f
+
 }
