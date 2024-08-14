@@ -782,17 +782,15 @@ select#year {
 
 @media (min-width: 576px) {
     /* Styles for small tablets and larger phones */
-
 }
 
-@media(width < 576px) {
-
-    .carousel-item {
-        width: 100%;
-        /* Make sure the carousel items take full width */
-        height: 300px;
-        /* Set a fixed minimum height for consistency */
-    }
+@media(width <576px){
+    
+      
+      .carousel-item {
+        width: 100%; /* Make sure the carousel items take full width */
+        height: 300px; /* Set a fixed minimum height for consistency */
+      }
 
     .card.custom-mob-card {
         width: 100%;
