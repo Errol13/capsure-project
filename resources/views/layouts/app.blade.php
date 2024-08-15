@@ -115,7 +115,7 @@
                             </a>
                         </li>
                         <li class="nav-item me-md-0">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="{{ url('/client-bookmark') }}">
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </li>
@@ -161,7 +161,7 @@
         <div class="container justify-content-center">
             <div class="row w-100">
                 <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
+                    <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
                         <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
                         <div>Services</div>
                     </a>

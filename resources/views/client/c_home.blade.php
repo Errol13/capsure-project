@@ -114,8 +114,8 @@
 
 
             <!-- Carousel for Mobile View -->
-            <div id="cardCarousel" class="carousel slide d-block d-md-none" data-bs-ride="carousel">
-                <div class="carousel-inner justify-content-center">
+            <div id="cardCarousel" class="carousel slide d-block d-md-none mb-4 pb-4" data-bs-ride="carousel">
+                <div class="carousel-inner justify-content-center pb-4 ">
                     <div class="carousel-item active py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border: none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
