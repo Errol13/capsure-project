@@ -207,11 +207,11 @@
 
 
 
-        <!-- Review 1 -->
+        <!-- Reviews -->
         <div class="container">
-            <div class="row">
+            <div class="row d-flex align-items-center justify-content-between">
                 <!-- Review Item 1 -->
-                <div class="col-12 col-md-6 mb-4 rvw-container rounded">
+                <div class="col-12 col-md-5 flex-grow-1 mb-4 rvw-container rounded">
                     <div class="d-flex align-items-center justify-content-between mb-0">
                         <div>
                             <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
@@ -239,8 +239,9 @@
                     </div>
                 </div>
 
+                <div class="col-1"></div>
                 <!-- Review Item 2 -->
-                <div class="col-12 col-md-6 col-lg-6 mb-4 rvw-container rounded">
+                <div class="col-12 col-md-5 flex-grow-1 mb-4 rvw-container rounded">
                     <div class="d-flex align-items-center justify-content-between mb-0">
                         <div>
                             <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
@@ -275,7 +276,7 @@
     <!--Portfolio -->
     <section id="portfolio-freelancer">
         <div class="row">
-        <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Portfolio</h2>
+        <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">PORTFOLIO</h2>
         </div>
         <div class="container mt-2 mb-4">
         <!-- Nav tabs -->
