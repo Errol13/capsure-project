@@ -153,7 +153,7 @@
             </div>
         </nav>
 
-        <main class="py-1 mx-1 pb-4 mb-2">
+        <main class="mx-1 pb-4 mb-2">
             @yield('content')
             
         </main>

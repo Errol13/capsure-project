@@ -32,3 +32,5 @@ Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileControlle
 #Profile
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
 #Profile Pages
+
+Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');

@@ -84,8 +84,24 @@
     margin-right: 20px;
 }
 
+.btn-outline {
+    color: gray;
+    margin: 0;
+    background-color: white;
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 10px;
+    height: 35px;
+    width: 70px;
+}
+
 .btn-link {
-    color: #91216C;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    background-color: #91216C;
+    height: 35px;
+    width: 70px;
 }
 
 .btn-auth {
@@ -301,6 +317,7 @@ select#year {
     /* Removes the default border */
     border-radius: 50px;
 }
+
 
 .input-group-text {
     top: 50%;
@@ -564,7 +581,12 @@ select#year {
     border: 1px solid #91216C;
 }
 
-
+/* Create Event Page */
+.custom-bg-page {
+    background-color: #FCF2F9;
+    height: max-content;
+    width: max-content;
+}
 
 
 

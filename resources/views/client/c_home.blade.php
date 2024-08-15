@@ -91,14 +91,14 @@
                 </div>
 
                 <!-- create an event -->
-                <button class="create-event-btn shadow-btn mb-3 rounded-pill open-sans-reg ">
+                <a class="create-event-btn shadow-btn mb-3 rounded-pill open-sans-reg " href="{{ url('/events') }}" style="text-decoration: none;">
                     Create an Event <i class="fas fa-party-horn"></i>
                     <img src="assets/event.svg" class="inside-icon me-1">
-                </button>
+                </a>
             </div>
         </div>
 
-        <div class="row mx-4 py-1">
+        <div class="row mx-4 pt-3">
             <h3 class="poppins-medium fs-1 text-right">Services For You</h3>
         </div>
 
