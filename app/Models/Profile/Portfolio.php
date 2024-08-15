@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Profile;
 
+use App\Models\Freelancer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

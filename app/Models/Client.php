@@ -14,8 +14,12 @@ class Client extends Model
     protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        'user_id', 'total_job_posted', 'total_successful_hiring',
-        'hiring_rate', 'avg_rating', 'favorites'
+        'user_id',
+        'total_job_posted',
+        'total_successful_hiring',
+        'hiring_rate',
+        'avg_rating',
+        'favorites'
     ];
 
     protected $casts = [
@@ -27,13 +31,13 @@ class Client extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(Review::class, 'client_id');
     }
 
     public function hiringRequests()
-{
-    return $this->hasMany(Hiring_request::class, 'client_id');
-}
-
+    {
+        return $this->hasMany(Hiring_request::class, 'client_id');
+    }
 }

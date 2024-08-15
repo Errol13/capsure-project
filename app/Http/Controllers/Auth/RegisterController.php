@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Freelancer;
+use App\Models\Profile\Service as ProfileService;
 use App\Models\Service;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -43,6 +44,7 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'contact_number' => ['nullable', 'numeric' ,'digits:11'],
         ]);
     }
 
@@ -151,7 +153,7 @@ class RegisterController extends Controller
     // Create service record for freelancer
     protected function createService(int $userId, array $data)
     {
-        Service::create([
+        ProfileService::create([
             'user_id' => $userId,
             'job_category' => $data['job_category'],
             'job_title' => $data['job_title'],

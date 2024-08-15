@@ -28,9 +28,11 @@ Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->
 Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('client-homepage') ->middleware(['auth', 'verified']);
 Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('freelancer-homepage') ->middleware(['auth', 'verified']);
 
-Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
 #Profile
-Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
-#Profile Pages
+Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
 
+Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
 Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
+Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
+Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateFreelancer'])->name('freelancer.update');
+

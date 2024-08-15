@@ -156,6 +156,10 @@
     text-decoration: none;
 }
 
+.txt-purple {
+    color: #91216C;
+}
+
 body,
 html {
     height: 100%;
@@ -589,6 +593,27 @@ select#year {
 }
 
 
+/* Setting Page */
+
+.btn-save{
+    background-color: #E1C1D7;
+    color: #91216C;
+    text-decoration: none;
+    border: 1px solid #ACA9A9;
+}
+
+.btn-cancel{
+    background-color: white;
+    color: #ACA9A9;
+    text-decoration: none;
+    border: 1px solid #ACA9A9;
+}
+
+.btn-verify{
+    background-color: #8FE2ED;
+    color: black;
+    text-decoration: none;
+}
 
 
 

@@ -11,7 +11,7 @@
             <div class="row my-3">
                 <div class="profile-container">
                     <img src="{{ asset('assets/daisy.svg') }}" alt="Profile Picture" class="rounded-circle img-fluid">
-                </div>
+                </div> 
             </div>
 
             <!--Address and Contacts -->

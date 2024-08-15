@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Profile\Service;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -66,11 +67,6 @@ class User extends Authenticatable implements MustVerifyEmail
     public function freelancer()
     {
         return $this->hasOne(Freelancer::class, 'user_id');
-    }
-
-    public function service()
-    {
-        return $this->hasOne(Service::class, 'user_id');
     }
 
     public function socmed(){

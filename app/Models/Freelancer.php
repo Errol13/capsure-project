@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use App\Models\Hiring\EventJob;
-use App\Models\Hiring\Events;
+use App\Models\Hiring\Hiring_request;
 use App\Models\Hiring\Review;
+use App\Models\Profile\Certificates;
+use App\Models\Profile\Portfolio;
+use App\Models\Profile\Service;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -15,7 +18,12 @@ class Freelancer extends Model
     protected $primaryKey = 'user_id';
 
     protected $fillable = [
-        'user_id', 'avg_rating', 'number_of_projects', 'terms_and_conditions', 'skills', 'isin_A_Team'
+        'user_id',
+        'avg_rating',
+        'number_of_projects',
+        'terms_and_conditions',
+        'skills',
+        'isin_A_Team'
     ];
 
     protected $casts = [
@@ -31,7 +39,7 @@ class Freelancer extends Model
     {
         return $this->hasMany(Service::class, 'freelancer_id');
     }
-    
+
 
     public function certificates()
     {
@@ -43,15 +51,23 @@ class Freelancer extends Model
         return $this->hasMany(Portfolio::class, 'freelancer_id');
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(Review::class, 'freelancer_id');
     }
 
-     // Relationship to EventJob through JobApplications
-     public function appliedJobs()
-     {
-         return $this->belongsToMany(EventJob::class, 'job_applications', 'freelancer_id', 'job_id')
-                     ->withPivot('status')
-                     ->withTimestamps();
-     }
+    // Relationship to EventJob through JobApplications
+    public function appliedJobs()
+    {
+        return $this->belongsToMany(EventJob::class, 'job_applications', 'freelancer_id', 'job_id')
+            ->withPivot('status')
+            ->withTimestamps();
+    }
+
+    public function hiringRequests()
+    {
+        return $this->hasMany(Hiring_request::class, 'freelancer_id');
+    }
+
+    
 }
