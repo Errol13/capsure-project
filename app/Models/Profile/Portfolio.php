@@ -13,6 +13,7 @@ class Portfolio extends Model
         'portfolio_id',
         'album_name',
         'image',
+        'freelancer_id',
     ];
 
     protected $casts = [

@@ -10,7 +10,7 @@ class Service extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
+        'freelancer_id',
         'job_category',
         'job_title',
         'fee_type',
@@ -20,6 +20,6 @@ class Service extends Model
 
     public function freelancer()
     {
-        return $this->belongsTo(Freelancer::class, 'user_id');
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 }

@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id('portfolio_id');
-            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreignId('freelancer_id')->constrained('freelancers', 'user_id')->onUpdate('cascade')->onDelete('cascade');
             $table->string('album_name',255);
             $table->timestamps();
         });

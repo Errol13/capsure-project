@@ -14,10 +14,11 @@ class Certificates extends Model
         'title',
         'date',
         'image',
+        'freelancer_id',
     ];
 
     public function freelancer()
     {
-        return $this->belongsTo(Freelancer::class, 'user_id');
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 }

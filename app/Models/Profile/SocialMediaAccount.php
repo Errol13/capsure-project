@@ -10,12 +10,10 @@ class SocialMediaAccount extends Model
     use HasFactory;
 
     protected $fillable = [
+        'id',
+        'platform',
+        'url',
         'user_id',
-        'job_category',
-        'job_title',
-        'fee_type',
-        'isAvailable',
-        'job_fee',
     ];
 
     public function user()

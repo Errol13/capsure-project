@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Hiring\EventJob;
+use App\Models\Hiring\Events;
+use App\Models\Hiring\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,17 +29,29 @@ class Freelancer extends Model
 
     public function services()
     {
-        return $this->hasMany(Service::class, 'user_id');
+        return $this->hasMany(Service::class, 'freelancer_id');
     }
     
 
     public function certificates()
     {
-        return $this->hasMany(Certificates::class, 'user_id');
+        return $this->hasMany(Certificates::class, 'freelancer_id');
     }
 
     public function portfolios()
     {
-        return $this->hasMany(Portfolio::class, 'user_id');
+        return $this->hasMany(Portfolio::class, 'freelancer_id');
     }
+
+    public function reviews(){
+        return $this->hasMany(Review::class, 'freelancer_id');
+    }
+
+     // Relationship to EventJob through JobApplications
+     public function appliedJobs()
+     {
+         return $this->belongsToMany(EventJob::class, 'job_applications', 'freelancer_id', 'job_id')
+                     ->withPivot('status')
+                     ->withTimestamps();
+     }
 }

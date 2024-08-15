@@ -24,7 +24,7 @@ class ServicesTableSeeder extends Seeder
         foreach ($freelancerIds as $freelancerId) {
             // multiple services for some freelancers
             $services[] = [
-                'user_id' => $freelancerId,
+                'freelancer_id' => $freelancerId,
                 'job_category' => 'Videography',
                 'job_title' => 'Videographer',
                 'fee_type' => '/project',
@@ -35,7 +35,7 @@ class ServicesTableSeeder extends Seeder
             // Add more services for certain freelancers
             if ($freelancerId % 2 == 0) { //every 2nd freelancer gets an additional service
                 $services[] = [
-                    'user_id' => $freelancerId,
+                    'freelancer_id' => $freelancerId,
                     'job_category' => 'Photography',
                     'job_title' => 'Photographer',
                     'fee_type' => '/hour',
@@ -46,7 +46,7 @@ class ServicesTableSeeder extends Seeder
 
             if ($freelancerId % 5 == 0) { //every 5th freelancer gets another service
                 $services[] = [
-                    'user_id' => $freelancerId,
+                    'freelancer_id' => $freelancerId,
                     'job_category' => 'Art',
                     'job_title' => 'Portrait Artist',
                     'fee_type' => '/project',
