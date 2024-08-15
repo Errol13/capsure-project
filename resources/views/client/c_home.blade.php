@@ -109,7 +109,7 @@
                     <img src="assets/solo.svg" class="inside-icon me-1">
                     <h3 class="poppins-regular fs-3 mb-0">Solo Freelancers</h3>
                 </div>
-                <p class="poppins-light fs-5 mb-0 btn-link right-side">View All</p>
+                <a class="poppins-light fs-5 mb-0 text-purple right-side">View All</a>
             </div>
 
 
@@ -289,7 +289,7 @@
                     <img src="assets/team.svg" class="inside-icon me-1" style="width: 40px; height: 40px">
                     <h3 class="poppins-regular fs-3 mb-0">Team Freelancers</h3>
                 </div>
-                <p class="poppins-light fs-5 mb-0 btn-link right-side">View All</p>
+                <a class="poppins-light fs-5 mb-0 text-purple right-side" href="#">View All</a>
             </div>
 
 

@@ -101,7 +101,7 @@
     border-radius: 10px;
     background-color: #91216C;
     height: 35px;
-    width: 70px;
+    width: 80px;
 }
 
 .btn-auth {
@@ -585,13 +585,16 @@ select#year {
     border: 1px solid #91216C;
 }
 
-/* Create Event Page */
+/* Create Event Page <-------------------------------------------------------------------------*/
 .custom-bg-page {
     background-color: #FCF2F9;
     height: max-content;
     width: max-content;
 }
 
+.open-sans-reg h3 {
+    font-size: px; /* Default font size */
+}
 
 /* Setting Page */
 
@@ -623,18 +626,14 @@ select#year {
 @media (min-width: 1400px) {
 
     /* Styles for large desktops */
-    .mobile-navbar {
-        display: none;
-    }
+
 }
 
 
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-    .mobile-navbar {
-        display: none;
-    }
+  
 }
 
 
