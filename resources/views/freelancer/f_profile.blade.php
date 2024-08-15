@@ -153,8 +153,9 @@
 
                 <!--Services -->
                 <p class="mt-3 fs-sm fs-md poppins-medium">Services</p>
+                @foreach ($user->freelancer->services as $service)
                 <div class="row mt-1 open-sans-reg">
-                    @foreach ($user->freelancer->services as $service)
+
                     <div class="col">
                         <p class="fs-smaller fs-md">{{$service->job_title}}</p>
                     </div>
@@ -170,8 +171,8 @@
                         <p class="text-danger fs-smaller fs-md">Not Available</p>
                         @endif
                     </div>
-                    @endforeach
                 </div>
+                @endforeach
 
                 <!--Terms of Service-->
                 <p class="mt-3 fs-sm fs-md poppins-medium">Terms of Service</p>
@@ -191,6 +192,129 @@
         </div>
 
     </div>
+
+    <!--Client Review -->
+    <section id="client-reviews">
+        <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex align-items-center">
+                <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Client Reviews</h2>
+                <p class="mb-0 fs-smaller">(10 reviews)</p>
+            </div>
+            <a class="fs-sm fs-md poppins-light txt-review" href="#">See All Reviews</a>
+        </div>
+
+        <p class="text-center fs-smaller fs-md mt-2">Recent Projects</p>
+
+
+
+        <!-- Review 1 -->
+        <div class="container">
+            <div class="row">
+                <!-- Review Item 1 -->
+                <div class="col-12 col-md-6 mb-4 rvw-container rounded">
+                    <div class="d-flex align-items-center justify-content-between mb-0">
+                        <div>
+                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
+                        </div>
+                        <a class="fs-sm fs-md poppins-light txt-review" href="#">See Post</a>
+                    </div>
+                    <p class="fs-sm fs-md poppins-light mt-0">June 27 2024</p>
+                    <div class="d-flex">
+                        <div class="text-center me-3">
+                            <!-- Profile Picture -->
+                            <img src="{{ asset('assets/daisy.svg') }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                        </div>
+                        <div>
+                            <!-- Review Content -->
+                            <h5 class="font-weight-bold">John Doe</h5>
+                            <div class="mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                            </div>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis auctor elit ut purus consectetur, sed tincidunt sapien luctus."</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review Item 2 -->
+                <div class="col-12 col-md-6 col-lg-6 mb-4 rvw-container rounded">
+                    <div class="d-flex align-items-center justify-content-between mb-0">
+                        <div>
+                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
+                        </div>
+                        <a class="fs-sm fs-md poppins-light txt-review" href="#">See Post</a>
+                    </div>
+                    <p class="fs-sm fs-md poppins-light">June 27 2024</p>
+                    <div class="d-flex">
+                        <div class="text-center me-3">
+                            <!-- Profile Picture -->
+                            <img src="{{ asset('assets/daisy.svg') }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                        </div>
+                        <div>
+                            <!-- Review Content -->
+                            <h5 class="font-weight-bold">John Doe</h5>
+                            <div class="mb-2">
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-fill text-warning"></i>
+                                <i class="bi bi-star-half text-warning"></i>
+                            </div>
+                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis auctor elit ut purus consectetur, sed tincidunt sapien luctus."</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!--Portfolio -->
+    <section id="portfolio-freelancer">
+        <div class="row">
+        <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Portfolio</h2>
+        </div>
+        <div class="container mt-2 mb-4">
+        <!-- Nav tabs -->
+        <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <a class="nav-link active" id="videos-tab" data-bs-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="true">Videos</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
+            </li>
+        </ul>
+
+        <!-- Tab content -->
+        <div class="tab-content" id="portfolioTabsContent">
+            <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="videos-tab">
+                <!-- Videos content -->
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-5 mb-md-3">
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <!-- Add more video items -->
+                </div>
+            </div>
+            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
+                <!-- Images content here -->
+                <div class="row mt-3">
+                    <div class="col-md-4 mb-5 mb-md-3">
+                        <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 1">
+                    </div>
+                    <!-- Add more image items -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+    
 </div>
 
 

@@ -155,8 +155,10 @@
 
         <main class="py-1 mx-1 pb-4 mb-2">
             @yield('content')
+            
         </main>
     </div>
+    
     <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-3 navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container justify-content-center">
             <div class="row w-100">
