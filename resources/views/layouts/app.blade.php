@@ -24,7 +24,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -88,7 +88,7 @@
                         @else
                         @if (Auth::user()->user_type == 'client')
                         <!-- Client-specific navbar items -->
-                        <li class="nav-item" id="nav-item-mobile" >
+                        <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
@@ -100,7 +100,7 @@
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black" href="#">JOB POSTING</a>
+                            <a class="nav-link text-black {{ request()->is('freelancer-homepage') ? 'active' : '' }}" href="freelancer-homepage">JOB POSTING</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">MY JOBS</a>
@@ -111,7 +111,7 @@
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
-                        
+
                         <li class="nav-item me-md-0" id="nav-item-mobile">
                             <a class="nav-link" href="#">
                                 <i class="fas fa-envelope"></i>
@@ -158,18 +158,27 @@
 
         <main class="mx-1 pb-4 mb-2">
             @yield('content')
-            
+
         </main>
     </div>
-    
+
     <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-3 navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container justify-content-center">
             <div class="row w-100">
                 <div class="col text-center">
+                    @auth
+                    @if (Auth::user()->user_type == 'client')
                     <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
                         <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
                         <div>Services</div>
                     </a>
+                    @elseif (Auth::user()->user_type == 'freelancer')
+                    <a class="nav-link" href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
+                        <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <div>Job Postings</div>
+                    </a>
+                    @endif
+                    @endauth
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="#" style="font-size:x-small;">

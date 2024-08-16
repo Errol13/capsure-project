@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Profile;
 
 use App\Http\Controllers\Controller;
+use App\Models\Freelancer;
+use App\Models\Profile\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +32,6 @@ class SettingsController extends Controller
         $validated = $request->validate([
             'first_name' => 'required|string|max:255',
             'last_name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
             'birthdate' => 'required|date',
             'street' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
@@ -45,16 +46,51 @@ class SettingsController extends Controller
         // Prepare data for update
         $updateData = $validated;
 
-        // Hash the password if provided
-        if (isset($validated['password'])) {
+        //Update the age when birthdate is changed
+        $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
+
+        // Hash the password only if provided
+        if (!empty($validated['password'])) {
             $updateData['password'] = Hash::make($validated['password']);
+        } else {
+            // Remove the password from the update data if it’s null or empty
+            unset($updateData['password']);
         }
 
         // Update the user's information with validated data
         $user->update($updateData);
 
-        // Redirect or return response
+        // Redirect 
         return redirect()->route('freelancer-settings')
             ->with('success', 'Profile updated successfully.');
+    }
+
+
+
+    public function updateServices(Request $request, $serviceId)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'job_title' => 'required|string',
+            'job_fee' => 'required|numeric',
+            'fee_type' => 'required|string',
+            'job_category' => 'required|string',
+            'availability' => 'required|string',
+        ]);
+
+        // Find the service by ID
+        $service = Service::findOrFail($serviceId);
+
+        $user = $request->user();
+
+        // Ensure the service belongs to the current freelancer
+        if ($service->freelancer_id !== $user->freelancer->id) {
+            return redirect()->back()->with('error', 'Unauthorized action.');
+        }
+
+        // Update the service with the validated data
+        $service->update($validatedData);
+
+        return redirect()->back()->with('success', 'Service updated successfully.');
     }
 }
