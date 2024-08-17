@@ -21,6 +21,9 @@
     <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 
     <!-- Scripts -->
@@ -49,84 +52,107 @@
                 @endif
                 @endauth
 
-                <!-- Hidden on mobile, visible on larger screens -->
-                <ul class="navbar-nav ms-auto d-none d-md-flex">
-                    <li class="nav-item">
-                        <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" href="{{ url('/client-events') }}">MY EVENTS</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-black" href="#">MY TRANSACTION</a>
-                    </li>
-                </ul>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-                <!-- Visible only on mobile -->
-                <ul class="navbar-nav ms-auto d-flex d-md-none">
-                    <li class="nav-item me-md-0">
-                        <a class="nav-link" href="{{ url('/client-bookmark') }}">
-                            <i class="fas fa-bookmark"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item me-md-0">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-bell"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-user"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                            <a class="dropdown-item" href="#">Setting</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-                <!-- Hidden on mobile, visible on larger screens -->
-                <ul class=" navbar-nav ms-1 d-none d-md-flex">
-                    <li class="nav-item me-md-0">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-envelope"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item me-md-0">
-                        <a class="nav-link" href="{{ url('/client-bookmark') }}">
-                            <i class="fas fa-bookmark"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item mx-1 ms-md-2">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-bell"></i>
-                        </a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            <i class="fas fa-user"></i>
-                            <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                            <a class="dropdown-item" href="#">Setting</a>
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
+                    </ul>
+
+                    <!-- Right Side Of Navbar -->
+                    <ul class="navbar-nav ms-auto">
+
+
+                        <!-- Authentication Links -->
+                        @guest
+
+                        <!--Tutorial Link -->
+                        <li class="nav-item">
+                            <a class="nav-link fw-bold text-black " href="#">HOW IT WORKS</a>
+                        </li>
+
+                        @if (Route::has('login'))
+                        <li class="nav-item">
+                            <a class="nav-link text-uppercase fw-bold text-black" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @endif
+
+                        @if (Route::has('choose'))
+                        <li class="nav-item">
+                            <a class="btn-purple rounded-2 px-3" href="{{ route('choose') }}"> SIGN UP</a>
+                        </li>
+                        @endif
+                        @else
+                        @if (Auth::user()->user_type == 'client')
+                        <!-- Client-specific navbar items -->
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
+                        </li>
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link  text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY EVENT POST</a>
+                        </li>
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
+                        </li>
+                        @elseif (Auth::user()->user_type == 'freelancer')
+                        <!-- Freelancer-specific navbar items -->
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link text-black {{ request()->is('freelancer-homepage') ? 'active' : '' }}" href="freelancer-homepage">JOB POSTING</a>
+                        </li>
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link text-black" href="#">MY JOBS</a>
+                        </li>
+                        <li class="nav-item" id="nav-item-mobile">
+                            <a class="nav-link text-black" href="#">MY TRANSACTION</a>
+                        </li>
+                        @endif
+
+                        <!-- Common navbar items for both freelancers and clients -->
+
+                        <li class="nav-item me-md-0" id="nav-item-mobile">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-envelope"></i>
                             </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-                    </li>
-                </ul>
+                        </li>
+                        <li class="nav-item me-md-0">
+                            <a class="nav-link" href="{{ url('/client-bookmark') }}">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item mx-1 ms-md-2">
+                            <a class="nav-link" href="#">
+                                <i class="fas fa-bell"></i>
+                            </a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <i class="fas fa-user"></i>
+                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                <a class="dropdown-item" href="freelancer-settings">Setting</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                         document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endguest
+
+                    </ul>
+                </div>
             </div>
         </nav>
 
@@ -140,10 +166,19 @@
         <div class="container justify-content-center">
             <div class="row w-100">
                 <div class="col text-center">
+                    @auth
+                    @if (Auth::user()->user_type == 'client')
                     <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
                         <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
                         <div>Services</div>
                     </a>
+                    @elseif (Auth::user()->user_type == 'freelancer')
+                    <a class="nav-link" href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
+                        <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <div>Job Postings</div>
+                    </a>
+                    @endif
+                    @endauth
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ url('/client-events') }}" style="font-size:x-small;">
