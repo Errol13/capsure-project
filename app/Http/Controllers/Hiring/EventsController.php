@@ -9,5 +9,9 @@ class EventsController extends Controller
 {
     public function showEventsForm(){
         return view('client.createEvent');
-        }
+    }
+
+    public function showMyEvents(){
+        return view('client.c_myEvents');
+    }
 }

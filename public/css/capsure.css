@@ -86,13 +86,12 @@
 
 .btn-outline {
     color: gray;
-    margin: 0;
     background-color: white;
     text-decoration: none;
     border: 1px solid gray;
     border-radius: 10px;
     height: 35px;
-    width: 70px;
+    width: 80px;
 }
 
 .btn-link {
@@ -618,7 +617,9 @@ select#year {
     text-decoration: none;
 }
 
-
+.event-title {
+    font-size: 1.25rem; /* Font size of h5 */
+}
 
 
 /*dito Phoebe lahat ng styles for large to medium screens ilagay*/
@@ -640,9 +641,7 @@ select#year {
 @media (min-width: 992px) {
 
     /* Styles for small laptops */
-    .mobile-navbar {
-        display: none;
-    }
+
 }
 
 
