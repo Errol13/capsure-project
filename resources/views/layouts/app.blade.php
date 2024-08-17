@@ -92,7 +92,7 @@
                             <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link  text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY EVENT POST</a>
+                            <a class="nav-link  text-black {{ request()->is('client-events') ? 'active' : '' }}" href="client-events">MY EVENTS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
