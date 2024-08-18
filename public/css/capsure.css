@@ -470,6 +470,7 @@ select#year {
 }
 
 
+
 /* Image styling */
 .box img {
     width: 100px;
@@ -646,6 +647,17 @@ tbody td:nth-child(5){
     text-decoration: none;
     border: none;
 }
+
+.accordion-body {
+    word-wrap: break-word; /* Ensures long words or text wrap to the next line */
+    overflow-wrap: break-word; /* Breaks long words to avoid overflow */
+    
+}
+
+.container {
+    overflow-x: hidden; /* Prevent horizontal scrolling on container */
+}
+
 
 .event-title {
     font-size: 1.25rem; /* Font size of h5 */
@@ -882,6 +894,10 @@ tbody td:nth-child(5){
     .custom-mob-card .card-body .card-text {
         margin-top: -20px;
         /* If needed, adjust the margin to move the text closer to the image */
+    }
+
+    #nav-item-mobile {
+        display: none;
     }
 
 }

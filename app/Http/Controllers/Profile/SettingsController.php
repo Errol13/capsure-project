@@ -22,8 +22,19 @@ class SettingsController extends Controller
         $user = Auth::user();
 
         if ($user->user_type == 'freelancer') {
-            // Load related data for freelancers
-            $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios');
+            // Load related data for freelancers with ordering
+            $user->load([
+                'freelancer.services' => function ($query) {
+                    $query->orderBy('id', 'asc');
+                },
+                'freelancer.certificates' => function ($query) {
+                    $query->orderBy('cert_id', 'asc');
+                },
+                'freelancer.portfolios' => function ($query) {
+                    $query->orderBy('portfolio_id', 'asc'); 
+                }
+            ]);
+
             return view('freelancer.f_setting', compact('user'));
         }
     }
@@ -99,8 +110,25 @@ class SettingsController extends Controller
         // Save the updated service
         $service->save();
 
-       
+
         // Redirect to the freelancer settings page
         return redirect()->route('freelancer-settings');
+    }
+
+    public function updateTerms(Request $request, $id)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'terms_and_conditions' => 'required|string|max:500',
+        ]);
+
+        //find the freelancer
+        $freelancer = Freelancer::findOrfail($id);
+
+        $freelancer->terms_and_conditions = $validatedData['terms_and_conditions'];
+
+        $freelancer->save();
+
+        return redirect()->back();
     }
 }

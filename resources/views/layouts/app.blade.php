@@ -24,7 +24,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+
 
 
     <!-- Scripts -->
@@ -140,8 +140,7 @@
                                 <a class="dropdown-item" href="/freelancer-profile">Profile</a>
                                 <a class="dropdown-item" href="freelancer-settings">Setting</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault();
-                         document.getElementById('logout-form').submit();">
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
 
@@ -181,6 +180,9 @@
                     @endif
                     @endauth
                 </div>
+
+                @auth
+                @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
                     <a class="nav-link" href="{{ url('/client-events') }}" style="font-size:x-small;">
                         <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
@@ -199,6 +201,27 @@
                         <div>Messages</div>
                     </a>
                 </div>
+                @elseif (Auth::user()->user_type == 'freelancer')
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
+                        <div>My Jobs</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/transaction.svg" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
+                        <div>My Transaction</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <img src="assets/chat.svg" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                        <div>Messages</div>
+                    </a>
+                </div>
+                @endif
+                @endauth
             </div>
         </div>
     </nav>

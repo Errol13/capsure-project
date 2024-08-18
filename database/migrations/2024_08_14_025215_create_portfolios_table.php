@@ -15,11 +15,11 @@ return new class extends Migration
         Schema::create('portfolios', function (Blueprint $table) {
             $table->id('portfolio_id');
             $table->foreignId('freelancer_id')->constrained('freelancers', 'user_id')->onUpdate('cascade')->onDelete('cascade');
-            $table->string('album_name',255);
+            $table->string('album_name', 255);
+            $table->json('path')->nullable(); // Store file paths in JSON format
             $table->timestamps();
+            $table->unique(['freelancer_id', 'album_name']); // Ensure uniqueness of combination
         });
-
-        DB::statement('ALTER TABLE freelancers ADD COLUMN image TEXT[]');
     }
 
     /**

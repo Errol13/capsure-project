@@ -40,6 +40,7 @@ Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\Se
 Route::patch('/freelancer/services/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateServices'])->name('service.update');
 Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceController::class, 'addService'])->name('service.add');
 Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
+Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
 
 #My Events Page Client
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
