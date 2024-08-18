@@ -663,6 +663,7 @@ tbody td:nth-child(5){
     background-color: #8FE2ED;
     color: black;
     text-decoration: none;
+    border: none;
 }
 
 .event-title {

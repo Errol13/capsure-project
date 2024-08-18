@@ -9,6 +9,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+
 
 class SettingsController extends Controller
 {
@@ -75,22 +77,30 @@ class SettingsController extends Controller
             'job_fee' => 'required|numeric',
             'fee_type' => 'required|string',
             'job_category' => 'required|string',
-            'availability' => 'required|string',
+            'availability' => 'required|string|in:available,not_available',
         ]);
+
+
 
         // Find the service by ID
         $service = Service::findOrFail($serviceId);
 
-        $user = $request->user();
+        // Convert availability to boolean for isAvailable
+        $isAvailable = strtolower($request->availability) === 'available';
 
-        // Ensure the service belongs to the current freelancer
-        if ($service->freelancer_id !== $user->freelancer->id) {
-            return redirect()->back()->with('error', 'Unauthorized action.');
-        }
+        // Update the service attributes
+        $service->job_title = $validatedData['job_title'];
+        $service->job_fee = $validatedData['job_fee'];
+        $service->fee_type = $validatedData['fee_type'];
+        $service->job_category = $validatedData['job_category'];
+        $service->isAvailable = $isAvailable;
 
-        // Update the service with the validated data
-        $service->update($validatedData);
 
-        return redirect()->back()->with('success', 'Service updated successfully.');
+        // Save the updated service
+        $service->save();
+
+       
+        // Redirect to the freelancer settings page
+        return redirect()->route('freelancer-settings');
     }
 }

@@ -63,6 +63,7 @@
                     <li class="nav-item border" role="presentation">
                         <a class="nav-link" id="services-tab" data-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
                     </li>
+
                     <li class="nav-item border" role="presentation">
                         <a class="nav-link" id="portfolio-tab" data-toggle="tab" href="#portfolio" role="tab" aria-controls="portfolio" aria-selected="false">Portfolio</a>
                     </li>
@@ -78,7 +79,7 @@
 
                             <!-- Edit Button -->
                             <div class="text-end" id="edit-button" onclick="enableEditMode()">
-                                <i class="fas fa-solid fa-pen-to-square mb-2 me-2"></i><span>Edit</span>
+                                <i class="fas fa-solid fa-pen-to-square mb-2 me-2 mt-2"></i><span>Edit</span>
                             </div>
 
                             <div class="form-group">
@@ -203,6 +204,10 @@
 
                     <!-- Services Tab -->
                     <div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="services-tab">
+
+                        <!--Accordion for Terms of Service -->
+                        @include('components.f_terms_service', ['freelancer' => $user->freelancer])
+
                         <!-- Add New Service Button -->
                         <div class="text-end mt-3 d-flex align-items-center">
                             <p class="mb-0 me-2 poppins-medium">Add Service</p>
@@ -211,116 +216,21 @@
                             </button>
                         </div>
                         <!-- Modal for adding new services-->
-                        @include('modals.addService_modal')
+                        @include('modals.addService_modal', ['freelancer_id'=> $user->id])
 
-                        @foreach ($user->freelancer->services as $index => $service)
-                        <form action="/freelancer/services/update/{{ $service->id }}" method="POST" id="services-form-{{ $service->id }}">
-                            @csrf
-                            @method ('PATCH')
-                            <div id="services-list">
-                                <!-- Existing services -->
-
-                                <div class="service-item" data-id="{{ $index + 1 }}">
-                                    <div class="row align-items-center">
-                                        <div class="col-md-4">
-                                            <label for="Job Title" class="form-label">Job Title</label>
-                                            <input type="text" class="form-control" name="services[{{ $index }}][job_title]" value="{{ $service->job_title }}" readonly>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="row">
-                                                <div class="col-6">
-                                                    <label for="Job Fee" class="form-label">Job Fee</label>
-                                                    <div class="row">
-                                                        <div class="col-8">
-                                                            <input type="text" class="form-control me-0" name="services[{{ $index }}][job_fee]" value="{{ $service->job_fee }}" readonly>
-                                                        </div>
-                                                        <div class="col-4">
-                                                            <p class="fs-6 my-2 ms-0 text-start text-muted">pesos</p>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="col-6">
-                                                    <label for="Fee Type" class="form-label">Fee Type</label>
-                                                    <select name="services[{{ $index }}][fee_type]" class="form-control" disabled>
-                                                        <option value="" disabled {{ old('services.' . $index . '.fee_type', $service->fee_type) === '' ? 'selected' : '' }}></option>
-                                                        <option value="/hour" {{ old('services.' . $index . '.fee_type', $service->fee_type) === '/hour' ? 'selected' : '' }}>/hr</option>
-                                                        <option value="/project" {{ old('services.' . $index . '.fee_type', $service->fee_type) === '/project' ? 'selected' : '' }}>/project</option>
-                                                    </select>
-                                                    @error('services.' . $index . '.fee_type')
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                    @enderror
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                        <div class="col-md-3">
-                                            <label for="Job Category" class="form-label">Job Category</label>
-                                            <select name="services[{{ $index }}][job_category]" class="form-control" disabled>
-                                                <option value="" {{ old('services.' . $index . '.job_category', $service->job_category) ? '' : 'selected' }}></option>
-                                                <option value="Arts" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Arts' ? 'selected' : '' }}>Arts</option>
-                                                <option value="Entertainment" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
-                                                <option value="Event Planner" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Event Planner' ? 'selected' : '' }}>Event Planner</option>
-                                                <option value="Food Service" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Food Service' ? 'selected' : '' }}>Food Service</option>
-                                                <option value="Handicrafts" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
-                                                <option value="Online Services" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Online Services' ? 'selected' : '' }}>Online Services</option>
-                                                <option value="Photography" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Photography' ? 'selected' : '' }}>Photography</option>
-                                                <option value="Styling" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Styling' ? 'selected' : '' }}>Styling</option>
-                                                <option value="Videography" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Videography' ? 'selected' : '' }}>Videography</option>
-                                                <option value="Voice Talent" {{ old('services.' . $index . '.job_category', $service->job_category) == 'Voice Talent' ? 'selected' : '' }}>Voice Talent</option>
-                                            </select>
-                                            @error('services.' . $index . '.job_category')
-                                            <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                            @enderror
-                                        </div>
-
-
-                                        <div class="col-md-3">
-                                            <label for="Availability" class="form-label">Availability</label>
-                                            <select name="services[{{ $index }}][availability]" class="form-control" disabled>
-                                                <option class="text-success" value="available" {{ $service->isAvailable ? 'selected' : '' }}>Available</option>
-                                                <option class="text-danger" value="not_available" {{ !$service->isAvailable ? 'selected' : '' }}>Not Available</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-md-2 text-end">
-                                            <i class="fas fa-pen-to-square me-2" onclick="editService('{{ $index + 1 }}')"></i>
-                                            <i class="fas fa-trash" onclick="deleteService('{{ $index + 1 }}')"></i>
-                                        </div>
-                                    </div>
-                                    <div class="text-end mt-2">
-                                        <button type="button" class="btn btn-primary d-none save-btn" id="save-btn-{{ $service->id }}" onclick="saveService('{{ $service->id }}')">Save</button>
-                                        <button type="button" class="btn btn-secondary d-none cancel-btn" id="cancel-btn-{{ $index + 1 }}" onclick="cancelEdit('{{ $index + 1 }}')">Cancel</button>
-                                    </div>
-                                </div>
-
-                            </div>
-                        </form>
+                        @foreach ($user->freelancer->services as $service)
+                        @include('components.f_update_services', ['service' => $service])
                         @endforeach
 
                     </div>
 
-
                     <!-- Portfolio Tab -->
                     <div class="tab-pane fade" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
-                        <form action="/save-portfolio" method="POST">
-                            @csrf
-                            <!-- Portfolio form fields here -->
-                            <div class="form-group">
-                                <label for="portfolio-title">Portfolio Title</label>
-                                <input type="text" class="form-control" id="portfolio-title" name="portfolio_title" value="{{ old('portfolio_title') }}">
-                            </div>
-                            <div class="form-group text-center">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" onclick="window.location.href='/settings';">Cancel</button>
-                            </div>
-                        </form>
+                        <!-- Modal Trigger -->
+                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
+                            Create Album
+                        </button>
+                        @include('modals.f_add_portfolio', ['user' => $user])
                     </div>
                 </div>
         </section>
@@ -329,8 +239,6 @@
     <div class="mt-5"></div>
 </div>
 
-
-<!-- JavaScript to enable/disable edit mode -->
 <script>
     function enableEditMode() {
         // Enable form fields
@@ -368,50 +276,6 @@
         } else {
             field.type = "password";
             button.innerHTML = '<i class="fas fa-eye"></i>';
-        }
-    }
-
-    //for Services 
-    let serviceCount = <?php echo count($user->freelancer->services); ?>;
-    let serviceCounter = {
-        count: serviceCount
-    }; // Initialize counter based on existing services
-
-    function editService(id) {
-        const serviceItem = document.querySelector(`[data-id="${id}"]`);
-        serviceItem.querySelectorAll('input, select').forEach((input) => {
-            input.removeAttribute('readonly');
-            input.removeAttribute('disabled');
-        });
-        serviceItem.querySelector('.save-btn').classList.remove('d-none');
-        serviceItem.querySelector('.cancel-btn').classList.remove('d-none');
-    }
-
-    function cancelEdit(id) {
-        const serviceItem = document.querySelector(`[data-id="${id}"]`);
-        serviceItem.querySelectorAll('input, select').forEach((input) => {
-            input.setAttribute('readonly', 'readonly');
-            input.setAttribute('disabled', 'disabled');
-        });
-        serviceItem.querySelector('.save-btn').classList.add('d-none');
-        serviceItem.querySelector('.cancel-btn').classList.add('d-none');
-    }
-
-    function deleteService(id) {
-        if (confirm('Are you sure you want to delete this service?')) {
-            // Perform deletion (AJAX or form submission)
-            // You might need a separate route and method to handle deletions
-            document.querySelector(`[data-id="${id}"]`).remove();
-        }
-    }
-
-    function saveService(serviceId) {
-        // Select the form based on the unique service ID
-        const form = document.getElementById(`services-form-${serviceId}`);
-        if (form) {
-            form.submit();
-        } else {
-            console.error('Form not found for service ID:', serviceId);
         }
     }
 </script>

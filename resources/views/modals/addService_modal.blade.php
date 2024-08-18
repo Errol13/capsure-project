@@ -2,11 +2,11 @@
     <div class="modal-dialog ">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addServiceModalLabel">New Service</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="add-service-form">
+                <form action="{{ route('service.add', ['id' => $freelancer_id]) }}" method="POST" id="add-service-form">
+                    @csrf
                     <div class="mb-3">
                         <label for="job_title" class="form-label">Job Title</label>
                         <input type="text" class="form-control" id="job_title" name="job_title">
@@ -16,35 +16,10 @@
                         </span>
                         @enderror
                     </div>
-                    <div class="mb-3">
-                        <label for="job_fee" class="form-label">Job Fee</label>
-                        <input type="text" class="form-control" id="job_fee" name="job_fee">
-
-                        @error('job_fee')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="fee_type" class="form-label">Fee Type</label>
-                        <select class="form-control" id="fee_type" name="fee_type">
-                            <option value="" disabled selected></option>
-                            <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
-                            <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
-                        </select>
-
-                        @error('fee_type')
-                        <span class="invalid-feedback" role="alert">
-                            <strong>{{ $message }}</strong>
-                        </span>
-                        @enderror
-                    </div>
 
                     <div class="mb-3">
                         <label for="job_category" class="form-label">Job Category</label>
-                        <select class="form-control" id="job_category" name="job_category">
+                        <select class="form-select" id="job_category" name="job_category">
                             <option value="" disabled selected></option>
                             <option value="Arts" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
                             <option value="Entertainment" {{ old('job_category') == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
@@ -65,6 +40,40 @@
                         </select>
                     </div>
 
+                    <div class="row">
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="job_fee" class="form-label">Job Fee</label>
+                                <input type="text" class="form-control" id="job_fee" name="job_fee">
+
+                                @error('job_fee')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-6">
+                            <div class="mb-3">
+                                <label for="fee_type" class="form-label">Fee Type</label>
+                                <select class="form-select" id="fee_type" name="fee_type">
+                                    <option value="" disabled selected></option>
+                                    <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
+                                    <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
+                                </select>
+
+                                @error('fee_type')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+                            </div>
+
+                        </div>
+
+                    </div>
+
                     <div class="mb-3">
                         <label for="availability" class="form-label">Availability</label>
                         <select class="form-control" id="availability" name="availability">
@@ -72,7 +81,7 @@
                             <option value="not_available">Not Available</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn-save px-4">Add</button>
+                    <button type="submit" class="btn-verify px-5">Add Service</button>
                 </form>
             </div>
         </div>
