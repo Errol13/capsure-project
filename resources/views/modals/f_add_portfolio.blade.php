@@ -2,7 +2,7 @@
 <div class="modal fade" id="albumModal" tabindex="-1" aria-labelledby="albumModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ route('albums.create') }}" method="POST" enctype="multipart/form-data">
+            <form id="albumForm" action="{{ route('portfolio.add', ['id' => $freelancer->user_id]) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <!-- Modal Header -->
                 <div class="modal-header">
@@ -15,11 +15,16 @@
                         <!-- Left Panel -->
                         <div class="col-md-4">
                             <div class="mb-4">
-                                <input type="text" class="form-control" placeholder="Add Album Title" name="album_name" />
+                                <input type="text" class="form-control" placeholder="Add Album Title" name="album_name" id="albumName" required />
                             </div>
                             <div class="mb-4">
-                                <!-- File Input -->
-                                <input type="file" id="fileUpload" name="files[]" class="form-control" multiple />
+                                <!-- Hidden File Input -->
+                                <input type="file" id="fileUpload" name="files[]" class="d-none" multiple accept="image/*,video/*" onchange="previewFiles(event)" />
+                                <!-- Custom Upload Button -->
+                                <button type="button" class="btn btn-light w-100" onclick="document.getElementById('fileUpload').click();">
+                                    <i class="fas fa-upload"></i> Upload Images/Files
+                                </button>
+                                <div id="filePreviewContainer" class="mt-3"></div>
                                 <button type="submit" class="btn btn-primary w-100 mt-2">Post</button>
                             </div>
                         </div>
@@ -38,12 +43,11 @@
     </div>
 </div>
 
-
-
 <script>
     function previewFiles(event) {
         const files = event.target.files;
         const previewContainer = document.getElementById('filePreviewContainer');
+        const fileInput = document.getElementById('fileUpload');
 
         // Get current number of previews
         const existingPreviews = previewContainer.querySelectorAll('div.position-relative').length;
@@ -55,6 +59,9 @@
             event.target.value = ''; // Clear the file input
             return;
         }
+
+        // Clear previous previews
+        previewContainer.innerHTML = '';
 
         Array.from(files).forEach(file => {
             if (existingPreviews >= maxFiles) return; // Stop if we reach the limit
@@ -70,13 +77,13 @@
                     mediaElement = document.createElement('img');
                     mediaElement.src = e.target.result;
                     mediaElement.classList.add('img-fluid', 'rounded');
-                    mediaElement.style.maxWidth = '200px'; // 
+                    mediaElement.style.maxWidth = '200px'; // Adjust width as needed
                 } else if (file.type.startsWith('video/')) {
                     mediaElement = document.createElement('video');
                     mediaElement.src = e.target.result;
                     mediaElement.controls = true;
                     mediaElement.classList.add('img-fluid', 'rounded');
-                    mediaElement.style.maxWidth = '200px'; 
+                    mediaElement.style.maxWidth = '200px'; // Adjust width as needed
                 }
 
                 fileDiv.appendChild(mediaElement);
@@ -87,6 +94,19 @@
                 removeButton.classList.add('position-absolute', 'top-0', 'end-0', 'btn', 'btn-danger', 'btn-sm');
                 removeButton.innerHTML = '<i class="fas fa-trash-alt"></i>';
                 removeButton.onclick = function() {
+                    // Remove the file from input
+                    const fileIndex = Array.from(fileInput.files).indexOf(file);
+                    if (fileIndex > -1) {
+                        const dataTransfer = new DataTransfer();
+                        Array.from(fileInput.files).forEach((f, i) => {
+                            if (i !== fileIndex) {
+                                dataTransfer.items.add(f);
+                            }
+                        });
+                        fileInput.files = dataTransfer.files;
+                    }
+
+                    // Remove the preview
                     fileDiv.remove();
                 };
 
@@ -97,4 +117,21 @@
             reader.readAsDataURL(file);
         });
     }
+
+    document.getElementById('albumForm').addEventListener('submit', function(event) {
+        const albumName = document.getElementById('albumName').value.trim();
+        const fileUpload = document.getElementById('fileUpload').files.length;
+
+        if (!albumName) {
+            alert('Please add an album title.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+
+        if (fileUpload === 0) {
+            alert('Please upload at least one file.');
+            event.preventDefault(); // Prevent form submission
+            return;
+        }
+    });
 </script>

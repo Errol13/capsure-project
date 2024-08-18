@@ -42,6 +42,9 @@ Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceContro
 Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
 Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
 
+#portfolio 
+Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
+
 #My Events Page Client
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
 Route::get('client-viewpost', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');

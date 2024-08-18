@@ -13,17 +13,16 @@ class Portfolio extends Model
     protected $fillable = [
         'portfolio_id',
         'album_name',
-        'image',
+        'path',
         'freelancer_id',
     ];
 
-    protected $casts = [
-        'image' => 'array',
-    ];
+    protected $primaryKey = 'portfolio_id';
 
+    public $incrementing = true;
 
     public function freelancer()
     {
-        return $this->belongsTo(Freelancer::class, 'user_id');
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 }

@@ -230,7 +230,10 @@
                         <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
                             Create Album
                         </button>
-                        @include('modals.f_add_portfolio', ['user' => $user])
+                        @include('modals.f_add_portfolio', ['freelancer' => $user->freelancer])
+                        <div class="mt-2">
+                            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+                        </div>
                     </div>
                 </div>
         </section>
