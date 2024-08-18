@@ -132,7 +132,7 @@
                                         <p class="card-text open-sans-light small text-success mb-0">10 Projects done</p>
                                     </div>
                                     <div class="ms-auto d-flex align-items-center">
-                                        <span class="text-warning me-1">★</span>
+                                        <span class="me-1">⭐</span>
                                         <span class="fw-bold">4.9</span>
                                         <span class="text-muted small ms-1">(10)</span>
                                     </div>

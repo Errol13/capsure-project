@@ -14,4 +14,8 @@ class EventsController extends Controller
     public function showMyEvents(){
         return view('client.c_myEvents');
     }
+
+    public function showViewPost(){
+        return view('client.c_viewpost');
+    }
 }

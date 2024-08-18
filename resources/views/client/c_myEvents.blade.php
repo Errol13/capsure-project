@@ -16,9 +16,9 @@
                         <button class="btn btn-secondary dropdown-toggle" style="background-color: white; border-radius:12px; color:black; border-color:lightgray;" type="button" id="filterToggleButton" data-bs-toggle="dropdown" aria-expanded="false">
                             Filter
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="filterToggleButton">
-                            <li><a class="dropdown-item" href="#">Client</a></li>
-                            <li><a class="dropdown-item" href="#">Freelancer</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end mb-1" style="background-color: white;" aria-labelledby="filterToggleButton">
+                            <li><a class="dropdown-item" href="#">Open</a></li>
+                            <li><a class="dropdown-item" href="#">Closed</a></li>
                         </ul>
                     </div>
                 </div>
@@ -85,7 +85,7 @@
                                 <td><?php echo $post['request']; ?></td>
                                 <td><?php echo $post['hired']; ?></td>
                                 <td>
-                                    <a href="#" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
+                                    <a href="{{ url('/client-viewpost') }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
                                     <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
                                 </td>
                             </tr>
@@ -97,7 +97,7 @@
             <!-- Small Screens -->
             <div class="d-block d-md-none mt-3">
                 <?php foreach ($posts as $post): ?>
-                    <div class="card mb-3">
+                    <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                         <div class="card-body">                            
                             <span class="badge bg-success me-2 mb-3"><?php echo $post['status']; ?></span>
                             <small>Created <?php echo $post['created']; ?></small>
@@ -107,7 +107,7 @@
                             <p class="mt-2 mb-0">Pending application: <?php echo $post['pending']; ?></p>
                             <p class="mb-0">Hiring request: <?php echo $post['request']; ?></p>
                             <p class="mb-2">Hired: <?php echo $post['hired']; ?></p>
-                            <a href="#" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
+                            <a href="{{ url('/client-viewpost') }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
                             <a href="#" class="btn btn-danger ms-2" style="border:none; border-radius: 12px;">Cancel</a>
                         </div>
                     </div>
