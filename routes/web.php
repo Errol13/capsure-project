@@ -44,3 +44,4 @@ Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\Sett
 
 #My Events Page Client
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
+Route::get('client-viewpost', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
