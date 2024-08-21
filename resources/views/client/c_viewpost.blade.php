@@ -345,7 +345,6 @@
                     </div>
                 </div>
 
-
                 <!-- Recommendation Tab -->
                 <div class="tab-pane fade" id="recommendation" role="tabpanel" aria-labelledby="recommendation-tab">
                     <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
