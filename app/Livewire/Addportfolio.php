@@ -27,7 +27,9 @@ class Addportfolio extends Component
 
     public function updatedFiles()
     {
-        $this->files = array_unique(array_merge($this->files, $this->files), SORT_REGULAR);
+        // Append new files to the existing ones without duplicating
+        $newFiles = $this->files;
+        $this->files = array_unique(array_merge($this->files, $newFiles), SORT_REGULAR);
     }
 
     public function removeFile($index)

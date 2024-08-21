@@ -23,17 +23,32 @@
 
                 <div class="row text-center mb-1 mt-4">
                     <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center ">
+                            @if ($user->isVerified == true)
+                            <i class="fs-5 fas fa-check-circle" style="color: #8FE2ED;"></i>
+                            @else
                             <i class="fs-5 fas fa-check-circle" style="color: #BEBEBE;"></i>
+                            @endif
                         </div>
                         <div class="ms-2 me-4">
-                            <a href="#" class="mb-0 fs-5 text-start txt-purple">Verify Account</a>
+                            @if ($user->isVerified == true)
+                            <button class="px-3 rounded-3 btn-verified fs-6 open-sans-reg fw-bold">Verified</button>
+                            @else
+                            <a href="#" class="mb-0 text-start">
+                                <button class="rounded-3 btn-verify fs-6 open-sans-reg">Verify Account</button>
+                            </a>
+                            @endif
                         </div>
-                        <div class="d-flex align-items-center ms-2">
-                            <i class="fs-5 fas fa-user" style="color: #BEBEBE;"></i>
+                        <div class="d-flex align-items-center ms-2 ">
+                            <i class=" ms-4 fs-5 fas fa-user" style="color: #BEBEBE;"></i>
                         </div>
-                        <div class="ms-2 me-2">
-                            <a href="#" class="mb-0 fs-5 text-start txt-purple">Be a Client</a>
+                        <div class="ms-2 me-2 ">
+                            <a href="#" class="mb-0 text-start">
+                                @if ($user->user_type === 'client')
+                                <button class=" px-3 rounded-3 btn-save fs-6">Be a Freelancer</button></a>
+                                @else
+                                <button class=" px-3 rounded-3 btn-save fs-6">Be a Client</button></a>
+                                @endif
                         </div>
                     </div>
                 </div>
@@ -44,13 +59,15 @@
                             <i class="fs-5 fas fa-users" style="color: #BEBEBE;"></i>
                         </div>
                         <div class="ms-2 me-4">
-                            <a href="#" class="mb-0 fs-5 text-start txt-purple">Join/Create Team</a>
+                            <a href="#" class="mb-0  text-start txt-purple">
+                                <button class="rounded-3 btn-save fs-6">Join/Create Team</button></a>
                         </div>
                         <div class="d-flex align-items-center ms-2">
                             <i class="fs-5 fas fa-trash " style="color: #BEBEBE;"></i>
                         </div>
                         <div class="ms-2 me-2">
-                            <a href="#" class="mb-0 fs-5 text-start text-danger">Delete Account</a>
+                            <a href="#" class="mb-0  text-start text-danger">
+                                <button class="rounded-3 btn-cancel text-danger fs-6">Delete Account</button></a>
                         </div>
                     </div>
                 </div>
@@ -62,6 +79,9 @@
                     </li>
                     <li class="nav-item border" role="presentation">
                         <a class="nav-link" id="services-tab" data-bs-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
+                    </li>
+                    <li class="nav-item border" role="presentation">
+                        <a class="nav-link" id="contacts-tab" data-bs-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a>
                     </li>
 
                     <li class="nav-item border" role="presentation">
@@ -224,6 +244,11 @@
 
                     </div>
 
+                    <!-- Contacts Tab -->
+                    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
+                        @include('components.social_media', ['socmed' => $user->socmed])
+                    </div>
+
                     <!-- Portfolio Tab -->
                     <div class="tab-pane fade" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
                         <!-- Modal Trigger -->
@@ -231,7 +256,7 @@
                             Create Album
                         </button>
                         <livewire:addportfolio :freelancer_id="$user->id" />
-                        
+
                         <div class="mt-2">
                             @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
                         </div>
@@ -239,6 +264,10 @@
                 </div>
         </section>
 
+        <section id="desktopview">
+            <!--Settinga -->
+            @include('components.f_settings_desktop')
+        </section>
     </div>
     <div class="mt-5"></div>
 </div>

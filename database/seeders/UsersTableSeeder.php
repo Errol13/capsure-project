@@ -15,9 +15,10 @@ class UsersTableSeeder extends Seeder
         $users = [];
         $clients = [];
         $freelancers = [];
+        $socialMedia = [];
 
         for ($i = 1; $i <= 40; $i++) {
-            
+
             $isFreelancer = $i % 2 === 0; // Even IDs for freelancers, odd IDs for clients
             $firstName = $isFreelancer ? "Daisy" : "Will";
             $lastName = "Smith" . $i;
@@ -61,6 +62,7 @@ class UsersTableSeeder extends Seeder
                     'user_id' => $i,
                 ];
             }
+
         }
 
         // Insert users
@@ -71,5 +73,24 @@ class UsersTableSeeder extends Seeder
 
         // Insert freelancers
         DB::table('freelancers')->insert($freelancers);
+
+        //create socmed
+         $socialMediaAccounts = [
+            ['platform' => 'Facebook', 'url' => ''],
+            ['platform' => 'LinkedIn', 'url' => ''],
+            ['platform' => 'Instagram', 'url' => '']
+        ];
+
+        foreach ($users as $user) {
+            foreach ($socialMediaAccounts as $socialMedia) {
+                DB::table('social_media_accounts')->insert([
+                    'user_id' => $user['id'],
+                    'platform' => $socialMedia['platform'],
+                    'url' => $socialMedia['url'],
+                    'created_at' => Carbon::now(),
+                    'updated_at' => Carbon::now(),
+                ]);
+            }
+        }
     }
 }

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->string('platform',255);
-            $table->text('text');
+            $table->text('url');
             $table->timestamps();
         });
     }

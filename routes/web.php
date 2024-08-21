@@ -43,6 +43,10 @@ Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceContro
 Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
 Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
 
+#socmed
+Route::get('/social-media', [App\Http\Controllers\Profile\SocMedController::class, 'showSocMed'])->name('social-media');
+Route::patch('/social-media/{platform}/update', [App\Http\Controllers\Profile\SocMedController::class, 'updateSocMed'])->name('social-media.update');
+
 #portfolio 
 Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
 

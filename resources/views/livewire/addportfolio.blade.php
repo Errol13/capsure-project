@@ -56,10 +56,7 @@
                                 <button type="submit" class="btn btn-primary w-100 mt-2">Post</button>
                             </div>
                         </div>
-                        <!-- Right Panel -->
-                        <div class="col-md-8 d-flex justify-content-center align-items-center">
-                            <!-- Display uploaded files preview here -->
-                        </div>
+                       
                     </div>
                 </div>
                 <!-- Modal Footer -->

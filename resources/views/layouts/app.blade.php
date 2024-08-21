@@ -146,7 +146,7 @@
                                 </a>
                                 @elseif (Auth::user()->user_type == 'freelancer')
                                 <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                <a class="dropdown-item" href="freelancer-settings">Setting</a>
+                                <a class="dropdown-item" href="/freelancer-settings">Setting</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}

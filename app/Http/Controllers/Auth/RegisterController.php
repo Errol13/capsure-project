@@ -7,6 +7,7 @@ use App\Models\Client;
 use App\Models\Freelancer;
 use App\Models\Profile\Service as ProfileService;
 use App\Models\Service;
+use App\Models\SocialMediaAccount;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -44,7 +45,7 @@ class RegisterController extends Controller
             'last_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'contact_number' => ['nullable', 'numeric' ,'digits:11'],
+            'contact_number' => ['nullable', 'numeric', 'digits:11'],
         ]);
     }
 
@@ -113,7 +114,18 @@ class RegisterController extends Controller
             'city' => $data['city'] ?? null,
             'contact_number' => $data['contact_number'] ?? null,
         ]);
-        
+
+        // Define the platforms
+        $platforms = ['Facebook', 'LinkedIn', 'Instagram'];
+
+        foreach ($platforms as $platform) {
+            SocialMediaAccount::create([
+                'user_id' => $user->id,
+                'platform' => $platform,
+                'url' => '', // Initialize with empty URL
+            ]);
+        }
+
         Client::create([
             'user_id' => $user->id,
         ]);
@@ -141,6 +153,17 @@ class RegisterController extends Controller
             'city' => $data['city'] ?? null,
             'contact_number' => $data['contact_number'] ?? null,
         ]);
+
+        // Define the platforms
+        $platforms = ['Facebook', 'LinkedIn', 'Instagram'];
+
+        foreach ($platforms as $platform) {
+            SocialMediaAccount::create([
+                'user_id' => $user->id,
+                'platform' => $platform,
+                'url' => '', // Initialize with empty URL
+            ]);
+        }
 
         Freelancer::create([
             'user_id' => $user->id,
