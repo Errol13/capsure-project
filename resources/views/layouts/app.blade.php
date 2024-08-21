@@ -135,9 +135,7 @@
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <i class="fas fa-user"></i>
                                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->user_type == 'client')
                                 <a class="dropdown-item" href="#">Profile</a>
