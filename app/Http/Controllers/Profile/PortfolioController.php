@@ -26,6 +26,11 @@ class PortfolioController extends Controller
             return redirect()->back()->withErrors(['files' => 'Please upload files.']);
         }
 
+        // Check if the album name already exists for this freelancer
+        if (Portfolio::where('freelancer_id', $id)->where('album_name', $request->input('album_name'))->exists()) {
+            return redirect()->back()->withErrors(['album_name' => 'The album name already exists!']);
+        }
+
         // Create a new portfolio
         $portfolio = new Portfolio();
         $portfolio->freelancer_id = $id;
@@ -45,11 +50,12 @@ class PortfolioController extends Controller
         $portfolio->path = json_encode($paths);
         $portfolio->save();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Portfolio created successfully.');
     }
 
 
-    public function showPortfolios()
+
+    public function addToAlbum()
     {
         //
     }

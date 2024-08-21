@@ -21,6 +21,8 @@ class SettingsController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
+        $socmed = $user->socmed()->orderBy('id', 'asc')->get();
+
         if ($user->user_type == 'freelancer') {
             // Load related data for freelancers with ordering
             $user->load([
@@ -31,7 +33,7 @@ class SettingsController extends Controller
                     $query->orderBy('cert_id', 'asc');
                 },
                 'freelancer.portfolios' => function ($query) {
-                    $query->orderBy('portfolio_id', 'asc'); 
+                    $query->orderBy('portfolio_id', 'asc');
                 }
             ]);
 

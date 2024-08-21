@@ -23,16 +23,17 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
 
-
+    @livewireStyles
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
+
+
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -185,12 +186,21 @@
                                 <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                <a class="dropdown-item" href="freelancer-settings">Setting</a>
+                                @if(Auth::user()->user_type == 'client')
+                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="#">Setting</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
                                 </a>
+                                @elseif (Auth::user()->user_type == 'freelancer')
+                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                <a class="dropdown-item" href="/freelancer-settings">Setting</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                @endif
 
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                     @csrf
@@ -206,7 +216,7 @@
 
         <main class="mx-1 pb-4 mb-2">
             @yield('content')
-
+        
         </main>
     </div>
 
@@ -273,6 +283,9 @@
             </div>
         </div>
     </nav>
+
+    @livewireScripts
+
 </body>
 
 </html>
