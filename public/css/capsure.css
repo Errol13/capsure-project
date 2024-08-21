@@ -616,6 +616,17 @@ tbody td:nth-child(5){
     padding-right: 60px;
 }
 
+.offer-table th:nth-child(1), .offer-table th:nth-child(2),
+.offer-table td:nth-child(1), .offer-table td:nth-child(2) {
+    text-align: center; /* Horizontal alignment */
+    vertical-align: middle; /* Vertical alignment */
+    padding: 12px; /* Adjust padding as needed */
+}
+
+.offer-table {
+    margin: 0 auto; /* Centers the table within its container */
+}
+
 
 .nav-link.active {
     position: relative;
