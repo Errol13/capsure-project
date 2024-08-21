@@ -71,7 +71,7 @@
             </div>
         </div>
     </div>
-
+    <!-- -------------------------------------------------------------------------------------------------------------------------------- -->
     <div class="card mt-4 py-2">
         <div class="container mt-2">
             <?php
@@ -89,7 +89,7 @@
                 'recommendation' => 6,
             ];
 
-            // Sample data for applicants (as you provided)
+            // Sample data for applicants
             $applicants = [
                 [
                     'name' => 'Daisy Maureen Dimasuay',
@@ -121,10 +121,104 @@
                     'profile_image' => 'assets/profilepic.svg',
                     'chat_icon' => 'assets/chat-application.svg'
                 ],
+                [
+                    'name' => 'Daisy Maureen Dimasuay',
+                    'location' => 'Naga City',
+                    'projects_done' => 10,
+                    'rating' => '⭐4.9 (10)',
+                    'role' => 'Photographer',
+                    'fee' => '₱700 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                    'chat_icon' => 'assets/chat-application.svg'
+                ],
             ];
+
+            // Sample data for hiring request
+            $hiring = [
+                [
+                    'name' => 'Phoebe Castro',
+                    'location' => 'Calabanga City',
+                    'projects_done' => 10,
+                    'rating' => '⭐4.5 (10)',
+                    'role' => 'Make-up Artist',
+                    'fee' => '₱500 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                ],
+                [
+                    'name' => 'Phoebe Castro',
+                    'location' => 'Calabanga City',
+                    'projects_done' => 10,
+                    'rating' => '⭐4.5 (10)',
+                    'role' => 'Make-up Artist',
+                    'fee' => '₱500 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                ],
+                [
+                    'name' => 'Phoebe Castro',
+                    'location' => 'Calabanga City',
+                    'projects_done' => 10,
+                    'rating' => '⭐4.5 (10)',
+                    'role' => 'Make-up Artist',
+                    'fee' => '₱500 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                ],
+                [
+                    'name' => 'Phoebe Castro',
+                    'location' => 'Calabanga City',
+                    'projects_done' => 10,
+                    'rating' => '⭐4.5 (10)',
+                    'role' => 'Make-up Artist',
+                    'fee' => '₱500 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                ],
+            ];
+
+            // Sample data for recommendation
+            $recomm = [
+                [
+                    'name' => 'Errol Celis',
+                    'location' => 'Pasay City',
+                    'projects_done' => 9,
+                    'rating' => '⭐5 (10)',
+                    'role' => 'Videographer',
+                    'fee' => '₱1000 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                    'chat_icon' => 'assets/chat-application.svg'
+                ],
+                [
+                    'name' => 'Errol Celis',
+                    'location' => 'Pasay City',
+                    'projects_done' => 9,
+                    'rating' => '⭐5 (10)',
+                    'role' => 'Videographer',
+                    'fee' => '₱1000 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                    'chat_icon' => 'assets/chat-application.svg'
+                ],
+                [
+                    'name' => 'Errol Celis',
+                    'location' => 'Pasay City',
+                    'projects_done' => 9,
+                    'rating' => '⭐5 (10)',
+                    'role' => 'Videographer',
+                    'fee' => '₱1000 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                    'chat_icon' => 'assets/chat-application.svg'
+                ],
+                [
+                    'name' => 'Errol Celis',
+                    'location' => 'Pasay City',
+                    'projects_done' => 9,
+                    'rating' => '⭐5 (10)',
+                    'role' => 'Videographer',
+                    'fee' => '₱1000 per hour',
+                    'profile_image' => 'assets/profilepic.svg',
+                    'chat_icon' => 'assets/chat-application.svg'
+                ],
+            ];
+
             ?>
 
-            <!-- Nav tabs -->
             <!-- Nav tabs -->
             <ul class="nav nav-fill pt-2 poppins-medium" style="background-color: #FCF2F9; position: relative;">
                 <?php foreach ($tabs as $tabId => $tabName): ?>
@@ -136,10 +230,10 @@
                             role="tab"
                             aria-controls="<?php echo $tabId; ?>"
                             aria-selected="<?php echo $tabId === 'application' ? 'true' : 'false'; ?>"
-                            style="color:black; position: relative;">
+                            style="color:black; position:relative;">
                             <h6>
                                 <?php echo $tabName; ?>
-                                <span class="badge text-black" style="background-color: #8FE2ED; border-radius:100px">
+                                <span class="badge text-black" style="background-color: #8FE2ED; border-radius:150px">
                                     <?php echo $badgeCounts[$tabId]; ?>
                                 </span>
                             </h6>
@@ -149,6 +243,7 @@
             </ul>
 
 
+
             <!-- Tab content -->
             <div class="tab-content">
 
@@ -156,10 +251,8 @@
                 <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
-                            <?php
-                            foreach ($applicants as $applicant) {
-                            ?>
-                                <div class="col-12 col-md-6 mb-3">
+                            <?php foreach ($applicants as $applicant) { ?>
+                                <div class="col-12 col-md-4 mb-3">
                                     <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                         <!-- Upper Part -->
                                         <div class="d-flex justify-content-between align-items-center mb-3">
@@ -177,14 +270,65 @@
                                         <div class="d-flex pb-3 pt-0">
                                             <img src="<?php echo htmlspecialchars($applicant['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 70px; height: 70px; object-fit: cover;">
                                             <div class="ms-4">
-                                                <h5 class="mb-0"><?php echo htmlspecialchars($applicant['name']); ?></h5>
-                                                <small class="text-muted mb-0"><?php echo htmlspecialchars($applicant['location']); ?></small><br>
+                                                <h6 class="mb-0"><?php echo htmlspecialchars($applicant['name']); ?></h6>
+                                                <p class="text-muted mb-0"><?php echo htmlspecialchars($applicant['location']); ?></p>
                                                 <small class="text-success mb-0"><?php echo htmlspecialchars($applicant['projects_done']); ?> Projects done</small>
                                             </div>
                                             <div class="ms-auto text-end">
-                                                <span class=" text-black"><?php echo htmlspecialchars($applicant['rating']); ?></span>
+                                                <span class="badge text-black"><?php echo htmlspecialchars($applicant['rating']); ?></span>
                                             </div>
                                         </div>
+
+
+                                        <!-- Action Buttons -->
+                                        <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
+                                            <button class="btn me-2 mb-2 mb-sm-0" style="white-space:nowrap; color:#91216C; width:100px; height: 35px; background-color:none; border-color:#91216C; border-radius: 12px">See Profile</button>
+                                            <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="color:black; width: 100px; height: 35px; background-color:#8FE2ED; border:none; border-radius: 12px">Hire</button>
+                                            <button class="btn me-2 mb-2 mb-sm-0" style="width: 100px; height: 35px; background-color:none; border-color:darkgrey; border-radius: 12px">Reject</button>
+                                            <a class="d-flex align-items-center ms-2" href="#">
+                                                <img src="<?php echo htmlspecialchars($applicant['chat_icon']); ?>" alt="Chat Icon" style="height: 30px;">
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            <?php } ?>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hiring Request Tab -->
+                <div class="tab-pane fade" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
+                    <div class="application-content mt-4">
+                        <div class="row mb-4">
+                            <?php foreach ($hiring as $hiring) { ?>
+                                <div class="col-12 col-md-4 mb-3">
+                                    <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                        <!-- Upper Part -->
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <div>
+                                                <small class="mb-0">Hiring as </small>
+                                                <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($hiring['role']); ?></span>
+                                            </div>
+                                            <div>
+                                                <small class="mb-0">Service Fee:</small>
+                                                <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($hiring['fee']); ?></span>
+                                            </div>
+                                        </div>
+                                        <hr class="custom-hr">
+                                        <!-- Profile Info -->
+                                        <div class="d-flex pb-3 pt-0">
+                                            <img src="<?php echo htmlspecialchars($hiring['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 70px; height: 70px; object-fit: cover;">
+                                            <div class="ms-4">
+                                                <h5 class="mb-0"><?php echo htmlspecialchars($hiring['name']); ?></h5>
+                                                <small class="text-muted mb-0"><?php echo htmlspecialchars($hiring['location']); ?></small><br>
+                                                <small class="text-success mb-0"><?php echo htmlspecialchars($hiring['projects_done']); ?> Projects done</small>
+                                            </div>
+                                            <div class="ms-auto text-end">
+                                                <span class="text-black"><?php echo htmlspecialchars($hiring['rating']); ?></span>
+                                            </div>
+                                        </div>
+                                        <hr class="custom-hr">
 
                                         <!-- Action Buttons -->
                                         <div class="d-flex flex-column flex-sm-row align-items-center">
@@ -192,26 +336,64 @@
                                             <div class="d-flex flex-column flex-sm-row align-items-center ms-0 ms-sm-4" style="justify-content:flex-end;">
                                                 <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="color:black; width: 100px; height: 35px; background-color:#8FE2ED; border:none; border-radius: 12px">Hire</button>
                                                 <button class="btn btn-outline-secondary me-2 mb-2 mb-sm-0" style="width: 100px; height: 35px; background-color:none; border-color:darkgrey; border-radius: 12px">Reject</button>
-                                                <a class="d-flex align-items-center ms-2" href="#">
-                                                    <img src="<?php echo htmlspecialchars($applicant['chat_icon']); ?>" alt="Chat Icon" style="height: 35px;">
-                                                </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            <?php
-                            }
-                            ?>
+                            <?php } ?>
                         </div>
                     </div>
                 </div>
 
-                <!-- Other Tabs (Placeholder Content) -->
-                <div class="tab-pane fade" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
-                    <p>Hiring Requests content goes here.</p>
-                </div>
+
+                <!-- Recommendation Tab -->
                 <div class="tab-pane fade" id="recommendation" role="tabpanel" aria-labelledby="recommendation-tab">
-                    <p>Recommendation content goes here.</p>
+                    <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
+                        <div class="application-content mt-4">
+                            <div class="row mb-4">
+                                <?php
+                                foreach ($recomm as $recomm) {
+                                ?>
+                                    <div class="col-12 col-md-4 mb-3">
+                                        <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                                            <!-- Upper Part -->
+                                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                                <div>
+                                                    <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role']); ?></span>
+                                                </div>
+                                            </div>
+                                            <hr class="custom-hr">
+                                            <!-- Profile Info -->
+                                            <div class="d-flex pb-3 pt-0">
+                                                <img src="<?php echo htmlspecialchars($recomm['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 70px; height: 70px; object-fit: cover;">
+                                                <div class="ms-4">
+                                                    <h5 class="mb-0"><?php echo htmlspecialchars($recomm['name']); ?></h5>
+                                                    <small class="text-muted mb-0"><?php echo htmlspecialchars($recomm['location']); ?></small><br>
+                                                    <small class="text-success mb-0"><?php echo htmlspecialchars($recomm['projects_done']); ?> Projects done</small>
+                                                </div>
+                                                <div class="ms-auto text-end">
+                                                    <span class=" text-black"><?php echo htmlspecialchars($recomm['rating']); ?></span>
+                                                </div>
+                                            </div>
+
+                                            <!-- Action Buttons -->
+                                            <div class="d-flex flex-column flex-sm-row align-items-center">
+                                                <a href="#" class="text-decoration-none mb-2 mb-sm-0" style="color: #91216C;">See Profile</a>
+                                                <div class="d-flex flex-column flex-sm-row align-items-center ms-0 ms-sm-4" style="justify-content:flex-end;">
+                                                    <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="color:black; width: 100px; height: 35px; background-color:#8FE2ED; border:none; border-radius: 12px">Hire</button>
+                                                    <a class="d-flex align-items-center ms-2" href="#">
+                                                        <img src="<?php echo htmlspecialchars($recomm['chat_icon']); ?>" alt="Chat Icon" style="height: 35px;">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <?php
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

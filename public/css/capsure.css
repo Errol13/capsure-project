@@ -4,10 +4,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sedan:ital@0;1&display=swap');
 
-.nav-link h5 {
-    font-size: 20px; /* Adjust the font size for smaller screens */
-}
-
 .poppins-regular {
     font-family: "Poppins", sans-serif;
     font-weight: 400;
@@ -296,11 +292,6 @@ select#year {
 
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/
 
-.navbar-nav .active {
-    margin-top: 2px;
-    border-bottom: #91216C solid 3px;
-    padding: 0;
-}
 
 .search-container {
     background-image: url('/assets/bg_homepage.svg');
@@ -626,11 +617,26 @@ tbody td:nth-child(5){
     padding-right: 60px;
 }
 
-.nav-item .nav-link.a {
-    border: none;
-    border-bottom: 5px solid #91216C; /* Customize the underline color and thickness */
-    background-color:none ; /* Remove background if any */
-     transition: border-color 0.3s ease-in-out;
+
+.nav-link.active {
+    position: relative;
+    color: black; /* Ensure the active tab's text is black */
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 5px;
+    background-color: #91216C; /* Customize the color of the line */
+    border-radius: 100px; /* Make the line rounded if desired */
+}
+
+
+.nav-link h5 {
+    font-size: 20px; /* Adjust the font size for smaller screens */
 }
 
 .nav-tabs .nav-link {
