@@ -22,7 +22,7 @@
                     <div class="d-flex flex-wrap">
                         @foreach (json_decode($portfolio->path) as $filePath)
                             @php
-                                // Remove the 'public/' prefix
+                                
                                 $relativePath = str_replace('public/', '', $filePath);
                                 $fileName = basename($relativePath);
                                 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));

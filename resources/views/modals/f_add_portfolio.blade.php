@@ -15,7 +15,13 @@
                         <!-- Left Panel -->
                         <div class="col-md-4">
                             <div class="mb-4">
-                                <input type="text" class="form-control" placeholder="Add Album Title" name="album_name" id="albumName" required />
+                                <input type="text" class="form-control @error('album_name') is-invalid @enderror" placeholder="Add Album Title" name="album_name" id="albumName" value="{{ old('album_name') }}" required />
+                                @error('album_name')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+
                             </div>
                             <div class="mb-4">
                                 <!-- Hidden File Input -->
@@ -77,13 +83,13 @@
                     mediaElement = document.createElement('img');
                     mediaElement.src = e.target.result;
                     mediaElement.classList.add('img-fluid', 'rounded');
-                    mediaElement.style.maxWidth = '200px'; // Adjust width as needed
+                    mediaElement.style.maxWidth = '200px';
                 } else if (file.type.startsWith('video/')) {
                     mediaElement = document.createElement('video');
                     mediaElement.src = e.target.result;
                     mediaElement.controls = true;
                     mediaElement.classList.add('img-fluid', 'rounded');
-                    mediaElement.style.maxWidth = '200px'; // Adjust width as needed
+                    mediaElement.style.maxWidth = '200px';
                 }
 
                 fileDiv.appendChild(mediaElement);

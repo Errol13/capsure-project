@@ -670,9 +670,7 @@ tbody td:nth-child(5){
     
 }
 
-.container {
-    overflow-x: hidden; /* Prevent horizontal scrolling on container */
-}
+
 
 
 .event-title {

@@ -58,14 +58,14 @@
                 <!-- Settings Tab -->
                 <ul class="nav nav-tabs mt-4 justify-content-center" id="myTab" role="tablist">
                     <li class="nav-item border" role="presentation">
-                        <a class="nav-link active" id="basic-info-tab" data-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Info</a>
+                        <a class="nav-link active" id="basic-info-tab" data-bs-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Info</a>
                     </li>
                     <li class="nav-item border" role="presentation">
-                        <a class="nav-link" id="services-tab" data-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
+                        <a class="nav-link" id="services-tab" data-bs-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
                     </li>
 
                     <li class="nav-item border" role="presentation">
-                        <a class="nav-link" id="portfolio-tab" data-toggle="tab" href="#portfolio" role="tab" aria-controls="portfolio" aria-selected="false">Portfolio</a>
+                        <a class="nav-link" id="portfolio-tab" data-bs-toggle="tab" href="#portfolio" role="tab" aria-controls="portfolio" aria-selected="false">Portfolio</a>
                     </li>
                 </ul>
 
@@ -210,7 +210,7 @@
 
                         <!-- Add New Service Button -->
                         <div class="text-end mt-3 d-flex align-items-center">
-                            <p class="mb-0 me-2 poppins-medium">Add Service</p>
+                            <p class="mb-0 me-2 poppins-medium">Services</p>
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addServiceModal">
                                 <i class="fas fa-solid fa-circle-plus"></i>
                             </button>
