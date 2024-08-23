@@ -700,6 +700,13 @@ tbody td:nth-child(5){
 
 /* Setting Page */
 
+input:disabled, 
+textarea:disabled, 
+select:disabled {
+    background-color: rgb(255, 255, 255) !important; /* Example: Light gray color */
+    cursor: not-allowed; /* Optional: Change cursor to indicate it's disabled */
+}
+
 .setting-color{
     color: #464646;
 }

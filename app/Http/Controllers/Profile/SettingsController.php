@@ -133,4 +133,83 @@ class SettingsController extends Controller
 
         return redirect()->back();
     }
+
+    public function store(Request $request)
+    {
+        $request->validate([
+            'skill_name' => 'required|string|max:255',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $freelancer = $user->freelancer;
+        $skills = $freelancer->skills ?? [];
+
+        // Add the new skill to the array
+        $skills[] = $request->skill_name;
+
+        // Remove duplicate skills
+        $skills = array_unique($skills);
+
+        // Update the freelancer's skills
+        $freelancer->update(['skills' => $skills]);
+
+        return redirect()->back()->with('success', 'Skill added successfully!');
+    }
+
+    public function update(Request $request)
+    {
+        $request->validate([
+            'old_skill_name' => 'required|string',
+            'new_skill_name' => 'required|string|max:255',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $freelancer = $user->freelancer;
+        $skills = $freelancer->skills ?? [];
+
+        // Find the index of the skill to update
+        $index = array_search($request->old_skill_name, $skills);
+
+        if ($index !== false) {
+            // Update the skill
+            $skills[$index] = $request->new_skill_name;
+
+            // Remove duplicate skills
+            $skills = array_unique($skills);
+
+            // Update the freelancer's skills
+            $freelancer->update(['skills' => $skills]);
+
+            return redirect()->back()->with('success', 'Skill updated successfully!');
+        }
+
+        return redirect()->back()->with('error', 'Skill not found.');
+    }
+
+    public function destroy(Request $request)
+    {
+        $request->validate([
+            'skill_name' => 'required|string',
+        ]);
+
+        /** @var User $user */
+        $user = Auth::user();
+        $freelancer = $user->freelancer;
+        $skills = $freelancer->skills ?? [];
+
+        // Remove the skill from the array
+        $skills = array_filter($skills, function ($skill) use ($request) {
+            return $skill !== $request->skill_name;
+        });
+
+        // Reindex array values
+        $skills = array_values($skills);
+
+        // Update the freelancer's skills
+        $freelancer->update(['skills' => $skills]);
+
+        return redirect()->back()->with('success', 'Skill deleted successfully!');
+    }
 }

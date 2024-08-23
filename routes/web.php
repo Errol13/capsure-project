@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Livewire\AddPortfolio;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,12 @@ Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\Sett
 #socmed
 Route::get('/social-media', [App\Http\Controllers\Profile\SocMedController::class, 'showSocMed'])->name('social-media');
 Route::patch('/social-media/{platform}/update', [App\Http\Controllers\Profile\SocMedController::class, 'updateSocMed'])->name('social-media.update');
+
+#skills
+Route::post('/skills', [SettingsController::class, 'store'])->name('skills.store');
+Route::patch('/skills', [SettingsController::class, 'update'])->name('skills.update');
+Route::delete('/skills/delete', [SettingsController::class, 'destroy'])->name('skills.destroy');
+
 
 #portfolio 
 Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');

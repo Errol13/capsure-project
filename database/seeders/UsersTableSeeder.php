@@ -15,10 +15,8 @@ class UsersTableSeeder extends Seeder
         $users = [];
         $clients = [];
         $freelancers = [];
-        $socialMedia = [];
 
         for ($i = 1; $i <= 40; $i++) {
-
             $isFreelancer = $i % 2 === 0; // Even IDs for freelancers, odd IDs for clients
             $firstName = $isFreelancer ? "Daisy" : "Will";
             $lastName = "Smith" . $i;
@@ -28,9 +26,8 @@ class UsersTableSeeder extends Seeder
             $isNumberVerified = rand(0, 1) === 1;
             $isVerified = rand(0, 1) === 1;
 
-            // Create user record
+            // Create user record without manually setting the ID
             $users[] = [
-                'id' => $i,
                 'first_name' => $firstName,
                 'last_name' => $lastName,
                 'email' => $email,
@@ -51,46 +48,51 @@ class UsersTableSeeder extends Seeder
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ];
+        }
 
-            // Create associated client or freelancer record
-            if ($isFreelancer) {
+        // Insert users and retrieve the inserted IDs
+        DB::table('users')->insert($users);
+        $insertedUsers = DB::table('users')->get();
+
+        // Create associated client or freelancer records using the correct user IDs
+        foreach ($insertedUsers as $user) {
+            if ($user->user_type === 'freelancer') {
                 $freelancers[] = [
-                    'user_id' => $i,
+                    'user_id' => $user->id,
                 ];
             } else {
                 $clients[] = [
-                    'user_id' => $i,
+                    'user_id' => $user->id,
                 ];
             }
-
         }
 
-        // Insert users
-        DB::table('users')->insert($users);
-
-        // Insert clients
+        // Insert clients and freelancers
         DB::table('clients')->insert($clients);
-
-        // Insert freelancers
         DB::table('freelancers')->insert($freelancers);
 
-        //create socmed
-         $socialMediaAccounts = [
+        // Define social media platforms
+        $socialMediaAccounts = [
             ['platform' => 'Facebook', 'url' => ''],
             ['platform' => 'LinkedIn', 'url' => ''],
             ['platform' => 'Instagram', 'url' => '']
         ];
 
-        foreach ($users as $user) {
-            foreach ($socialMediaAccounts as $socialMedia) {
-                DB::table('social_media_accounts')->insert([
-                    'user_id' => $user['id'],
-                    'platform' => $socialMedia['platform'],
-                    'url' => $socialMedia['url'],
+        // Create social media records for each user
+        $socialMedia = [];
+        foreach ($insertedUsers as $user) {
+            foreach ($socialMediaAccounts as $socialMediaAccount) {
+                $socialMedia[] = [
+                    'user_id' => $user->id,
+                    'platform' => $socialMediaAccount['platform'],
+                    'url' => $socialMediaAccount['url'],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
-                ]);
+                ];
             }
         }
+
+        // Insert social media accounts
+        DB::table('social_media_accounts')->insert($socialMedia);
     }
 }

@@ -9,8 +9,6 @@
 
 
 
-
-
  <div class="container mt-2">
      <div class="accordion" id="termsAccordion">
          <!-- Accordion Item -->

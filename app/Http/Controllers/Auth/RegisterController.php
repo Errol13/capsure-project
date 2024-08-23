@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Freelancer;
 use App\Models\Profile\Service as ProfileService;
+use App\Models\Profile\SocialMediaAccount as ProfileSocialMediaAccount;
 use App\Models\Service;
 use App\Models\SocialMediaAccount;
 use App\Models\User;
@@ -119,7 +120,7 @@ class RegisterController extends Controller
         $platforms = ['Facebook', 'LinkedIn', 'Instagram'];
 
         foreach ($platforms as $platform) {
-            SocialMediaAccount::create([
+            ProfileSocialMediaAccount::create([
                 'user_id' => $user->id,
                 'platform' => $platform,
                 'url' => '', // Initialize with empty URL
@@ -158,7 +159,7 @@ class RegisterController extends Controller
         $platforms = ['Facebook', 'LinkedIn', 'Instagram'];
 
         foreach ($platforms as $platform) {
-            SocialMediaAccount::create([
+            ProfileSocialMediaAccount::create([
                 'user_id' => $user->id,
                 'platform' => $platform,
                 'url' => '', // Initialize with empty URL

@@ -183,7 +183,8 @@
                     </p>
                     @else
                     <p class="text-start fs-smaller fs-md mt-2">
-                        The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. The freelancer will deliver the services with reasonable skill, care, and diligence.
+                        The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client.
+                        The freelancer will deliver the services with reasonable skill, care, and diligence.
                     </p>
                     @endif
                 </div>

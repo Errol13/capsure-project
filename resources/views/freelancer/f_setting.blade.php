@@ -242,6 +242,8 @@
                         @include('components.f_update_services', ['service' => $service])
                         @endforeach
 
+                        <!-- Skills Section for adding, editing and deleting -->
+                        @include('components.f_skills', ['freelancer' => $user->freelancer])
                     </div>
 
                     <!-- Contacts Tab -->

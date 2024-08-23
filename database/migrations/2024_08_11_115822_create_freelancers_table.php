@@ -18,12 +18,10 @@ return new class extends Migration
             $table->integer('number_of_projects')->default(0);
             $table->text('terms_and_conditions')->default("The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. 
             The freelancer will deliver the services with reasonable skill, care, and diligence.");
+            $table->json('skills')->nullable();
             $table->boolean('isin_A_Team')->default(false);
             $table->timestamps();
         });
-
-        // Adding the skills array column directly in the same migration
-        DB::statement('ALTER TABLE freelancers ADD COLUMN skills TEXT[]');
     }
 
     /**
