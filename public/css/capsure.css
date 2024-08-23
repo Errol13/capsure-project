@@ -616,17 +616,58 @@ tbody td:nth-child(5){
     padding-right: 60px;
 }
 
+.dropdown-menu {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+    padding: 0;
+    overflow: hidden;
+}
+
+.dropdown-item {
+    padding: 10px 20px;
+}
+
+.dropdown-item strong {
+    color: black;
+}
+
+.dropdown-item small {
+    color: gray;
+}
+
+
 .offer-table th:nth-child(1), .offer-table th:nth-child(2),
 .offer-table td:nth-child(1), .offer-table td:nth-child(2) {
-    text-align: center; /* Horizontal alignment */
-    vertical-align: middle; /* Vertical alignment */
-    padding: 12px; /* Adjust padding as needed */
+    text-align: center; 
+    vertical-align: middle;
+    padding: 12px; 
 }
 
 .offer-table {
-    margin: 0 auto; /* Centers the table within its container */
+    margin: 0 auto;
 }
 
+.nav-item .dropdown-toggle-notif::after {
+    display: none !important;
+}
+
+/* Default bell color */
+.nav-link .fa-bell,
+.nav-link .fa-envelope,
+.nav-link .fa-bookmark {
+    color: darkgray;
+    transition: color 0.3s ease;
+}
+
+/* Bell color when hovered or focused */
+.nav-link:hover .fa-bell,
+.nav-link:focus .fa-bell {
+    color: #91216C; /* Change to your desired color */
+}
+
+.nav-item.dropdown.show .nav-link .fa-bell {
+    color: #91216C; 
+}
 
 .nav-link.active {
     position: relative;

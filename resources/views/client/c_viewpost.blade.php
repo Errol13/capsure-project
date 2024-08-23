@@ -177,7 +177,9 @@
                     'location' => 'Pasay City',
                     'projects_done' => 9,
                     'rating' => '⭐5 (10)',
-                    'role' => 'Videographer',
+                    'role1' => 'Videographer',
+                    'role2' => 'Make-up Artist',
+                    'role3' => 'Cake Baker',
                     'profile_image' => 'assets/profilepic.svg',
                 ],
                 [
@@ -185,7 +187,9 @@
                     'location' => 'Pasay City',
                     'projects_done' => 9,
                     'rating' => '⭐5 (10)',
-                    'role' => 'Videographer',
+                    'role1' => 'Videographer',
+                    'role2' => 'Make-up Artist',
+                    'role3' => 'Cake Baker',
                     'profile_image' => 'assets/profilepic.svg',
                 ],
                 [
@@ -193,7 +197,9 @@
                     'location' => 'Pasay City',
                     'projects_done' => 9,
                     'rating' => '⭐5 (10)',
-                    'role' => 'Videographer',
+                    'role1' => 'Videographer',
+                    'role2' => 'Make-up Artist',
+                    'role3' => 'Cake Baker',
                     'profile_image' => 'assets/profilepic.svg',
                 ],
                 [
@@ -201,9 +207,12 @@
                     'location' => 'Pasay City',
                     'projects_done' => 9,
                     'rating' => '⭐5 (10)',
-                    'role' => 'Videographer',
+                    'role1' => 'Videographer',
+                    'role2' => 'Make-up Artist',
+                    'role3' => 'Cake Baker',
                     'profile_image' => 'assets/profilepic.svg',
                 ],
+
             ];
 
             ?>
@@ -231,8 +240,6 @@
                 <?php endforeach; ?>
             </ul>
 
-
-
             <!-- Tab content -->
             <div class="tab-content">
 
@@ -244,7 +251,7 @@
                                 <div class="col-12 col-md-4 mb-3">
                                     <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                         <!-- Upper Part -->
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-1">
                                             <div>
                                                 <small class="mb-0">Applying as </small><br>
                                                 <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($applicant['role']); ?></span>
@@ -254,7 +261,7 @@
                                                 <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($applicant['fee']); ?></span>
                                             </div>
                                         </div>
-                                        <hr class="custom-hr">
+                                        <hr class="mb-2" style="color:#CBCACA;">
                                         <!-- Profile Info -->
                                         <div class="d-flex pb-3 pt-0">
                                             <img src="<?php echo htmlspecialchars($applicant['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
@@ -271,7 +278,7 @@
                                         <!-- Action Buttons -->
                                         <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                             <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
-                                            <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                            <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                             <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px">Reject</button>
                                         </div>
                                     </div>
@@ -289,7 +296,7 @@
                                 <div class="col-12 col-md-4 mb-3">
                                     <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                         <!-- Upper Part -->
-                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                        <div class="d-flex justify-content-between align-items-center mb-0">
                                             <div>
                                                 <small class="mb-0">Hiring as </small><br>
                                                 <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($hiring['role']); ?></span>
@@ -299,7 +306,7 @@
                                                 <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($hiring['fee']); ?></span>
                                             </div>
                                         </div>
-                                        <hr class="custom-hr">
+                                        <hr class="mb-2" style="color:#CBCACA;">
                                         <!-- Profile Info -->
                                         <div class="d-flex pb-3 pt-0">
                                             <img src="<?php echo htmlspecialchars($hiring['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
@@ -345,7 +352,6 @@
                     </div>
                 </div>
 
-
                 <!-- Recommendation Tab -->
                 <div class="tab-pane fade" id="recommendation" role="tabpanel" aria-labelledby="recommendation-tab">
                     <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
@@ -355,7 +361,7 @@
                                     <div class="col-12 col-md-4 mb-3">
                                         <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                             <!-- Profile Info -->
-                                            <div class="d-flex pb-3 pt-0">
+                                            <div class="d-flex pb-0 pt-0">
                                                 <img src="<?php echo htmlspecialchars($recomm['profile_image']); ?>" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                                 <div class="ms-4">
                                                     <h6 class="mb-0"><?php echo htmlspecialchars($recomm['name']); ?></h6>
@@ -366,14 +372,14 @@
                                                     <span class="badge text-black"><?php echo htmlspecialchars($recomm['rating']); ?></span>
                                                 </div>
                                             </div>
-                                            <hr class="custom-hr p-0 m-1">
+                                            <hr class=" p-0 m-1" style="color:#CBCACA;">
                                             <div class="d-flex justify-content-between align-items-center mb-3">
                                                 <div>
                                                     <small class="mb-0 ms-2">Service/s</small><br>
                                                     <div class="col ms-2">
-                                                        <span class="badge fw-bold text-uppercase p-1  me-2" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role']); ?></span>
-                                                        <span class="badge fw-bold text-uppercase p-1 me-2" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role']); ?></span>
-                                                        <span class="badge fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role']); ?></span>
+                                                        <span class="fw-bold p-1  me-2" style="color: black; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role1']); ?></span>
+                                                        <span class="fw-bold p-1 me-2" style="color: black; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role2']); ?></span>
+                                                        <span class=" fw-bold p-1" style="color: black; background-color:whitesmoke; border-radius:12px;"><?php echo htmlspecialchars($recomm['role3']); ?></span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,7 +387,7 @@
                                             <!-- Action Buttons -->
                                             <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                                 <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
-                                                <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                                <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                             </div>
                                         </div>
                                     </div>
@@ -391,8 +397,95 @@
                     </div>
                 </div>
             </div>
+        </div>
 
+        <!-- Hire Modal -->
+        <div class="modal fade" id="hireModal" tabindex="-1" aria-labelledby="hireModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header border-none">
+                        <h4 class="modal-title" id="hireModalLabel">Hire Freelancer</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="d-flex mb-4 align-items-center">
+                            <!-- Profile Image -->
+                            <img src="assets/profilepic.svg" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px;">
+
+                            <!-- Profile Info -->
+                            <div class="ms-3"> <!-- Add margin to the left of the text -->
+                                <h4 class="mb-0">Daisy Maureen Dimasuay</h4>
+                                <p class="text-muted mb-1">Naga City</p>
+                                <div class="d-flex align-items-center">
+                                    <span class="text-warning">⭐</span>
+                                    <span class="fw-bold ms-1">5.0</span>
+                                    <small class="text-muted ms-2">(10) Reviews</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Job roles and availability -->
+                        <div class="list-group mb-4">
+                            <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
+                                Photographer <span>₱5000/project</span> <span class="text-success">Available</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                Make-up Artist <span>₱5000/project</span> <span class="text-danger">Not Available</span>
+                            </div>
+                            <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color:#EEEEEE;">
+                                Video Editor <span>₱5000/project</span> <span class="text-success">Available</span>
+                            </div>
+                        </div>
+
+                        <!-- Hire options -->
+                        <div class="row d-flex mb-1 align-items-center">
+                            <div class="col">
+                                <label for="role" class="form-label">Hire as</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" id="role">
+                                    <option>Photographer</option>
+                                    <option>Make-up Artist</option>
+                                    <option>Video Editor</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex mb-1 align-items-center">
+                            <!-- Label -->
+                            <label for="fee" class="me-3">Fee Offer</label>
+
+                            <!-- Input -->
+
+                            <div class="col input-group me-2" style="max-width: 50%;">
+                                <input type="text" class="form-control" id="fee" value="₱4000.00">
+                                <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt text-right"></i></button>
+                            </div>
+
+                            <!-- Select -->
+                            <select class="form-select" id="per" style="max-width: 30%;">
+                                <option>per project</option>
+                                <option>per hour</option>
+                            </select>
+                        </div>
+
+                        <div class=" row mb-3 align-items-center">
+                            <div class="col">
+                                <label for="payment" class="form-label">Payment Method</label>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" id="payment">
+                                    <option>CASH</option>
+                                    <option>CREDIT</option>
+                                    <option>PayPal</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-center mb-1">
+                            <button type="button" class="btn" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-@endsection
+    @endsection
