@@ -288,7 +288,6 @@
                     </div>
                 </div>
 
-                <!-- Hiring Request Tab -->
                 <div class="tab-pane fade" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
@@ -340,7 +339,8 @@
 
                                         <!-- Action Buttons -->
                                         <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                            <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">Negotiate</button>
+                                            <!-- Trigger the modal with this button -->
+                                            <button class="btn me-2 mb-2 mb-sm-0 negotiate-btn" data-bs-toggle="modal" data-bs-target="#negotiateModal" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">Negotiate</button>
                                             <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Accept Offer</button>
                                             <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px">Cancel</button>
                                         </div>
@@ -348,7 +348,44 @@
                                 </div>
                             <?php } ?>
                         </div>
+                    </div>
+                </div>
 
+                <!-- Negotiate Modal-->
+                <div class="modal" id="negotiateModal" tabindex="-1" aria-labelledby="negotiateModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header poppins-medium" style="border-bottom: none;">
+                                <h4 class="modal-title" id="negotiateModalLabel">Make an Offer</h5>
+                            </div>
+                            <div class="d-flex table-responsive mt-1 mb-2 text-center">
+                                <table class="table table-bordered offer-table" style="table-layout: fixed; width: 100%;">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 50%;">Freelancer's Offer</th>
+                                            <th style="width: 50%;">Your Offer</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>₱600 per hour</td>
+                                            <td>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control text-center" style="border:none;" value="₱500 per hour" id="offerInput" readonly>
+                                                    <button class="btn" type="button" id="editButton" style="border:none;">
+                                                        <i class="bi bi-pencil"></i> <!-- Bootstrap Pencil Icon -->
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex justify-content-center mb-1">
+                                <button type="button" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Offer</button>
+                                <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
@@ -400,31 +437,25 @@
         </div>
 
         <!-- Hire Modal -->
-        <div class="modal fade" id="hireModal" tabindex="-1" aria-labelledby="hireModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
+        <div class="modal" id="hireModal" tabindex="-1" aria-labelledby="hireModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
-                    <div class="modal-header border-none">
-                        <h4 class="modal-title" id="hireModalLabel">Hire Freelancer</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
                     <div class="modal-body">
                         <div class="d-flex mb-4 align-items-center">
                             <!-- Profile Image -->
-                            <img src="assets/profilepic.svg" alt="Profile" class="rounded-circle" style="width: 100px; height: 100px;">
+                            <img src="assets/profilepic.svg" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
 
                             <!-- Profile Info -->
                             <div class="ms-3"> <!-- Add margin to the left of the text -->
-                                <h4 class="mb-0">Daisy Maureen Dimasuay</h4>
-                                <p class="text-muted mb-1">Naga City</p>
+                                <h6 class="mb-0">Daisy Maureen Dimasuay</h6>
+                                <small class="text-muted mb-2">Naga City</small>
                                 <div class="d-flex align-items-center">
                                     <span class="text-warning">⭐</span>
-                                    <span class="fw-bold ms-1">5.0</span>
+                                    <small class="fw-bold ms-1">5.0</small>
                                     <small class="text-muted ms-2">(10) Reviews</small>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Job roles and availability -->
                         <div class="list-group mb-4">
                             <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
                                 Photographer <span>₱5000/project</span> <span class="text-success">Available</span>
@@ -436,8 +467,6 @@
                                 Video Editor <span>₱5000/project</span> <span class="text-success">Available</span>
                             </div>
                         </div>
-
-                        <!-- Hire options -->
                         <div class="row d-flex mb-1 align-items-center">
                             <div class="col">
                                 <label for="role" class="form-label">Hire as</label>
@@ -451,23 +480,16 @@
                             </div>
                         </div>
                         <div class="d-flex mb-1 align-items-center">
-                            <!-- Label -->
                             <label for="fee" class="me-3">Fee Offer</label>
-
-                            <!-- Input -->
-
                             <div class="col input-group me-2" style="max-width: 50%;">
                                 <input type="text" class="form-control" id="fee" value="₱4000.00">
                                 <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt text-right"></i></button>
                             </div>
-
-                            <!-- Select -->
                             <select class="form-select" id="per" style="max-width: 30%;">
                                 <option>per project</option>
                                 <option>per hour</option>
                             </select>
                         </div>
-
                         <div class=" row mb-3 align-items-center">
                             <div class="col">
                                 <label for="payment" class="form-label">Payment Method</label>
@@ -476,16 +498,17 @@
                                 <select class="form-select" id="payment">
                                     <option>CASH</option>
                                     <option>CREDIT</option>
-                                    <option>PayPal</option>
                                 </select>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center mb-1">
-                            <button type="button" class="btn" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
+                            <button type="button" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
+                            <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    @endsection
+</div>
+@endsection
