@@ -46,9 +46,9 @@
                             <a href="#" class="mb-0 text-start">
                                 @if ($user->user_type === 'client')
                                 <button class=" px-3 rounded-3 btn-save fs-6">Be a Freelancer</button></a>
-                                @else
-                                <button class=" px-3 rounded-3 btn-save fs-6">Be a Client</button></a>
-                                @endif
+                            @else
+                            <button class=" px-3 rounded-3 btn-save fs-6">Be a Client</button></a>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -242,6 +242,9 @@
                         @include('components.f_update_services', ['service' => $service])
                         @endforeach
 
+                        <!--Awards-->
+                        @include('components.f_awards', ['freelancer' => $user->freelancer])
+
                         <!-- Skills Section for adding, editing and deleting -->
                         @include('components.f_skills', ['freelancer' => $user->freelancer])
                     </div>
@@ -254,15 +257,29 @@
                     <!-- Portfolio Tab -->
                     <div class="tab-pane fade" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
                         <!-- Modal Trigger -->
-                        <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
-                            Create Album
-                        </button>
-                        <livewire:addportfolio :freelancer_id="$user->id" />
+                        @php
+                        $portfolioLimit = 3; // Maximum number of portfolios allowed
+                        $portfolioCount = $user->freelancer->portfolios->count(); 
+                        @endphp
 
-                        <div class="mt-2">
-                            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
-                        </div>
+                        @if ($portfolioCount < $portfolioLimit)
+                            <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
+                            Create Album
+                            </button>
+                            @else
+                            <button type="button" class="btn btn-primary mt-3" disabled>
+                                Create Album
+                            </button>
+                            <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
+                            @endif
+
+                            <livewire:addportfolio :freelancer_id="$user->id" />
+
+                            <div class="mt-2">
+                                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+                            </div>
                     </div>
+
                 </div>
         </section>
 

@@ -20,10 +20,12 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
+    <script src="{{asset('js/capsure.jd')}}"> </script>
 
     @livewireStyles
 
@@ -126,7 +128,7 @@
                                 <i class="fas fa-bookmark"></i>
                             </a>
                         </li>
-                
+
                         <li class="nav-item dropdown mx-1 ms-md-2">
                             <a class="nav-link dropdown-toggle-notif" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                 <i class="fas fa-bell"></i>
@@ -216,7 +218,7 @@
 
         <main class="mx-1 pb-4 mb-2">
             @yield('content')
-        
+
         </main>
     </div>
 

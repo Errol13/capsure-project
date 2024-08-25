@@ -16,13 +16,13 @@
             <h2 class="accordion-header" id="headingSkills">
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="h6 mb-0">Skills</span>
-                    <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkills" aria-expanded="true" aria-controls="collapseSkills">
+                    <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills">
                         <i class="ms-5 text-end fas fa-chevron-down collapse-icon" aria-hidden="true"></i>
                         <i class="ms-5 text-end fas fa-chevron-up collapse-icon d-none" aria-hidden="true"></i>
                     </button>
                 </div>
             </h2>
-            <div id="collapseSkills" class="accordion-collapse collapse show" aria-labelledby="headingSkills" data-bs-parent="#skillsAccordion">
+            <div id="collapseSkills" class="accordion-collapse collapse" aria-labelledby="headingSkills" data-bs-parent="#skillsAccordion">
                 <div class="accordion-body">
                     @foreach ($freelancer->skills as $skill)
                     <div class="d-flex justify-content-between align-items-center mb-2">
@@ -32,7 +32,7 @@
                         </div>
                         <div>
                             <button class="btn btn-sm btn-link" data-bs-toggle="modal" data-bs-target="#editSkillModal" data-skill="{{ $skill }}"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-link text-danger" onclick="confirmDelete('{{ $skill }}')"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-sm btn-link text-danger" onclick=" confirmDeleteSkill('{{ $skill }}')"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                     @endforeach
@@ -42,6 +42,7 @@
     </div>
     @endif
 </div>
+
 
 <!-- Modal for Adding Skills -->
 <div class="modal fade" id="addSkillsModal" tabindex="-1" aria-labelledby="addSkillsModalLabel" aria-hidden="true">
@@ -93,25 +94,38 @@
     </div>
 </div>
 
-<!-- Confirmation box for deletion -->
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Handle the icon toggle based on accordion state
         var accordionCollapse = document.getElementById('collapseSkills');
         var collapseIcons = document.querySelectorAll('.collapse-icon');
 
-        // Update icons on accordion show/hide
+        // Initial icon setup based on current collapse state
+        if (accordionCollapse.classList.contains('show')) {
+            toggleIcons(true);
+        } else {
+            toggleIcons(false);
+        }
+
+        // Update icons on accordion show
         accordionCollapse.addEventListener('show.bs.collapse', function() {
-            collapseIcons.forEach(function(icon) {
-                icon.classList.toggle('d-none', icon.classList.contains('fa-chevron-down'));
-            });
+            toggleIcons(true);
         });
 
+        // Update icons on accordion hide
         accordionCollapse.addEventListener('hide.bs.collapse', function() {
-            collapseIcons.forEach(function(icon) {
-                icon.classList.toggle('d-none', icon.classList.contains('fa-chevron-up'));
-            });
+            toggleIcons(false);
         });
+
+        function toggleIcons(isExpanded) {
+            collapseIcons.forEach(function(icon) {
+                if (isExpanded) {
+                    icon.classList.toggle('d-none', icon.classList.contains('fa-chevron-down'));
+                } else {
+                    icon.classList.toggle('d-none', icon.classList.contains('fa-chevron-up'));
+                }
+            });
+        }
 
         // Set up the Edit Skill Modal
         var editSkillModal = document.getElementById('editSkillModal');
@@ -126,7 +140,7 @@
         });
     });
 
-    function confirmDelete(skillName) {
+    function confirmDeleteSkill(skillName) {
         if (confirm('Are you sure you want to delete this skill?')) {
             var form = document.createElement('form');
             form.method = 'POST';

@@ -8,6 +8,7 @@ use App\Models\Hiring\Review;
 use App\Models\Profile\Certificates;
 use App\Models\Profile\Portfolio;
 use App\Models\Profile\Service;
+use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -68,6 +69,12 @@ class Freelancer extends Model
     {
         return $this->hasMany(Hiring_request::class, 'freelancer_id');
     }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'freelancer_id');
+    }
+    
 
     
 }
