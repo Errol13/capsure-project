@@ -1,18 +1,9 @@
+
+
 <div class="container mt-4">
     @if ($portfolios->isEmpty())
     <p class="fs-6 text-center open-sans-reg text-muted mt-5">No portfolios yet. Create one.</p>
     @else
-
-    <div class="d-flex justify-content-end mb-3">
-        <!-- Upload Button -->
-        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
-            <i class="fas fa-upload"></i> Upload
-        </button>
-        <!-- Delete Button -->
-        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-            <i class="fas fa-trash"></i> Delete
-        </button>
-    </div>
 
     <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
         @foreach ($portfolios as $index => $portfolio)
@@ -39,11 +30,11 @@
                 <div class="position-relative">
                     @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-thumbnail" style="max-width: 200px; max-height: 150px; object-fit: cover; margin: 5px;">
+                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-thumbnail">
                     </a>
                     @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-thumbnail" style="max-width: 200px; max-height: 150px; object-fit: cover; margin: 5px;"></video>
+                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-thumbnail"></video>
                     </a>
                     @else
                     <p>Unsupported file type: {{ $fileExtension }}</p>
@@ -66,36 +57,5 @@
         @endforeach
     </div>
     @endif
-
-    <!-- Upload Modal -->
-    <livewire:updateportfolio :portfolios="$user->freelancer->portfolios" />
-
-    <!-- Delete Modal -->
-    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="deleteModalLabel">Delete Album</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <!-- Content for delete confirmation -->
-                    <form id="deleteForm" method="POST" action="{{ route('delete-album') }}">
-                        @csrf
-                        @method('DELETE')
-                        <div class="mb-3">
-                            <label for="albumSelect" class="form-label">Select Album to Delete</label>
-                            <select class="form-select" id="albumSelect" name="album_id">
-                                @foreach ($portfolios as $portfolio)
-                                <option value="{{ $portfolio->portfolio_id }}">{{ $portfolio->album_name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
 
 </div>

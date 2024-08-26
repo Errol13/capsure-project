@@ -57,7 +57,7 @@ class Addportfolio extends Component
     {
         $this->validate([
             'album_name' => 'required|string|max:255',
-            'files' => 'required|array|min:1|max:5', // Ensure at least one file and no more than 5
+            'files' => 'required|array|min:1|max:10', // Ensure at least one file and no more than 5
             'files.*' => 'mimes:jpg,jpeg,png,gif,mp4,mov,avi|max:51200', // Validate file types and size (max 50MB per file)
         ]);
 

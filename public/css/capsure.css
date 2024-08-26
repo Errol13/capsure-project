@@ -704,13 +704,20 @@ input:disabled,
 textarea:disabled, 
 select:disabled {
     background-color: rgb(255, 255, 255) !important; /* Example: Light gray color */
-    cursor: not-allowed; /* Optional: Change cursor to indicate it's disabled */
 }
 
 .setting-color{
     color: #464646;
 }
 
+.add-setting-clr{
+    color: #CBCACA;
+}
+
+.setting-socmed-img{
+    max-width: 40px; 
+    max-height: 40px;
+}
 
 .btn-save{
     background-color: #E1C1D7;
@@ -953,8 +960,19 @@ select:disabled {
         margin-right: 10px;
     }
 
+    /* Setting */
+
     #mobileinfosetting{
         display: none;
+    }
+
+    .img-thumbnail{
+        max-width: 200px; 
+        max-height: 150px; 
+        width: 150px;
+        height: 100px;
+        object-fit: cover; 
+        margin: 5px;
     }
 
 }
@@ -996,6 +1014,13 @@ select:disabled {
 
     #desktopview{
         display: none;
+    }
+
+    .img-thumbnail{
+        max-width: 150px; 
+        max-height: 125px; 
+        object-fit: cover; 
+        margin: 5px;
     }
 
 }

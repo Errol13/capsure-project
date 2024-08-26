@@ -235,17 +235,29 @@
                                 <i class="fas fa-solid fa-circle-plus"></i>
                             </button>
                         </div>
-                        <!-- Modal for adding new services-->
-                        @include('modals.addService_modal', ['freelancer_id'=> $user->id])
+
 
                         @foreach ($user->freelancer->services as $service)
                         @include('components.f_update_services', ['service' => $service])
                         @endforeach
 
                         <!--Awards-->
+                        <div class="text-end mt-3 d-flex align-items-center">
+                            <p class="mb-0 me-2 poppins-medium">Awards</p>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addAwardsModal">
+                                <i class="fas fa-solid fa-circle-plus"></i>
+                            </button>
+                        </div>
                         @include('components.f_awards', ['freelancer' => $user->freelancer])
 
                         <!-- Skills Section for adding, editing and deleting -->
+                        <!-- Skills Display -->
+                        <div class="text-end mt-3 d-flex align-items-center">
+                            <p class="mb-0 me-2 poppins-medium">Skills</p>
+                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">
+                                <i class="fas fa-solid fa-circle-plus"></i> <!-- Plus icon for adding skills -->
+                            </button>
+                        </div>
                         @include('components.f_skills', ['freelancer' => $user->freelancer])
                     </div>
 
@@ -259,7 +271,7 @@
                         <!-- Modal Trigger -->
                         @php
                         $portfolioLimit = 3; // Maximum number of portfolios allowed
-                        $portfolioCount = $user->freelancer->portfolios->count(); 
+                        $portfolioCount = $user->freelancer->portfolios->count();
                         @endphp
 
                         @if ($portfolioCount < $portfolioLimit)
@@ -273,9 +285,22 @@
                             <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
                             @endif
 
-                            <livewire:addportfolio :freelancer_id="$user->id" />
-
                             <div class="mt-2">
+                                @if ($user->freelancer->portfolios->isEmpty())
+                                <div></div>
+                                @else
+                                <div class="d-flex justify-content-end mb-3">
+                                    <!-- Upload Button -->
+                                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                    <!-- Delete Button -->
+                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                        <i class="fas fa-trash"></i> Delete
+                                    </button>
+                                </div>
+                                @endif
+                                
                                 @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
                             </div>
                     </div>
@@ -287,6 +312,27 @@
             <!--Settinga -->
             @include('components.f_settings_desktop')
         </section>
+
+        <!-- Modal for adding new services-->
+        @include('modals.addService_modal', ['freelancer_id'=> $user->id])
+
+        <!--skills modal -->
+        @include('modals.skills_modal', ['freelancer' => $user->freelancer])
+
+        <!--awards -->
+        @include('modals.awards_modal', ['freelancer' => $user->freelancer])
+
+        <!--adding portfolio-->
+        <livewire:addportfolio :freelancer_id="$user->id" />
+
+        <!--updating portfolio -->
+        <livewire:updateportfolio :portfolios="$user->freelancer->portfolios" />
+
+        <!--deleting portfolio -->
+        @include('modals.delete_album', ['portfolios' => $user->freelancer->portfolios])
+
+
+
     </div>
     <div class="mt-5"></div>
 </div>

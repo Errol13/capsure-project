@@ -1,4 +1,4 @@
- <!-- Add New Service Button -->
+
  <div class="text-end mt-3 d-flex align-items-center">
      <p class="mb-0 me-2 poppins-medium">Terms of Service</p>
      <!-- Edit Icon -->
