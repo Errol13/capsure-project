@@ -1,16 +1,13 @@
 <div class="row mt-2">
     <div class="col-12 d-flex justify-content-between align-items-center">
         <p class="fs-sm-name fs-md-name poppins-medium mb-0 poppins-light ms-4">SETTING</p>
-        <div class="d-flex justify-content-end align-items-end">
-            <button class="btn-cancel me-3 px-3">Cancel</button>
-            <button class="btn-save px-3">Save</button>
-        </div>
+
     </div>
 </div>
 
 <div class="row">
     <!--First Column -->
-    <div class="col-md-2 col-lg-2">
+    <div class="col-md-3 col-lg-3">
         <!--Profile Pic and Personal Information -->
         <div class="row my-2">
             <div class="profile-container">
@@ -69,8 +66,8 @@
             <div class="col-md-12 d-flex align-items-center justify-content-center mt-2">
                 <div class="w-100">
 
-                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-evenly">
-                        <i class="fas fa-users" style="color: gray;"></i>
+                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center">
+                        <i class="fas fa-users me-3" style="color: gray;"></i>
                         Join a Team
                     </button>
 
@@ -89,38 +86,21 @@
             </div>
 
 
-            <!--Awards and Certifications -->
-            <p class="mt-3 fs-sm fs-md poppins-medium text-start">Awards & Certifications</p>
-
-            <div class="row my-1 text-start mb-1 ms-md-4">
-                @if($user->freelancer->certificates->isEmpty())
-                <div class="col-12 d-flex align-items-start justify-content-start">
-                    <div class="d-flex align-items-start">
-                        <img class="socmed-container" src="{{ asset('assets/Prize.svg') }}" alt="Certificate">
-                    </div>
-                    <div class="ms-2 ms-md-3">
-                        <p class="mb-0 fs-sm-cont fs-md text-start text-muted">No Awards</p>
-                    </div>
-                </div>
-                @else
-                @foreach($user->freelancer->certificates as $certificate)
-                <div class="col-12 d-flex align-items-center justify-content-start">
-                    <div class="d-flex align-items-center">
-                        <img class="socmed-container" src="{{ asset('assets/Prize.svg') }}" alt="Certificate">
-                    </div>
-                    <div class="col">
-                        <div class="ms-2 ms-md-3">
-                            <p class="mb-0 fs-sm-cont fs-md text-start">{{ $certificate->title }}</p>
-                        </div>
-                        <div class="ms-2 ms-md-3">
-                            <p class="mb-0 fs-sm-cont fs-md text-start">{{ $certificate->date }}</p>
-                        </div>
-                    </div>
-                </div>
-                @endforeach
-                @endif
+            <!--Awards-->
+            <div class="mt-4"></div>
+            <div class="text-end d-flex align-items-center mt-4">
+                <p class="mb-0 me-3 poppins-medium setting-color fs-5 text-start">Awards and Certifications</p>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addAwardsModal">
+                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
+                </button>
             </div>
+            @include('components.f_awards', ['freelancer' => $user->freelancer])
+
+            <!--Social Media -->
+            @include('components.social_media', ['socmed' => $user->socmed])
+
         </div>
+
     </div>
 
     <!--Space between-->
@@ -138,7 +118,7 @@
 
                 <div class="d-flex justify-content-start align-items-center mb-2">
                     <span class="h6 mb-0 me-3 poppins-medium setting-color fs-5">Basic Information</span>
-                    <div class="text-start" id="edit-button" onclick="enableEditMode()">
+                    <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
                         <i class="fas fa-solid fa-pen mb-2 me-2 mt-2"></i>
                     </div>
                 </div>
@@ -244,7 +224,7 @@
                             <!-- Password Information -->
                             <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
                                 <span class="h6 mb-0 me-3 poppins-medium setting-color fs-5">Password Information</span>
-                                <div class="text-start" id="edit-button" onclick="enableEditMode()">
+                                <div class="text-start" id="edit-button-dt" onclick=" enableEditModeDesktop()">
                                     <i class="fas fa-solid fa-pen mb-2 me-2 mt-2"></i>
                                 </div>
                             </div>
@@ -283,85 +263,161 @@
                 </div>
 
                 <!-- Save and Cancel Buttons -->
-                <div class="form-group text-center" id="form-buttons" style="display: none;">
-                    <button type="submit" class="btn btn-primary">Save</button>
-                    <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
+                <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
+                    <button type="submit" class="fs-5 btn-save px-2">Save</button>
+                    <button type="button" class="fs-5 btn-cancel px-2" onclick="cancelEditBasicInfo()">Cancel</button>
                 </div>
             </form>
         </div>
 
-        <!--Services -->
+        <!-- Services -->
         <div class="row">
             <!-- Add New Service Button -->
             <div class="text-end mt-1 d-flex align-items-center">
                 <p class="mb-0 me-2 poppins-medium setting-color fs-5">Services</p>
                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                    <i class="fas fa-solid fa-circle-plus fs-6"></i>
+                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
                 </button>
             </div>
-            <!-- Modal for adding new services-->
-            @include('modals.addService_modal', ['freelancer_id'=> $user->id])
 
             @foreach ($user->freelancer->services as $service)
-            <div class="row mt-1 open-sans-reg">
-
+            <div class="row mt-1 open-sans-reg" data-id="{{ $service->id }}">
                 <div class="col">
-                    <p class="fs-smaller fs-md">{{$service->job_title}}</p>
+                    <input type="text" class="form-control fs-smaller fs-md" value="{{ $service->job_title }}" readonly>
                 </div>
-
                 <div class="col">
-                    <p class="fs-smaller fs-md">₱{{$service->job_fee}} {{$service->fee_type}}</p>
+                    <input type="text" class="form-control fs-smaller fs-md" value="₱{{ $service->job_fee }} {{ $service->fee_type }}" readonly>
                 </div>
-
-                <div class="col">
-                    <button type="button" class="btn" data-bs-target="#">
-                        <i class="fas fa-pen fa-solid fa-circle-plus fs-6"></i>
-                    </button>
-                </div>
-
-
                 <div class="col-auto">
-                    @if ($service->isAvailable === true)
-                    <p class="text-success fs-smaller fs-md">Available</p>
-                    @else
-                    <p class="text-danger fs-smaller fs-md">Not Available</p>
-                    @endif
+                    <button type="button" class="btn edit-btn" onclick="toggleEdit('{{ $service->id }}')">
+                        <i class="fas fa-pen fs-6"></i>
+                    </button>
+
+                    <!-- Hidden elements -->
+                    <div class="edit-controls d-none">
+                        <button type="button" class="btn availability-toggle">
+                            <i class="fas fa-toggle-{{ $service->isAvailable ? 'on' : 'off' }} fs-6"></i>
+                        </button>
+                        <button type="button" class="btn text-danger delete-btn">
+                            <i class="fas fa-trash fs-6"></i>
+                        </button>
+                        <button type="button" class="btn btn-primary save-btn">
+                            Save
+                        </button>
+                        <button type="button" class="btn btn-secondary cancel-btn">
+                            Cancel
+                        </button>
+                    </div>
                 </div>
             </div>
+
             @endforeach
+        </div>
 
 
+        <!--Skills -->
+        <div class="row">
+            <!-- Skills Section for adding, editing and deleting -->
+            <div class="text-end mt-3 d-flex align-items-center">
+                <p class="mb-0 me-2 poppins-medium setting-color fs-5">Skills</p>
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">
+                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i> <!-- Plus icon for adding skills -->
+                </button>
+            </div>
+            @include('components.f_skills', ['freelancer' => $user->freelancer])
+        </div>
+
+        <!--Terms of Service -->
+        <div class="row">
+            <div class="text-end mt-3 d-flex align-items-center">
+                <p class="mb-0 me-2 poppins-medium setting-color fs-5">Terms of Service</p>
+                <!-- Edit Icon -->
+                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsDesktopModal">
+                    <i class="ms-0 me-4 fs-6 text-start fas fa-pen fa-solid"></i>
+                </button>
+
+            </div>
+            <div class="container terms-container rounded">
+                <p class="text-start fs-6 mt-2 ">
+                    {{$user->freelancer->terms_and_conditions}}
+                </p>
+            </div>
+            @include('modals.f_terms_desktop', ['freelancer' => $user->freelancer])
+        </div>
+
+
+        <!--Portfolio -->
+        <div class="row mt-3">
+            <!-- Add New Service Button -->
+            <div class="text-end mt-1 d-flex align-items-center">
+                <p class="mb-0 me-2 poppins-medium setting-color fs-5">Portfolio</p>
+                @if ($portfolioCount < $portfolioLimit)
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#albumModal">
+                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
+                    </button>
+                    @else
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#albumModal">
+                        <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
+                    </button>
+                    <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
+                    @endif
+
+            </div>
+            @php
+            $portfolioLimit = 3; // Maximum number of portfolios allowed
+            $portfolioCount = $user->freelancer->portfolios->count();
+            @endphp
+
+            <div class="mt-2">
+                @if ($user->freelancer->portfolios->isEmpty())
+                <div></div>
+                @else
+                <div class="d-flex justify-content-end mb-3">
+                    <!-- Upload Button -->
+                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                        <i class="fas fa-upload"></i> Upload
+                    </button>
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+                @endif
+
+                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+            </div>
         </div>
 
     </div>
 </div>
 
 <script>
-    function enableEditMode() {
-        // Enable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.removeAttribute('disabled');
+    function enableEditModeDesktop() {
+        // Enable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = false;
         });
 
         // Show Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'block';
+        document.getElementById('form-buttons-dt').style.display = 'block';
 
-        // Hide Edit button
-        document.getElementById('edit-button').style.display = 'none';
+        // Optionally hide the edit button to prevent further clicks
+        document.getElementById('edit-button-dt').style.display = 'none';
     }
 
-    function cancelEdit() {
-        // Disable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.setAttribute('disabled', 'true');
+    function cancelEditBasicInfo() {
+        // Disable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = true;
         });
 
         // Hide Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'none';
+        document.getElementById('form-buttons-dt').style.display = 'none';
 
-        // Show Edit button
-        document.getElementById('edit-button').style.display = 'block';
+        // Show the edit button again
+        document.getElementById('edit-button-dt').style.display = 'block';
     }
+
 
     function togglePasswordVisibility(fieldId) {
         var field = document.getElementById(fieldId);
@@ -375,4 +431,42 @@
             button.innerHTML = '<i class="fas fa-eye"></i>';
         }
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Function to toggle edit mode
+        window.toggleEdit = function(id) {
+            console.log('Editing service with ID:', id); // Verify ID is correct
+
+            const row = document.querySelector(`[data-id="${id}"]`);
+            if (!row) {
+                console.error(`No row found for id ${id}`);
+                return;
+            }
+
+            const isEditing = row.classList.toggle('editing');
+
+            // Toggle input and select fields
+            row.querySelectorAll('input').forEach(el => {
+                el.readOnly = !isEditing;
+                el.disabled = !isEditing;
+            });
+
+            // Toggle visibility of edit controls
+            const controls = row.querySelector('.edit-controls');
+            if (controls) {
+                controls.classList.toggle('d-none', !isEditing);
+            }
+
+            // Optionally update the button text or icon
+            const editButton = row.querySelector('.edit-btn');
+            if (editButton) {
+                editButton.innerHTML = isEditing ?
+                    '<i class="fas fa-check fs-6"></i>' // Change to check icon when in editing mode
+                    :
+                    '<i class="fas fa-pen fs-6"></i>'; // Pen icon when not in editing mode
+            }
+        };
+
+        // Optional: Add event listeners to existing edit buttons if needed
+    });
 </script>

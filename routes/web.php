@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Livewire\AddPortfolio;
 use Illuminate\Support\Facades\Auth;
@@ -53,9 +54,17 @@ Route::post('/skills', [SettingsController::class, 'store'])->name('skills.store
 Route::patch('/skills', [SettingsController::class, 'update'])->name('skills.update');
 Route::delete('/skills/delete', [SettingsController::class, 'destroy'])->name('skills.destroy');
 
+#certificates
+Route::post('/certificates', [App\Http\Controllers\Profile\CertificateController::class, 'store'])->name('certificates.store');
+Route::patch('/certificates/update', [App\Http\Controllers\Profile\CertificateController::class, 'update'])->name('certificates.update');
+Route::delete('/certificates/delete', [App\Http\Controllers\Profile\CertificateController::class, 'destroy'])->name('certificates.destroy');
 
 #portfolio 
 Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
+Route::post('/delete/image', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteImage'])->name('delete.image');
+Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteAlbum'])->name('delete-album');
+
+
 
 #My Events Page Client
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');

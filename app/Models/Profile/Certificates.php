@@ -18,6 +18,8 @@ class Certificates extends Model
         'freelancer_id',
     ];
 
+    protected $primaryKey = 'cert_id';
+
     public function freelancer()
     {
         return $this->belongsTo(Freelancer::class, 'freelancer_id');

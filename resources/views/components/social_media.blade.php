@@ -7,10 +7,10 @@
         @csrf
         @method('PATCH')
 
-        <div class="col-auto">
-            <img src="{{ asset('assets/' . $socialMedia->platform . '.svg') }}" alt="{{ $socialMedia->platform }} Logo" class="img-fluid" style="max-width: 40px; max-height: 40px;">
+        <div class="col-auto col-md-2">
+            <img src="{{ asset('assets/' . $socialMedia->platform . '.svg') }}" alt="{{ $socialMedia->platform }} Logo" class="socmed-container setting-socmed-img">
         </div>
-        <div class="col">
+        <div class="col col-md-8">
             <div class="input-group">
                 <input
                     type="url"
@@ -22,7 +22,7 @@
                     readonly />
             </div>
         </div>
-        <div class="col-auto">
+        <div class="col-auto col-md-2">
             <button type="button" class="btn edit-btn" data-target="#{{ $socialMedia->platform }}_link">
                 <i class="fas fa-pen-to-square"></i>
             </button>

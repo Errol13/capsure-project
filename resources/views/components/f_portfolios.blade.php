@@ -1,11 +1,10 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+
 
 <div class="container mt-4">
     @if ($portfolios->isEmpty())
-    <!-- Display message if there are no portfolio records -->
     <p class="fs-6 text-center open-sans-reg text-muted mt-5">No portfolios yet. Create one.</p>
     @else
-    <!-- Tabs Navigation -->
+
     <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
         @foreach ($portfolios as $index => $portfolio)
         <li class="nav-item" role="presentation">
@@ -16,7 +15,6 @@
         @endforeach
     </ul>
 
-    <!-- Tabs Content -->
     <div class="tab-content mt-3" id="portfolioTabsContent">
         @foreach ($portfolios as $index => $portfolio)
         <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="portfolio-{{ $portfolio->portfolio_id }}" role="tabpanel" aria-labelledby="tab-{{ $portfolio->portfolio_id }}">
@@ -29,17 +27,24 @@
                 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
                 @endphp
                 @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
-                @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
-                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                    <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-thumbnail" style="max-width: 200px; max-height: 150px; object-fit: cover; margin: 5px;">
-                </a>
-                @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
-                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                    <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-thumbnail" style="max-width: 200px; max-height: 150px; object-fit: cover; margin: 5px;"></video>
-                </a>
-                @else
-                <p>Unsupported file type: {{ $fileExtension }}</p>
-                @endif
+                <div class="position-relative">
+                    @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                    <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
+                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-thumbnail">
+                    </a>
+                    @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
+                    <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
+                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-thumbnail"></video>
+                    </a>
+                    @else
+                    <p>Unsupported file type: {{ $fileExtension }}</p>
+                    @endif
+
+                    <!-- Delete Button -->
+                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" data-file-path="{{ $relativePath }}">
+                        Delete
+                    </button>
+                </div>
                 @else
                 <p>File path mismatch: {{ $relativePath }}</p>
                 @endif
@@ -52,4 +57,5 @@
         @endforeach
     </div>
     @endif
+
 </div>

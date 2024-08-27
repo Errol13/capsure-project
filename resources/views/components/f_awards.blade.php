@@ -1,31 +1,35 @@
 
 <div class="container mt-2">
-    @if(empty($freelancer->skills))
-    <p>Add skills to attract more clients.</p>
+    @if($freelancer->certificates->isEmpty())
+    <p>Add awards to showcase your achievements.</p>
     @else
-    <div class="accordion" id="skillsAccordion">
-        <!-- Accordion Item for Skills -->
+    <div class="accordion" id="awardsAccordion">
         <div class="accordion-item">
-            <h2 class="accordion-header" id="headingSkills">
+            <h2 class="accordion-header" id="headingAwards">
                 <div class="d-flex justify-content-between align-items-center">
-                    <span class="h6 mb-0"></span>
-                    <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSkills" aria-expanded="false" aria-controls="collapseSkills">
+                    <span class="h6 mb-0">Awards</span>
+                    <button class="btn btn-link p-0" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAwards" aria-expanded="false" aria-controls="collapseAwards">
                         <i class="ms-5 text-end fas fa-chevron-down collapse-icon" aria-hidden="true"></i>
                         <i class="ms-5 text-end fas fa-chevron-up collapse-icon d-none" aria-hidden="true"></i>
                     </button>
                 </div>
             </h2>
-            <div id="collapseSkills" class="accordion-collapse collapse" aria-labelledby="headingSkills" data-bs-parent="#skillsAccordion">
+            <div id="collapseAwards" class="accordion-collapse collapse" aria-labelledby="headingAwards" data-bs-parent="#awardsAccordion">
                 <div class="accordion-body">
-                    @foreach ($freelancer->skills as $skill)
+                    @foreach ($freelancer->certificates as $certificate)
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex align-items-center">
-                            <span class="me-2"><i class="fas fa-solid fa-certificate" style="color: yellow;"></i></span>
-                            <span>{{ $skill }}</span>
+                            <a data-fancybox="certificate-gallery" href="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}">
+                                <img src="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}" alt="{{ $certificate->title }}" class="me-2" style="width: 50px; height: 50px;">
+                            </a>
+                            <div>
+                                <span class="d-block">{{ $certificate->title }}</span>
+                                <small class="text-muted">{{ \Carbon\Carbon::parse($certificate->date)->format('M d, Y') }}</small>
+                            </div>
                         </div>
                         <div>
-                            <button class="btn btn-sm btn-link" data-bs-toggle="modal" data-bs-target="#editSkillModal" data-skill="{{ $skill }}"><i class="fas fa-edit"></i></button>
-                            <button class="btn btn-sm btn-link text-danger" onclick=" confirmDeleteSkill('{{ $skill }}')"><i class="fas fa-trash"></i></button>
+                            <button class="btn btn-sm btn-link" data-bs-toggle="modal" data-bs-target="#editAwardModal" data-id="{{ $certificate->cert_id }}" data-title="{{ $certificate->title }}" data-date="{{ $certificate->date }}" data-image="{{ $certificate->image }}"><i class="fas fa-edit"></i></button>
+                            <button class="btn btn-sm btn-link text-danger" onclick="confirmDeleteAward('{{ $certificate->cert_id }}')"><i class="fas fa-trash"></i></button>
                         </div>
                     </div>
                     @endforeach
@@ -37,9 +41,11 @@
 </div>
 
 
+
+
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var accordionCollapse = document.getElementById('collapseSkills');
+        var accordionCollapse = document.getElementById('collapseAwards');
         var collapseIcons = document.querySelectorAll('.collapse-icon');
 
         // Initial icon setup based on current collapse state
@@ -68,6 +74,6 @@
                 }
             });
         }
-        
+
     });
 </script>

@@ -87,7 +87,7 @@
                                     </div>
                                     <div class="col-md-2 text-end">
                                         <i class="fas fa-pen-to-square me-2" onclick="editService('{{ $service->id }}')"></i>
-                                        <button type="button" class="btn px-0 " onclick="confirmDelete('{{ $service->id }}')"><i class="text-danger fas fa-trash"></i></button>
+                                        <button type="button" class="btn px-0 " onclick="confirmServiceDelete('{{ $service->id }}')"><i class="text-danger fas fa-trash"></i></button>
                                     </div>
                                 </div>
                                 <div class="text-end mt-2">
@@ -127,7 +127,7 @@
         serviceItem.querySelector('.cancel-btn').classList.add('d-none');
     }
 
-    function confirmDelete(serviceId) {
+    function confirmServiceDelete(serviceId) {
         if (confirm('Are you sure you want to delete this service?')) {
             document.getElementById(`delete-form-${serviceId}`).submit();
         }

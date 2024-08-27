@@ -212,4 +212,6 @@ class SettingsController extends Controller
 
         return redirect()->back()->with('success', 'Skill deleted successfully!');
     }
+
+    
 }
