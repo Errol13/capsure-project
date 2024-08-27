@@ -60,3 +60,6 @@ Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\Port
 #My Events Page Client
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
 Route::get('client-viewpost', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
+
+#Transaction
+Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');

@@ -1,0 +1,335 @@
+@extends('layouts.app')
+
+@section('content')
+<div class="container mt-4">
+    <!-- Tabs -->
+    <ul class="nav nav-tabs mb-3">
+        <li class="nav-item">
+            <a class="nav-link active" style="color:black;" href="#ongoing" data-bs-toggle="tab">ON-GOING Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="color:black;" href="#upcoming" data-bs-toggle="tab">UPCOMING Events</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" style="color:black;" href="#history" data-bs-toggle="tab">PAST Events</a>
+        </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content">
+        <!-- ON-GOING Tab -->
+        <div class="tab-pane fade show active" id="ongoing">
+            <!-- Table for larger screens -->
+            <table id="unique-payment-table" class="table table-borderless d-none d-md-table mt-3">
+                <thead class="table-primary poppins-extralight">
+                    <tr>
+                        <th style="width: 10%;"></th>
+                        <th style="width: 10%;"></th>
+                        <th style="width: 15%;">Payment Fee</th>
+                        <th style="width: 16%;">Confirmation</th>
+                        <th style="width: 20%;">Freelancer's Confirmation</th>
+                        <th style="width: 14%;">Payment Proof</th>
+                        <th style="width: 15%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $currprojects = [
+                        [
+                            'id' => 1,
+                            'title' => 'Project 1',
+                            'freelancers' => [
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                            ]
+                        ],
+                        [
+                            'id' => 1,
+                            'title' => 'Project 1',
+                            'freelancers' => [
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                            ]
+                        ],
+                    ]
+                    ?>
+
+                    <?php foreach ($currprojects as $currproject): ?>
+                        <tr style="border:none;">
+                            <td colspan="7" class="p-0">
+                                <div class="card mb-1 mt-3">
+                                    <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
+                                        <span><?= $currproject['title']; ?></span>
+                                        <a href="<?= url('/client-viewpost', ['id' => $currproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Loop through each freelancer -->
+                                        <?php foreach ($currproject['freelancers'] as $freelancer): ?>
+                                            <div class="row align-items-center mb-2">
+                                                <div class="col-auto pe-1">
+                                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle">
+                                                </div>
+                                                <div class="col-2 pe-4">
+                                                    <div class="d-flex flex-column align-items-start">
+                                                        <div><?= $freelancer['name']; ?></div>
+                                                        <small class="text-muted"><?= $freelancer['profession']; ?></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 text-left">₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                                <div class="col-2 d-flex align-items-center">
+                                                    <span class="<?= $freelancer['confirmation_status'] == 'Fully Paid' ? 'text-success' : 'text-warning'; ?>">
+                                                        <?= $freelancer['confirmation_status']; ?>
+                                                    </span>
+                                                    <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
+                                                        <i class="fas fa-repeat" style="color: black;"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2 text-success"><?= $freelancer['freelancer_confirmation']; ?></div>
+                                                <div class="col-1 d-flex justify-content-center">
+                                                    <a href="#" class="btn btn-outline-secondary btn-sm" style="white-space: nowrap;"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-end">
+                                                    <button class="btn btn-outline-secondary btn-sm btn-fit-width">Write a review</button>
+                                                </div>
+                                            </div>
+                                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">                                            
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <!-- Card style on smaller screens -->
+            <?php foreach ($currprojects as $currproject): ?>
+                <div class="card mb-3 mt-3 d-block d-md-none">
+                    <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
+                        <span><?= $currproject['title']; ?></span>
+                        <a href="<?= url('/client-viewpost', ['id' => $currproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                    </div>
+                    <div class="card-body">
+                        <!-- Loop through each freelancer -->
+                        <?php foreach ($currproject['freelancers'] as $freelancer): ?>
+                            <div class="d-flex flex-column align-items-start mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle me-2">
+                                    <div>
+                                        <?= $freelancer['name']; ?>
+                                        <small class="text-muted d-block"><?= $freelancer['profession']; ?></small>
+                                    </div>
+                                </div>
+                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                <div class="mb-1"><strong>Confirmation:</strong> <?= $freelancer['confirmation_status']; ?></div>
+                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> <?= $freelancer['freelancer_confirmation']; ?></div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a href="#" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                    <button class="btn btn-outline-secondary btn-sm">Write a review</button>
+                                </div>
+                            </div>                 
+                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">                                            
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- UPCOMING Tab -->
+        <div class="tab-pane" id="upcoming">
+            <!-- Table for larger screens -->
+            <table id="unique-payment-table" class="table table-borderless d-none d-md-table mt-3">
+                <thead class="table-primary poppins-extralight">
+                    <tr>
+                        <th style="width: 10%;"></th>
+                        <th style="width: 10%;"></th>
+                        <th style="width: 15%;">Payment Fee</th>
+                        <th style="width: 16%;">Confirmation</th>
+                        <th style="width: 20%;">Freelancer's Confirmation</th>
+                        <th style="width: 14%;">Payment Proof</th>
+                        <th style="width: 15%;"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    $soonprojects = [
+                        [
+                            'id' => 1,
+                            'title' => 'Project 1',
+                            'freelancers' => [
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                            ]
+                        ],
+                        [
+                            'id' => 1,
+                            'title' => 'Project 1',
+                            'freelancers' => [
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                                [
+                                    'profile_image' => 'assets/profilepic.svg',
+                                    'name' => 'Freelancer 1',
+                                    'profession' => 'Developer',
+                                    'payment_fee' => 1500,
+                                    'confirmation_status' => 'Fully Paid',
+                                    'freelancer_confirmation' => 'Fully Paid'
+                                ],
+                            ]
+                        ],
+                    ]
+                    ?>
+
+                    <?php foreach ($soonprojects as $soonproject): ?>
+                        <tr style="border:none;">
+                            <td colspan="7" class="p-0">
+                                <div class="card mb-1 mt-3">
+                                    <div class="card-header poppins-medium d-flex justify-content-venter align-items-center">
+                                        <span><?= $soonproject['title']; ?></span>
+                                        <a href="<?= url('/client-viewpost', ['id' => $soonproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                    </div>
+                                    <div class="card-body">
+                                        <!-- Loop through each freelancer -->
+                                        <?php foreach ($soonproject['freelancers'] as $freelancer): ?>
+                                            <div class="row align-items-center mb-2">
+                                                <div class="col-auto pe-1">
+                                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle">
+                                                </div>
+                                                <div class="col-2 pe-4">
+                                                    <div class="d-flex flex-column align-items-start">
+                                                        <div><?= $freelancer['name']; ?></div>
+                                                        <small class="text-muted"><?= $freelancer['profession']; ?></small>
+                                                    </div>
+                                                </div>
+                                                <div class="col-2 text-left">₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                                <div class="col-2 d-flex align-items-center">
+                                                    <span class="<?= $freelancer['confirmation_status'] == 'Fully Paid' ? 'text-success' : 'text-warning'; ?>">
+                                                        <?= $freelancer['confirmation_status']; ?>
+                                                    </span>
+                                                    <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
+                                                        <i class="fas fa-repeat" style="color: black;"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="col-2 text-success"><?= $freelancer['freelancer_confirmation']; ?></div>
+                                                <div class="col-1 d-flex justify-content-center">
+                                                    <a href="#" class="btn btn-outline-secondary btn-sm" style="white-space: nowrap;"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                                </div>
+                                                <div class="col-2 d-flex justify-content-end">
+                                                    <button class="btn btn-outline-secondary btn-sm btn-fit-width">Write a review</button>
+                                                </div>
+                                            </div>
+                                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">                                            
+                                        <?php endforeach; ?>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+
+            <!-- Card style on smaller screens -->
+            <?php foreach ($soonprojects as $soonproject): ?>
+                <div class="card mb-3 mt-3 d-block d-md-none">
+                    <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
+                        <span><?= $soonproject['title']; ?></span>
+                        <a href="<?= url('/client-viewpost', ['id' => $soonproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                    </div>
+                    <div class="card-body">
+                        <!-- Loop through each freelancer -->
+                        <?php foreach ($soonproject['freelancers'] as $freelancer): ?>
+                            <div class="d-flex flex-column align-items-start mb-3">
+                                <div class="d-flex align-items-center mb-2">
+                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle me-2">
+                                    <div>
+                                        <?= $freelancer['name']; ?>
+                                        <small class="text-muted d-block"><?= $freelancer['profession']; ?></small>
+                                    </div>
+                                </div>
+                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                <div class="mb-1"><strong>Confirmation:</strong> <?= $freelancer['confirmation_status']; ?></div>
+                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> <?= $freelancer['freelancer_confirmation']; ?></div>
+                                <div class="d-flex justify-content-between mt-3">
+                                    <a href="#" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                    <button class="btn btn-outline-secondary btn-sm">Write a review</button>
+                                </div>
+                            </div>                 
+                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">                                            
+                        <?php endforeach; ?>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+
+        <!-- HISTORY Tab -->
+        <div class="tab-pane fade" id="history">
+            <!-- Content for History Tab -->
+        </div>
+    </div>
+</div>
+
+@endsection
