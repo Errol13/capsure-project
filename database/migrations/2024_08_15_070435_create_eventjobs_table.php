@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('eventjobs', function (Blueprint $table) {
+        Schema::create('event_jobs', function (Blueprint $table) {
             $table->id('job_id'); // Primary key
             $table->string('service_needed', 255); // Service needed by the client
             $table->string('job_category', 255); // Job category of the freelancer's service

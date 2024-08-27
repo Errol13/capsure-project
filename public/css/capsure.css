@@ -312,6 +312,10 @@ select#year {
     border-radius: 50px;
 }
 
+.err{
+    margin: none;
+    padding: none;
+}
 
 .input-group-text {
     top: 50%;

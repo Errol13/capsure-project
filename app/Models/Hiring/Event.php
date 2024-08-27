@@ -7,12 +7,11 @@ use App\Models\Freelancer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Events extends Model
+class Event extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'event_id',
         'title',
         'description',
         'start_date',
@@ -26,6 +25,8 @@ class Events extends Model
         'status',
         'client_id',
     ];
+
+    protected $primaryKey = 'event_id';
 
     public function client()
     {

@@ -17,7 +17,7 @@ return new class extends Migration
             // Foreign key columns
             $table->foreignId('client_id')->constrained('clients', 'user_id')->onDelete('cascade');
             $table->foreignId('freelancer_id')->constrained('freelancers', 'user_id')->onDelete('cascade');
-            $table->foreignId('job_id')->constrained('jobs', 'job_id')->onDelete('cascade');
+            $table->foreignId('job_id')->constrained('event_jobs', 'job_id')->onDelete('cascade');
             $table->foreignId('hiring_request_id')->constrained('hiring_requests', 'hiring_request_id')->onDelete('cascade');
             
             // Payment amount column

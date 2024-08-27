@@ -19,9 +19,11 @@ class EventJob extends Model
         'event_id',             // Foreign key to the events table
     ];
 
+    protected $primaryKey = 'job_id';
+
     public function event()
     {
-        return $this->belongsTo(Events::class, 'event_id');
+        return $this->belongsTo(Event::class, 'event_id');
     }
 
     // Relationship to Freelancer through JobApplications

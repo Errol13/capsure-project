@@ -4,6 +4,8 @@ use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Livewire\AddPortfolio;
+use App\Http\Livewire\CreateEventForm;
+use App\Livewire\CreateEventForm as LivewireCreateEventForm;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +37,7 @@ Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 
 Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
 
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
-Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
+
 
 #settings
 Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
@@ -67,5 +69,6 @@ Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController
 
 
 #My Events Page Client
+Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
 Route::get('client-viewpost', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
