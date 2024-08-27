@@ -100,7 +100,7 @@
                             <a class="nav-link  text-black {{ request()->is('client-events') ? 'active' : '' }}" href="client-events">MY EVENTS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->is('#') ? 'active' : '' }}" href="#">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->is('client-transaction') ? 'active' : '' }}" href="client-transaction">MY TRANSACTION</a>
                         </li>
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
@@ -250,7 +250,7 @@
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
+                    <a class="nav-link" href="{{ url('/client-transaction') }}" style="font-size:x-small;">
                         <img src="assets/transaction.svg" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
                         <div>My Transaction</div>
                     </a>

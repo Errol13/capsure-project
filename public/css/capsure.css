@@ -91,6 +91,13 @@
     width: 80px;
 }
 
+.btn-fit-width {
+    width: 90%; /* Full width of the container */
+    text-align: center; /* Center text inside the button */
+    padding: 0.5rem 1rem; /* Adjust padding as needed */
+    margin: 0; /* Remove default margin */
+}
+
 .btn-link {
     color: white;
     border: none;
@@ -590,9 +597,16 @@ select#year {
 .open-sans-reg h3 {
     font-size: px; /* Default font size */
 }
+
 thead {
-    background-color: #4CAF50; /* Change this to your desired color */
-    color: white; /* Optional: Change the text color to ensure readability */
+    background-color: #4CAF50;
+    color: white; 
+}
+
+#unique-payment-table th {
+    background-color: #E1C1D7; 
+    border: none;
+    text-align: right;
 }
 
 thead th:nth-child(1),
@@ -895,6 +909,37 @@ select:disabled {
         overflow: hidden;
     }
 
+    .card-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 15px;
+        background-color: #f8f9fa;
+    }
+    .freelancer-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 15px;
+        border-bottom: 1px solid #dee2e6;
+    }
+    .freelancer-info {
+        display: flex;
+        align-items: center;
+    }
+    .freelancer-info img {
+        border-radius: 50%;
+        margin-right: 10px;
+    }
+    .status {
+        color: #28a745; /* Green color for "Fully Paid" */
+    }
+    .status-partially {
+        color: #ff9900; /* Orange color for "Partially Paid" */
+    }
+    .btn-review.disabled {
+        opacity: 0.5;
+    }
    
     /* Client homepage <-------------------------------------------------------*/
     .search-container {
