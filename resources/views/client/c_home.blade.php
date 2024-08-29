@@ -109,71 +109,67 @@
                     <img src="assets/solo.svg" class="inside-icon me-1">
                     <h3 class="poppins-regular fs-3 mb-0">Solo Freelancers</h3>
                 </div>
-                <a class="poppins-light fs-5 mb-0 text-purple right-side">View All</a>
+                <a href="#" class="poppins-light fs-5 mb-0 text-purple right-side">View All</a>
             </div>
 
 
             <!-- Carousel for Mobile View -->
-            <div id="cardCarousel" class="carousel slide d-block d-md-none mb-4 pb-4" data-bs-ride="carousel">
-                <div class="carousel-inner justify-content-center pb-4 ">
-                    <div class="carousel-item active py-2">
+            <div id="cardCarousel" class="carousel slide d-block d-md-none mb-4 pb-1" data-bs-ride="carousel">
+                <div class="carousel-inner justify-content-center pb-4">
+                    @foreach ($users as $user)
+                    @if ($user->freelancer)
+                    @php
+                    $service = $user->freelancer->services->first();
+                    $portfolio = $user->freelancer->portfolios->first();
+                    @endphp
+                    <div class="carousel-item {{ $loop->first ? 'active' : '' }} py-2">
                         <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border: none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                             <div class="col-align px-2 mt-1">
-                                <h5 class="card-title poppins-medium mt-1">Photographer</h5>
-                                <h5 class="poppins-medium fs-5 mb-0 right-side">₱500/hr</h5>
+                                <h5 class="card-title poppins-medium mt-1">{{ $service->job_title }}</h5>
+                                <h5 class="poppins-medium fs-5 mb-0 right-side">{{ $service->fee }}</h5>
                             </div>
-                            <img src="/assets/cover.svg" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
-                            <div class="card-body open-sans-reg p-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <img src="/assets/profilepic.svg" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
-                                    <div class="ms-3">
-                                        <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;">Daisy Maureen Dimasuay</p>
-                                        <p class="card-text open-sans-light small mb-0">Naga City</p>
-                                        <p class="card-text open-sans-light small text-success mb-0">10 Projects done</p>
-                                    </div>
-                                    <div class="ms-auto d-flex align-items-center">
-                                        <span class="me-1">⭐</span>
-                                        <span class="fw-bold">4.9</span>
-                                        <span class="text-muted small ms-1">(10)</span>
-                                    </div>
-                                </div>
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <a href="#" class="btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
-                                    <img src="assets/bookmark.svg" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                    <!-- Repeat for additional cards -->
-                    <div class="carousel-item active py-2">
-                        <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
-                            <div class="col-align px-2 mt-1">
-                                <h5 class="card-title poppins-medium mt-1">Photographer</h5>
-                                <h5 class="poppins-medium fs-5 mb-0 right-side">₱500/hr</h5>
-                            </div>
-                            <img src="/assets/cover.svg" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
-                            <div class="card-body open-sans-reg p-3">
+                            @if ($portfolio)
+                            @php
+                            $paths = json_decode($portfolio->path, true);
+                            $firstImage = $paths[0];
+                            @endphp
+                            <img src="{{ $firstImage }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                            @else
+                            <img src="{{ asset('assets/cover.svg') }}" class="card-img-top profile-container rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                            @endif
+
+                            <div class="card-body open-sans-reg p-2">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img src="/assets/profilepic.svg" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                                    <img src="{{ $user->profile_image }}" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
                                     <div class="ms-3">
-                                        <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;">Daisy Maureen Dimasuay</p>
-                                        <p class="card-text open-sans-light small mb-0">Naga City</p>
-                                        <p class="card-text open-sans-light small text-success mb-0">10 Projects done</p>
+                                        <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                        <p class="card-text open-sans-light small mb-0">{{ $user->city }}</p>
+                                        @if ($user->freelancer->number_of_projects > 0)
+                                        <p class="card-text open-sans-light small text-success mb-0">{{ $user->freelancer->number_of_projects }} done</p>
+                                        @else
+                                        <p class="card-text open-sans-light small text-success mb-0">No projects yet</p>
+                                        @endif
                                     </div>
                                     <div class="ms-auto d-flex align-items-center">
+                                        @if ($user->avg_rating > 0)
                                         <span class="text-warning me-1">★</span>
-                                        <span class="fw-bold">4.9</span>
+                                        <span class="fw-bold">{{ $user->freelancer->avg_rating }}</span>
                                         <span class="text-muted small ms-1">(10)</span>
+                                        @else
+                                        <span class="text-muted me-1 fs-smaller">No ratings yet</span>
+                                        @endif
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex justify-content-between align-items-center pb-2">
                                     <a href="#" class="btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
-                                    <img src="assets/bookmark.svg" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
+                                    <img src="{{ asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
                                 </div>
                             </div>
                         </div>
                     </div>
+                    @endif
+                    @endforeach
                 </div>
 
                 <!-- Carousel controls -->
@@ -187,96 +183,76 @@
                 </button>
             </div>
 
-            <!-- Grid Layout for Larger Screens -->
-            <?php
-            // Sample card data
-            $cards = [
-                [
-                    'title' => 'Photographer',
-                    'rate' => '₱500/hr',
-                    'profile' => '/assets/profilepic.svg',
-                    'cover' => '/assets/cover.svg',
-                    'name' => 'Daisy Maureen Dimasuay',
-                    'location' => 'Naga City',
-                    'projects' => '10 Projects done',
-                    'rating' => '4.9',
-                    'reviews' => '(10)',
-                    'bookmark' => 'assets/bookmark.svg'
-                ],
-                // Add more card arrays as needed
-                [
-                    'title' => 'Photographer',
-                    'rate' => '₱500/hr',
-                    'profile' => '/assets/profilepic.svg',
-                    'cover' => '/assets/cover.svg',
-                    'name' => 'Daisy Maureen Dimasuay',
-                    'location' => 'Naga City',
-                    'projects' => '10 Projects done',
-                    'rating' => '4.9',
-                    'reviews' => '(10)',
-                    'bookmark' => 'assets/bookmark.svg'
-                ],
 
-                [
-                    'title' => 'Photographer',
-                    'rate' => '₱500/hr',
-                    'profile' => '/assets/profilepic.svg',
-                    'cover' => '/assets/cover.svg',
-                    'name' => 'Daisy Maureen Dimasuay',
-                    'location' => 'Naga City',
-                    'projects' => '10 Projects done',
-                    'rating' => '4.9',
-                    'reviews' => '(10)',
-                    'bookmark' => 'assets/bookmark.svg'
-                ],
-
-                [
-                    'title' => 'Photographer',
-                    'rate' => '₱500/hr',
-                    'profile' => '/assets/profilepic.svg',
-                    'cover' => '/assets/cover.svg',
-                    'name' => 'Daisy Maureen Dimasuay',
-                    'location' => 'Naga City',
-                    'projects' => '10 Projects done',
-                    'rating' => '4.9',
-                    'reviews' => '(10)',
-                    'bookmark' => 'assets/bookmark.svg'
-                ],
-            ];
-
-            ?>
 
             <!-- Grid Layout for Larger Screens -->
             <div class="card-grid d-none d-md-flex flex-wrap justify-content-center">
-                <?php foreach ($cards as $card): ?>
-                    <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
-                        <div class="col-align px-2 mt-1">
-                            <h5 class="card-title poppins-medium mt-1"><?php echo htmlspecialchars($card['title']); ?></h5>
-                            <h5 class="poppins-medium fs-5 mb-0 right-side"><?php echo htmlspecialchars($card['rate']); ?></h5>
+                @foreach ($users as $user)
+                @if($user->freelancer)
+
+                @php
+                $service = $user->freelancer->services->first();
+                $portfolio =$user->freelancer->portfolios->first();
+                @endphp
+
+                <div class="card mx-auto shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
+                    <div class="col-align px-2 mt-1">
+                        <!-- Display Freelancer Title and Rate -->
+                        <h5 class="card-title poppins-medium mt-1">{{ $service->job_title }}</h5>
+                        <h5 class="poppins-medium fs-5 mb-0 right-side">{{ $service->fee}}</h5>
+                    </div>
+
+                    <!-- Display Freelancer Cover Image -->
+                    @if($portfolio)
+                    <!--display the first image in their first album -->
+                    @php
+                    $paths = json_decode($portfolio->path, true);
+                    $firstImage = $paths[0];
+                    @endphp
+                    <img src="{{ $firstImage }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                    @else
+                    <img src="{{ asset('assets/cover.svg') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                    @endif
+
+                    <div class="card-body open-sans-reg p-3">
+                        <div class="d-flex align-items-center mb-2">
+                            <!-- Display Freelancer Profile Image -->
+                            <img src="{{ $user->profile_image }}" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                            <div class="ms-3">
+                                <!-- Display Freelancer Name, Location, and Projects -->
+                                <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;">{{ $user->first_name }} {{ $user->last_name }}</p>
+                                <p class="card-text open-sans-light small mb-0">{{ $user->city }}</p>
+
+                                <!-- if no projects yet -->
+                                @if($user->freelancer->number_of_projects > 0)
+                                <p class="card-text open-sans-light small text-success mb-0">{{ $user->freelancer->number_of_projects }} done</p>
+                                @else
+                                <p class="card-text open-sans-light small text-success mb-0">No projects yet</p>
+                                @endif
+                            </div>
+                            <div class="ms-auto d-flex align-items-center">
+                                @if($user->avg_rating > 0)
+                                <span class="text-warning me-1">★</span>
+                                <!-- Display Freelancer Rating and Reviews -->
+                                <span class="fw-bold">{{ $user->freelancer->avg_rating }}</span>
+                                <span class="text-muted small ms-1">(10)</span>
+                                @else
+                                <span class="text-muted me-1 fs-smaller ">No ratings yet</span>
+                                @endif
+                            </div>
                         </div>
-                        <img src="<?php echo htmlspecialchars($card['cover']); ?>" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
-                        <div class="card-body open-sans-reg p-3">
-                            <div class="d-flex align-items-center mb-2">
-                                <img src="<?php echo htmlspecialchars($card['profile']); ?>" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
-                                <div class="ms-3">
-                                    <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;"><?php echo htmlspecialchars($card['name']); ?></p>
-                                    <p class="card-text open-sans-light small mb-0"><?php echo htmlspecialchars($card['location']); ?></p>
-                                    <p class="card-text open-sans-light small text-success mb-0"><?php echo htmlspecialchars($card['projects']); ?></p>
-                                </div>
-                                <div class="ms-auto d-flex align-items-center">
-                                    <span class="text-warning me-1">★</span>
-                                    <span class="fw-bold"><?php echo htmlspecialchars($card['rating']); ?></span>
-                                    <span class="text-muted small ms-1"><?php echo htmlspecialchars($card['reviews']); ?></span>
-                                </div>
-                            </div>
-                            <div class="d-flex justify-content-between align-items-center">
-                                <a href="#" class="btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
-                                <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
-                            </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <!-- See Profile Button -->
+                            <a href="#" class="btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
+                            <!-- Bookmark Icon -->
+                            <img src="{{ asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
                         </div>
                     </div>
-                <?php endforeach; ?>
+                </div>
+                @endif
+                @endforeach
             </div>
+
 
         </div>
 

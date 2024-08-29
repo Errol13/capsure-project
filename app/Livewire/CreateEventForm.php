@@ -71,7 +71,7 @@ class CreateEventForm extends Component
             'payment_method' => $this->payment_method,
             'budget_min' => $this->budget_min,
             'budget_max' => $this->budget_max,
-            'status' => 'pending', 
+            'status' => 'pending',
             'client_id' => $user->id,
         ]);
 
@@ -88,6 +88,16 @@ class CreateEventForm extends Component
         session()->flash('message', 'Event created successfully!');
         return redirect()->to('/client-events');
     }
+
+    public function messages()
+    {
+        return [
+            'jobs.*.service_needed.required' => 'Service needed is required.',
+            'jobs.*.job_category.required' => 'Job category is required.',
+            'jobs.*.number_of_people.required' => 'Number of people is required.',
+        ];
+    }
+
 
     public function render()
     {

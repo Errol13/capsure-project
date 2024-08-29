@@ -17,7 +17,7 @@
                 <!-- Basic Info -->
                 <div class="row my-4 ">
                     <div class="col-12 profile-container">
-                        <img src="{{ asset('assets/daisy.svg') }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <img src="{{ $user->profile_image }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
                 </div>
 
@@ -251,7 +251,6 @@
                         @include('components.f_awards', ['freelancer' => $user->freelancer])
 
                         <!-- Skills Section for adding, editing and deleting -->
-                        <!-- Skills Display -->
                         <div class="text-end mt-3 d-flex align-items-center">
                             <p class="mb-0 me-2 poppins-medium">Skills</p>
                             <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">

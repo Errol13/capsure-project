@@ -29,10 +29,11 @@
 
                     <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
                         <label for="description">Description:</label>
-                        <textarea id="description" class="form-control" wire:model="description" rows="3" maxlength="500" placeholder="Enter event description"></textarea>
-                        <small class="text-muted">{{ strlen($description) }}/500</small>
+                        <textarea id="description" class="form-control" wire:model.debounce.500ms="description" rows="3" maxlength="500" placeholder="Enter event description" oninput="updateCharCount()"></textarea>
+                        <small class="text-muted"><span id="charCount">{{ strlen($description) }}</span>/500</small>
                         @error('description') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>
+
 
                     <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
                         <label>Location:</label>
@@ -159,5 +160,10 @@
             event.preventDefault();
             window.location.href = "{{ url('/client-homepage') }}";
         }
+
+        function updateCharCount() {
+        var description = document.getElementById('description').value;
+        document.getElementById('charCount').innerText = description.length;
+    }
     </script>
 </div>
