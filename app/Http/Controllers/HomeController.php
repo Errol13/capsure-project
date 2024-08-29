@@ -42,7 +42,7 @@ class HomeController extends Controller
         $users = User::where('user_type', 'freelancer')
             ->with(['freelancer.services', 'freelancer.portfolios'])
             ->orderBy('id')
-            ->get();
+            ->paginate(9);
 
         return view('client.c_home', compact('users'));
     }

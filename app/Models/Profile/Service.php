@@ -20,6 +20,10 @@ class Service extends Model
         'job_fee',
     ];
 
+     protected $casts = [
+        'skills' => 'array', 
+    ];
+
     public function freelancer()
     {
         return $this->belongsTo(Freelancer::class, 'freelancer_id');
