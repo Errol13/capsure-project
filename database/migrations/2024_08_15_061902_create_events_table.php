@@ -24,7 +24,7 @@ return new class extends Migration
             $table->string('payment_method', 50);
             $table->decimal('budget_min', 11, 2); 
             $table->decimal('budget_max', 11, 2);
-            $table->string('status', 50); 
+            $table->string('status', 50)->default('open'); 
             $table->timestamps();
         });
     }

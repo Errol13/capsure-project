@@ -46,4 +46,15 @@ class HomeController extends Controller
 
         return view('client.c_home', compact('users'));
     }
+
+
+    public function showAllEvents(){
+        $users = User::where('user_type', 'client')
+        ->whereHas('client.events')
+        ->with(['client.events', 'events.event_jobs'])
+        ->orderBy('id')
+        ->paginate(9);
+
+        return view('freelancer.f_home', compact('users'));
+    }
 }

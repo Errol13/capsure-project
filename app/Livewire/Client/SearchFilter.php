@@ -42,7 +42,11 @@ class SearchFilter extends Component
                 $query->where('avg_rating', '==', $this->rating);
             })
             ->when($this->location, function ($query) {
-                $query->where('location', 'like', '%' . $this->location . '%');
+                $query->whereHas('freelancer', function ($query) {
+                    $query->whereHas('user', function ($query) {
+                        $query->where('city', 'like', '%' . $this->location . '%');
+                    });
+                });
             })
             ->get();
 

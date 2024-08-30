@@ -38,6 +38,11 @@ Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'sho
     ->name('client-homepage')
     ->middleware(['auth', 'verified']);
 
+#freelancer-homepage
+Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'showAllEvents'])
+    ->name('freelancer-homepage')
+    ->middleware(['auth', 'verified']);
+
 #Profile
 Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
 
@@ -76,7 +81,7 @@ Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController
 #My Events Page Client
 Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
-Route::get('client-viewpost', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
+Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
 
 #Transaction
 Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');

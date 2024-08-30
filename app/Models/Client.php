@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Hiring\Event;
 use App\Models\Hiring\Hiring_request;
 use App\Models\Hiring\Review;
 use App\Models\Transaction\Transaction;
@@ -37,12 +38,19 @@ class Client extends Model
         return $this->hasMany(Review::class, 'client_id');
     }
 
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'client_id');
+    }
+
     public function hiringRequests()
     {
         return $this->hasMany(Hiring_request::class, 'client_id');
     }
 
-    public function transactions(){
+
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class, 'client_id');
     }
 }

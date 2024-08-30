@@ -87,10 +87,16 @@
             </div>
         </div>
 
-        
+        <!-- create an event -->
+        <a class="create-event-btn shadow-btn mb-3 rounded-pill open-sans-reg " href="{{ url('/events') }}" style="text-decoration: none;">
+            Create an Event <i class="fas fa-party-horn"></i>
+            <img src="assets/event.svg" class="inside-icon me-1">
+        </a>
+
+
 
 
     </div>
 
-    
+
 </div>

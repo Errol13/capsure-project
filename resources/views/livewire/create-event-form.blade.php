@@ -158,7 +158,7 @@
     <script>
         function cancelForm(event) {
             event.preventDefault();
-            window.location.href = "{{ url('/client-homepage') }}";
+            window.history.back();
         }
 
         function updateCharCount() {

@@ -25,4 +25,8 @@ class Hiring_request extends Model
     {
         return $this->hasOne(Transaction::class, 'hiring_request_id');
     }
+
+    public function eventjob(){
+        return $this->belongsTo(EventJob::class, 'job_id');
+    }
 }

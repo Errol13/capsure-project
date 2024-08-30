@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Hiring\Event;
 use App\Models\Profile\Service;
 use App\Models\Profile\SocialMediaAccount;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -63,6 +64,11 @@ class User extends Authenticatable implements MustVerifyEmail
     public function client()
     {
         return $this->hasOne(Client::class, 'user_id');
+    }
+
+    public function events()
+    {
+        return $this->hasManyThrough(Event::class, Client::class, 'user_id', 'client_id');
     }
 
     public function freelancer()

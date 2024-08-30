@@ -9,7 +9,7 @@
                     <h2>My Posts</h2>
                 </div>
                 <div class="col-auto">
-                    <button class="btn btn-primary" style="background-color:#8FE2ED; border:none; color:black;">+</button>
+                    <a href="{{ url('/events') }}" class="btn btn-primary" style="background-color:#8FE2ED; border:none; color:black;">+</a>
                 </div>
                 <div class="col ms-auto text-end">
                     <div class="dropdown">
@@ -23,41 +23,6 @@
                     </div>
                 </div>
             </div>
-
-
-            <?php
-            // Example array of posts
-            $posts = [
-                [
-                    'created' => '1 min ago',
-                    'title' => '18th Birthday Celebration',
-                    'budget' => '₱10,000 - ₱20,000',
-                    'status' => 'OPEN',
-                    'pending' => 0,
-                    'request' => 0,
-                    'hired' => 0
-                ],
-                [
-                    'created' => '1 min ago',
-                    'title' => '18th Birthday Celebration',
-                    'budget' => '₱10,000 - ₱20,000',
-                    'status' => 'OPEN',
-                    'pending' => 0,
-                    'request' => 0,
-                    'hired' => 0
-                ],
-                [
-                    'created' => '1 min ago',
-                    'title' => '18th Birthday Celebration',
-                    'budget' => '₱10,000 - ₱20,000',
-                    'status' => 'OPEN',
-                    'pending' => 0,
-                    'request' => 0,
-                    'hired' => 0
-                ],
-                // Add more posts as needed
-            ];
-            ?>
 
             <!-- Larger Screens -->
             <div class="table-responsive d-none d-md-block">
@@ -73,45 +38,46 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($posts as $post): ?>
+                        @foreach ($events as $event)
                             <tr>
                                 <td>
-                                    <small>Created <?php echo $post['created']; ?></small><br>
-                                    <strong class="poppins-medium"><?php echo $post['title']; ?></strong><br>
-                                    <small>Budget: <?php echo $post['budget']; ?></small>
+                                    <small>Created {{ $event->created_at->diffForHumans() }}</small><br>
+                                    <strong class="poppins-medium">{{ $event->title }}</strong><br>
+                                    <small>Budget: ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</small>
                                 </td>
-                                <td class="text-success fw-bold"><?php echo $post['status']; ?></td>
-                                <td><?php echo $post['pending']; ?></td>
-                                <td><?php echo $post['request']; ?></td>
-                                <td><?php echo $post['hired']; ?></td>
+                                <td class="text-success fw-bold text-uppercase">{{ $event->status }}</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>0</td>
                                 <td>
-                                    <a href="{{ url('/client-viewpost') }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
+                                    <a href="{{ url('/client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
                                     <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
                                 </td>
                             </tr>
-                        <?php endforeach; ?>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
 
             <!-- Small Screens -->
             <div class="d-block d-md-none mt-3">
-                <?php foreach ($posts as $post): ?>
+                @foreach ($events as $event)
                     <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                        <div class="card-body">                            
-                            <span class="badge bg-success me-2 mb-3"><?php echo $post['status']; ?></span>
-                            <small>Created <?php echo $post['created']; ?></small>
-                            <h5 class="card-title poppins-medium"><?php echo $post['title']; ?></h5>
-                            <p class="card-text">Budget: <?php echo $post['budget']; ?></p>
+                        <div class="card-body">
+                            <span class="badge bg-success me-2 mb-3 text-uppercase">{{ $event->status }}</span>
+                            <small>Created {{ $event->created_at->diffForHumans() }}</small>
+                            <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
+                            <p class="card-text">Budget: {{ $event->budget_min }} - {{ $event->budget_max }}</p>
                             <hr>
-                            <p class="mt-2 mb-0">Pending application: <?php echo $post['pending']; ?></p>
-                            <p class="mb-0">Hiring request: <?php echo $post['request']; ?></p>
-                            <p class="mb-2">Hired: <?php echo $post['hired']; ?></p>
-                            <a href="{{ url('/client-viewpost') }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
+                            <p class="mt-2 mb-0">Pending application:0</p>
+                            <p class="mb-0">Hiring request: 0</p>
+                            <p class="mb-2">Hired: 0</p>
+                           
+                            <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
                             <a href="#" class="btn btn-danger ms-2" style="border:none; border-radius: 12px;">Cancel</a>
                         </div>
                     </div>
-                <?php endforeach; ?>
+                @endforeach
             </div>
 
         </div>

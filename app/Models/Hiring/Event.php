@@ -33,7 +33,7 @@ class Event extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function eventjobs(){
+    public function event_jobs(){
         return $this->hasMany(EventJob::class, 'event_id');
     }
 }
