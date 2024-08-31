@@ -30,9 +30,10 @@
                                 @endphp
                                 <p class="card-text text-muted">{{ $timeSince }}</p>
                             </div>
-
-
-                            <p class="card-text content-color">{{$event->description}}</p>
+                            <div class="row rw-height-eventdesc mb-2">
+                            <p class="card-text content-color">{!! nl2br(e($event->description)) !!}</p>
+                            </div>
+                           
                             <div class="d-flex flex-wrap">
                                 @foreach($event->event_jobs ?? [] as $event_job)
                                 <span class="badge bg-secondary me-2 mb-2">{{$event_job->service_needed}}</span>
@@ -57,7 +58,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mt-3">
-                                <a href="#" class="text-center btn-seemore rounded-3 me-2 flex-grow-1 poppins-light fs-6 py-1">See More</a>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="text-center btn-seemore rounded-3 me-2 flex-grow-1 poppins-light fs-6 py-1">See More</a>
                                 <a href="#" class=" rounded-3 btn-seeprof me-2 px-2 poppins-light fs-6 py-1">See Profile</a>
                                 <img src="{{ asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
                             </div>

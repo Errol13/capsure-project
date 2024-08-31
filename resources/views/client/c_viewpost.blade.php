@@ -57,30 +57,31 @@
 
 
         <!-- Event Jobs -->
-        <div class="card col-md-4" style="border-radius: 15px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);  border:none;">
+        <div class="card col-md-4" style="border-radius: 15px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border:none;">
             <div class="card-body poppins-medium">
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
+                    @foreach($eventJobs as $eventJob)
                     <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: white;">
-                        <span>2</span>
-                        Photographer
-                        <span class="badge bg-primary badge-custom rounded-pill">1 Hired</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: white;">
-                        <span>1</span>
-                        Make-Up Artist
-                        <span class="badge bg-success badge-custom rounded-pill">Complete</span>
-                    </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: white;">
-                        <span>1</span>
-                        Hair Stylist
+                        <span>{{$eventJob->number_of_people}}</span>
+                        {{$eventJob->service_needed}}
+
+                        @php
+                        // Get the hired count for the current job, or default to 0 if not set
+                        $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
+                        @endphp
+
+                        <!-- Display badges based on the count -->
+                        @if($completedHiredCount == 0)
                         <span class="badge bg-danger badge-custom rounded-pill">No Hired</span>
+                        @elseif($eventJob->number_of_people == $completedHiredCount)
+                        <span class="badge bg-success badge-custom rounded-pill">Complete</span>
+                        @else
+                        <span class="badge bg-primary badge-custom rounded-pill">{{ $completedHiredCount }} Hired</span>
+                        @endif
+
                     </li>
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: white;">
-                        <span>5</span>
-                        Cake Baker
-                        <span class="badge bg-primary badge-custom rounded-pill">3 Hired</span>
-                    </li>
+                    @endforeach
                 </ul>
             </div>
         </div>
@@ -119,6 +120,7 @@
                 <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
+                            @if($applicants->isNotEmpty())
                             @foreach ($applicants as $applicant)
                             <div class="col-12 col-md-4 mb-3">
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
@@ -156,6 +158,9 @@
                                 </div>
                             </div>
                             @endforeach
+                            @else 
+                            <p class="text-center open-sans-reg fs-5 my-3">No Applicants</p>
+                            @endif 
                         </div>
                     </div>
                 </div>
@@ -164,6 +169,7 @@
                 <div class="tab-pane fade" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
+                            @if($hiringRequests->isNotEmpty())
                             @foreach ($hiringRequests as $hiring)
                             <div class="col-12 col-md-4 mb-3">
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
@@ -219,6 +225,9 @@
                                 </div>
                             </div>
                             @endforeach
+                            @else 
+                            <p class="text-center open-sans-reg fs-5">No Hiring Requests</p>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -232,14 +241,22 @@
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-0 pt-0">
-                                        <img src="{{ $recomm->profile_image }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ $recomm->user->profile_image}}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
-                                            <h6 class="mb-0">{{ $recomm->name }}</h6>
-                                            <p class="text-muted mb-0">{{ $recomm->location }}</p>
-                                            <small class="text-success mb-0">{{ $recomm->projects_done }} Projects done</small>
+                                            <h6 class="mb-0">{{ $recomm->user->first_name }} {{ $recomm->user->last_name }}</h6>
+                                            <p class="text-muted mb-0">{{ $recomm->user->street }}, {{ $recomm->user->barangay }}, {{ $recomm->user->city }}</p>
+                                            @if($recomm->number_of_projects)
+                                            <small class="text-success mb-0">{{ $recomm->number_of_projects}} Projects done</small>
+                                            @else 
+                                            <small class="text-muted mb-0">No projects yet</small>
+                                            @endif
                                         </div>
                                         <div class="ms-auto text-end">
-                                            <span class="badge text-black">{{ $recomm->rating }}</span>
+                                            @if($recomm->avg_rating)
+                                            <span class="badge text-black">{{ $recomm->avg_rating }}</span>
+                                            @else
+                                            <span class="badge text-black">No ratings yet</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <hr class=" p-0 m-1" style="color:#CBCACA;">
@@ -247,9 +264,9 @@
                                         <div>
                                             <small class="mb-0 ms-2">Service/s</small><br>
                                             <div class="col ms-2">
-                                                <span class="fw-bold p-1 me-2" style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $recomm->role1 }}</span>
-                                                <span class="fw-bold p-1 me-2" style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $recomm->role2 }}</span>
-                                                <span class="fw-bold p-1" style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $recomm->role3 }}</span>
+                                                @foreach($recomm->services as $service)
+                                                <span class="fw-bold p-1 me-2" style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $service->job_title }}</span>
+                                                @endforeach
                                             </div>
                                         </div>
                                     </div>
@@ -265,6 +282,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
         </div>
 

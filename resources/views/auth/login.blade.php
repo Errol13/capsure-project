@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container px-5 poppins-light py-5 my-4">
+<div class="container px-5 poppins-light py-5 mt-1">
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class>

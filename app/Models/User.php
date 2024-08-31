@@ -76,7 +76,9 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasOne(Freelancer::class, 'user_id');
     }
 
-    public function socmed(){
+    public function socmed()
+    {
         return $this->hasMany(SocialMediaAccount::class, 'user_id');
     }
+
 }

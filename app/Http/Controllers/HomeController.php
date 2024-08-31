@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Freelancer;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -25,36 +26,31 @@ class HomeController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->routeIs('client-homepage')) {
-            // Logic for the client homepage
-            return view('client.c_home');
-        } elseif ($request->routeIs('freelancer-homepage')) {
-            // Logic for the freelancer homepage
-            return view('freelancer.f_home');
+        if (Auth::check()) {
+            $user = Auth::user();
+
+            if ($user->user_type == 'client') {
+                // Load client-specific content
+                $users = User::where('user_type', 'freelancer')
+                    ->with(['freelancer.services', 'freelancer.portfolios'])
+                    ->orderBy('id')
+                    ->paginate(9);
+                return view('client.c_home', compact('users'));
+            } elseif ($user->user_type == 'freelancer') {
+                // Load freelancer-specific content
+                $users = User::where('user_type', 'client')
+                    ->whereHas('client.events')
+                    ->with(['client.events', 'events.event_jobs'])
+                    ->orderBy('id')
+                    ->paginate(9);
+                return view('freelancer.f_home', compact('users'));
+            } elseif ($user->user_type == 'admin') {
+                // Load admin-specific content
+                return view('admin.dashboard');
+            }
         } else {
-            // Default logic
-            return view('home');
+            // Load general content for guests
+            return view('welcome');
         }
-    }
-
-    public function showTopServices()
-    {
-        $users = User::where('user_type', 'freelancer')
-            ->with(['freelancer.services', 'freelancer.portfolios'])
-            ->orderBy('id')
-            ->paginate(9);
-
-        return view('client.c_home', compact('users'));
-    }
-
-
-    public function showAllEvents(){
-        $users = User::where('user_type', 'client')
-        ->whereHas('client.events')
-        ->with(['client.events', 'events.event_jobs'])
-        ->orderBy('id')
-        ->paginate(9);
-
-        return view('freelancer.f_home', compact('users'));
     }
 }

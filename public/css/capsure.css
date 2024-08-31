@@ -400,12 +400,23 @@ select#year {
 /* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
 
 .btn-seemore {
-    
     background-color: #91216C;
     color: white;
     margin: 0;
     text-decoration: none;
 }
+
+.rw-height-eventdesc {
+    display: -webkit-box; /* Enables the WebKit box model */
+    -webkit-line-clamp: 2; /* Limits the text to 3 lines */
+    -webkit-box-orient: vertical; /* Sets the box orientation to vertical */
+    overflow: hidden; /* Hides any content that overflows the container */
+    text-overflow: ellipsis; /* Adds an ellipsis (...) when text overflows */
+    height: 60px; /* Sets the height of the container */
+    line-height: 20px; /* Sets the line height to match the height of the container */
+    max-height: 60px; /* Ensures the height does not exceed the container */
+}
+
 
 .content-color{
     color: #666666;

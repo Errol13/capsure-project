@@ -90,22 +90,25 @@
                             <a class="btn-purple rounded-2 px-3" href="{{ route('choose') }}"> SIGN UP</a>
                         </li>
                         @endif
-                        @else
+
+                        @endguest
+                        @Auth
                         @if (Auth::user()->user_type == 'client')
                         <!-- Client-specific navbar items -->
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->is('client-homepage') ? 'active' : '' }}" href="client-homepage">SERVICES</a>
+                            <a class="nav-link text-black {{ request()->routeIs('client-homepage') ? 'active' : '' }}" href="{{ route('client-homepage') }}">SERVICES</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link  text-black {{ request()->is('client-events') ? 'active' : '' }}" href="client-events">MY EVENTS</a>
+                            <a class="nav-link text-black {{ request()->routeIs('client-events') ? 'active' : '' }}" href="{{ route('client-events') }}">MY EVENTS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->is('client-transaction') ? 'active' : '' }}" href="client-transaction">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->routeIs('client-transaction') ? 'active' : '' }}" href="{{ route('client-transaction') }}">MY TRANSACTION</a>
                         </li>
+
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->is('freelancer-homepage') ? 'active' : '' }}" href="freelancer-homepage">JOB POSTING</a>
+                            <a class="nav-link text-black {{ request()->is('freelancer-homepage') ? 'active' : '' }}" href="{{ route('freelancer-homepage') }}">JOB POSTING</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">MY JOBS</a>
@@ -209,7 +212,7 @@
                                 </form>
                             </div>
                         </li>
-                        @endguest
+                        @endauth
 
                     </ul>
                 </div>
@@ -244,7 +247,7 @@
                 @auth
                 @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ url('/client-events') }}" style="font-size:x-small;">
+                    <a class="nav-link" href="{{ route ('client-events') }}" style="font-size:x-small;">
                         <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
                         <div>My Event Post</div>
                     </a>

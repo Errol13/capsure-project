@@ -50,7 +50,7 @@
                                 <td>0</td>
                                 <td>0</td>
                                 <td>
-                                    <a href="{{ url('/client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
+                                    <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
                                     <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
                                 </td>
                             </tr>

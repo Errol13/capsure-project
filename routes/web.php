@@ -30,18 +30,15 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->name('choose');
 
 #Homepages
-Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('client-homepage') ->middleware(['auth', 'verified']);
-Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])->name('freelancer-homepage') ->middleware(['auth', 'verified']);
+Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('client-homepage');
 
-#client-homepage
-Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'showTopServices'])
-    ->name('client-homepage')
-    ->middleware(['auth', 'verified']);
+Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('freelancer-homepage');
 
-#freelancer-homepage
-Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'showAllEvents'])
-    ->name('freelancer-homepage')
-    ->middleware(['auth', 'verified']);
+
 
 #Profile
 Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');

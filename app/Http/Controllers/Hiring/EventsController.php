@@ -40,7 +40,7 @@ class EventsController extends Controller
         // Fetch the event by its ID
         $event = Event::findOrFail($id);
 
-        
+
         $event->start_date_formatted = Carbon::parse($event->start_date)->format('F j, Y h:i A'); // Month Year
         $event->end_date_formatted = Carbon::parse($event->end_date)->format('F j, Y h:i A'); // Full end date with time
 
@@ -52,7 +52,7 @@ class EventsController extends Controller
         $applicants = collect();
         $recommendations = collect();
 
-        $recommendations = collect(); 
+        $completedHiredCounts = collect();
 
         foreach ($jobs as $job) {
             // Fetch job applications
@@ -69,10 +69,20 @@ class EventsController extends Controller
 
             // Fetch recommendations
             $jobRecommendations = Freelancer::whereHas('services', function ($query) use ($job) {
-                $query->where('job_title', $job->service_needed);
-            })->get();
+                $query->where('job_title', $job->service_needed)
+                    ->where('job_category', $job->job_category);
+            })
+                ->with(['user', 'services']) // Eager load the user and services relationships
+                ->get();
 
             $recommendations = $recommendations->merge($jobRecommendations); // Merge recommendations
+
+            //getting hired freelaners count for each job
+            $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();
+            $hiredCount = $jobApplicantsHired->count();
+
+            // Store the count of hired freelancers for the job
+            $completedHiredCounts->put($job->job_id, $hiredCount);
         }
 
 
@@ -80,38 +90,40 @@ class EventsController extends Controller
         $hiringRequests = Hiring_request::whereIn('job_id', $jobs->pluck('job_id'))->get();
         $invitedFreelancers = Freelancer::whereIn('user_id', $hiringRequests->pluck('freelancer_id'))->get();
 
-        // Check transactions to see how many hires, completed jobs, and no hires
-        $transactions = Transaction::whereIn('job_id', $jobs->pluck('job_id'))->get();
-
-        // Determine hiring status counts
-        $hiredCount = $transactions->count();
-        $completedCount = $transactions->where('transaction_status', 'completed')->count();
-        $noHireCount = $jobs->count() - $hiredCount;
 
         $tabs = [
             'application' => 'Applications',
             'hiring-requests' => 'Hiring Requests',
-            'recommended' => 'Recommendations'
+            'recommendation' => 'Recommendations'
         ];
 
         $badgeCounts = [
             'application' => $jobApplications->count(),
             'hiring-requests' => $invitedFreelancers->count(),
-            'recommended' => $transactions->where('transaction_status', 'completed')->count()
+            'recommendation' => $recommendations->count()
         ];
 
-        return view('client.c_viewpost', [
-            'event' => $event,
-            'eventJobs' => $jobs,
-            'jobApplications' => $jobApplications,
-            'applicants' => $applicants,
-            'hiringRequests' => $invitedFreelancers,
-            'recommendations' => $recommendations,
-            'hiredCount' => $hiredCount,
-            'completedCount' => $completedCount,
-            'noHireCount' => $noHireCount,
-            'tabs' => $tabs,
-            'badgeCounts' => $badgeCounts
-        ]);
+        $user = Auth::user();
+
+        if ($user->user_type === 'client'){
+            return view('client.c_viewpost', [
+                'event' => $event,
+                'eventJobs' => $jobs,
+                'jobApplications' => $jobApplications,
+                'applicants' => $applicants,
+                'hiringRequests' => $invitedFreelancers,
+                'recommendations' => $recommendations,
+                'completedHiredCounts' => $completedHiredCounts,
+                'tabs' => $tabs,
+                'badgeCounts' => $badgeCounts
+            ]);
+        } elseif ($user->user_type === 'freelancer') {
+            return view('components.F_Hiring.event_post', [
+                'event' => $event,
+                'eventJobs' => $jobs,
+                'jobApplications' => $jobApplications,
+                'completedHiredCounts' => $completedHiredCounts,
+            ]);
+        }
     }
 }
