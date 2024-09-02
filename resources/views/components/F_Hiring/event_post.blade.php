@@ -53,12 +53,107 @@
             </div>
             <hr>
             <p class="mt-3">{!! nl2br(e($event->description)) !!}</p>
+            <hr>
+
+            <!--Client Profile -->
+            <div class="row mt-2">
+
+                <div class="col-12 col-md-12 flex-grow-1 mb-4">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div>
+                            <h5 class="text-start mb-0 poppins-medium me-2">CLIENT</h5>
+                        </div>
+                        <a class="fs-sm fs-md poppins-medium txt-review " href="#">See Profile</a>
+                    </div>
+
+                    <div class="d-flex">
+                        <div class="text-center me-3">
+                            <!-- Profile Picture -->
+                            <img src="{{ asset($clientUser->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                        </div>
+                        <div>
+                            <!-- Profile Content -->
+                            <h5 class="fw-bold poppins-medium mb-0">{{$clientUser->first_name}} {{$clientUser->last_name}}</h5>
+                            <p class="fs-sm mt-1 mb-0">{{$clientUser->city}}</p>
+                            @if($clientUser->client->avg_rating == 0)
+                            <p class="fs-6 open-sans-reg light-color-prof mt-1 fst-italic text-muted">No ratings yet</p>
+                            @else
+                            <!-- Star Rating Container -->
+                            <div class="star-rating mt-0 mt-md-1">
+                                <div class="row">
+                                    <div class="col-auto">
+                                        <p class="mb-0 fs-sm fs-md">{{ number_format($clientUser->client->avg_rating, 1) }}</p>
+                                    </div>
+                                    <div class="col">
+                                        <div class="d-flex align-items-center mt-1">
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                <i class="fas fa-star {{ $i <= $clientUser->client->avg_rating ? 'filled' : '' }}"></i>
+                                                @endfor
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    <!--Client's Event Post Details -->
+                    <div class="row mt-2">
+                        <div class="col-3">
+                            <div class="d-flex flex-column align-items-center open-sans-reg">
+                                <div class="d-flex mt-2 align-items-center">
+                                    <p class="fs-5 fw-bold me-2 mb-0">{{$TotalPosts}}</p>
+                                    <p class="fs-6 txt-reviewer mb-0">Events Posted</p>
+                                </div>
+                                <span class="text-muted text-start mt-1">Total number of events posted by the client.</span>
+                            </div>
+
+                        </div>
+
+                        <div class="col-6">
+                            <div class="d-flex flex-column align-items-center open-sans-reg">
+                                <div class="d-flex mt-2 align-items-center">
+                                    @if($hiringSuccessRate == 0)
+                                    <p class="fs-5 fw-bold me-2 mb-0">0%</p>
+                                    @else
+                                    <p class="fs-5 fw-bold me-2 mb-0">{{ number_format($hiringSuccessRate, 2) }}%</p>
+                                    @endif
+                                    <p class="fs-6 txt-reviewer mb-0">Hiring Success Rate</p>
+                                </div>
+                                <span class=" fs-sm text-muted text-start mt-1">Represents how often a client successfully hires<br> after posting an event.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-3">
+                            <div class="d-flex flex-column align-items-center open-sans-reg">
+                                <div class="d-flex mt-2 align-items-center">
+                                    <p class="fs-6 fw-bold me-2 mb-0">Member since</p>
+                                </div>
+                                <span class="text-muted text-start mt-1">{{date_format($clientUser->date_joined, 'F j, Y')}}.</span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                </div>
+            </div>
         </div>
 
 
         <!-- Event Jobs -->
         <div class="card col-md-4" style="border-radius: 15px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border:none;">
             <div class="card-body poppins-medium">
+
+                <div class="row my-2 p-2">
+                    <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center m-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
+                        APPLY JOB
+                    </button>
+                    @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
+                </div>
+
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
                     @foreach($eventJobs as $eventJob)
@@ -73,9 +168,9 @@
 
                         <!-- Display badges based on the count -->
                         @if($completedHiredCount == 0)
-                        <span class="badge bg-danger badge-custom rounded-pill">No Hired</span>
+                        <span class="badge bg-success badge-custom rounded-pill">Available</span>
                         @elseif($eventJob->number_of_people == $completedHiredCount)
-                        <span class="badge bg-success badge-custom rounded-pill">Complete</span>
+                        <span class="badge bg-danger badge-custom rounded-pill">Not Available</span>
                         @else
                         <span class="badge bg-primary badge-custom rounded-pill">{{ $completedHiredCount }} Hired</span>
                         @endif
@@ -86,6 +181,35 @@
             </div>
         </div>
     </div>
+
+    <!-- Display error message -->
+    @include('modals.alert_success_error')
+
+
+
+    <!--Alert for Double Booking -->
+    @if(session('error'))
+    @php
+    $errorMessage = session('error');
+    $conflictingEvent = session('conflicting_event');
+    @endphp
+
+    @include('modals.conflict_alert_modal', [
+    'errorMessage' => $errorMessage,
+    'conflictingEvent' => $conflictingEvent
+    ])
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Show the modal 
+            var conflictModal = new bootstrap.Modal(document.getElementById('conflictModal'));
+            conflictModal.show();
+        });
+
         
+    </script>
+    @endif
+
+
 </div>
 @endsection

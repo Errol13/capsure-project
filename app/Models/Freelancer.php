@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
+use App\Models\hiring\Job_application;
 use App\Models\Hiring\Review;
 use App\Models\Profile\Certificates;
 use App\Models\Profile\Portfolio;
@@ -65,6 +66,11 @@ class Freelancer extends Model
             ->withTimestamps();
     }
 
+    public function jobApplications()
+    {
+        return $this->hasMany(Job_application::class, 'freelancer_id', 'user_id');
+    }
+
     public function hiringRequests()
     {
         return $this->hasMany(Hiring_request::class, 'freelancer_id');
@@ -74,7 +80,4 @@ class Freelancer extends Model
     {
         return $this->hasMany(Transaction::class, 'freelancer_id');
     }
-    
-
-    
 }

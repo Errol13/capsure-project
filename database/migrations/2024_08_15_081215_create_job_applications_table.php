@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('job_applications', function (Blueprint $table) {
             $table->id(); 
             $table->foreignId('freelancer_id')->constrained('freelancers', 'user_id')->onUpdate('cascade')->onDelete('cascade'); // Foreign key to freelancers table
+            $table->unsignedBigInteger('service_id');
             $table->foreignId('job_id')->constrained('event_jobs', 'job_id')->onUpdate('cascade')->onDelete('cascade'); // Foreign key to jobs table
             $table->string('status', 50); // Freelancer's application status (accepted, rejected, pending)
             $table->timestamps(); // Created at and updated at timestamps

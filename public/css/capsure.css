@@ -407,14 +407,14 @@ select#year {
 }
 
 .rw-height-eventdesc {
-    display: -webkit-box; /* Enables the WebKit box model */
-    -webkit-line-clamp: 2; /* Limits the text to 3 lines */
-    -webkit-box-orient: vertical; /* Sets the box orientation to vertical */
-    overflow: hidden; /* Hides any content that overflows the container */
-    text-overflow: ellipsis; /* Adds an ellipsis (...) when text overflows */
-    height: 60px; /* Sets the height of the container */
-    line-height: 20px; /* Sets the line height to match the height of the container */
-    max-height: 60px; /* Ensures the height does not exceed the container */
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    height: 60px; 
+    line-height: 20px; 
+    max-height: 60px; 
 }
 
 
@@ -457,6 +457,28 @@ select#year {
     margin: 0;
     /* Remove default margin */
 }
+
+/*Freelancer ViewPost */
+.fixed-tabs {
+    position: -webkit-sticky; 
+    position: sticky;
+    top: 0; /* Distance from the top of the viewport */
+    z-index: 1000; /* Ensure it stays above other content */
+    background-color: #FCF2F9; /* Same as your tab background */
+    border-bottom: 1px solid #b8b4b4; /* Optional: adds a border at the bottom */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for better visibility */
+  }
+
+  .rw-height-service {
+    display: -webkit-box; 
+    -webkit-box-orient: horizontal; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    height: 40px; 
+    line-height: 20px; 
+    max-height: 40px; 
+}
+  
 
 
 

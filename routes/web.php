@@ -73,12 +73,13 @@ Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\Port
 Route::post('/delete/image', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteImage'])->name('delete.image');
 Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteAlbum'])->name('delete-album');
 
-
-
 #My Events Page Client
 Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
 Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
 Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
+
+#Job Application
+Route::post('apply-job', [App\Http\Controllers\Hiring\Job_applicationController::class, 'applyJob'])->name('job.apply');
 
 #Transaction
 Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');

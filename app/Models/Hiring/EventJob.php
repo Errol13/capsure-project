@@ -31,7 +31,8 @@ class EventJob extends Model
     {
         return $this->belongsToMany(Freelancer::class, 'job_applications', 'job_id', 'freelancer_id')
             ->withPivot('status')
-            ->withTimestamps();
+            ->withTimestamps()
+            ->with('user');
     }
 
     public function hiringRequests()

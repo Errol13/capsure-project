@@ -116,8 +116,9 @@
                                 @foreach($jobs as $index => $job)
                                 <tr>
                                     <td class="align-middle px-2">
-                                        <input type="text" class="form-control mt-4 fs-6" wire:model="jobs.{{ $index }}.service_needed" placeholder="Eg. Photographer">
+                                        <input type="text" class="form-control mt-4 fs-6" wire:model="jobs.{{ $index }}.service_needed" placeholder="Eg. Photographer" data-autocomplete>
                                         @error("jobs.$index.service_needed") <span class="text-danger">{{ $message }}</span> @enderror
+                                        <div id="editor-data" data-services="{{ json_encode($services) }}"></div>
                                     </td>
                                     <td class="align-middle">
                                         <select class="form-select w-100" wire:model="jobs.{{ $index }}.job_category">
@@ -156,14 +157,39 @@
     </div>
 
     <script>
+        document.addEventListener('livewire:load', function() {
+            console.log('Livewire loaded'); // Check if this is logged
+
+            const dataEl = document.getElementById('editor-data');
+            if (dataEl) {
+                const services = JSON.parse(dataEl.dataset.services);
+                console.log('Services:', services); // Verify if this is logged
+
+                if (services && services.length > 0) {
+                    $('input[data-autocomplete]').autocomplete({
+                        source: services,
+                        minLength: 2
+                    });
+                } else {
+                    console.warn('No services data available for autocomplete.');
+                }
+            } else {
+                console.warn('No data element found.');
+            }
+        });
+
+
+
+
         function cancelForm(event) {
             event.preventDefault();
             window.history.back();
         }
 
         function updateCharCount() {
-        var description = document.getElementById('description').value;
-        document.getElementById('charCount').innerText = description.length;
-    }
+            var description = document.getElementById('description').value;
+            document.getElementById('charCount').innerText = description.length;
+        }
     </script>
+
 </div>

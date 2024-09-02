@@ -88,10 +88,10 @@
     </div>
 
     <!-- Tabs -->
-    <div class="card mt-4 py-2">
+    <div class="card mt-4 py-2 ">
         <div class="container mt-2">
             <!-- Nav tabs -->
-            <ul class="nav nav-fill pt-2 poppins-medium" style="background-color: #FCF2F9; position: relative;">
+            <ul class="nav nav-fill pt-2 poppins-medium fixed-tabs" style="background-color: #FCF2F9;">
                 @foreach ($tabs as $tabId => $tabName)
                 <li class="nav-item">
                     <a class="nav-link {{ $tabId === 'application' ? 'active' : '' }}"
@@ -128,24 +128,33 @@
                                     <div class="d-flex justify-content-between align-items-center mb-1">
                                         <div>
                                             <small class="mb-0">Applying as </small><br>
-                                            <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;">{{ $applicant->role }}</span>
+                                            <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;">{{ $applicant['service_needed'] }}</span>
                                         </div>
                                         <div>
                                             <small class="mb-0">Service Fee:</small><br>
-                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $applicant->fee }}</span>
+                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $applicant['fee'] }}</span>
                                         </div>
                                     </div>
                                     <hr class="mb-2" style="color:#CBCACA;">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-3 pt-0">
-                                        <img src="{{ $applicant->profile_image }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($applicant['applicant']->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
-                                            <h6 class="mb-0">{{ $applicant->name }}</h6>
-                                            <p class="text-muted mb-0">{{ $applicant->location }}</p>
-                                            <small class="text-success mb-0">{{ $applicant->projects_done }} Projects done</small>
+                                            <h6 class="mb-0">{{ $applicant['applicant']->user->first_name }} {{ $applicant['applicant']->user->last_name }}</h6>
+                                            <p class="text-muted mb-0">{{ $applicant['applicant']->user->city }}</p>
+                                            @if ($applicant['applicant']->number_of_projects > 0)
+                                            <small class="text-success mb-0">{{ $applicant['applicant']->number_of_projects}} Projects done</small>
+                                            @else
+                                            <small class="text-muted mb-0">No projects yet</small>
+                                            @endif
                                         </div>
                                         <div class="ms-auto text-end">
-                                            <span class="badge text-black">{{ $applicant->rating }}</span>
+                                            @if ( $applicant['applicant']->avg_rating > 0)
+                                            <span class="badge text-black">{{ $applicant['applicant']->avg_rating }}</span>
+                                            @else 
+                                            <span class="badge text-black">No ratings yet</span>
+                                            @endif
+
                                         </div>
                                     </div>
 
@@ -241,7 +250,7 @@
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-0 pt-0">
-                                        <img src="{{ $recomm->user->profile_image}}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($recomm->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
                                             <h6 class="mb-0">{{ $recomm->user->first_name }} {{ $recomm->user->last_name }}</h6>
                                             <p class="text-muted mb-0">{{ $recomm->user->street }}, {{ $recomm->user->barangay }}, {{ $recomm->user->city }}</p>
@@ -252,7 +261,7 @@
                                             @endif
                                         </div>
                                         <div class="ms-auto text-end">
-                                            @if($recomm->avg_rating)
+                                            @if($recomm->avg_rating != 0)
                                             <span class="badge text-black">{{ $recomm->avg_rating }}</span>
                                             @else
                                             <span class="badge text-black">No ratings yet</span>
@@ -263,9 +272,9 @@
                                     <div class="d-flex justify-content-between align-items-center mb-3">
                                         <div>
                                             <small class="mb-0 ms-2">Service/s</small><br>
-                                            <div class="col ms-2">
+                                            <div class="col ms-2 rw-height-service">
                                                 @foreach($recomm->services as $service)
-                                                <span class="fw-bold p-1 me-2" style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $service->job_title }}</span>
+                                                <span class="fw-bold p-1 me-2 " style="color: black; background-color:whitesmoke; border-radius:12px;">{{ $service->job_title }}</span>
                                                 @endforeach
                                             </div>
                                         </div>

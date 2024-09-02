@@ -25,7 +25,9 @@
             </div>
 
             <!-- Larger Screens -->
+
             <div class="table-responsive d-none d-md-block">
+                @if($events->isNotEmpty())
                 <table class="table mt-3">
                     <thead class="table-primary text-center poppins-extralight">
                         <tr>
@@ -38,46 +40,56 @@
                         </tr>
                     </thead>
                     <tbody>
+
                         @foreach ($events as $event)
-                            <tr>
-                                <td>
-                                    <small>Created {{ $event->created_at->diffForHumans() }}</small><br>
-                                    <strong class="poppins-medium">{{ $event->title }}</strong><br>
-                                    <small>Budget: ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</small>
-                                </td>
-                                <td class="text-success fw-bold text-uppercase">{{ $event->status }}</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>0</td>
-                                <td>
-                                    <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
-                                    <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
-                                </td>
-                            </tr>
+                        <tr>
+                            <td>
+                                <small>Created {{ $event->created_at->diffForHumans() }}</small><br>
+                                <strong class="poppins-medium">{{ $event->title }}</strong><br>
+                                <small>Budget: ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</small>
+                            </td>
+                            <td class="text-success fw-bold text-uppercase">{{ $event->status }}</td>
+                            <td>{{$event->jobApplicationsCount}}</td>
+                            <td>{{$event->hiringRequestsCount}}</td>
+                            <td>{{$event->hiredCount}}</td>
+                            <td>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
+                                <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
+                            </td>
+                        </tr>
                         @endforeach
+
                     </tbody>
+
                 </table>
+                @else
+                <p class="my-5 text-muted text-center fs-5">No Posts</p>
+                @endif
             </div>
 
             <!-- Small Screens -->
             <div class="d-block d-md-none mt-3">
+                @if($events->isNotEmpty())
                 @foreach ($events as $event)
-                    <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                        <div class="card-body">
-                            <span class="badge bg-success me-2 mb-3 text-uppercase">{{ $event->status }}</span>
-                            <small>Created {{ $event->created_at->diffForHumans() }}</small>
-                            <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
-                            <p class="card-text">Budget: {{ $event->budget_min }} - {{ $event->budget_max }}</p>
-                            <hr>
-                            <p class="mt-2 mb-0">Pending application:0</p>
-                            <p class="mb-0">Hiring request: 0</p>
-                            <p class="mb-2">Hired: 0</p>
-                           
-                            <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
-                            <a href="#" class="btn btn-danger ms-2" style="border:none; border-radius: 12px;">Cancel</a>
-                        </div>
+                <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                    <div class="card-body">
+                        <span class="badge bg-success me-2 mb-3 text-uppercase">{{ $event->status }}</span>
+                        <small>Created {{ $event->created_at->diffForHumans() }}</small>
+                        <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
+                        <p class="card-text">Budget: {{ $event->budget_min }} - {{ $event->budget_max }}</p>
+                        <hr>
+                        <p class="mt-2 mb-0">Pending application:{{$event->jobApplicationsCount}}</p>
+                        <p class="mb-0">Hiring request: {{$event->hiringRequestsCount}}</p>
+                        <p class="mb-2">Hired: {{$event->hiredCount}}</p>
+
+                        <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
+                        <a href="#" class="btn btn-danger ms-2" style="border:none; border-radius: 12px;">Cancel</a>
                     </div>
+                </div>
                 @endforeach
+                @else
+                <p class="mt-5 text-muted text-center fs-5">No Posts</p>
+                @endif
             </div>
 
         </div>

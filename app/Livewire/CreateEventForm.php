@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
+use App\Models\Profile\Service;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -12,6 +13,7 @@ class CreateEventForm extends Component
 {
     public $title, $description, $start_date, $end_date, $street, $barangay, $city, $payment_method, $budget_min, $budget_max;
     public $jobs = [];
+    public $services = []; 
 
     public function mount()
     {
@@ -23,6 +25,9 @@ class CreateEventForm extends Component
         $this->street = $user->street;
         $this->barangay = $user->barangay;
         $this->city = $user->city;
+
+        // Fetch job titles from the services table
+        $this->services = Service::pluck('job_title')->toArray();
     }
 
     public function addJob()
@@ -71,7 +76,7 @@ class CreateEventForm extends Component
             'payment_method' => $this->payment_method,
             'budget_min' => $this->budget_min,
             'budget_max' => $this->budget_max,
-            'status' => 'pending',
+            'status' => 'Open',
             'client_id' => $user->id,
         ]);
 
