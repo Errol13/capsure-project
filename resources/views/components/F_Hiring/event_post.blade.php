@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container my-4 pb-2">
-    <a href="{{ route('freelancer-homepage') }}" style="text-decoration:none; color:black;">
+    <a href="#" onclick="window.history.go(-1); return false;" style="text-decoration:none; color:black;">
         <i class="fas fa-arrow-left me-2 mb-4"></i>Back
     </a>
 
@@ -99,44 +99,40 @@
 
                     <!--Client's Event Post Details -->
                     <div class="row mt-2">
-                        <div class="col-3">
+                        <div class="col-4">
                             <div class="d-flex flex-column align-items-center open-sans-reg">
                                 <div class="d-flex mt-2 align-items-center">
-                                    <p class="fs-5 fw-bold me-2 mb-0">{{$TotalPosts}}</p>
-                                    <p class="fs-6 txt-reviewer mb-0">Events Posted</p>
+                                    <p class="fs-sm fs-md fw-bold me-2 mb-0">{{$TotalPosts}}</p>
+                                    <p class="fs-sm fs-md txt-reviewer mb-0">Events Posted</p>
                                 </div>
-                                <span class="text-muted text-start mt-1">Total number of events posted by the client.</span>
+                                <span class="fs-sm fs-md text-muted text-start mt-1">Total number of events posted by the client.</span>
                             </div>
 
                         </div>
 
-                        <div class="col-6">
+                        <div class="col-5">
                             <div class="d-flex flex-column align-items-center open-sans-reg">
                                 <div class="d-flex mt-2 align-items-center">
                                     @if($hiringSuccessRate == 0)
-                                    <p class="fs-5 fw-bold me-2 mb-0">0%</p>
+                                    <p class="fs-sm fs-md fw-bold me-2 mb-0">0%</p>
                                     @else
-                                    <p class="fs-5 fw-bold me-2 mb-0">{{ number_format($hiringSuccessRate, 2) }}%</p>
+                                    <p class="fs-sm fs-mdfw-bold me-2 mb-0">{{ number_format($hiringSuccessRate, 2) }}%</p>
                                     @endif
-                                    <p class="fs-6 txt-reviewer mb-0">Hiring Success Rate</p>
+                                    <p class="fs-sm fs-md txt-reviewer mb-0">Hiring Success Rate</p>
                                 </div>
-                                <span class=" fs-sm text-muted text-start mt-1">Represents how often a client successfully hires<br> after posting an event.</span>
+                                <span class="fs-sm fs-mdtext-muted text-start mt-1">Represents how often a client successfully hires after posting an event.</span>
                             </div>
                         </div>
 
                         <div class="col-3">
                             <div class="d-flex flex-column align-items-center open-sans-reg">
                                 <div class="d-flex mt-2 align-items-center">
-                                    <p class="fs-6 fw-bold me-2 mb-0">Member since</p>
+                                    <p class="fs-sm fs-md fw-bold me-2 mb-0">Member since</p>
                                 </div>
-                                <span class="text-muted text-start mt-1">{{date_format($clientUser->date_joined, 'F j, Y')}}.</span>
+                                <span class="fs-sm fs-mdtext-muted text-start mt-1">{{date_format($clientUser->date_joined, 'F j, Y')}}.</span>
                             </div>
                         </div>
                     </div>
-
-
-
-
 
                 </div>
             </div>
@@ -148,7 +144,7 @@
             <div class="card-body poppins-medium">
 
                 <div class="row my-2 p-2">
-                    <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center m-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
+                    <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center my-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
                         APPLY JOB
                     </button>
                     @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
@@ -182,10 +178,6 @@
         </div>
     </div>
 
-    <!-- Display error message -->
-    @include('modals.alert_success_error')
-
-
 
     <!--Alert for Double Booking -->
     @if(session('error'))
@@ -205,8 +197,6 @@
             var conflictModal = new bootstrap.Modal(document.getElementById('conflictModal'));
             conflictModal.show();
         });
-
-        
     </script>
     @endif
 

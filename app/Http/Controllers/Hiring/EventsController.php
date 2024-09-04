@@ -8,6 +8,7 @@ use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
+use App\Models\Profile\Service;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
@@ -91,19 +92,38 @@ class EventsController extends Controller
             $eventJob = EventJob::findOrFail($job->job_id);
             $serviceNeeded = $eventJob->service_needed;
 
+
             // Fetch job applications
             $applications = Job_application::where('job_id', $job->job_id)->get();
             $jobApplications = $jobApplications->merge($applications);
 
+
+
+
             // Fetch freelancers who applied for the job
             $jobApplicants = $job->applicants()->with('services')->get();
 
+
             // Iterate over the applicants to include job details
             foreach ($jobApplicants as $applicant) {
-                // Get the freelancer's service data
-                $freelancerService = $applicant->services()->where('job_title', $serviceNeeded)->first();
 
-                // Assuming the fee is stored in the services table
+                //Fetch specific Job Applications for a specific freelancer
+                $freelancerServiceDetails = Job_application::select(['service_id', 'status'])
+                    ->where('job_id', $job->job_id)
+                    ->where('freelancer_id', $applicant->user_id)
+                    ->first();
+
+                if ($freelancerServiceDetails) {
+                    $service = $freelancerServiceDetails->service_id;
+                    $status = $freelancerServiceDetails->status;
+                } else {
+                    $service = null;
+                }
+
+                // Get the freelancer's service data
+                $freelancerService = $applicant->services()->where('id', $service)->first();
+
+                //getting the service job fee of the freelancer
                 $fee = $freelancerService ? $freelancerService->job_fee : null;
 
                 // Add the applicant with additional job details
@@ -111,8 +131,15 @@ class EventsController extends Controller
                     'applicant' => $applicant,
                     'service_needed' => $serviceNeeded,
                     'fee' => $fee,
+                    'job_id' => $job->job_id,
+                    'status' => $status
                 ]);
             }
+
+            // Sort applicants by status: 'Pending' first, 'Rejected' last
+            $sortedApplicants = $applicants->sortBy(function ($applicant) {
+                return $applicant['status'] === 'Rejected' ? 1 : 0;
+            });
 
             // Fetch recommendations
             $jobRecommendations = Freelancer::whereHas('services', function ($query) use ($job) {
@@ -149,7 +176,7 @@ class EventsController extends Controller
             'recommendation' => $recommendations->count()
         ];
 
-        
+
         $user = Auth::user();
 
         //for freelancers 
@@ -179,12 +206,12 @@ class EventsController extends Controller
                 'event' => $event,
                 'eventJobs' => $jobs,
                 'jobApplications' => $jobApplications,
-                'applicants' => $applicants,
+                'applicants' => $sortedApplicants,
                 'hiringRequests' => $invitedFreelancers,
                 'recommendations' => $recommendations,
                 'completedHiredCounts' => $completedHiredCounts,
                 'tabs' => $tabs,
-                'badgeCounts' => $badgeCounts
+                'badgeCounts' => $badgeCounts,
             ]);
         } elseif ($user->user_type === 'freelancer') {
             return view('components.F_Hiring.event_post', [

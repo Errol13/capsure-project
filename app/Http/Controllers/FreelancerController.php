@@ -114,4 +114,11 @@ class FreelancerController extends Controller
         // Redirect to the freelancers index page
         return redirect()->route('freelancers.index');
     }
+
+    //show Myjobs
+
+    public function myJobs(){
+
+        return view('freelancer.f_myjobs');
+    }
 }

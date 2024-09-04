@@ -16,18 +16,23 @@
 
 
     <!--Styles -->
+    
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
-
+  
+    
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
 
 
 
@@ -112,10 +117,10 @@
                         @elseif (Auth::user()->user_type == 'freelancer')
                         <!-- Freelancer-specific navbar items -->
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->is('freelancer-homepage') ? 'active' : '' }}" href="{{ route('freelancer-homepage') }}">JOB POSTING</a>
+                            <a class="nav-link text-black {{ request()->routeIs('freelancer-homepage') ? 'active' : '' }}" href="{{ route('freelancer-homepage') }}">JOB POSTING</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black" href="#">MY JOBS</a>
+                            <a class="nav-link text-black {{ request()->routeIs('my-jobs') ? 'active' : '' }}" href="{{ route('my-jobs') }}">MY JOBS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
                             <a class="nav-link text-black" href="#">MY TRANSACTION</a>
@@ -236,12 +241,12 @@
                     @auth
                     @if (Auth::user()->user_type == 'client')
                     <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
-                        <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/home-icon.svg')}}" alt="Services" class="services" style="width: 20px; height: 20px;">
                         <div>Services</div>
                     </a>
                     @elseif (Auth::user()->user_type == 'freelancer')
                     <a class="nav-link" href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
-                        <img src="assets/home-icon.svg" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/home-icon.svg')}}" alt="Services" class="services" style="width: 20px; height: 20px;">
                         <div>Job Postings</div>
                     </a>
                     @endif
@@ -252,38 +257,38 @@
                 @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route ('client-events') }}" style="font-size:x-small;">
-                        <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/event-icon.svg')}}" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
                         <div>My Event Post</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ url('/client-transaction') }}" style="font-size:x-small;">
-                        <img src="assets/transaction.svg" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/transaction.svg')}}" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
                         <div>My Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="assets/chat.svg" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/chat.svg')}}" alt="Chat" class="chat" style="width: 20px; height: 20px;">
                         <div>Messages</div>
                     </a>
                 </div>
                 @elseif (Auth::user()->user_type == 'freelancer')
                 <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="assets/event-icon.svg" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
+                    <a class="nav-link" href="{{ route('my-jobs') }}" style="font-size:x-small;">
+                        <img src="{{asset('assets/event-icon.svg')}}" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
                         <div>My Jobs</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="assets/transaction.svg" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/transaction.svg')}}" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
                         <div>My Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="assets/chat.svg" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                        <img src="{{asset('assets/chat.svg')}}" alt="Chat" class="chat" style="width: 20px; height: 20px;">
                         <div>Messages</div>
                     </a>
                 </div>

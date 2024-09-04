@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Livewire\AddPortfolio;
 use App\Http\Livewire\CreateEventForm;
 use App\Livewire\CreateEventForm as LivewireCreateEventForm;
+use App\Livewire\MyJobs;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -80,6 +82,10 @@ Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController
 
 #Job Application
 Route::post('apply-job', [App\Http\Controllers\Hiring\Job_applicationController::class, 'applyJob'])->name('job.apply');
+Route::patch('apply-job/reject/{id}', [App\Http\Controllers\Hiring\Job_applicationController::class, 'rejectApplicant'])->name('jobApplication.update');
 
 #Transaction
 Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');
+
+#My Jobs Page
+Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');

@@ -43,10 +43,7 @@ class Job_applicationController extends Controller
 
             // Check if the event times of the transaction overlap with the job's event time
             if ($transactionEvent->start_time < $jobEndTime && $transactionEvent->end_time > $jobStartTime) {
-                return redirect()->back()->with([
-                    'error' => 'Applying to this event results in schedule conflicts.',
-                    'conflicting_event' => $transactionEvent
-                ]);
+                return response()->json(['error' => 'Applying to this event results in schedule conflicts.'], 400);
             }
         }
 
@@ -56,7 +53,7 @@ class Job_applicationController extends Controller
             ->first();
 
         if ($existingApplication) {
-            return response()->json(['error' => 'You have already applied for this job.'], 400);
+            return response()->json(['warning' => 'You have already applied for this job.'], 400);
         }
 
         Job_application::create([
@@ -66,6 +63,27 @@ class Job_applicationController extends Controller
             'status' => 'Pending',
         ]);
 
-        return redirect()->back()->with('success', 'Application submitted successfully');
+        return response()->json(['success' => 'Application submitted successfully']);
+    }
+
+
+
+    public function rejectApplicant(Request $request, $job_id)
+    {
+        $freelancerId = $request->query('freelancer_id');
+
+        // Find the specific job application
+        $jobApplication = Job_application::where('job_id', $job_id)
+            ->where('freelancer_id', $freelancerId)
+            ->first();
+
+        if ($jobApplication) {
+            $jobApplication->status = 'Rejected';
+            $jobApplication->save();
+
+            return response()->json(['message' => 'Application rejected successfully.'], 200);
+        } else {
+            return response()->json(['message' => 'Job application not found.'], 404);
+        }
     }
 }

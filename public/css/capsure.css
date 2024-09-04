@@ -469,6 +469,7 @@ select#year {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for better visibility */
   }
 
+
   .rw-height-service {
     display: -webkit-box; 
     -webkit-box-orient: horizontal; 
@@ -478,7 +479,30 @@ select#year {
     line-height: 20px; 
     max-height: 40px; 
 }
-  
+
+/* My Jobs Page */
+
+.nav-link.tabs-bg-color {
+    background-color: #E5E4E4; /* Light gray background for inactive tabs */
+    color: #000; /* Default text color */
+    border: 1px solid  #cfcfcf ;
+    transition: background-color 0.3s ease; /* Smooth transition for color changes */
+}
+
+.nav-link.active.tabs-bg-color {
+    background-color: #91216C; /* Blue background for active tab */
+    color: #fff; /* White text color for active tab */
+}
+
+.letter-spacing {
+    letter-spacing: 1px; 
+}
+
+.pending-color{
+    color: #ACA9A9;
+}
+
+
 
 
 

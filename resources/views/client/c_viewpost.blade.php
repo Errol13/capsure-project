@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container my-4 pb-2">
-    <a href="{{ url('/client-events') }}" style="text-decoration:none; color:black;">
+    <a href="#" onclick="window.history.go(-1); return false;" style="text-decoration:none; color:black;">
         <i class="fas fa-arrow-left me-2 mb-4"></i>Back
     </a>
 
@@ -151,7 +151,7 @@
                                         <div class="ms-auto text-end">
                                             @if ( $applicant['applicant']->avg_rating > 0)
                                             <span class="badge text-black">{{ $applicant['applicant']->avg_rating }}</span>
-                                            @else 
+                                            @else
                                             <span class="badge text-black">No ratings yet</span>
                                             @endif
 
@@ -162,14 +162,27 @@
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
-                                        <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px">Reject</button>
+
+
+                                        <button type="button"
+                                            class="btn mb-2 mb-sm-0"
+                                            style="flex: 1; width: 100%; background-color: none; border-color: darkgrey; border-radius: 20px"
+                                            data-toggle="modal"
+                                            data-target="#confirmRejectModal"
+                                            data-url="{{ route('jobApplication.update', ['id' => $applicant['job_id']]) }}?freelancer_id={{ $applicant['applicant']->user_id }}">
+                                            Reject
+                                        </button>
+
+                                        @include('modals.Hiring.reject_modal')
+
                                     </div>
+
                                 </div>
                             </div>
                             @endforeach
-                            @else 
+                            @else
                             <p class="text-center open-sans-reg fs-5 my-3">No Applicants</p>
-                            @endif 
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -234,7 +247,7 @@
                                 </div>
                             </div>
                             @endforeach
-                            @else 
+                            @else
                             <p class="text-center open-sans-reg fs-5">No Hiring Requests</p>
                             @endif
                         </div>
@@ -256,7 +269,7 @@
                                             <p class="text-muted mb-0">{{ $recomm->user->street }}, {{ $recomm->user->barangay }}, {{ $recomm->user->city }}</p>
                                             @if($recomm->number_of_projects)
                                             <small class="text-success mb-0">{{ $recomm->number_of_projects}} Projects done</small>
-                                            @else 
+                                            @else
                                             <small class="text-muted mb-0">No projects yet</small>
                                             @endif
                                         </div>

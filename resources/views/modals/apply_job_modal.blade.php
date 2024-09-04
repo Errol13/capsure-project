@@ -1,4 +1,5 @@
-<div class="modal" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModal" aria-hidden="true">
+<!-- Apply Job Modal -->
+<div class="modal fade" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -12,17 +13,14 @@
                     <select class="form-select border border-danger-subtle" id="apply_as" name="apply_as" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($eventJobs as $eventJob)
-
-                        @php
-                        // Get the hired count for the current job, or default to 0 if not set
-                        $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
-                        @endphp
-
-                        @if($eventJob->number_of_people != $completedHiredCount)
-                        <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
-                        @elseif($eventJob->number_of_people == $completedHiredCount)
-                        <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
-                        @endif
+                            @php
+                            $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
+                            @endphp
+                            @if($eventJob->number_of_people != $completedHiredCount)
+                                <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
+                            @else
+                                <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
+                            @endif
                         @endforeach
                     </select>
 
@@ -30,10 +28,9 @@
                     <select class="form-select border border-danger-subtle" id="service_id" name="service_id" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($freelancer->services as $service)
-                        <option value="{{ $service->id }}">{{ $service->job_title }}</option>
+                            <option value="{{ $service->id }}">{{ $service->job_title }}</option>
                         @endforeach
                     </select>
-
 
                     <!-- Hidden input for passing the freelancer ID -->
                     <input type="hidden" id="user_id" name="user_id" value="{{ $freelancer->user_id }}">
@@ -45,6 +42,74 @@
             </div>
         </div>
     </div>
-
-
 </div>
+
+<!-- Response Modal -->
+<div id="responseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="responseModalLabel">Application Status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalMessage">
+                <!-- Message will be inserted here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('apply-job-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        const form = this;
+        const formData = new FormData(form);
+        const applyJobUrl = form.action; // Get the form action URL
+
+        fetch(applyJobUrl, {
+            method: 'POST',
+            body: formData,
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            const modalMessage = document.getElementById('modalMessage');
+            if (data.error) {
+                modalMessage.innerHTML = '<p class="text-danger">' + data.error + '</p>';
+                $('#responseModal').modal('show'); // Show the error modal
+            } else if (data.warning) {
+                modalMessage.innerHTML = '<p class="text-danger">' + data.warning + '</p>';
+                $('#responseModal').modal('show'); // Show the warning modal
+            } else if (data.success) {
+                modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
+
+                // Close the applyJobModal
+                $('#applyJobModal').modal('hide');
+
+                // Show the responseModal
+                $('#responseModal').modal('show');
+                
+                // Optional: Redirect after showing the responseModal
+                setTimeout(function() {
+                    window.location.href = data.redirectUrl || window.location.href; // Redirect to a specific URL or refresh the page
+                }, 2000); // Adjust timing as needed
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    });
+});
+</script>
+
+
