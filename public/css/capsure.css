@@ -417,6 +417,17 @@ select#year {
     max-height: 60px; 
 }
 
+.rw-height-eventservices{
+    display: -webkit-box; 
+    -webkit-line-clamp: 3; 
+    -webkit-box-orient: vertical; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    height: 20px; 
+    line-height: 10px; 
+    max-height: 20px; 
+}
+
 
 .content-color{
     color: #666666;

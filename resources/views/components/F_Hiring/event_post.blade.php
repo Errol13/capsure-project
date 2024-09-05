@@ -147,8 +147,9 @@
                     <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center my-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
                         APPLY JOB
                     </button>
-                    @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
+                   
                 </div>
+                @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
 
                 <h4>Event Jobs</h4>
                 <ul class="list-group">

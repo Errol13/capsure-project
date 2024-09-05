@@ -83,6 +83,7 @@ Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController
 #Job Application
 Route::post('apply-job', [App\Http\Controllers\Hiring\Job_applicationController::class, 'applyJob'])->name('job.apply');
 Route::patch('apply-job/reject/{id}', [App\Http\Controllers\Hiring\Job_applicationController::class, 'rejectApplicant'])->name('jobApplication.update');
+Route::delete('apply-job/cancel/{id}', [App\Http\Controllers\Hiring\Job_applicationController::class, 'cancelApplication'])->name('jobApplication.cancel');
 
 #Transaction
 Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');

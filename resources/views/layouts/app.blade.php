@@ -24,8 +24,9 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
   
     
@@ -141,58 +142,8 @@
                             </a>
                         </li>
 
-                        <li class="nav-item dropdown mx-1 ms-md-2">
-                            <a class="nav-link dropdown-toggle-notif" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-bell"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 300px;">
-                                <li>
-                                    <div class="d-flex justify-content-between align-items-center px-3 py-2">
-                                        <span class="fw-bold">Notification</span>
-                                        <a href="#" class="text-decoration-none">Mark all as Read</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <strong>Someone applied to your post.</strong>
-                                        <br><small class="text-muted">4 mins ago</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        <strong>Someone wants to make an offer.</strong>
-                                        <br><small class="text-muted">10 mins ago</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Dianne accepted your offer.
-                                        <br><small class="text-muted">Yesterday 10pm</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Someone applied to your post.
-                                        <br><small class="text-muted">June 28, 2024</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="#">
-                                        Joan declined your hiring request.
-                                        <br><small class="text-muted">June 5, 2024</small>
-                                    </a>
-                                </li>
-                                <li>
-                                    <hr class="dropdown-divider">
-                                </li>
-                                <li>
-                                    <a class="dropdown-item text-center" href="#">See All</a>
-                                </li>
-                            </ul>
-                        </li>
+                        <!--for livewire or dynamic notifications --> 
+                        <livewire:notifications />
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
