@@ -81,9 +81,9 @@ class Job_applicationController extends Controller
             $jobApplication->status = 'Rejected';
             $jobApplication->save();
 
-            return response()->json(['message' => 'Application rejected successfully.'], 200);
+            return redirect()->back()->with('success', 'Application rejected successfully.');
         } else {
-            return response()->json(['message' => 'Job application not found.'], 404);
+            return redirect()->back()->with('error', 'Job application not found.');
         }
     }
 }

@@ -1,4 +1,4 @@
-<div wire:poll.10s>
+<div wire:poll.5s>
     <div class="ms-4 mt-5 mb-4">
         <h3 class="ms-5 mt-3 poppins-medium">My Jobs</h3>
     </div>
@@ -28,6 +28,10 @@
         <div class="tab-content">
             <!-- Application Content -->
             <div class="tab-pane fade {{ $activeTab === 'application' ? 'show active' : '' }}" id="application" aria-labelledby="application-tab">
+
+                <!--If no applications -->
+                @if($appliedJobs->isNotEMpty())
+
                 <table class="table table-striped">
                     <thead class="text-center mb-2">
                         <tr>
@@ -74,17 +78,84 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                @else
+                <p class="text-center mt-5 text-muted fs-4">No Applications</p>
+                @endif
             </div>
 
             <!-- Hiring Request Content -->
             <div class="tab-pane fade {{ $activeTab === 'hiring-request' ? 'show active' : '' }}" id="hiring-request" aria-labelledby="hiring-request-tab">
-                <!-- Content for Hiring Requests -->
+                
+             <!-- If there are Hiring Requests -->
+              @if($hiringRequests->isNotEmpty())
+            
+            <!-- Content for Hiring Requests -->
+                <table class="table table-striped">
+                    <thead class="text-center mb-2">
+                        <tr>
+                            <th style="background-color: #FCF2F9;">Event</th>
+                            <th style="background-color: #FCF2F9;">Service</th>
+                            <th style="background-color: #FCF2F9;">Client's Fee Offer</th>
+                            <th style="background-color: #FCF2F9;">My Fee</th>
+                            <th style="background-color: #FCF2F9;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Jobs Offered-->
+                        <tr>
+                            @foreach($hiringRequests as $job)
+                            <td class="open-sans-reg">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <strong>{{ $job->eventjob->event->title }}</strong>
+                                    <a href="{{ route('client-viewpost', ['id' => $job->eventjob->event->event_id]) }}" class="btn btn-link pt-0 me-3" style="white-space: nowrap; color: #91216C;">
+                                        View Post
+                                    </a>
+                                </div>
 
+                                <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $job->eventjob->event->start_date_formatted }} - {{ $job->eventjob->event->end_date_formatted }}</span><br>
+                                <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->eventjob->event->street }}, {{ $job->eventjob->event->barangay }}, {{ $job->eventjob->event->city }}</span><br>
+                                <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->eventjob->event->budget_min }} - ₱{{ $job->eventjob->event->budget_max }}</span>
+                            </td>
+                            <td>{{$$job->eventjob->service_needed}}</td>
+
+                            <!--Client's Offer -->
+                            <td>
+                                <span class="text-uppercase fw-bold">
+                                ₱{{ $job->client_pricing }}
+                                </span>
+                            </td>
+
+                            <td>
+                                <span class="text-uppercase fw-bold">
+                                ₱{{ $job->freelancer_pricing }}
+                                </span>
+                            </td>
+
+
+                            <td>
+                                <a href="#" class="btn btn-link pt-0" style="white-space: nowrap; color: #91216C; text-decoration: none; display: block;">{{$job->status}}</a>
+                                <a href="#" class="btn btn-link pt-0 text-purple" style="text-decoration: none; display: block;">Negotiation</a>
+                                <a href="#" class="btn btn-link pt-0 text-danger" style="text-decoration: none; display: block;">Decline Offer</a>
+                            </td>
+
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                @else 
+                <p class="text-muted text-center mt-4 fs-4">No Hiring Requests</p>
+                @endif
 
             </div>
 
             <!-- Recommendation Content -->
             <div class="tab-pane fade {{ $activeTab === 'recommendation' ? 'show active' : '' }}" id="recommendation" aria-labelledby="recommendation-tab">
+
+                <!--If no recommendations -->
+                @if($eventRecommendations->isNotEmpty())
+
                 <!-- Content for Recommendations -->
                 <table class="table table-striped">
                     <thead class="text-center mb-2">
@@ -112,7 +183,7 @@
                                 @endforeach
                             </td>
 
-        
+
                             <td class="open-sans-reg ">
                                 <a href="#" class="btn-verify rounded-2 pt-0 mb-1" style="white-space: nowrap; text-decoration: none; display: block;">Apply</a>
                                 <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-0 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
@@ -122,6 +193,10 @@
                         @endforeach
                     </tbody>
                 </table>
+
+                @else
+                <p class="text-muted text-center mt-4 fs-4">No Available Events</p>
+                @endif
 
             </div>
         </div>

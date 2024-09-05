@@ -40,7 +40,7 @@ class MyJobs extends Component
             return $job;
         });
 
-        //fetch how many applications, requests and recommendations
+        //fetch how many applications and requests
         $appliedJobsCount = $appliedJobs->count();
         $hiringRequestsCount = $freelancer->hiringRequests()->count();
 
@@ -52,9 +52,20 @@ class MyJobs extends Component
             })->get();
 
         //format the date for each event
-        foreach($eventRecommendations as $event){
+        foreach ($eventRecommendations as $event) {
             $event->start_date_formatted = Carbon::parse($event->start_date)->format('M j, Y h:i A');
             $event->end_date_formatted = Carbon::parse($event->end_date)->format('M j, Y h:i A');
+        }
+
+        // Get hiring requests with related event job and event data through eventjob
+        $hiringRequests = $freelancer->hiringRequests()
+            ->with(['eventjob.event'])
+            ->get();
+
+        //format the date for each event
+        foreach ($hiringRequests as $eachEvent) {
+            $eachEvent->eventjob->event->start_date_formatted = Carbon::parse($eachEvent->eventjob->event->start_date)->format('M j, Y h:i A');
+            $eachEvent->eventjob->event->end_date_formatted = Carbon::parse($eachEvent->eventjob->event->end_date)->format('M j, Y h:i A');
         }
 
 
@@ -66,7 +77,8 @@ class MyJobs extends Component
             'appliedJobsCount' => $appliedJobsCount,
             'hiringRequestsCount' => $hiringRequestsCount,
             'eventRecommendations' => $eventRecommendations,
-            'recommendationsCount' => $eventRecommendationsCount
+            'recommendationsCount' => $eventRecommendationsCount,
+            'hiringRequests' => $hiringRequests
         ]);
     }
 }

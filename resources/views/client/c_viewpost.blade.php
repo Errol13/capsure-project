@@ -161,8 +161,10 @@
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
+                                        @if($applicant['status'] != 'Rejected')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
-
+                                        <!-- Hire Modal -->
+                                        @include('modals.hire_modal', ['freelancer' => $applicant['applicant']])
 
                                         <button type="button"
                                             class="btn mb-2 mb-sm-0"
@@ -172,6 +174,16 @@
                                             data-url="{{ route('jobApplication.update', ['id' => $applicant['job_id']]) }}?freelancer_id={{ $applicant['applicant']->user_id }}">
                                             Reject
                                         </button>
+                                        @elseif(($applicant['status'] == 'Rejected'))
+                                        <button type="button"
+                                            class="btn mb-2 mb-sm-0 text-danger fw-bold"
+                                            style="flex: 1; width: 100%; background-color: none; border-color: darkgrey; border-radius: 20px"
+                                            data-toggle="modal"
+                                            data-target="#confirmRejectModal"
+                                            data-url="#" disabled>
+                                            Rejected
+                                        </button>
+                                        @endif
 
                                         @include('modals.Hiring.reject_modal')
 
@@ -308,8 +320,7 @@
             </div>
         </div>
 
-        <!-- Hire Modal -->
-        @include('modals.hire_modal')
+
 
         <!-- Negotiate Modal-->
         @include('modals.negotiate_modal')

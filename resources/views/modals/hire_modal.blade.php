@@ -5,29 +5,34 @@
             <div class="modal-body">
                 <div class="d-flex mb-4 align-items-center">
                     <!-- Profile Image -->
-                    <img src="assets/profilepic.svg" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
+                    <img src="{{asset($freelancer->user->profile_image)}}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
 
                     <!-- Profile Info -->
                     <div class="ms-3"> <!-- Add margin to the left of the text -->
-                        <h6 class="mb-0">Daisy Maureen Dimasuay</h6>
-                        <small class="text-muted mb-2">Naga City</small>
+                        <h6 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}}</h6>
+                        <small class="text-muted mb-2">{{$freelancer->user->city}}</small>
                         <div class="d-flex align-items-center">
+                            @if($freelancer->avg_rating != 0)
                             <span class="text-warning">⭐</span>
-                            <small class="fw-bold ms-1">5.0</small>
+                            <small class="fw-bold ms-1">{{$freelancer->avg_rating}}</small>
                             <small class="text-muted ms-2">(10) Reviews</small>
+                            @else
+                            <span cass="text-muted">No ratings yet</span>
+                            @endif
                         </div>
                     </div>
                 </div>
                 <div class="list-group mb-4">
+                    @foreach($freelancer->services as $service)
                     <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
-                        Photographer <span>₱5000/project</span> <span class="text-success">Available</span>
+
+                        {{$service->job_title}} <span>₱{{$service->job_fee}}{{$service->fee_type}}</span>
+                        <span class="{{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
+                            {{ $service->isAvailable ? 'Available' : 'Not Available' }}
+                        </span>
+
                     </div>
-                    <div class="list-group-item d-flex justify-content-between align-items-center">
-                        Make-up Artist <span>₱5000/project</span> <span class="text-danger">Not Available</span>
-                    </div>
-                    <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color:#EEEEEE;">
-                        Video Editor <span>₱5000/project</span> <span class="text-success">Available</span>
-                    </div>
+                    @endforeach
                 </div>
                 <div class="row d-flex mb-1 align-items-center">
                     <div class="col">
@@ -35,10 +40,11 @@
                     </div>
                     <div class="col">
                         <select class="form-select" id="role">
-                            <option>Photographer</option>
-                            <option>Make-up Artist</option>
-                            <option>Video Editor</option>
+                            @foreach($freelancer->services as $service)
+                            <option>{{$service->job_title}}</option>
+                            @endforeach
                         </select>
+
                     </div>
                 </div>
                 <div class="d-flex mb-1 align-items-center">
@@ -59,7 +65,7 @@
                     <div class="col">
                         <select class="form-select" id="payment">
                             <option>CASH</option>
-                            <option>CREDIT</option>
+                            <option>ONLINE</option>
                         </select>
                     </div>
                 </div>
