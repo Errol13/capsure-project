@@ -7,5 +7,7 @@ use Illuminate\Http\Request;
 
 class Hiring_requestController extends Controller
 {
-    //
+    //hire freelancer
+
+    
 }

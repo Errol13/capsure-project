@@ -73,12 +73,6 @@
                                 @if($job->pivot->status == 'Pending')
                                 <a href="#" class="btn btn-link pt-0 text-danger" style="text-decoration: none; display: block;" wire:click="openModal({{ $job->job_id }})">Cancel</a>
                                 @endif
-
-
-
-
-
-
                             </td>
 
                         </tr>
@@ -204,17 +198,21 @@
                     </td>
 
                     <!--Needed Services -->
-                    <td>
+                    <td class="d-flex align-content-start flex-wrap">
                         @foreach($event->event_jobs as $job)
-                        <span class="me-2 rounded-3 border border-secondary-subtle bg-primary-subtle p-2">{{$job->service_needed}}</span>
+                        <span class="me-2 rounded-3 border border-secondary-subtle bg-primary-subtle p-2 mb-2">{{$job->service_needed}}</span>
                         @endforeach
                     </td>
 
 
                     <td class="open-sans-reg ">
-                        <a href="#" class="btn-verify rounded-2 pt-0 mb-1" style="white-space: nowrap; text-decoration: none; display: block;">Apply</a>
-                        <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-0 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
+                        <!--<a href="#" class="btn-verify rounded-2 pt-0 mb-1" style="white-space: nowrap; text-decoration: none; display: block;" data-toggle="modal" data-target="#applyJobModal">Apply</a>-->
+                        <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-4 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
                     </td>
+
+                    <!--Apply Modal 
+                    @include('modals.apply_job_modal', ['eventJobs' => $event->event_jobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )-->
+
 
                 </tr>
                 @endforeach

@@ -105,18 +105,4 @@ class Job_applicationController extends Controller
         }
     }
 
-    public function cancelApplication($job_id)
-    {
-        // Find the job application by job_id
-        $jobApplication = Job_application::where('job_id', $job_id)->first();
-
-        if ($jobApplication) {
-            // Delete the job application if it exists
-            $jobApplication->delete();
-            return redirect()->back()->with('success', 'Cancelled Job Application successfully');
-        } else {
-            // Handle the case where the job application is not found
-            return redirect()->back()->with('error', 'Job application not found.');
-        }
-    }
 }

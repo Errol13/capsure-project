@@ -75,8 +75,13 @@ class EventsController extends Controller
         // Fetch the event by its ID
         $event = Event::findOrFail($id);
 
-        $event->start_date_formatted = Carbon::parse($event->start_date)->format('F j, Y h:i A'); // Month Year
-        $event->end_date_formatted = Carbon::parse($event->end_date)->format('F j, Y h:i A'); // Full end date with time
+        $event->start_date_formatted = Carbon::parse($event->start_date)->format('M j, Y h:i A'); // Month Year
+        $event->end_date_formatted = Carbon::parse($event->end_date)->format('M j, Y h:i A'); // Full end date with time
+
+        //compute the event's duration
+        $start = Carbon::parse($event->start_date);
+        $end = Carbon::parse($event->end_date);
+        $durationInHours = $start->diffInHours($end);
 
         // Get all jobs associated with this event
         $jobs = EventJob::where('event_id', $id)->get();
@@ -96,8 +101,6 @@ class EventsController extends Controller
             // Fetch job applications
             $applications = Job_application::where('job_id', $job->job_id)->get();
             $jobApplications = $jobApplications->merge($applications);
-
-
 
 
             // Fetch freelancers who applied for the job
@@ -147,7 +150,10 @@ class EventsController extends Controller
                     ->where('job_category', $job->job_category);
             })
                 ->with(['user', 'services']) // Eager load the user and services relationships
+                ->orderBy('avg_rating', 'desc') // Sort by avg_rating in descending order
+                ->orderBy('user_id', 'asc') // Sort by id in ascending order
                 ->get();
+
 
             $recommendations = $recommendations->merge($jobRecommendations); // Merge recommendations
 
@@ -201,6 +207,7 @@ class EventsController extends Controller
             $hiringSuccessRate = ($successfulEvents / $clientTotalPosts) * 100;
         }
 
+
         if ($user->user_type === 'client') {
             return view('client.c_viewpost', [
                 'event' => $event,
@@ -212,6 +219,7 @@ class EventsController extends Controller
                 'completedHiredCounts' => $completedHiredCounts,
                 'tabs' => $tabs,
                 'badgeCounts' => $badgeCounts,
+                'durationInHours' => $durationInHours
             ]);
         } elseif ($user->user_type === 'freelancer') {
             return view('components.F_Hiring.event_post', [
@@ -224,6 +232,24 @@ class EventsController extends Controller
                 'hiringSuccessRate' => $hiringSuccessRate,
                 'freelancer' => $freelancer,
             ]);
+        }
+    }
+
+    //cancel event post
+
+    public function closeEventPost($eventId)
+    {
+
+        //fetch the event
+        $event = Event::where('event_id', $eventId)->first();
+
+        if ($event) {
+            $event->status = 'Closed';
+            $event->save();
+
+            return redirect()->back()->with('success', 'Event Post successfully closed.');
+        } else {
+            return redirect()->back()->with('error', 'Cannot found the event post.');
         }
     }
 }

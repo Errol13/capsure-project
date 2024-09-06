@@ -5,6 +5,7 @@ namespace App\Livewire\Freelancer;
 use App\Models\Freelancer;
 use App\Models\Hiring\Event;
 use App\Models\hiring\Job_application;
+use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
@@ -77,6 +78,9 @@ class MyJobs extends Component
         $appliedJobsCount = $appliedJobs->count();
         $hiringRequestsCount = $freelancer->hiringRequests()->count();
 
+        //completedHiredCounts
+        $completedHiredCounts = collect();
+
         $eventRecommendations = Event::with('event_jobs')
             ->where('status', 'Open')
             ->whereHas('event_jobs', function ($query) use ($freelancer) {
@@ -86,6 +90,16 @@ class MyJobs extends Component
         foreach ($eventRecommendations as $event) {
             $event->start_date_formatted = Carbon::parse($event->start_date)->format('M j, Y h:i A');
             $event->end_date_formatted = Carbon::parse($event->end_date)->format('M j, Y h:i A');
+
+            //completedHiredCounts for each event job
+            foreach ($event->event_jobs as $job) {
+                // Getting hired freelancers count for each job
+                $jobApplicantsHired = Transaction::where('job_id', $job->id)->get();
+                $hiredCount = $jobApplicantsHired->count();
+
+                // Store the count of hired freelancers for the job
+                $completedHiredCounts->put($job->id, $hiredCount);
+            }
         }
 
         $hiringRequests = $freelancer->hiringRequests()
@@ -99,13 +113,16 @@ class MyJobs extends Component
 
         $eventRecommendationsCount = $eventRecommendations->count();
 
+
         return view('livewire.freelancer.my-jobs', [
             'appliedJobs' => $appliedJobs,
             'appliedJobsCount' => $appliedJobsCount,
             'hiringRequestsCount' => $hiringRequestsCount,
             'eventRecommendations' => $eventRecommendations,
             'recommendationsCount' => $eventRecommendationsCount,
-            'hiringRequests' => $hiringRequests
+            'hiringRequests' => $hiringRequests,
+            'freelancer' => $freelancer,
+            'completedHiredCounts' => $completedHiredCounts
         ]);
     }
 }
