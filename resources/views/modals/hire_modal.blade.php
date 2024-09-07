@@ -1,79 +1,118 @@
 <!-- Hire Modal -->
-<div class="modal" id="hireModal" tabindex="-1" aria-labelledby="hireModalLabel" aria-hidden="true">
+<div class="modal" id="hireModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireModalLabel-{{ $uniqueId }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <div class="d-flex mb-4 align-items-center">
-                    <!-- Profile Image -->
-                    <img src="{{asset($freelancer->user->profile_image)}}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
-
-                    <!-- Profile Info -->
-                    <div class="ms-3"> <!-- Add margin to the left of the text -->
-                        <h6 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}}</h6>
-                        <small class="text-muted mb-2">{{$freelancer->user->city}}</small>
-                        <div class="d-flex align-items-center">
-                            @if($freelancer->avg_rating != 0)
-                            <span class="text-warning">⭐</span>
-                            <small class="fw-bold ms-1">{{$freelancer->avg_rating}}</small>
-                            <small class="text-muted ms-2">(10) Reviews</small>
-                            @else
-                            <span cass="text-muted">No ratings yet</span>
-                            @endif
+                <form action="#" method="POST">
+                    @csrf
+                    <!-- Profile Section -->
+                    <div class="d-flex mb-4 align-items-center">
+                        <!-- Profile Image -->
+                        <img src="{{ asset($freelancer->user->profile_image) }}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
+                        <!-- Profile Info -->
+                        <div class="ms-3">
+                            <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }}</h6>
+                            <small class="text-muted mb-2">{{ $freelancer->user->city }}</small>
+                            <div class="d-flex align-items-center">
+                                @if($freelancer->avg_rating != 0)
+                                <span class="text-warning">⭐</span>
+                                <small class="fw-bold ms-1">{{ $freelancer->avg_rating }}</small>
+                                <small class="text-muted ms-2">(10) Reviews</small>
+                                @else
+                                <span class="text-muted">No ratings yet</span>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="list-group mb-4">
-                    @foreach($freelancer->services as $service)
-                    <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
 
-                        {{$service->job_title}} <span>₱{{$service->job_fee}}{{$service->fee_type}}</span>
-                        <span class="{{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
-                            {{ $service->isAvailable ? 'Available' : 'Not Available' }}
-                        </span>
+                    <!-- Services List -->
+                    <div class="list-group mb-4">
+                        @foreach($freelancer->services as $service)
+                        <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
+                            {{ $service->job_title }}
+                            <span>₱{{ $service->job_fee }}{{ $service->fee_type }}</span>
+                            <span class="{{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
+                                {{ $service->isAvailable ? 'Available' : 'Not Available' }}
+                            </span>
+                        </div>
+                        @endforeach
+                    </div>
 
+                    <!-- Hire as role -->
+                    <div class="row d-flex mb-1 align-items-center">
+                        <div class="col">
+                            <label for="role-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" id="role-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
+                                <option value="" selected disabled></option>
+                                @foreach($freelancer->services as $service)
+                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}">
+                                    {{ $service->job_title }}
+                                </option>
+                                @endforeach
+                            </select>
+                        </div>
                     </div>
-                    @endforeach
-                </div>
-                <div class="row d-flex mb-1 align-items-center">
-                    <div class="col">
-                        <label for="role" class="form-label">Hire as</label>
-                    </div>
-                    <div class="col">
-                        <select class="form-select" id="role">
-                            @foreach($freelancer->services as $service)
-                            <option>{{$service->job_title}}</option>
-                            @endforeach
-                        </select>
 
+                    <!-- Computed Fee -->
+                    <p class="fw-bold" id="computed-fee-<?php echo $uniqueId; ?>">Computed Fee: ₱0.00</p>
+                    <input type="hidden" name="freelancer_pricing" id="fee-hidden-<?php echo $uniqueId; ?>" value="0">
+
+                    <!-- Offer Input -->
+                    <div class="d-flex mb-1 justify-content-between align-items-center">
+                        <label for="fee-<?php echo $uniqueId; ?>" class="me-1">Your Offer</label>
+                        <div class="col input-group me-2" style="max-width: 50%;">
+                            <input type="text" class="form-control" id="fee-<?php echo $uniqueId; ?>" name="client_pricing" value="₱0.00" required>
+                            <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt text-right"></i></button>
+                        </div>
                     </div>
-                </div>
-                <div class="d-flex mb-1 align-items-center">
-                    <label for="fee" class="me-3">Fee Offer</label>
-                    <div class="col input-group me-2" style="max-width: 50%;">
-                        <input type="text" class="form-control" id="fee" value="₱4000.00">
-                        <button class="btn btn-outline-secondary" type="button"><i class="fas fa-pencil-alt text-right"></i></button>
+
+                    <!-- Payment Method -->
+                    <div class="row mb-3 align-items-center">
+                        <div class="col">
+                            <label for="payment-{{ $uniqueId }}" class="form-label">Payment Method</label>
+                        </div>
+                        <div class="col">
+                            <select class="form-select" name="payment_method" id="payment-{{ $uniqueId }}" required>
+                                <option value="CASH">CASH</option>
+                                <option value="ONLINE">ONLINE</option>
+                            </select>
+                        </div>
                     </div>
-                    <select class="form-select" id="per" style="max-width: 30%;">
-                        <option>per project</option>
-                        <option>per hour</option>
-                    </select>
-                </div>
-                <div class=" row mb-3 align-items-center">
-                    <div class="col">
-                        <label for="payment" class="form-label">Payment Method</label>
+
+                    <!-- Hidden Inputs -->
+                    <input type="hidden" name="freelancer_id" value="{{ $freelancer->user_id }}">
+                    <input type="hidden" name="client_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="status" value="pending">
+
+                    <!-- Action Buttons -->
+                    <div class="d-flex justify-content-center mb-1">
+                        <button type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
+                        <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
-                    <div class="col">
-                        <select class="form-select" id="payment">
-                            <option>CASH</option>
-                            <option>ONLINE</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center mb-1">
-                    <button type="button" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
-                    <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+    const durationInHours = <?php echo json_encode($durationInHours ?? 0); ?>;
+
+    function updateFee(uniqueId) {
+        const selectElement = document.getElementById('role-' + uniqueId);
+        const selectedOption = selectElement.options[selectElement.selectedIndex];
+        const jobFee = parseFloat(selectedOption.getAttribute('data-job-fee')) || 0;
+        const totalFee = jobFee * durationInHours;
+        const roundedFee = totalFee.toFixed(2);
+        const formattedFee = parseFloat(roundedFee).toLocaleString('en-US', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        document.getElementById('computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
+        document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
+        document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
+    }
+</script>

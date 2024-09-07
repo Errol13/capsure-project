@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Hiring\EventJob;
 use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
+use App\Notifications\ApplicationReceived;
+use App\Notifications\ApplicationRejected;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class Job_applicationController extends Controller
 {
@@ -54,16 +57,26 @@ class Job_applicationController extends Controller
 
         if ($existingApplication) {
             return response()->json(['warning' => 'You have already applied for this job.'], 400);
+        } else {
+            Job_application::create([
+                'job_id' => $validated['apply_as'],
+                'freelancer_id' => $validated['user_id'],
+                'service_id' => $validated['service_id'],
+                'status' => 'Pending',
+            ]);
+
+            // Notify the client about the new applicant
+            $client = $event->client->user; //the client who posted the job
+            $client->notify(new ApplicationReceived($event));
+
+            Log::info('Application submitted successfully for:', [
+                'job_id' => $validated['apply_as'],
+                'freelancer_id' => $validated['user_id']
+            ]);
+
+
+            return response()->json(['success' => 'Application submitted successfully']);
         }
-
-        Job_application::create([
-            'job_id' => $validated['apply_as'],
-            'freelancer_id' => $validated['user_id'],
-            'service_id' => $validated['service_id'],
-            'status' => 'Pending',
-        ]);
-
-        return response()->json(['success' => 'Application submitted successfully']);
     }
 
 
@@ -81,9 +94,15 @@ class Job_applicationController extends Controller
             $jobApplication->status = 'Rejected';
             $jobApplication->save();
 
+            // Notify the freelancer about the rejection
+            $freelancer = $jobApplication->freelancer->user; //get the freelancer
+            $freelancer->notify(new ApplicationRejected($jobApplication->eventJob));
+
+
             return redirect()->back()->with('success', 'Application rejected successfully.');
         } else {
             return redirect()->back()->with('error', 'Job application not found.');
         }
     }
+
 }

@@ -81,14 +81,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             }
         })
-        .then(response => response.json())
+        .then(response => {
+            // Log the raw response to the console
+            console.log('Response Status:', response.status);
+            return response.json(); // Parse the JSON response
+        })
         .then(data => {
+            console.log('Response Data:', data); // Log the response data to the console
+            
             const modalMessage = document.getElementById('modalMessage');
             if (data.error) {
                 modalMessage.innerHTML = '<p class="text-danger">' + data.error + '</p>';
                 $('#responseModal').modal('show'); // Show the error modal
             } else if (data.warning) {
-                modalMessage.innerHTML = '<p class="text-danger">' + data.warning + '</p>';
+                modalMessage.innerHTML = '<p class="text-warning">' + data.warning + '</p>';
                 $('#responseModal').modal('show'); // Show the warning modal
             } else if (data.success) {
                 modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
@@ -99,17 +105,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Show the responseModal
                 $('#responseModal').modal('show');
                 
-                // Optional: Redirect after showing the responseModal
+                //Redirect after showing the responseModal
                 setTimeout(function() {
                     window.location.href = data.redirectUrl || window.location.href; // Redirect to a specific URL or refresh the page
-                }, 2000); // Adjust timing as needed
+                }, 2000); // time before the action get done
             }
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Fetch Error:', error);
         });
     });
 });
+
 </script>
 
 

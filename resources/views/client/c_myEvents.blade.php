@@ -48,13 +48,24 @@
                                 <strong class="poppins-medium">{{ $event->title }}</strong><br>
                                 <small>Budget: ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</small>
                             </td>
-                            <td class="text-success fw-bold text-uppercase">{{ $event->status }}</td>
-                            <td>{{$event->jobApplicationsCount}}</td>
-                            <td>{{$event->hiringRequestsCount}}</td>
-                            <td>{{$event->hiredCount}}</td>
+                            <td class="{{ $event->status == 'Open' ? 'text-success' : 'text-danger' }} fw-bold text-uppercase">
+                                {{ $event->status }}
+                            </td>
+
+                            <td class="fs-5">{{$event->jobApplicationsCount}}</td>
+                            <td class="fs-5">{{$event->hiringRequestsCount}}</td>
+                            <td class="fs-5">{{$event->hiredCount}}</td>
                             <td>
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
-                                <a href="#" class="btn btn-link text-danger" style="text-decoration:none;">Cancel</a>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="{{ $event->status == 'Closed' ? 'mt-4' : 'mt-0' }} btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a><br>
+
+                                @if($event->status == 'Open')
+                                <a href="#" class="btn btn-link text-danger"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#confirmationModal"
+                                    data-event-id="{{ $event->event_id }}"
+                                    style="border:none; border-radius: 12px; text-decoration:none;"
+                                    id="openModalButton">Close</a>
+                                @endif
                             </td>
                         </tr>
                         @endforeach
@@ -73,7 +84,7 @@
                 @foreach ($events as $event)
                 <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     <div class="card-body">
-                        <span class="badge bg-success me-2 mb-3 text-uppercase">{{ $event->status }}</span>
+                        <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge me-2 mb-3 text-uppercase">{{ $event->status ? 'Open' : 'Closed' }}</span>
                         <small>Created {{ $event->created_at->diffForHumans() }}</small>
                         <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
                         <p class="card-text">Budget: {{ $event->budget_min }} - {{ $event->budget_max }}</p>
@@ -83,7 +94,10 @@
                         <p class="mb-2">Hired: {{$event->hiredCount}}</p>
 
                         <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-primary" style="background-color: #91216C; color:white; border:none; border-radius: 12px;">View Post</a>
-                        <a href="#" class="btn btn-danger ms-2" style="border:none; border-radius: 12px;">Cancel</a>
+                        @if($event->status == 'Open')
+                        <a href="{{ route('eventpost.close', ['id' => $event->event_id]) }}" class="btn btn-danger ms-2"
+                            data-bs-toggle="modal" data-bs-target="#confirmationModal" data-event-id="{{ $event->event_id }}" style="border:none; border-radius: 12px;" id="openModalButton">Close</a>
+                        @endif
                     </div>
                 </div>
                 @endforeach
@@ -91,6 +105,9 @@
                 <p class="mt-5 text-muted text-center fs-5">No Posts</p>
                 @endif
             </div>
+
+            <!--Modal for closing the post -->
+            @include('modals.Hiring.close_event')
 
         </div>
     </div>

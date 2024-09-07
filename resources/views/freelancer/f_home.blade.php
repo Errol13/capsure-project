@@ -13,7 +13,6 @@
         <div class="container mt-2 poppins-regular ">
             <div class="row">
 
-
                 @foreach($users as $user)
                 @if($user->client && $user->client->events)
                 @foreach($user->client->events as $event)
@@ -34,7 +33,7 @@
                             <p class="card-text content-color">{!! nl2br(e($event->description)) !!}</p>
                             </div>
                            
-                            <div class="d-flex flex-wrap">
+                            <div class="d-flex flex-wrap rw-height-eventservices">
                                 @foreach($event->event_jobs ?? [] as $event_job)
                                 <span class="badge bg-secondary me-2 mb-2">{{$event_job->service_needed}}</span>
                                 @endforeach

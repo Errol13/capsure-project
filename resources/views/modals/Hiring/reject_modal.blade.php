@@ -24,7 +24,7 @@
 
 <script>
     $(document).ready(function () {
-        // When the modal is shown, get the URL from the data attribute and set it on the form action
+      
         $('#confirmRejectModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var url = button.data('url'); // Extract URL from data-* attributes

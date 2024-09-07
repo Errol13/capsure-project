@@ -9,7 +9,10 @@
     <!-- Event Details -->
     <div class="row">
         <div class="col-md-8 pb-4" style="border-radius:12px;">
-            <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
+            <div class="d-flex justify-content-between align-items-center">
+                <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
+                <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
+            </div>
             <p class="text-muted">Posted {{ $event->created_at->diffForHumans() }}</p>
             <hr>
             <div class="row">
@@ -162,9 +165,9 @@
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
                                         @if($applicant['status'] != 'Rejected')
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal"data-bs-target="#hireModal-{{ $applicant['applicant']->user_id }}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                         <!-- Hire Modal -->
-                                        @include('modals.hire_modal', ['freelancer' => $applicant['applicant']])
+                                        @include('modals.hire_modal', ['uniqueId' => $applicant['applicant']->user_id,'freelancer' => $applicant['applicant'], $durationInHours = $durationInHours])
 
                                         <button type="button"
                                             class="btn mb-2 mb-sm-0"
@@ -308,8 +311,11 @@
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                     </div>
+
+                                     <!-- Hire Modal -->
+                                     @include('modals.hire_modal', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, $durationInHours = $durationInHours, 'eventId'=> $event->event_id])
                                 </div>
                             </div>
                             @endforeach
