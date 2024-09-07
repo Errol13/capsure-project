@@ -34,9 +34,7 @@
                             @if ($user->isVerified == true)
                             <button class="px-3 rounded-3 btn-verified fs-6 open-sans-reg fw-bold">Verified</button>
                             @else
-                            <a href="#" class="mb-0 text-start">
-                                <button class="rounded-3 btn-verify fs-6 open-sans-reg">Verify Account</button>
-                            </a>
+                            <a class="rounded-3 btn-verify fs-6 open-sans-reg" href="{{ route('validphone') }}">Verify Account</a>
                             @endif
                         </div>
                         <div class="d-flex align-items-center ms-2 ">
@@ -299,7 +297,7 @@
                                     </button>
                                 </div>
                                 @endif
-                                
+
                                 @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
                             </div>
                     </div>

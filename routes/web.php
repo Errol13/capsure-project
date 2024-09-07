@@ -89,3 +89,6 @@ Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransac
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');
+
+#Validation
+Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');

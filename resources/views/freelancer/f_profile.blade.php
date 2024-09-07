@@ -121,7 +121,7 @@
                 </div>
                 <p class="mt-0 m-0 open-sans-reg light-color-prof">{{$user->age}} years old</p>
                 <p class="fs-6 mb-0 mt-2 open-sans-reg light-color-prof ">Rating</p>
-                @if($client->avg_rating == 0)
+                @if($user->freelancer->avg_rating == 0)
                 <p class="fs-6 open-sans-reg light-color-prof mt-1 fst-italic text-muted">No ratings yet</p>
                 @else
                 <!-- Star Rating Container -->
