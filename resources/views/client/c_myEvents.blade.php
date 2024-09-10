@@ -84,7 +84,7 @@
                 @foreach ($events as $event)
                 <div class="card mb-3" style="border-radius: 20px;background-color:white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     <div class="card-body">
-                        <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge me-2 mb-3 text-uppercase">{{ $event->status ? 'Open' : 'Closed' }}</span>
+                        <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge me-2 mb-3 text-uppercase">{{ $event->status }}</span>
                         <small>Created {{ $event->created_at->diffForHumans() }}</small>
                         <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
                         <p class="card-text">Budget: {{ $event->budget_min }} - {{ $event->budget_max }}</p>
