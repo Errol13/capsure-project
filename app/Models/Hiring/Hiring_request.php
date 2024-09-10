@@ -2,6 +2,7 @@
 
 namespace App\Models\Hiring;
 
+use App\Models\Freelancer;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -28,5 +29,9 @@ class Hiring_request extends Model
 
     public function eventjob(){
         return $this->belongsTo(EventJob::class, 'job_id');
+    }
+
+    public function freelancer(){
+        return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 }

@@ -126,14 +126,14 @@ class EventsController extends Controller
                 // Get the freelancer's service data
                 $freelancerService = $applicant->services()->where('id', $service)->first();
 
-                //getting the service job fee of the freelancer
-                $fee = $freelancerService ? $freelancerService->job_fee : null;
+                
+
 
                 // Add the applicant with additional job details
                 $applicants->push([
                     'applicant' => $applicant,
                     'service_needed' => $serviceNeeded,
-                    'fee' => $fee,
+                    'service' => $freelancerService,
                     'job_id' => $job->job_id,
                     'status' => $status
                 ]);
@@ -155,7 +155,7 @@ class EventsController extends Controller
                 ->get();
 
 
-            $recommendations = $recommendations->merge($jobRecommendations); // Merge recommendations
+            $recommendations = $recommendations->merge($jobRecommendations)->unique('user_id'); // Merge recommendations
 
             // Getting hired freelancers count for each job
             $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();

@@ -1,5 +1,5 @@
 <!-- Hire Modal -->
-<div class="modal" id="hireModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireModalLabel-{{ $uniqueId }}" aria-hidden="true">
+<div class="modal" id="hireRecommModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireRecommModalLabel-{{ $uniqueId }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
@@ -41,22 +41,24 @@
                     <!-- Hire as role -->
                     <div class="row d-flex mb-1 align-items-center">
                         <div class="col">
-                            <label for="role-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
+                            <label for="roleRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
                         </div>
                         <div class="col">
-                            <select class="form-select" id="role-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
+                            <select class="form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
                                 <option value="" selected disabled></option>
                                 @foreach($freelancer->services as $service)
-                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}">
+                                @if($service->isAvailable == true)
+                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}" data-fee-type="{{$service->fee_type}}"> 
                                     {{ $service->job_title }}
                                 </option>
+                                @endif
                                 @endforeach
                             </select>
                         </div>
                     </div>
 
                     <!-- Computed Fee -->
-                    <p class="fw-bold" id="computed-fee-<?php echo $uniqueId; ?>">Computed Fee: ₱0.00</p>
+                    <p class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee: ₱0.00</p>
                     <input type="hidden" name="freelancer_pricing" id="fee-hidden-<?php echo $uniqueId; ?>" value="0">
 
                     <!-- Offer Input -->
@@ -98,20 +100,47 @@
 </div>
 
 <script>
-    const durationInHours = <?php echo json_encode($durationInHours ?? 0); ?>;
+    if (typeof durationInHours === 'undefined') {
+        const durationInHours = <?php echo json_encode($durationInHours ?? 0); ?>;
+    }
+
 
     function updateFee(uniqueId) {
-        const selectElement = document.getElementById('role-' + uniqueId);
+        const selectElement = document.getElementById('roleRecomm-' + uniqueId);
+        if (!selectElement) {
+            console.error('Select element not found for roleRecomm-' + uniqueId);
+            return;
+        }
+
         const selectedOption = selectElement.options[selectElement.selectedIndex];
+
+        //get corresponding data from the selected option
         const jobFee = parseFloat(selectedOption.getAttribute('data-job-fee')) || 0;
-        const totalFee = jobFee * durationInHours;
+        const feeType = selectedOption.getAttribute('data-fee-type');
+
+        let totalFee = 0;
+
+        // Check fee type and calculate total fee
+        if (feeType === '/hour') {
+            // Ensure durationInHours is a number and greater than 0
+            totalFee = jobFee * (durationInHours > 0 ? durationInHours : 1);
+        } else if (feeType === '/project') {
+            totalFee = jobFee;
+        }
+
+        // error handling when totalfee is not a valid number
+        if (isNaN(totalFee)) {
+            console.error('Total fee calculation error for roleRecomm-' + uniqueId);
+            totalFee = 0;
+        }
+
         const roundedFee = totalFee.toFixed(2);
         const formattedFee = parseFloat(roundedFee).toLocaleString('en-US', {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2
         });
 
-        document.getElementById('computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
+        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
         document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
     }

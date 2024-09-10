@@ -135,7 +135,7 @@
                                         </div>
                                         <div>
                                             <small class="mb-0">Service Fee:</small><br>
-                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $applicant['fee'] }}</span>
+                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $applicant['service']->job_fee }}</span>
                                         </div>
                                     </div>
                                     <hr class="mb-2" style="color:#CBCACA;">
@@ -165,9 +165,11 @@
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
                                         @if($applicant['status'] != 'Rejected')
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal"data-bs-target="#hireModal-{{ $applicant['applicant']->user_id }}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal-{{ $applicant['applicant']->user_id }}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                         <!-- Hire Modal -->
-                                        @include('modals.hire_modal', ['uniqueId' => $applicant['applicant']->user_id,'freelancer' => $applicant['applicant'], $durationInHours = $durationInHours])
+                                        @include('modals.Hiring.hire_modal', ['applicantId' => $applicant['applicant']->user_id,'freelancer' => 
+                                        $applicant['applicant'], $durationInHours = $durationInHours, 'service' => $applicant['service'], 
+                                        'job_id' => $applicant['job_id'], 'payment_method' => $event->payment_method ])
 
                                         <button type="button"
                                             class="btn mb-2 mb-sm-0"
@@ -311,11 +313,11 @@
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireRecommModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                     </div>
 
-                                     <!-- Hire Modal -->
-                                     @include('modals.hire_modal', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, $durationInHours = $durationInHours, 'eventId'=> $event->event_id])
+                                    <!-- Hire Modal -->
+                                    @include('modals.Hiring.hire_recomm', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, 'durationInHours' => $durationInHours, 'eventId'=> $event->event_id])
                                 </div>
                             </div>
                             @endforeach
@@ -332,4 +334,6 @@
         @include('modals.negotiate_modal')
     </div>
 </div>
+
+
 @endsection

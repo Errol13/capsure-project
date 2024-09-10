@@ -90,3 +90,6 @@ Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransac
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');
+
+#hiring requests
+Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'hireFreelancer'])->name('freelancer.hire');
