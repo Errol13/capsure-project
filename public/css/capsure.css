@@ -117,6 +117,116 @@
     font-weight: bold;
 }
 
+.vbox {
+    width: 100%;
+    max-width: 500px; /* Limit the maximum width of the box */
+    padding: 20px; /* Add padding inside the box */
+    margin: 0 auto; /* Center the box horizontally */
+    border: 1px solid #ccc; /* Add a border around the box */
+    border-radius: 10px; /* Rounded corners */
+    background-color: #f9f9f9; /* Background color for the box */
+  }
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+}
+
+.prefix {
+    padding: 10px;
+    background-color: #e9ecef;
+    border: 1px solid #ccc;
+    border-radius: 5px 0 0 5px;
+}
+
+input[type="tel"] {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-left: none;
+    border-radius: 0 5px 5px 0;
+}
+
+.btn.send-otp {
+    padding: 10px 20px;
+    background-color: #8b206a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.note {
+    font-size: 12px;
+    color: #666;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.note {
+    font-size: 12px;
+    color: #666;
+}
+
+.otp-inputs {
+    display: flex;
+    margin: 10px 0; 
+    gap: 10px;
+}
+
+.otp-wrapper {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+    gap: 10px; /* Adds spacing between OTP inputs and the button */
+}
+
+.otp-input {
+    width: 60px;
+    height: 60px;
+    font-size: 0px;
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.otp-input:focus {
+    border-color: #8b206a; /* Focused state border color */
+    outline: none; /* Remove default outline */
+}
+
+.btn.confirm {
+    padding: 10px 20px;
+    background-color: #8b206a; /* Dark magenta */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    display: block;
+    width: 100%;
+    max-width: 100px; /* Limit button width */
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; /* Center the button */
+}
+
+.otp-inputs input {
+    width: 35px;  /* Smaller width */
+    height: 35px;  /* Smaller height */
+    font-size: 16px;  /* Adjust font size for smaller input */
+    text-align: center;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border-color 0.3s ease;
+}
 .step.active .circle {
     background-color: #8b206a; /* Dark magenta color */
     color: white;
