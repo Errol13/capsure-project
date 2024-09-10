@@ -93,3 +93,6 @@ Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs')
 
 #hiring requests
 Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'hireFreelancer'])->name('freelancer.hire');
+
+#Validation
+Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
