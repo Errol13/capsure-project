@@ -36,6 +36,8 @@ class Hiring_requestController extends Controller
         // Merge cleaned data with validated data
         $validated = array_merge($validated, $cleanedData);
 
+        Log::info('Validated Data:', $validated);
+
         // Get the event job
         $eventJob = EventJob::find($validated['job_id']);
         $event = $eventJob->event;

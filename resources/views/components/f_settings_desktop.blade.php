@@ -27,10 +27,10 @@
                         Verified
                     </button>
                     @else
-                    <button class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center">
+                    <a class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center" href="{{ route('validphone') }}">
                         <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
                         Verify Account
-                    </button>
+</a>
                     @endif
                 </div>
             </div>

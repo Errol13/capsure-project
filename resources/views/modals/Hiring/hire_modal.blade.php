@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="{{route('freelancer.hire')}}" method="POST">
+                <form action="/hire/applicant" method="POST">
                     @csrf
                     <!-- Profile Section -->
                     <div class="d-flex mb-4 align-items-center">
