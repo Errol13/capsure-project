@@ -10,4 +10,8 @@ class ValidateController extends Controller
     public function showValidPhone(){
         return view('validation.validphone');
         }
+
+    public function showValidID(){
+        return view('validation.validID');
+        }
 }

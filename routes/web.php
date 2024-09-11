@@ -96,3 +96,4 @@ Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestContro
 
 #Validation
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
+Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');

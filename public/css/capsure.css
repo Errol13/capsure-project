@@ -119,12 +119,39 @@
 
 .vbox {
     width: 100%;
-    max-width: 500px; /* Limit the maximum width of the box */
-    padding: 20px; /* Add padding inside the box */
-    margin: 0 auto; /* Center the box horizontally */
-    border: 1px solid #ccc; /* Add a border around the box */
-    border-radius: 10px; /* Rounded corners */
-    background-color: #f9f9f9; /* Background color for the box */
+    max-width: 600px; 
+    padding: 30px;
+    margin: 0 auto; 
+    border: 1px solid #ccc; 
+    background-color: white; 
+  }
+
+  .xbox {
+    width: 100%;
+    max-width: 750px; 
+    padding: 30px;
+    margin: 0 auto; 
+    border: 1px solid #ccc; 
+    background-color: white; 
+  }
+
+  .upload-section {
+    border: 2px dashed #d9d9d9;
+    border-radius: 10px;
+    padding: 20px;
+    min-height: 150px;
+  }
+
+  .upload-section .icon {
+    text-align: center;
+    font-size: 50px;
+    color: #6c757d;
+    margin-bottom: 5px;
+  }
+
+  .upload-section input {
+    text-align: center;
+    display: none;
   }
 
 .form-section {
@@ -151,7 +178,7 @@ input[type="tel"] {
     border-radius: 0 5px 5px 0;
 }
 
-.btn.send-otp {
+.send-otp {
     padding: 10px 20px;
     background-color: #8b206a;
     color: white;
@@ -159,15 +186,7 @@ input[type="tel"] {
     border-radius: 5px;
     margin-left: 10px;
     cursor: pointer;
-}
-
-.note {
-    font-size: 12px;
-    color: #666;
-}
-
-.form-section {
-    margin-bottom: 20px;
+    text-decoration: none;
 }
 
 .note {
@@ -181,11 +200,16 @@ input[type="tel"] {
     gap: 10px;
 }
 
+.otp-inputs input,
+.btn.confirm {
+    height: 40px;
+}
+
 .otp-wrapper {
     display: flex;
     align-items: center;
     margin: 10px 0;
-    gap: 10px; /* Adds spacing between OTP inputs and the button */
+    gap: 5px; 
 }
 
 .otp-input {
@@ -193,35 +217,44 @@ input[type="tel"] {
     height: 60px;
     font-size: 0px;
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid white;
     border-radius: 5px;
 }
 
 .otp-input:focus {
-    border-color: #8b206a; /* Focused state border color */
-    outline: none; /* Remove default outline */
+    border-color: #8b206a; 
+    outline: none;
 }
 
-.btn.confirm {
+.confirm {
     padding: 10px 20px;
-    background-color: #8b206a; /* Dark magenta */
+    background-color: #8b206a;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 30px;
     cursor: pointer;
-    margin-top: 10px;
     display: block;
     width: 100%;
-    max-width: 100px; /* Limit button width */
     text-align: center;
     margin-left: auto;
-    margin-right: auto; /* Center the button */
+    margin-right: auto; 
+    height: 100%; 
+    text-decoration: none;
+}
+
+
+.otp-inputs input.otp-box {
+    width: 40px; 
+    height: 100%;
+    margin-right: 5px;
+    text-align: center;
+    font-size: 18px;
 }
 
 .otp-inputs input {
-    width: 35px;  /* Smaller width */
-    height: 35px;  /* Smaller height */
-    font-size: 16px;  /* Adjust font size for smaller input */
+    width: 35px; 
+    height: 35px; 
+    font-size: 14px; 
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 5px;
@@ -229,6 +262,11 @@ input[type="tel"] {
 }
 .step.active .circle {
     background-color: #8b206a; /* Dark magenta color */
+    color: white;
+}
+
+.step.done .circle {
+    background-color: lightgreen; /* Dark magenta color */
     color: white;
 }
 
@@ -240,7 +278,7 @@ input[type="tel"] {
 }
 
 .line {
-    width: 100px;
+    width: 180px;
     height: 2px;
     background-color: #ccc;
     margin: 0 10px;
@@ -1018,6 +1056,7 @@ select:disabled {
 
 /* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
 @media (width >=768px) {
+    
 
     /*sign up <-------------------------------*/
     .bg-signup {
