@@ -3,6 +3,7 @@
 namespace App\Models\Hiring;
 
 use App\Models\Freelancer;
+use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -35,12 +36,18 @@ class EventJob extends Model
             ->with('user');
     }
 
+    public function jobApplications()
+    {
+        return $this->hasMany(Job_application::class, 'job_id');
+    }
+
     public function hiringRequests()
     {
         return $this->hasMany(Hiring_request::class, 'job_id');
     }
 
-    public function transactions(){
+    public function transactions()
+    {
         return $this->hasMany(Transaction::class, 'job_id');
     }
 }

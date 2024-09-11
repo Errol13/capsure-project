@@ -14,6 +14,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
 {
@@ -126,7 +127,6 @@ class EventsController extends Controller
                 // Get the freelancer's service data
                 $freelancerService = $applicant->services()->where('id', $service)->first();
 
-                
 
 
                 // Add the applicant with additional job details
@@ -168,7 +168,29 @@ class EventsController extends Controller
 
         // Get freelancers who have been sent hiring requests for the event's jobs
         $hiringRequests = Hiring_request::whereIn('job_id', $jobs->pluck('job_id'))->get();
-        $invitedFreelancers = Freelancer::whereIn('user_id', $hiringRequests->pluck('freelancer_id'))->get();
+
+        //Attach service details to each hiring request
+        $hiringRequests->each(function ($hiringRequest) {
+            $serviceDetails = $hiringRequest->serviceDetails();
+            $hiringRequest->serviceDetails = $serviceDetails;
+        });
+
+        $invitedFreelancers = Freelancer::with('user')->whereIn('user_id', $hiringRequests->pluck('freelancer_id'))->get();
+
+        // Attach service details to each freelancer
+        $invitedFreelancers->each(function ($freelancer) use ($hiringRequests) {
+            // Find the hiring request for the current freelancer
+            $hiringRequest = $hiringRequests->firstWhere('freelancer_id', $freelancer->user_id);
+            if ($hiringRequest) {
+                $freelancer->serviceDetails = $hiringRequest->serviceDetails;
+                $freelancer->hiringRequestData = $hiringRequest; // Attach the hiring request data
+
+                //display the contents for debugging
+                Log::info('Hiring Request Data: ', $freelancer->hiringRequestData ? $freelancer->hiringRequestData->toArray() : []);
+
+            }
+        });
+
 
         $tabs = [
             'application' => 'Applications',

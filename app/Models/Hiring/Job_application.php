@@ -22,4 +22,5 @@ class Job_application extends Model
         return $this->belongsTo(Freelancer::class, 'freelancer_id', 'user_id');
     }
 
+   
 }

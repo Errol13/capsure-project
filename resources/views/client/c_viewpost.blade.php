@@ -164,11 +164,22 @@
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
                                         <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
-                                        @if($applicant['status'] != 'Rejected')
+                                        
+                                        @if(($applicant['status'] == 'Accepted'))
+                                        <button type="button"
+                                            class="btn mb-2 mb-sm-0 text-success fw-bold"
+                                            style="flex: 1; width: 100%; background-color: none; border-color: darkgrey; border-radius: 20px"
+                                            data-toggle="modal"
+                                            data-target="#"
+                                            data-url="#" disabled>
+                                            Accepted
+                                        </button>
+
+                                        @elseif($applicant['status'] == 'Pending')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireModal-{{ $applicant['applicant']->user_id }}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                         <!-- Hire Modal -->
-                                        @include('modals.Hiring.hire_modal', ['applicantId' => $applicant['applicant']->user_id,'freelancer' => 
-                                        $applicant['applicant'], $durationInHours = $durationInHours, 'service' => $applicant['service'], 
+                                        @include('modals.Hiring.hire_modal', ['applicantId' => $applicant['applicant']->user_id,'freelancer' =>
+                                        $applicant['applicant'], $durationInHours = $durationInHours, 'service' => $applicant['service'],
                                         'job_id' => $applicant['job_id'], 'payment_method' => $event->payment_method ])
 
                                         <button type="button"
@@ -188,6 +199,7 @@
                                             data-url="#" disabled>
                                             Rejected
                                         </button>
+                                       
                                         @endif
 
                                         @include('modals.Hiring.reject_modal')
@@ -209,36 +221,49 @@
                     <div class="application-content mt-4">
                         <div class="row mb-4">
                             @if($hiringRequests->isNotEmpty())
-                            @foreach ($hiringRequests as $hiring)
+                            @foreach ($hiringRequests as $freelancer)
                             <div class="col-12 col-md-4 mb-3">
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                     <!-- Upper Part -->
                                     <div class="d-flex justify-content-between align-items-center mb-0">
+                                        @if(isset($freelancer->serviceDetails))
                                         <div>
                                             <small class="mb-0">Hiring as </small><br>
-                                            <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;">{{ $hiring->role }}</span>
+                                            <span class="fw-bold text-uppercase p-1" style="color: #91216C; background-color:whitesmoke; border-radius:12px;">{{ $freelancer->serviceDetails->job_title }}</span>
                                         </div>
                                         <div>
                                             <small class="mb-0">Service Fee:</small><br>
-                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $hiring->fee }}</span>
+                                            <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $freelancer->serviceDetails->job_fee}}</span>
                                         </div>
+                                        @else
+                                        <p>Service details not available.</p>
+                                        @endif
                                     </div>
                                     <hr class="mb-2" style="color:#CBCACA;">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-3 pt-0">
-                                        <img src="{{ $hiring->profile_image }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($freelancer->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
-                                            <h6 class="mb-0">{{ $hiring->name }}</h6>
-                                            <p class="text-muted mb-0">{{ $hiring->location }}</p>
-                                            <small class="text-success mb-0">{{ $hiring->projects_done }} Projects done</small>
+                                            <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }} </h6>
+                                            <p class="text-muted mb-0">{{ $freelancer->user->city }}</p>
+                                            @if($freelancer->number_of_projects != 0)
+                                            <small class="text-success mb-0">{{ $freelancer->number_of_projects }} Projects done</small>
+                                            @else
+                                            <small class="text-muted mb-0">No projects yet</small>
+                                            @endif
                                         </div>
                                         <div class="ms-auto text-end">
-                                            <span class="badge text-black">{{ $hiring->rating }}</span>
+                                            @if($freelancer->avg_rating > 0)
+                                            <span class="badge text-black">{{ $freelancer->avg_rating }}</span>
+                                            @else
+                                            <span class="badge text-muted">No ratings yet</span>
+                                            @endif
                                         </div>
                                     </div>
 
                                     <!-- Table Negotiation -->
                                     <div class="d-flex table-responsive mt-1 mb-2 text-center">
+                                        @if(isset($freelancer->hiringRequestData))
                                         <table class="table table-bordered offer-table">
                                             <thead>
                                                 <tr>
@@ -248,11 +273,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>₱600 per hour</td>
-                                                    <td>₱500 per hour</td>
+                                                    <td>₱{{$freelancer->hiringRequestData->freelancer_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
+                                                    <td>₱{{$freelancer->hiringRequestData->client_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        @else
+                                        <p>No hiring request data.</p>
+                                        @endif
                                     </div>
 
                                     <!-- Action Buttons -->
@@ -262,6 +290,10 @@
                                         <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px">Cancel</button>
                                     </div>
                                 </div>
+
+                                <!-- Negotiate Modal-->
+                                @include('modals.Hiring.negotiate_modal', ['hiringRequestData' => $freelancer->hiringRequestData, 'fee_type' => $freelancer->serviceDetails->fee_type])
+
                             </div>
                             @endforeach
                             @else
@@ -328,10 +360,6 @@
             </div>
         </div>
 
-
-
-        <!-- Negotiate Modal-->
-        @include('modals.negotiate_modal')
     </div>
 </div>
 

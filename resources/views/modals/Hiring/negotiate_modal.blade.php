@@ -15,13 +15,16 @@
                     </thead>
                     <tbody>
                         <tr>
-                            <td>₱600 per hour</td>
+                            <td>₱{{$hiringRequestData->freelancer_pricing}} <span> {{$fee_type}}</span></td>
                             <td>
                                 <div class="input-group">
-                                    <input type="text" class="form-control text-center" style="border:none;" value="₱500 per hour" id="offerInput" readonly>
-                                    <button class="btn" type="button" id="editButton" style="border:none;">
-                                        <i class="bi bi-pencil"></i> <!-- Bootstrap Pencil Icon -->
-                                    </button>
+                                    <div class="d-flex align-items-center">
+                                        <input type="text" class="form-control text-center" style="border:none;" value="₱{{$hiringRequestData->freelancer_pricing}}" id="offerInput" readonly>
+                                        <span> {{$fee_type}}</span>
+                                        <button class="btn" type="button" id="editButton" style="border:none;">
+                                            <i class="bi bi-pencil"></i> <!-- Bootstrap Pencil Icon -->
+                                        </button>
+                                    </div>
                                 </div>
                             </td>
                         </tr>

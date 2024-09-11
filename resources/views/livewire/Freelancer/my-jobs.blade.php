@@ -139,7 +139,7 @@
                         <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->eventjob->event->street }}, {{ $job->eventjob->event->barangay }}, {{ $job->eventjob->event->city }}</span><br>
                         <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->eventjob->event->budget_min }} - ₱{{ $job->eventjob->event->budget_max }}</span>
                     </td>
-                    <td>{{$$job->eventjob->service_needed}}</td>
+                    <td>{{$job->eventjob->service_needed}}</td>
 
                     <!--Client's Offer -->
                     <td>
@@ -156,9 +156,9 @@
 
 
                     <td>
-                        <a href="#" class="btn btn-link pt-0" style="white-space: nowrap; color: #91216C; text-decoration: none; display: block;">{{$job->status}}</a>
-                        <a href="#" class="btn btn-link pt-0 text-purple" style="text-decoration: none; display: block;">Negotiation</a>
-                        <a href="#" class="btn btn-link pt-0 text-danger" style="text-decoration: none; display: block;">Decline Offer</a>
+                        <a href="#" class="btn btn-save rounded pt-0 pb-0 mb-1 border-secondary-subtle " style="white-space: nowrap; color: black; background-color:#D9D9D9; text-decoration: none; display: block;">{{$job->status}}</a>
+                        <a href="#" class="btn-save rounded pt-0 text-purple border-1 mb-1" style="text-decoration: none; display: block;">Negotiation</a>
+                        <a href="#" class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</a>
                     </td>
 
                 </tr>

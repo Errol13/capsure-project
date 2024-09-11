@@ -119,4 +119,29 @@
         document.getElementById('fee-hidden-' + applicantId).value = roundedFee;
         document.getElementById('fee-' + applicantId).value = '₱' + formattedFee;
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+    // Select all forms within modals (assuming multiple modals)
+    document.querySelectorAll('.modal form').forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+            // Prevent the default form submission to log details first
+            event.preventDefault();
+
+            // Create a FormData object from the form
+            var formData = new FormData(form);
+
+            // Log each form field and its value
+            formData.forEach(function(value, key) {
+                console.log(key + ": " + value);
+            });
+
+            // Optionally delay the actual submission to see logs
+            setTimeout(function() {
+                // Submit the form after logging
+                form.submit();
+            }, 1000);  // 1 second delay to check logs
+        });
+    });
+});
+
 </script>
