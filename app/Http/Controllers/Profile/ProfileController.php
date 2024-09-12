@@ -29,5 +29,7 @@ class ProfileController extends Controller
       }
 
     }
-
+    public function showClientsProfile(){
+        return view('client.c_profile');
+      }
 }

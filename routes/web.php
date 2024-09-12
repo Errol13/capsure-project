@@ -44,7 +44,7 @@ Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 
 
 #Profile
 Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
-
+Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
 
 
@@ -86,7 +86,9 @@ Route::patch('apply-job/reject/{id}', [App\Http\Controllers\Hiring\Job_applicati
 Route::patch('event/close/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'closeEventPost'])->name('eventpost.close');
 
 #Transaction
-Route::get('client-transaction', [App\Http\Controllers\Transaction\ClientTransactController::class, 'showClientTransact'])->name('client-transaction');
+Route::get('client-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showClientTransact'])->name('client-transaction');
+Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showFreelancerTransact'])->name('freelancer-transaction');
+
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');

@@ -124,7 +124,7 @@
                             <a class="nav-link text-black {{ request()->routeIs('my-jobs') ? 'active' : '' }}" href="{{ route('my-jobs') }}">MY JOBS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black" href="#">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->routeIs('freelancer-transaction') ? 'active' : '' }}" href="{{ route('freelancer-transaction') }}">MY TRANSACTION</a>
                         </li>
                         @endif
 
@@ -152,7 +152,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 @if(Auth::user()->user_type == 'client')
-                                <a class="dropdown-item" href="#">Profile</a>
+                                <a class="dropdown-item" href="/client-profile">Profile</a>
                                 <a class="dropdown-item" href="#">Setting</a>
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
