@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('client_id')->constrained('clients','user_id')->onUpdate('cascade')->onDelete('cascade'); // Foreign key to clients table
             $table->decimal('client_pricing', 10, 2); // Client's pricing for freelancer's service
             $table->decimal('freelancer_pricing', 10, 2); // Freelancer's pricing for their service
+            $table->string('dealer_user_type', 50); //who made or sent the offer
             $table->string('status', 50); // Request status (pending, accepted, rejected)
             $table->timestamps(); // Created at and updated at timestamps
         });        

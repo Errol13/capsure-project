@@ -8,6 +8,7 @@ use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
 
@@ -105,6 +106,14 @@ class MyJobs extends Component
         $hiringRequests = $freelancer->hiringRequests()
             ->with(['eventjob.event'])
             ->get();
+
+        //Attach service details to each hiring request
+        $hiringRequests->each(function ($hiringRequest) {
+            $serviceDetails = $hiringRequest->serviceDetails();
+
+            Log::info('service details:', $serviceDetails->toArray()); // the details are correctly retrieved
+            $hiringRequest->serviceDetails = $serviceDetails;
+        });
 
         foreach ($hiringRequests as $eachEvent) {
             $eachEvent->eventjob->event->start_date_formatted = Carbon::parse($eachEvent->eventjob->event->start_date)->format('M j, Y h:i A');

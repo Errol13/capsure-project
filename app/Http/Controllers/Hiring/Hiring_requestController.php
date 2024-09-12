@@ -65,6 +65,7 @@ class Hiring_requestController extends Controller
             'client_id' => $validated['client_id'],
             'client_pricing' => $validated['client_pricing'],
             'freelancer_pricing' => $validated['freelancer_pricing'],
+            'dealer_user_type' => 'client',
             'status' => 'Pending'
         ]);
 
@@ -86,7 +87,77 @@ class Hiring_requestController extends Controller
 
 
     //edit the offer, negotiation
-    public function negotiatePrice(){
+    public function negotiatePrice(Request $request)
+    {
+        Log::info('Request Data:', $request->all());
+
+        // Clean and convert client_pricing and freelancer_pricing
+        $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
+
+        // Convert cleaned values to float
+        $cleanedData = [
+            'client_pricing' => (float) $clientPricing,
+        ];
+
+        // Validate the request data with cleaned values
+        $validated =  $request->merge($cleanedData)->validate([
+            'hiring_request_id' => 'required|exists:hiring_requests,hiring_request_id',
+            'client_pricing' => 'required|numeric|min:0',
+        ]);
+
+        Log::info('Validated Data:', $validated);
+
+        //get the hiring request
+        $hiringRequest = Hiring_request::find($validated['hiring_request_id']);
+
+        $hiringRequest->client_pricing = $validated['client_pricing'];
+        $hiringRequest->save();
+
+        return redirect()->back()->with('success', 'Price was modified successfully.');
+    }
+
+    //cancel the offer
+
+    public function cancelOffer($hiring_request_id)
+    {
+        //get the hiring request
+        $hiringRequest = Hiring_request::find($hiring_request_id);
+
+        //update the application change it from accepted to pending
+        $jobApplication = $hiringRequest->getJobApplication();
+
+        if ($jobApplication) {
+            Log::info('Retrieved Job App:', $jobApplication->toArray());
+        } else {
+            Log::warning('Job Application is null.');
+        }
+
+
+        $jobApplication->status = 'Pending';
+        $jobApplication->save();
+
+        //delete the record
+        $hiringRequest->delete();
+
+        return redirect()->back()->with('success', 'Hiirng request was successfully cancelled.');
+    }
+
+    //decline an offer, action by freelancer
+    public function declineOffer($hiring_request_id)
+    {
+        //get the hiring request
+        $hiringRequest = Hiring_request::find($hiring_request_id);
+
+        //update the hiring status from pending to rejected
+        $hiringRequest->status = 'Rejected';
+        $hiringRequest->save();
+
+        return redirect()->back()->with('success', 'Hiirng request was successfully cancelled.');
+    }
+
+    //accept the offer 
+
+    public function acceptoffer($hiring_request_id){
 
     }
 }
