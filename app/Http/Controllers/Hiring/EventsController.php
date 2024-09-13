@@ -173,7 +173,7 @@ class EventsController extends Controller
         $hiringRequests->each(function ($hiringRequest) {
             $serviceDetails = $hiringRequest->serviceDetails();
             $hiringRequest->serviceDetails = $serviceDetails;
-        });
+        }); 
 
         $invitedFreelancers = Freelancer::with('user')->whereIn('user_id', $hiringRequests->pluck('freelancer_id'))->get();
 

@@ -17,6 +17,7 @@ class Hiring_request extends Model
         'job_id',
         'client_id',
         'client_pricing',
+        'dealer_user_type',
         'freelancer_pricing',
         'status',
     ];
@@ -36,6 +37,7 @@ class Hiring_request extends Model
     // Relationship to JobApplication through EventJob
     public function getJobApplication()
     {
+        
         return $this->eventjob->jobApplications()->where('freelancer_id', $this->freelancer_id)->first();
     }
 
