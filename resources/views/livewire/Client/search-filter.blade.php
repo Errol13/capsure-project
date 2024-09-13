@@ -10,7 +10,7 @@
         </div>
 
         <!-- Filter Options Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog d-flex modal-sm modal-lg position-center py-4 my-4 px-2">
                 <div class="modal-content rounded-4">
                     <div class="modal-header">
@@ -92,11 +92,5 @@
             Create an Event <i class="fas fa-party-horn"></i>
             <img src="assets/event.svg" class="inside-icon me-1">
         </a>
-
-
-
-
     </div>
-
-
 </div>

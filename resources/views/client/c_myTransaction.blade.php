@@ -5,13 +5,13 @@
     <!-- Tabs -->
     <ul class="nav nav-tabs mb-3">
         <li class="nav-item">
-            <a class="nav-link active" style="color:black;" href="#ongoing" data-bs-toggle="tab">ON-GOING Events</a>
+            <a class="nav-link active" style="color:black;" href="#ongoing" data-bs-toggle="tab">ON-GOING</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" style="color:black;" href="#upcoming" data-bs-toggle="tab">UPCOMING Events</a>
+            <a class="nav-link" style="color:black;" href="#upcoming" data-bs-toggle="tab">UPCOMING</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" style="color:black;" href="#history" data-bs-toggle="tab">PAST Events</a>
+            <a class="nav-link" style="color:black;" href="#history" data-bs-toggle="tab">HISTORY</a>
         </li>
     </ul>
 
@@ -25,10 +25,10 @@
                 <thead class="table-primary poppins-extralight">
                     <tr>
                         <th style="width: 10%;"></th>
-                        <th style="width: 10%;"></th>
-                        <th style="width: 15%;">Payment Fee</th>
-                        <th style="width: 16%;">Confirmation</th>
-                        <th style="width: 20%;">Freelancer's Confirmation</th>
+                        <th style="width: 13%;"></th>
+                        <th style="width: 17%;">Payment Fee</th>
+                        <th style="width: 13%;">Confirmation</th>
+                        <th style="width: 18%;">Freelancer's Confirmation</th>
                         <th style="width: 14%;">Payment Proof</th>
                         <th style="width: 15%;"></th>
                     </tr>
@@ -184,10 +184,10 @@
                 <thead class="table-primary poppins-extralight">
                     <tr>
                         <th style="width: 10%;"></th>
-                        <th style="width: 10%;"></th>
-                        <th style="width: 15%;">Payment Fee</th>
-                        <th style="width: 16%;">Confirmation</th>
-                        <th style="width: 20%;">Freelancer's Confirmation</th>
+                        <th style="width: 13%;"></th>
+                        <th style="width: 17%;">Payment Fee</th>
+                        <th style="width: 13%;">Confirmation</th>
+                        <th style="width: 18%;">Freelancer's Confirmation</th>
                         <th style="width: 14%;">Payment Proof</th>
                         <th style="width: 15%;"></th>
                     </tr>
@@ -285,6 +285,9 @@
                                                     <span class="<?= $freelancer['confirmation_status'] == 'Unpaid' ? 'text-danger' : 'text-success'; ?>">
                                                         <?= $freelancer['confirmation_status']; ?>
                                                     </span>
+                                                    <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
+                                                        <i class="fas fa-repeat" style="color: black;"></i>
+                                                    </button>
                                                 </div>
                                                 <div class="col-2 text-danger"><?= $freelancer['freelancer_confirmation']; ?></div>
                                                 <div class="col-1 d-flex justify-content-center">
@@ -344,11 +347,11 @@
                 <thead class="table-primary poppins-extralight">
                     <tr>
                         <th style="width: 10%;"></th>
-                        <th style="width: 10%;"></th>
+                        <th style="width: 13%;"></th>
                         <th style="width: 15%;">Payment Fee</th>
-                        <th style="width: 16%;">Confirmation</th>
-                        <th style="width: 20%;">Freelancer's Confirmation</th>
-                        <th style="width: 14%;">Payment Proof</th>
+                        <th style="width: 13%;">Confirmation</th>
+                        <th style="width: 18%;">Freelancer's Confirmation</th>
+                        <th style="width: 12%; white-space:nowrap;">Payment Proof</th>
                         <th style="width: 15%;"></th>
                     </tr>
                 </thead>
