@@ -34,94 +34,34 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    $currprojects = [
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Partially Paid',
-                                    'freelancer_confirmation' => 'Partially Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Partially Paid',
-                                    'freelancer_confirmation' => 'Partially Paid'
-                                ],
-                            ]
-                        ],
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Partially Paid',
-                                    'freelancer_confirmation' => 'Partially Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Partially Paid',
-                                    'freelancer_confirmation' => 'Partially Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Partially Paid',
-                                    'freelancer_confirmation' => 'Partially Paid'
-                                ],
-                            ]
-                        ],
-                    ]
-                    ?>
-
-                    <?php foreach ($currprojects as $currproject): ?>
+                    <?php for ($i = 1; $i <= 2; $i++): ?>
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                                        <span><?= $currproject['title']; ?></span>
-                                        <a href="<?= url('/client-viewpost', ['id' => $currproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                        <span>Project <?= $i; ?></span>
+                                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                     </div>
                                     <div class="card-body">
-                                        <!-- Loop through each freelancer -->
-                                        <?php foreach ($currproject['freelancers'] as $freelancer): ?>
+                                        <?php for ($j = 1; $j <= 3; $j++): ?>
                                             <div class="row align-items-center mb-2">
                                                 <div class="col-auto pe-1">
-                                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle">
+                                                    <img src="assets/profilepic.svg" class="rounded-circle">
                                                 </div>
                                                 <div class="col-2 pe-4">
                                                     <div class="d-flex flex-column align-items-start">
-                                                        <div><?= $freelancer['name']; ?></div>
-                                                        <small class="text-muted"><?= $freelancer['profession']; ?></small>
+                                                        <div>Freelancer <?= $j; ?></div>
+                                                        <small class="text-muted">Developer</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-2 text-left">₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                                <div class="col-2 text-left">₱ 1,500.00</div>
                                                 <div class="col-2 d-flex align-items-center">
-                                                    <span class="<?= $freelancer['confirmation_status'] == 'Partially Paid' ? 'text-primary' : 'text-success'; ?>">
-                                                        <?= $freelancer['confirmation_status']; ?>
-                                                    </span>
+                                                    <span class="text-primary">Partially Paid</span>
                                                     <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
                                                         <i class="fas fa-repeat" style="color: black;"></i>
                                                     </button>
                                                 </div>
-                                                <div class="col-2 text-primary"><?= $freelancer['freelancer_confirmation']; ?></div>
+                                                <div class="col-2 text-primary">Partially Paid</div>
                                                 <div class="col-1 d-flex justify-content-center">
                                                     <a href="#" class="btn btn-outline-secondary btn-sm position-relative" style="white-space: nowrap; border-bottom-right-radius: 0px; border-top-right-radius: 0px; ">
                                                         <i class="fas fa-receipt me-2"></i>View Receipt
@@ -135,46 +75,49 @@
                                                 </div>
                                             </div>
                                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                        <?php endforeach; ?>
+                                        <?php endfor; ?>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
+
                 </tbody>
             </table>
 
-            <!-- Card style on smaller screens -->
-            <?php foreach ($currprojects as $currproject): ?>
+            <?php for ($i = 1; $i <= 2; $i++): // Loop through each project 
+            ?>
                 <div class="card mb-3 mt-3 d-block d-md-none">
                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                        <span><?= $currproject['title']; ?></span>
-                        <a href="<?= url('/client-viewpost', ['id' => $currproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                        <span>Project <?= $i; ?></span>
+                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                     </div>
                     <div class="card-body">
-                        <!-- Loop through each freelancer -->
-                        <?php foreach ($currproject['freelancers'] as $freelancer): ?>
+                        <?php for ($j = 1; $j <= 3; $j++): // Loop through each freelancer 
+                        ?>
                             <div class="d-flex flex-column align-items-start mb-3">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle me-2">
+                                    <img src="assets/profilepic.svg" class="rounded-circle me-2">
                                     <div>
-                                        <?= $freelancer['name']; ?>
-                                        <small class="text-muted d-block"><?= $freelancer['profession']; ?></small>
+                                        Freelancer <?= $j; ?>
+                                        <small class="text-muted d-block">Developer</small>
                                     </div>
                                 </div>
-                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
-                                <div class="mb-1"><strong>Confirmation:</strong> <?= $freelancer['confirmation_status']; ?></div>
-                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> <?= $freelancer['freelancer_confirmation']; ?></div>
+                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ 1,500.00</div>
+                                <div class="mb-1"><strong>Confirmation:</strong> Partially Paid</div>
+                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> Partially Paid</div>
                                 <div class="d-flex justify-content-between mt-3">
-                                    <a href="#" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                    <a href="#" class="btn btn-outline-secondary btn-sm me-2">
+                                        <i class="fas fa-receipt me-2"></i>View Receipt
+                                    </a>
                                     <button class="btn btn-outline-secondary btn-sm">Write a review</button>
                                 </div>
                             </div>
                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endfor; ?>
         </div>
 
         <!-- UPCOMING Tab --------------------------------------------------------------------------------------------------------------------------------------------->
@@ -193,151 +136,93 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    $soonprojects = [
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'date' => 'November 1, 2024',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Unpaid',
-                                    'freelancer_confirmation' => 'Unpaid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Unpaid',
-                                    'freelancer_confirmation' => 'Unpaid'
-                                ],
-                            ]
-                        ],
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'date' => 'November 1, 2024',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Unpaid',
-                                    'freelancer_confirmation' => 'Unpaid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Unpaid',
-                                    'freelancer_confirmation' => 'Unpaid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Unpaid',
-                                    'freelancer_confirmation' => 'Unpaid'
-                                ],
-                            ]
-                        ],
-                    ]
+                    <?php for ($i = 1; $i <= 2; $i++): // Loop through each project 
                     ?>
-
-                    <?php foreach ($soonprojects as $soonproject): ?>
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <div class="me-auto">
-                                            <small><?= $soonproject['date']; ?></small>
+                                            <small>November <?= $i; ?>, 2024</small> <!-- Dynamic date example -->
                                         </div>
                                         <div class="flex-grow-1 text-center poppins-medium">
-                                            <span><?= $soonproject['title']; ?></span>
+                                            <span>Project <?= $i; ?></span>
                                         </div>
                                         <div class="ms-auto">
-                                            <a href="<?= url('/client-viewpost', ['id' => $soonproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                            <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <!-- Loop through each freelancer -->
-                                        <?php foreach ($soonproject['freelancers'] as $freelancer): ?>
+                                        <?php for ($j = 1; $j <= 3; $j++): // Loop through each freelancer 
+                                        ?>
                                             <div class="row align-items-center mb-2">
                                                 <div class="col-auto pe-1">
-                                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle">
+                                                    <img src="assets/profilepic.svg" class="rounded-circle">
                                                 </div>
                                                 <div class="col-2 pe-4">
                                                     <div class="d-flex flex-column align-items-start">
-                                                        <div><?= $freelancer['name']; ?></div>
-                                                        <small class="text-muted"><?= $freelancer['profession']; ?></small>
+                                                        <div>Freelancer <?= $j; ?></div>
+                                                        <small class="text-muted">Developer</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-2 text-left">₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                                <div class="col-2 text-left">₱ <?= number_format(1500, 2); ?></div>
                                                 <div class="col-2 d-flex align-items-center">
-                                                    <span class="<?= $freelancer['confirmation_status'] == 'Unpaid' ? 'text-danger' : 'text-success'; ?>">
-                                                        <?= $freelancer['confirmation_status']; ?>
-                                                    </span>
+                                                    <span class="text-danger">Unpaid</span>
                                                     <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
                                                         <i class="fas fa-repeat" style="color: black;"></i>
                                                     </button>
                                                 </div>
-                                                <div class="col-2 text-danger"><?= $freelancer['freelancer_confirmation']; ?></div>
+                                                <div class="col-2 text-danger">Unpaid</div>
                                                 <div class="col-1 d-flex justify-content-center">
-                                                    <a href="#" class="btn btn-outline-secondary btn-sm" style="white-space: nowrap;"><i class="fas fa-upload me-2"></i>Upload Receipt</a>
+                                                    <a href="#" class="btn btn-outline-secondary btn-sm" style="white-space: nowrap;">
+                                                        <i class="fas fa-upload me-2"></i>Upload Receipt
+                                                    </a>
                                                 </div>
                                                 <div class="col-2 d-flex justify-content-end">
                                                     <button class="btn btn-outline-secondary btn-sm btn-fit-width">Write a review</button>
                                                 </div>
                                             </div>
                                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                        <?php endforeach; ?>
+                                        <?php endfor; ?>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
                 </tbody>
             </table>
 
-            <!-- Card style on smaller screens -->
-            <?php foreach ($soonprojects as $soonproject): ?>
+            <?php for ($i = 1; $i <= 2; $i++): // Loop for projects 
+            ?>
                 <div class="card mb-3 mt-3 d-block d-md-none">
                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                        <span><?= $soonproject['title']; ?></span>
-                        <a href="<?= url('/client-viewpost', ['id' => $soonproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                        <span>Project <?= $i; ?></span> <!-- Project title with dynamic content -->
+                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                     </div>
                     <div class="card-body">
-                        <!-- Loop through each freelancer -->
-                        <?php foreach ($soonproject['freelancers'] as $freelancer): ?>
+                        <?php for ($j = 1; $j <= 3; $j++): // Loop for freelancers 
+                        ?>
                             <div class="d-flex flex-column align-items-start mb-3">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle me-2">
+                                    <img src="assets/profilepic.svg" class="rounded-circle me-2"> <!-- Static profile image -->
                                     <div>
-                                        <?= $freelancer['name']; ?>
-                                        <small class="text-muted d-block"><?= $freelancer['profession']; ?></small>
+                                        Freelancer <?= $j; ?> <!-- Freelancer name with dynamic content -->
+                                        <small class="text-muted d-block">Developer</small> <!-- Static profession -->
                                     </div>
                                 </div>
-                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
-                                <div class="mb-1"><strong>Confirmation:</strong> <?= $freelancer['confirmation_status']; ?></div>
-                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> <?= $freelancer['freelancer_confirmation']; ?></div>
+                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format(1500, 2); ?></div> <!-- Static payment fee -->
+                                <div class="mb-1"><strong>Confirmation:</strong> Unpaid</div> <!-- Static confirmation status -->
+                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> Unpaid</div> <!-- Static freelancer confirmation -->
                                 <div class="d-flex justify-content-between mt-3">
                                     <a href="#" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-receipt me-2"></i>View Receipt</a>
                                     <button class="btn btn-outline-secondary btn-sm">Write a review</button>
                                 </div>
                             </div>
                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endfor; ?>
         </div>
 
         <!-- HISTORY Tab ----------------------------------------------------------------------------------------------------------------------------------------------->
@@ -356,101 +241,40 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php
-                    $pastprojects = [
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'date' => 'November 1, 2024',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Fully Paid',
-                                    'freelancer_confirmation' => 'Fully Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Fully Paid',
-                                    'freelancer_confirmation' => 'Fully Paid'
-                                ],
-                            ]
-                        ],
-                        [
-                            'id' => 1,
-                            'title' => 'Project 1',
-                            'date' => 'November 1, 2024',
-                            'freelancers' => [
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'Fully Paid',
-                                    'confirmation_status' => 'Fully Paid',
-                                    'freelancer_confirmation' => 'Fully Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Fully Paid',
-                                    'freelancer_confirmation' => 'Fully Paid'
-                                ],
-                                [
-                                    'profile_image' => 'assets/profilepic.svg',
-                                    'name' => 'Freelancer 1',
-                                    'profession' => 'Developer',
-                                    'payment_fee' => 1500,
-                                    'confirmation_status' => 'Fully Paid',
-                                    'freelancer_confirmation' => 'Fully Paid'
-                                ],
-                            ]
-                        ],
-                    ]
+                    <?php for ($i = 1; $i <= 2; $i++): // Loop for past projects 
                     ?>
-
-                    <?php foreach ($pastprojects as $pastproject): ?>
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header d-flex align-items-center justify-content-between">
                                         <div class="me-auto">
-                                            <small><?= $pastproject['date']; ?></small>
+                                            <small>November <?= $i; ?>, 2024</small> <!-- Dynamic project date -->
                                         </div>
                                         <div class="flex-grow-1 text-center poppins-medium">
-                                            <span><?= $pastproject['title']; ?></span>
+                                            <span>Project <?= $i; ?></span> <!-- Dynamic project title -->
                                         </div>
                                         <div class="ms-auto">
-                                            <a href="<?= url('/client-viewpost', ['id' => $pastproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                            <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                         </div>
                                     </div>
                                     <div class="card-body">
-                                        <!-- Loop through each freelancer -->
-                                        <?php foreach ($pastproject['freelancers'] as $freelancer): ?>
+                                        <?php for ($j = 1; $j <= 3; $j++): // Loop for freelancers 
+                                        ?>
                                             <div class="row align-items-center mb-2">
                                                 <div class="col-auto pe-1">
-                                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle">
+                                                    <img src="assets/profilepic.svg" class="rounded-circle"> <!-- Static profile image -->
                                                 </div>
                                                 <div class="col-2 pe-4">
                                                     <div class="d-flex flex-column align-items-start">
-                                                        <div><?= $freelancer['name']; ?></div>
-                                                        <small class="text-muted"><?= $freelancer['profession']; ?></small>
+                                                        <div>Freelancer <?= $j; ?></div> <!-- Dynamic freelancer name -->
+                                                        <small class="text-muted">Developer</small> <!-- Static profession -->
                                                     </div>
                                                 </div>
-                                                <div class="col-2 text-left">₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
+                                                <div class="col-2 text-left">₱ <?= number_format(1500, 2); ?></div> <!-- Static payment fee -->
                                                 <div class="col-2 d-flex align-items-center">
-                                                    <span class="<?= $freelancer['confirmation_status'] == 'Fully Paid' ? 'text-success' : 'text-warning'; ?>">
-                                                        <?= $freelancer['confirmation_status']; ?>
-                                                    </span>
+                                                    <span class="text-success">Fully Paid</span> <!-- Static confirmation status -->
                                                 </div>
-                                                <div class="col-2 text-success"><?= $freelancer['freelancer_confirmation']; ?></div>
+                                                <div class="col-2 text-success">Fully Paid</div> <!-- Static freelancer confirmation -->
                                                 <div class="col-1 d-flex justify-content-center">
                                                     <a href="#" class="btn btn-outline-secondary btn-sm" style="white-space: nowrap;"><i class="fas fa-receipt me-2"></i>View Receipt</a>
                                                 </div>
@@ -459,46 +283,46 @@
                                                 </div>
                                             </div>
                                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                        <?php endforeach; ?>
+                                        <?php endfor; ?>
                                     </div>
                                 </div>
                             </td>
                         </tr>
-                    <?php endforeach; ?>
+                    <?php endfor; ?>
                 </tbody>
             </table>
 
-            <!-- Card style on smaller screens -->
-            <?php foreach ($soonprojects as $soonproject): ?>
+            <?php for ($i = 1; $i <= 2; $i++): // Loop for soon projects 
+            ?>
                 <div class="card mb-3 mt-3 d-block d-md-none">
                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                        <span><?= $soonproject['title']; ?></span>
-                        <a href="<?= url('/client-viewpost', ['id' => $soonproject['id']]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                        <span>Project <?= $i; ?></span> <!-- Dynamic project title -->
+                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                     </div>
                     <div class="card-body">
-                        <!-- Loop through each freelancer -->
-                        <?php foreach ($soonproject['freelancers'] as $freelancer): ?>
+                        <?php for ($j = 1; $j <= 3; $j++): // Loop for freelancers 
+                        ?>
                             <div class="d-flex flex-column align-items-start mb-3">
                                 <div class="d-flex align-items-center mb-2">
-                                    <img src="<?= $freelancer['profile_image']; ?>" class="rounded-circle me-2">
+                                    <img src="assets/profilepic.svg" class="rounded-circle me-2"> <!-- Static profile image -->
                                     <div>
-                                        <?= $freelancer['name']; ?>
-                                        <small class="text-muted d-block"><?= $freelancer['profession']; ?></small>
+                                        Freelancer <?= $j; ?> <!-- Dynamic freelancer name -->
+                                        <small class="text-muted d-block">Developer</small> <!-- Static profession -->
                                     </div>
                                 </div>
-                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format($freelancer['payment_fee'], 2); ?></div>
-                                <div class="mb-1"><strong>Confirmation:</strong> <?= $freelancer['confirmation_status']; ?></div>
-                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> <?= $freelancer['freelancer_confirmation']; ?></div>
+                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ <?= number_format(1500, 2); ?></div> <!-- Static payment fee -->
+                                <div class="mb-1"><strong>Confirmation:</strong> Fully Paid</div> <!-- Static confirmation -->
+                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> Fully Paid</div> <!-- Static freelancer confirmation -->
                                 <div class="d-flex justify-content-between mt-3">
                                     <a href="#" class="btn btn-outline-secondary btn-sm me-2"><i class="fas fa-receipt me-2"></i>View Receipt</a>
                                     <button class="btn btn-outline-secondary btn-sm">Write a review</button>
                                 </div>
                             </div>
                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                        <?php endforeach; ?>
+                        <?php endfor; ?>
                     </div>
                 </div>
-            <?php endforeach; ?>
+            <?php endfor; ?>
         </div>
     </div>
 </div>
