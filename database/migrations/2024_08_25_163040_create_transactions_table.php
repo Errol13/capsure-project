@@ -29,6 +29,11 @@ return new class extends Migration
             
             $table->timestamps(); // Adds created_at and updated_at columns
         });
+
+        Schema::table('transactions', function (Blueprint $table) {
+            $table->index('freelancer_id');
+            $table->index('job_id');
+        });
     }    
 
     /**

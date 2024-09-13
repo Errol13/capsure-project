@@ -13,14 +13,14 @@
                     <select class="form-select border border-danger-subtle" id="apply_as" name="apply_as" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($eventJobs as $eventJob)
-                            @php
-                            $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
-                            @endphp
-                            @if($eventJob->number_of_people != $completedHiredCount)
-                                <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
-                            @else
-                                <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
-                            @endif
+                        @php
+                        $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
+                        @endphp
+                        @if($eventJob->number_of_people != $completedHiredCount)
+                        <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
+                        @else
+                        <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
+                        @endif
                         @endforeach
                     </select>
 
@@ -28,7 +28,7 @@
                     <select class="form-select border border-danger-subtle" id="service_id" name="service_id" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($freelancer->services as $service)
-                            <option value="{{ $service->id }}">{{ $service->job_title }}</option>
+                        <option value="{{ $service->id }}">{{ $service->job_title }}</option>
                         @endforeach
                     </select>
 
@@ -65,58 +65,68 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('apply-job-form').addEventListener('submit', function(event) {
-        event.preventDefault(); // Prevent the default form submission
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('apply-job-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-        const form = this;
-        const formData = new FormData(form);
-        const applyJobUrl = form.action; // Get the form action URL
+            const form = this;
+            const formData = new FormData(form);
+            const applyJobUrl = form.action; // Get the form action URL
 
-        fetch(applyJobUrl, {
-            method: 'POST',
-            body: formData,
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-            }
-        })
-        .then(response => {
-            // Log the raw response to the console
-            console.log('Response Status:', response.status);
-            return response.json(); // Parse the JSON response
-        })
-        .then(data => {
-            console.log('Response Data:', data); // Log the response data to the console
-            
-            const modalMessage = document.getElementById('modalMessage');
-            if (data.error) {
-                modalMessage.innerHTML = '<p class="text-danger">' + data.error + '</p>';
-                $('#responseModal').modal('show'); // Show the error modal
-            } else if (data.warning) {
-                modalMessage.innerHTML = '<p class="text-warning">' + data.warning + '</p>';
-                $('#responseModal').modal('show'); // Show the warning modal
-            } else if (data.success) {
-                modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
+            fetch(applyJobUrl, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                    }
+                })
+                .then(response => {
+                    // Log the raw response to the console
+                    console.log('Response Status:', response.status);
+                    return response.json(); // Parse the JSON response
+                })
+                .then(data => {
+                    console.log('Response Data:', data); // Log the response data to the console
 
-                // Close the applyJobModal
-                $('#applyJobModal').modal('hide');
+                    const modalMessage = document.getElementById('modalMessage');
+                    if (data.error) {
+                        modalMessage.innerHTML = '<p class="text-danger">' + data.error + '</p>';
+                        $('#responseModal').modal('show'); // Show the error modal
+                    } else if (data.warning) {
+                        modalMessage.innerHTML = '<p class="text-warning">' + data.warning + '</p>';
+                        $('#responseModal').modal('show'); // Show the warning modal
 
-                // Show the responseModal
-                $('#responseModal').modal('show');
-                
-                //Redirect after showing the responseModal
-                setTimeout(function() {
-                    window.location.href = data.redirectUrl || window.location.href; // Redirect to a specific URL or refresh the page
-                }, 2000); // time before the action get done
-            }
-        })
-        .catch(error => {
-            console.error('Fetch Error:', error);
+                    } else if (data.conflict) {
+                        console.log(data.event);
+                        modalMessage.innerHTML = '<p class="text-danger">' + data.conflict + '</p>' +
+                            '<p class="fs-6">' + 'Conflicting Event: ' + data.event + '</p>' +
+                            '<p class="fs-6">' + 'Event Start Date: ' + data.start_date + '</p>' +
+                            '<p class="fs-6">' + 'Event End Date: ' + data.end_date + '</p>';
+
+                        // Close the applyJobModal
+                        $('#applyJobModal').modal('hide');
+
+                        $('#responseModal').modal('show'); // Show the warning modal
+
+                    } else if (data.success) {
+                        modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
+
+                        // Close the applyJobModal
+                        $('#applyJobModal').modal('hide');
+
+                        // Show the responseModal
+                        $('#responseModal').modal('show');
+
+                        //Redirect after showing the responseModal
+                        setTimeout(function() {
+                            window.location.href = data.redirectUrl || window.location.href; // Redirect to a specific URL or refresh the page
+                        }, 2000); // time before the action get done
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch Error:', error);
+                });
         });
     });
-});
-
 </script>
-
-

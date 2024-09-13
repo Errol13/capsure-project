@@ -192,27 +192,6 @@
     </div>
 
 
-    <!--Alert for Double Booking -->
-    @if(session('error'))
-    @php
-    $errorMessage = session('error');
-    $conflictingEvent = session('conflicting_event');
-    @endphp
-
-    @include('modals.conflict_alert_modal', [
-    'errorMessage' => $errorMessage,
-    'conflictingEvent' => $conflictingEvent
-    ])
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Show the modal 
-            var conflictModal = new bootstrap.Modal(document.getElementById('conflictModal'));
-            conflictModal.show();
-        });
-    </script>
-    @endif
-
-
 </div>
+
 @endsection

@@ -159,16 +159,20 @@
                             <td>
                                 <div class="d-flex flex-column justify-content-start">
                                     @if($job->status != 'Rejected')
-                                    @if($job->dealer_user_type == 'freelancer')
+                                    @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
                                     <a href="#" class="btn btn-save rounded pt-0 pb-0 mb-1 border-secondary-subtle " style="white-space: nowrap; color: black; background-color:#D9D9D9; text-decoration: none; display: block;">Pending</a>
-                                    @elseif($job->dealer_user_type == 'client')
-                                    <button class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
+                                    @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
+                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-hiringid = "{{$job->hiring_request_id}}"
+                                    class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
                                     @elseif($job->status == 'Accepted')
                                     <button class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</button>
                                     @endif
+                                    <!--if accepted, this will be gone --> 
+                                    @if($job->status != 'Accepted')
                                     <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiation</button>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"
+                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="decline" data-hiringid = "{{$job->hiring_request_id}}"
                                         class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</button>
+                                    @endif
 
                                     @elseif($job->status == 'Rejected')
                                     <button class="btn btn-danger pt-0 pb-0 mb-1 border-1 border-secondary-subtle " disabled style="color:white;">Offer Declined</button>
@@ -178,16 +182,19 @@
                                     
                                 </div>
 
-                                <!--decline the offer component -->
+                                <!--modal component -->
                                 <div wire:ignore>
                                     <x-confirmation-modal
                                         :id="$job->hiring_request_id"
                                         title="Confirmation"
                                         message="Are you sure you want to decline this offer?"
-                                        :actionUrl="route('offer.decline', $job->hiring_request_id)"
-                                        method="PATCH" />
+                                        :actionUrl="''"
+                                        method="POST" />
                                 </div>
 
+                               
+
+                                
 
 
                                 <!-- Negotiate Modal-->

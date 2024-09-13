@@ -19,3 +19,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select the modal by ID dynamically using Bootstrap's show.bs.modal event
+        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+            button.addEventListener('click', function(event) {
+                let action = this.getAttribute('data-action');
+                let hiringRequestId = this.getAttribute('data-hiringid')
+                let modalId = this.getAttribute('data-bs-target'); // Get the modal ID
+
+                let modal = document.querySelector(modalId);
+                let title = modal.querySelector('.modal-title');
+                let message = modal.querySelector('.modal-body');
+                let form = modal.querySelector('form');
+
+                console.log(hiringRequestId);
+
+                // Update modal content based on the action
+                if (action === 'decline') {
+                    title.textContent = 'Confirmation';
+                    message.textContent = 'Are you sure you want to decline this offer?';
+                    form.setAttribute('action', `/hire/offer/decline/${hiringRequestId}`);
+                    form.querySelector('input[name="_method"]').value = 'PATCH';
+                } else if (action === 'accept') {
+                    title.textContent = 'Confirm Accept Offer';
+                    message.textContent = 'Are you sure you want to accept this offer?';
+                    form.setAttribute('action', `/hire/offer/accept/${hiringRequestId}`);
+                    form.querySelector('input[name="_method"]').value = 'POST';
+                }
+                else if (action === 'cancel') {
+                    title.textContent = 'Confirm Cancellation';
+                    message.textContent = 'Are you sure you want to cancel this offer?';
+                    form.setAttribute('action', `/hire/offer/cancel/${hiringRequestId}`);
+                    form.querySelector('input[name="_method"]').value = 'PATCH';
+                }
+            });
+        });
+    });
+</script>

@@ -8,6 +8,7 @@ use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use App\Notifications\ApplicationReceived;
 use App\Notifications\ApplicationRejected;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -34,19 +35,24 @@ class Job_applicationController extends Controller
         $event = $eventJob->event;
 
         // Get the start and end time of the event being applied for
-        $jobStartTime = $event->start_time;
-        $jobEndTime = $event->end_time;
+        $jobStartTime = $event->start_date;
+        $jobEndTime = $event->end_date;
 
         // Find all transactions for the freelancer
-        $transactions = Transaction::where('freelancer_id', $validated['user_id'])->get();
+        $transactions = Transaction::where('freelancer_id', $validated['user_id'])->where('job_id', '!=', $eventJob->job_id)->get();
 
         foreach ($transactions as $transaction) {
             // Get the event associated with the freelancer's transaction
             $transactionEvent = EventJob::find($transaction->job_id)->event;
 
             // Check if the event times of the transaction overlap with the job's event time
-            if ($transactionEvent->start_time < $jobEndTime && $transactionEvent->end_time > $jobStartTime) {
-                return response()->json(['error' => 'Applying to this event results in schedule conflicts.'], 400);
+            if ($transactionEvent->start_date <= $jobEndTime && $transactionEvent->end_date >= $jobStartTime) {
+
+                $start_date = Carbon::parse($transactionEvent->start_date)->format('M j, Y h:i A'); // Month Year
+                $end_date = Carbon::parse($transactionEvent->end_date)->format('M j, Y h:i A'); // Full end date with time
+
+                return response()->json(['conflict' => 'Applying to this event results in schedule conflicts.', 
+                'event' => $transactionEvent->title, 'start_date' => $start_date, 'end_date' => $end_date, ], 400);
             }
         }
 

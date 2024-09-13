@@ -13,7 +13,7 @@
                 <p>Start Time: {{ $conflictingEvent->start_time }}</p>
                 <p>End Time: {{ $conflictingEvent->end_time }}</p>
                 <p>Event Name: {{ $conflictingEvent->name }}</p>
-                @endif
+                @endif 
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -21,3 +21,4 @@
         </div>
     </div>
 </div>
+

@@ -98,6 +98,9 @@ Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestContro
 Route::patch('/hire/negotiate', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'negotiatePrice'])->name('freelancer.negotiate');
 Route::patch('/hire/offer/cancel/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'cancelOffer'])->name('offer.cancel');
 Route::patch('/hire/offer/decline/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'declineOffer'])->name('offer.decline');
+Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'acceptOffer'])->name('offer.accept');
+
+
 
 #Validation
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
