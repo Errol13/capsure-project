@@ -4,6 +4,7 @@ namespace App\Models\Transaction;
 
 use App\Models\Client;
 use App\Models\Freelancer;
+use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,6 +45,18 @@ class Transaction extends Model
     {
         return $this->belongsTo(EventJob::class, 'job_id');
     }
+
+    public function event()
+{
+    return $this->hasOneThrough(
+        Event::class,         // Final model we want to access
+        EventJob::class,      // Intermediate model
+        'job_id',             // Foreign key on EventJob (connecting to Transaction)
+        'event_id',           // Foreign key on Event (connecting to EventJob)
+        'job_id',             // Local key on Transaction (connecting to EventJob)
+        'event_id'            // Local key on EventJob (connecting to Event)
+    );
+}
 
     public function Hiring_request()
     {

@@ -13,13 +13,14 @@
         <li class="nav-item">
             <a class="nav-link" style="color:black;" href="#history" data-bs-toggle="tab">HISTORY</a>
         </li>
-    </ul>
+    </ul> 
 
     <!-- Tab content -->
     <div class="tab-content">
 
         <!-- ON-GOING Tab ------------------------------------------------------------------------------------------------------------------------------>
         <div class="tab-pane show active" id="ongoing">
+        @if($ongoing->isNotEmpty())
             <!-- Table for larger screens -->
             <table id="unique-payment-table" class="table table-borderless d-none d-md-table mt-3">
                 <thead class="table-primary poppins-extralight">
@@ -34,13 +35,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php for ($i = 1; $i <= 2; $i++): ?>
+                    
+                        @foreach($ongoing as $transaction)
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                                        <span>Project <?= $i; ?></span>
-                                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                        <span>Project {{$transaction->freelancer->number_of_projects}}</span>
+                                        <a href="#" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                     </div>
                                     <div class="card-body">
                                         <?php for ($j = 1; $j <= 3; $j++): ?>
@@ -80,7 +82,13 @@
                                 </div>
                             </td>
                         </tr>
-                    <?php endfor; ?>
+                        @endforeach
+
+
+                        @else 
+                        <p class="fs-5">No on-going transactions.</p>
+                        @endif
+                    
 
                 </tbody>
             </table>

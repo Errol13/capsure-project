@@ -14,13 +14,16 @@
                 <div class="col ms-auto text-end">
                     <div class="dropdown">
                         <button class="btn btn-secondary dropdown-toggle" style="background-color: white; border-radius:12px; color:black; border-color:lightgray;" type="button" id="filterToggleButton" data-bs-toggle="dropdown" aria-expanded="false">
-                            Filter
+                            Filter: {{ ucfirst($status) }} <!-- Show current filter status -->
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end mb-1" style="background-color: white;" aria-labelledby="filterToggleButton">
-                            <li><a class="dropdown-item" href="#">Open</a></li>
-                            <li><a class="dropdown-item" href="#">Closed</a></li>
+                            <li><a class="dropdown-item {{ $status == 'Open' ? 'active' : '' }}" href="{{ request()->fullUrlWithQuery(['status' => 'Open']) }}">Open</a></li>
+                            <li><a class="dropdown-item {{ $status == 'Closed' ? 'active' : '' }}" href="{{ request()->fullUrlWithQuery(['status' => 'Closed']) }}">Closed</a></li>
+                            <li><a class="dropdown-item {{ $status == 'All' ? 'active' : '' }}" href="{{ request()->url() }}">All</a></li>
                         </ul>
                     </div>
+
+
                 </div>
             </div>
 

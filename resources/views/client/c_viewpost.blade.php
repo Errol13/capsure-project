@@ -287,24 +287,33 @@
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
 
                                         @if($freelancer->hiringRequestData->status != 'Rejected')
+
+                                        <!--if accepted this will be gone-->
+                                        @if($freelancer->hiringRequestData->status != 'Accepted')
                                         <button class="btn me-2 mb-2 mb-sm-0 negotiate-btn" data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$freelancer->hiringRequestData->hiring_request_id}}"
                                             style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">Negotiate</button>
-                                        @if($freelancer->hiringRequestData->dealer_user_type == 'client')
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#CBCACA; border:none; border-radius: 20px">Pending</button>
-                                        @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer')
+                                        @endif
+
+                                        @if($freelancer->hiringRequestData->dealer_user_type == 'client' && $freelancer->hiringRequestData->status != 'Accepted')
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" disabled style="flex: 2; width: 100%; color:black; background-color:#CBCACA; border:none; border-radius: 20px">Pending</button>
+                                        @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer' && $freelancer->hiringRequestData->status != 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px"
-                                        data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}" 
-                                        data-action="accept" data-hiringid = "{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
+                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
+                                            data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
                                         @elseif($freelancer->hiringRequestData->status == 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</button>
                                         @endif
+
+                                        <!--if accepted this will be gone-->
+                                        @if($freelancer->hiringRequestData->status != 'Accepted')
                                         <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px"
-                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}" 
-                                            data-action="cancel" data-hiringid = "{{ $freelancer->hiringRequestData->hiring_request_id }}">Cancel</button>
+                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
+                                            data-action="cancel" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Cancel</button>
+                                        @endif
 
                                         @elseif($freelancer->hiringRequestData->status == 'Rejected')
-                                        <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold" style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
-
+                                        <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold"
+                                            style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
                                         @endif
 
                                     </div>
@@ -318,9 +327,9 @@
                                     :actionUrl="''"
                                     method="PATCH" />
 
-                              
 
-                               
+
+
 
 
                                 <!-- Negotiate Modal-->

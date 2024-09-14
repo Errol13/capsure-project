@@ -37,7 +37,7 @@ class Hiring_requestController extends Controller
             'freelancer_id' => 'required|exists:freelancers,user_id',
             'job_id' => 'required|exists:event_jobs,job_id',
             'client_id' => 'required|exists:clients,user_id',
-            'client_pricing' => 'required|numeric|min:0',
+            'client_pricing' => 'required|numeric|min:1',
             'freelancer_pricing' => 'required|numeric|min:0',
         ]);
 
@@ -46,12 +46,11 @@ class Hiring_requestController extends Controller
         $eventJob = EventJob::find($validated['job_id']);
         $event = $eventJob->event;
 
-        $jobStartTime = $event->start_time;
-        $jobEndTime = $event->end_time;
+        $jobStartTime = $event->start_date;
+        $jobEndTime = $event->end_date;
 
         Log::info('Validated Data:', $event->toArray());
 
-        // Check if the freelancer has any transactions
         $hasTransactions = Transaction::where('freelancer_id', $validated['freelancer_id'])->exists();
 
         if ($hasTransactions) {
@@ -73,6 +72,7 @@ class Hiring_requestController extends Controller
                 return response()->json(['error' => 'The freelancer was already hired for the same schedule.'], 400);
             }
         }
+
 
         // Prevent duplication of hiring request
         $hiringRequestExists = Hiring_request::where('freelancer_id', $validated['freelancer_id'])

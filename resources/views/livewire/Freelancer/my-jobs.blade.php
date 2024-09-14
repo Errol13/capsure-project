@@ -169,7 +169,7 @@
                                     @endif
                                     <!--if accepted, this will be gone --> 
                                     @if($job->status != 'Accepted')
-                                    <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiation</button>
+                                    <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiate</button>
                                     <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="decline" data-hiringid = "{{$job->hiring_request_id}}"
                                         class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</button>
                                     @endif

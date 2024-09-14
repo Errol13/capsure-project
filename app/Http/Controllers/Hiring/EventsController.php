@@ -23,17 +23,27 @@ class EventsController extends Controller
         return view('client.createEvent');
     }
 
-    public function showMyEvents()
+    public function showMyEvents(Request $request)
     {
         /** @var User $user */
         $user = Auth::user();
 
-        // Get events for the authenticated user that have associated event_jobs
-        $events = Event::where('client_id', $user->id)
-            ->whereHas('event_jobs') // Ensure the event has associated event_jobs
-            ->orderBy('created_at') // Order by creation time
-            ->get();
+        // Get the status filter from the request, default to 'All' if not provided
+        $status = $request->input('status', 'All');
 
+        // Get events for the authenticated user
+        $eventsQuery = Event::where('client_id', $user->id)
+            ->whereHas('event_jobs') // Ensure the event has associated event_jobs
+            ->orderBy('created_at');
+
+        // Apply filtering by status if it's not 'All'
+        if ($status != 'All') {
+            $eventsQuery->where('status', $status);
+        }
+
+        $events = $eventsQuery->get();
+
+        // Get counts for each event 
         $eventsWithCounts = $events->map(function ($event) {
             // Initialize counters
             $hiredCount = 0;
@@ -66,8 +76,10 @@ class EventsController extends Controller
 
         return view('client.c_myEvents', [
             'events' => $eventsWithCounts,
+            'status' => $status, // Pass current status to view for active filter indication
         ]);
     }
+
 
 
 
@@ -173,7 +185,7 @@ class EventsController extends Controller
         $hiringRequests->each(function ($hiringRequest) {
             $serviceDetails = $hiringRequest->serviceDetails();
             $hiringRequest->serviceDetails = $serviceDetails;
-        }); 
+        });
 
         $invitedFreelancers = Freelancer::with('user')->whereIn('user_id', $hiringRequests->pluck('freelancer_id'))->get();
 
@@ -187,7 +199,6 @@ class EventsController extends Controller
 
                 //display the contents for debugging
                 Log::info('Hiring Request Data: ', $freelancer->hiringRequestData ? $freelancer->hiringRequestData->toArray() : []);
-
             }
         });
 
@@ -273,5 +284,10 @@ class EventsController extends Controller
         } else {
             return redirect()->back()->with('error', 'Cannot found the event post.');
         }
+    }
+
+    //edit the post
+    public function editPost($event_id){
+
     }
 }
