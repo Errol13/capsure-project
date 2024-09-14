@@ -292,12 +292,15 @@
                                         @if($freelancer->hiringRequestData->dealer_user_type == 'client')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#CBCACA; border:none; border-radius: 20px">Pending</button>
                                         @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer')
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Accept Offer</button>
+                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px"
+                                        data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}" 
+                                        data-action="accept" data-hiringid = "{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
                                         @elseif($freelancer->hiringRequestData->status == 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</button>
                                         @endif
                                         <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px"
-                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}">Cancel</button>
+                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}" 
+                                            data-action="cancel" data-hiringid = "{{ $freelancer->hiringRequestData->hiring_request_id }}">Cancel</button>
 
                                         @elseif($freelancer->hiringRequestData->status == 'Rejected')
                                         <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold" style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
@@ -312,8 +315,13 @@
                                     :id="$freelancer->hiringRequestData->hiring_request_id"
                                     title="Confirm Cancellation"
                                     message="Are you sure you want to cancel this offer?"
-                                    :actionUrl="route('offer.cancel', $freelancer->hiringRequestData->hiring_request_id)"
+                                    :actionUrl="''"
                                     method="PATCH" />
+
+                              
+
+                               
+
 
                                 <!-- Negotiate Modal-->
                                 @livewire('negotiate-modal', ['hiringRequestId' => $freelancer->hiringRequestData->hiring_request_id,

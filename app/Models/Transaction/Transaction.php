@@ -27,6 +27,8 @@ class Transaction extends Model
         'hiring_request_id',
     ];
 
+    protected $primaryKey = 'transaction_id';
+
     // Define relationships
     public function client()
     {

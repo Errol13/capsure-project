@@ -27,6 +27,11 @@ return new class extends Migration
             $table->string('status', 50)->default('open'); 
             $table->timestamps();
         });
+
+        Schema::table('events', function (Blueprint $table) {
+            $table->index('start_date');
+            $table->index('end_date');
+        });
     }
 
     /**

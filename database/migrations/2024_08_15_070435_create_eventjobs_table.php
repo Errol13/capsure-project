@@ -20,6 +20,10 @@ return new class extends Migration
             $table->foreignId('event_id')->constrained('events' ,'event_id')->onUpdate('cascade')->onDelete('cascade'); // Foreign key to events table
             $table->timestamps(); // Created at and updated at columns
         });
+
+        Schema::table('event_jobs', function (Blueprint $table) {
+            $table->index('event_id');
+        });
     }
 
     /**
