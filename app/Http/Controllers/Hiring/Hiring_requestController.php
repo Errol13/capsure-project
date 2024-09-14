@@ -3,13 +3,17 @@
 namespace App\Http\Controllers\Hiring;
 
 use App\Http\Controllers\Controller;
+use App\Models\Client;
+use App\Models\Freelancer;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
+use App\Notifications\AcceptedOffer;
 use App\Notifications\HiringRequestSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class Hiring_requestController extends Controller
@@ -213,6 +217,24 @@ class Hiring_requestController extends Controller
                 'payment_status' => 'Unpaid',
                 'transaction_status' => 'Pending'
             ]);
+
+            /** @var User */
+            $user = Auth::user();
+
+            // Check if the user is a freelancer or client
+            if ($user->user_type === 'client') {
+                $freelancer = User::where('id', $hiringRequest->freelancer_id)->first();
+                if ($freelancer) {
+                    Log::info('Notifying freelancer: ' . $freelancer->email);
+                    $freelancer->notify(new AcceptedOffer($hiringRequest, $user));
+                }
+            } elseif ($user->user_type === 'freelancer') {
+                $client = User::where('id', $hiringRequest->client_id)->first();
+                if ($client) {
+                    Log::info('Notifying client: ' . $client->email);
+                    $client->notify(new AcceptedOffer($hiringRequest, $user));
+                }
+            }
 
             return redirect()->back()->with('success', 'Offer accepted!');
         } else {

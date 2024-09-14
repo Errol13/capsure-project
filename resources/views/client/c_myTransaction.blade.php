@@ -20,7 +20,7 @@
 
         <!-- ON-GOING Tab ------------------------------------------------------------------------------------------------------------------------------>
         <div class="tab-pane show active" id="ongoing">
-        @if($ongoing->isNotEmpty())
+        @if($transactionsByEvent['ongoing']->isNotEmpty())
             <!-- Table for larger screens -->
             <table id="unique-payment-table" class="table table-borderless d-none d-md-table mt-3">
                 <thead class="table-primary poppins-extralight">
@@ -36,34 +36,36 @@
                 </thead>
                 <tbody>
                     
-                        @foreach($ongoing as $transaction)
+                <!-- loop through the on-going events --> 
+                        @foreach($transactionsByEvent['ongoing'] as $eventGroup)
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                                        <span>Project {{$transaction->freelancer->number_of_projects}}</span>
-                                        <a href="#" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
+                                        <span>{{$eventGroup['event']->title}}</span>
+                                        <a href="{{route('client-viewpost', [ 'id' => $eventGroup['event']->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                     </div>
                                     <div class="card-body">
-                                        <?php for ($j = 1; $j <= 3; $j++): ?>
+                                        <!-- loop the transactions -->
+                                        @foreach($eventGroup['transactions'] as $transaction)
                                             <div class="row align-items-center mb-2">
                                                 <div class="col-auto pe-1">
                                                     <img src="assets/profilepic.svg" class="rounded-circle">
                                                 </div>
                                                 <div class="col-2 pe-4">
                                                     <div class="d-flex flex-column align-items-start">
-                                                        <div>Freelancer <?= $j; ?></div>
-                                                        <small class="text-muted">Developer</small>
+                                                        <div>{{$transaction->freelancer->user->first_name}} {{$transaction->freelancer->user->last_name}}</div>
+                                                        <small class="text-muted">{{$transaction->Hiring_request->serviceDetails()->job_title}}</small>
                                                     </div>
                                                 </div>
-                                                <div class="col-2 text-left">₱ 1,500.00</div>
+                                                <div class="col-2 text-left">₱ {{$transaction->payment_amount}}</div>
                                                 <div class="col-2 d-flex align-items-center">
-                                                    <span class="text-primary">Partially Paid</span>
+                                                    <span class="text-primary">{{$transaction->payment_status}}</span>
                                                     <button class="btn btn-link pb-4" onclick="togglePaymentStatus()">
                                                         <i class="fas fa-repeat" style="color: black;"></i>
                                                     </button>
                                                 </div>
-                                                <div class="col-2 text-primary">Partially Paid</div>
+                                                <div class="col-2 text-primary">{{$transaction->payment_status}}</div>
                                                 <div class="col-1 d-flex justify-content-center">
                                                     <a href="#" class="btn btn-outline-secondary btn-sm position-relative" style="white-space: nowrap; border-bottom-right-radius: 0px; border-top-right-radius: 0px; ">
                                                         <i class="fas fa-receipt me-2"></i>View Receipt
@@ -77,7 +79,7 @@
                                                 </div>
                                             </div>
                                             <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                        <?php endfor; ?>
+                                       @endforeach
                                     </div>
                                 </div>
                             </td>
@@ -92,40 +94,6 @@
 
                 </tbody>
             </table>
-
-            <?php for ($i = 1; $i <= 2; $i++): // Loop through each project 
-            ?>
-                <div class="card mb-3 mt-3 d-block d-md-none">
-                    <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                        <span>Project <?= $i; ?></span>
-                        <a href="<?= url('/client-viewpost', ['id' => $i]); ?>" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
-                    </div>
-                    <div class="card-body">
-                        <?php for ($j = 1; $j <= 3; $j++): // Loop through each freelancer 
-                        ?>
-                            <div class="d-flex flex-column align-items-start mb-3">
-                                <div class="d-flex align-items-center mb-2">
-                                    <img src="assets/profilepic.svg" class="rounded-circle me-2">
-                                    <div>
-                                        Freelancer <?= $j; ?>
-                                        <small class="text-muted d-block">Developer</small>
-                                    </div>
-                                </div>
-                                <div class="mb-1"><strong>Payment Fee:</strong> ₱ 1,500.00</div>
-                                <div class="mb-1"><strong>Confirmation:</strong> Partially Paid</div>
-                                <div class="mb-1"><strong>Freelancer's Confirmation:</strong> Partially Paid</div>
-                                <div class="d-flex justify-content-between mt-3">
-                                    <a href="#" class="btn btn-outline-secondary btn-sm me-2">
-                                        <i class="fas fa-receipt me-2"></i>View Receipt
-                                    </a>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width" data-bs-toggle="modal" data-bs-target="#reviewClientModal">Write a Review</button>
-                                </div>
-                            </div>
-                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                        <?php endfor; ?>
-                    </div>
-                </div>
-            <?php endfor; ?>
         </div>
 
         <!-- UPCOMING Tab --------------------------------------------------------------------------------------------------------------------------------------------->

@@ -15,57 +15,54 @@ class TransactionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // Fetch the client's transactions
-        $transactions = $user->client->transactions;
-
-        // Log::info('transactions: ', $transactions->toArray());
+        // Fetch the client's events with only the necessary fields
+        $events = $user->client->events()
+            ->select('event_id', 'title', 'start_date', 'end_date') // Include start_date and end_date
+            ->get();
 
         // Set the timezone to Asia/Manila
         $timezone = 'Asia/Manila';
-
-        // Get the current date and time in the specified timezone
         $today = Carbon::now($timezone);
 
-
-        // Log the current local and UTC times
-        Log::info('Current Local Time:', ['local' => $today->toDateTimeString()]);
-
-        // Filter ongoing transactions
-        $ongoing = $transactions->filter(function ($transaction) use ($today) {
-            // Parse start_date and end_date, and set to UTC
-            $startDate = $transaction->event->start_date;
-            $endDate = $transaction->event->end_date;
-
-            // Log transaction details
-            Log::info('Transaction Dates:', [
-                'startDateUTC' => $startDate,
-                'endDateUTC' => $endDate
-            ]);
-
-            // Determine if the transaction is ongoing
-            return $startDate <= $today && $endDate >= $today;
+        // Filter events by their date
+        $ongoingEvents = $events->filter(function ($event) use ($today) {
+            return $event->start_date <= $today && $event->end_date >= $today;
         });
 
-        // Log ongoing transactions
-        Log::info('Ongoing: ', $ongoing->toArray());
-
-        // Filter upcoming transactions
-        $upcoming = $transactions->filter(function ($transaction) use ($today) {
-            return $transaction->event->start_date > $today;
+        $upcomingEvents = $events->filter(function ($event) use ($today) {
+            return $event->start_date > $today;
         });
 
-         // Log ongoing transactions
-        Log::info('Upcoming: ', $upcoming->toArray());
-
-        // Filter previous transactions
-        $history = $transactions->filter(function ($transaction) use ($today) {
-            return $transaction->event->end_date < $today;
+        $previousEvents = $events->filter(function ($event) use ($today) {
+            return $event->end_date < $today;
         });
-        Log::info('Previous: ', $history->toArray());
 
-        // Return the view with filtered transactions
-        return view('client.c_myTransaction', compact('ongoing', 'upcoming', 'history'));
+        // Get transactions for each event category
+        $transactionsByEvent = [
+            'ongoing' => $ongoingEvents->map(function ($event) {
+                return [
+                    'event' => $event,
+                    'transactions' => $event->transactions
+                ];
+            }),
+            'upcoming' => $upcomingEvents->map(function ($event) {
+                return [
+                    'event' => $event,
+                    'transactions' => $event->transactions
+                ];
+            }),
+            'previous' => $previousEvents->map(function ($event) {
+                return [
+                    'event' => $event,
+                    'transactions' => $event->transactions
+                ];
+            }),
+        ];
+
+        // Return the view with grouped transactions by event
+        return view('client.c_myTransaction', compact('transactionsByEvent'));
     }
+
 
 
 

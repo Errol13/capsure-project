@@ -20,7 +20,7 @@
             @forelse($notifications as $notification)
             <li>
                 <a class="dropdown-item" href="{{ $notification->data['url'] }}">
-                    <strong>{{ $notification->data['message'] }}</strong>
+                    <strong class="text-wrap">{{ $notification->data['message'] }}</strong>
                     <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                 </a>
             </li>
