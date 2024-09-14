@@ -1,9 +1,9 @@
 <!-- Modal Structure -->
-<div class="modal" id="reportProfileModal" tabindex="-1" aria-labelledby="reportProfileLabel" aria-hidden="true">
+<div class="modal" id="reportClientModal" tabindex="-1" aria-labelledby="reportClientLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header pt-0">
-                <h5 class="modal-title" id="reportProfileLabel">Report Profile</h5>
+                <h5 class="modal-title" id="reportClientLabel">Report Profile</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -13,16 +13,16 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-check d-flex align-items-start">
-                                    <input class="form-check-input me-2" type="checkbox" id="unprofessionalBehavior">
-                                    <label class="form-check-label" for="unprofessionalBehavior">Unprofessional Behavior</label>
+                                    <input class="form-check-input me-2" type="checkbox" id="unclearRequirements">
+                                    <label class="form-check-label" for="unclearRequirements">Unclear/Changing Requirements</label>
                                 </div>
                                 <div class="form-check d-flex align-items-start">
-                                    <input class="form-check-input me-2" type="checkbox" id="poorQualityWork">
-                                    <label class="form-check-label" for="poorQualityWork">Poor Quality Work</label>
+                                    <input class="form-check-input me-2" type="checkbox" id="delayed">
+                                    <label class="form-check-label" for="delayed">Delayed/No Payment</label>
                                 </div>
                                 <div class="form-check d-flex align-items-start">
-                                    <input class="form-check-input me-2" type="checkbox" id="missedEvents">
-                                    <label class="form-check-label" for="missedEvents">Missed Scheduled Event/s</label>
+                                    <input class="form-check-input me-2" type="checkbox" id="inappropriateBehavior">
+                                    <label class="form-check-label" for="inappropriateBehavior">Inappropriate Behavior</label>
                                 </div>
                             </div>
                             <div class="col-6">
@@ -31,8 +31,8 @@
                                     <label class="form-check-label" for="inadequateCommunication">Inadequate Communication</label>
                                 </div>
                                 <div class="form-check d-flex align-items-start">
-                                    <input class="form-check-input me-2" type="checkbox" id="overcharging">
-                                    <label class="form-check-label" for="overcharging">Overcharging</label>
+                                    <input class="form-check-input me-2" type="checkbox" id="scam">
+                                    <label class="form-check-label" for="scam">Scam/Fraudulent Requests</label>
                                 </div>
                                 <div class="form-check d-flex align-items-start">
                                     <input class="form-check-input me-2" type="checkbox" id="others">

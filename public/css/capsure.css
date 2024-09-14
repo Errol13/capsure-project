@@ -844,8 +844,7 @@ select#year {
 }
 
 .rvw-container {
-    background-color: #f1ecec;
-    border: 1px solid #91216C;
+    background-color: white;
 }
 
 /* Create Event Page <-------------------------------------------------------------------------*/

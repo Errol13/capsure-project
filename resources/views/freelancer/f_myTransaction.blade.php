@@ -67,7 +67,7 @@
                                                     </a>
                                                 </div>
                                                 <div class="col-2 d-flex justify-content-end">
-                                                    <button class="btn btn-outline-secondary btn-sm btn-fit-width">Write a review</button>
+                                                <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width" data-bs-toggle="modal" data-bs-target="#reviewFreelancerModal">Write a Review</button>
                                                 </div>
                                             </div>
                                         <?php endfor; ?>
@@ -103,7 +103,7 @@
                                     <a href="#" class="btn btn-outline-secondary btn-sm me-2">
                                         <i class="fas fa-receipt me-2"></i>View Receipt
                                     </a>
-                                    <button class="btn btn-outline-secondary btn-sm">Write a review</button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width" data-bs-toggle="modal" data-bs-target="#reviewFreelancerModal">Write a Review</button>
                                 </div>
                             </div>
                         <?php endfor; ?>
@@ -306,6 +306,7 @@
                 </div>
             <?php endfor; ?>
         </div>
+        @include('modals.f_review')
     </div>
 </div>
 
