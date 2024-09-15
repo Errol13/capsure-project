@@ -214,13 +214,13 @@
                 @endif
             </div>
 
-            <!-- Recommendation Content -->
+            <!--Recommendation Content-->
             <div class="tab-pane fade {{ $activeTab === 'recommendation' ? 'show active' : '' }}" id="recommendation" aria-labelledby="recommendation-tab">
 
-                <!--If no recommendations -->
+                <!--If no recommendations-->
                 @if($eventRecommendations->isNotEmpty())
 
-                <!-- Content for Recommendations -->
+                <!-- Content for Recommendations-->
                 <table class="table table-striped">
                     <thead class="text-center mb-2">
                         <tr>
@@ -230,7 +230,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Jobs Recommendations -->
+                        <!--Jobs Recommendations-->
                         <tr>
                             @foreach($eventRecommendations as $event)
                             <td class="open-sans-reg">
@@ -250,14 +250,10 @@
 
                             </td>
 
-
                             <td class="open-sans-reg ">
-                                <!--<a href="#" class="btn-verify rounded-2 pt-0 mb-1" style="white-space: nowrap; text-decoration: none; display: block;" data-toggle="modal" data-target="#applyJobModal">Apply</a>-->
+                               
                                 <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-4 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
                             </td>
-
-                            <!--Apply Modal 
-                    @include('modals.apply_job_modal', ['eventJobs' => $event->event_jobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )-->
 
 
                         </tr>

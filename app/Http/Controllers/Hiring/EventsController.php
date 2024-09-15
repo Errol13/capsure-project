@@ -55,7 +55,7 @@ class EventsController extends Controller
 
             foreach ($jobs as $job) {
                 // Fetch job applications
-                $applications = Job_application::where('job_id', $job->job_id)->get();
+                $applications = Job_application::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->get();
                 $jobApplicationsCount += $applications->count();
 
                 // Getting hired freelancers count for each job
@@ -63,7 +63,7 @@ class EventsController extends Controller
                 $hiredCount += $jobApplicantsHired->count();
 
                 // Get hiring requests count for the event's jobs
-                $hiringRequestsCount += Hiring_request::where('job_id', $job->job_id)->count();
+                $hiringRequestsCount += Hiring_request::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->count();
             }
 
             // Add counts to the event object

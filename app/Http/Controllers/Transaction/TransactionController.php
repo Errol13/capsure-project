@@ -24,17 +24,23 @@ class TransactionController extends Controller
         $timezone = 'Asia/Manila';
         $today = Carbon::now($timezone);
 
-        // Filter events by their date
+        // Filter and format events by their date
         $ongoingEvents = $events->filter(function ($event) use ($today) {
             return $event->start_date <= $today && $event->end_date >= $today;
+        })->map(function ($event) use ($timezone) {
+            return $this->formatEventDates($event, $timezone);
         });
 
         $upcomingEvents = $events->filter(function ($event) use ($today) {
             return $event->start_date > $today;
+        })->map(function ($event) use ($timezone) {
+            return $this->formatEventDates($event, $timezone);
         });
 
         $previousEvents = $events->filter(function ($event) use ($today) {
             return $event->end_date < $today;
+        })->map(function ($event) use ($timezone) {
+            return $this->formatEventDates($event, $timezone);
         });
 
         // Get transactions for each event category
@@ -59,9 +65,34 @@ class TransactionController extends Controller
             }),
         ];
 
+        Log::info('Previous: ', $transactionsByEvent['previous']->toArray());
+
         // Return the view with grouped transactions by event
         return view('client.c_myTransaction', compact('transactionsByEvent'));
     }
+
+    /**
+     * Format the start and end date of the event.
+     *
+     * @param  \App\Models\Event  $event
+     * @param  string  $timezone
+     * @return \App\Models\Event
+     */
+    private function formatEventDates($event, $timezone)
+    {
+        // Format the start date as 'Month Day, Year'
+        $event->start_date_formatted = Carbon::parse($event->start_date)
+            ->timezone($timezone)
+            ->format('M j, Y');
+
+        // Format the end date as 'Month Day, Year h:i A'
+        $event->end_date_formatted = Carbon::parse($event->end_date)
+            ->timezone($timezone)
+            ->format('M j, Y');
+
+        return $event;
+    }
+
 
 
 

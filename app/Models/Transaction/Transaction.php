@@ -14,7 +14,6 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    // Specify the table name if it is not the plural form of the model name
     protected $table = 'transactions';
 
     // Define the fillable attributes
@@ -47,19 +46,23 @@ class Transaction extends Model
     }
 
     public function event()
-{
-    return $this->hasOneThrough(
-        Event::class,         // Final model we want to access
-        EventJob::class,      // Intermediate model
-        'job_id',             // Foreign key on EventJob (connecting to Transaction)
-        'event_id',           // Foreign key on Event (connecting to EventJob)
-        'job_id',             // Local key on Transaction (connecting to EventJob)
-        'event_id'            // Local key on EventJob (connecting to Event)
-    );
-}
+    {
+        return $this->hasOneThrough(
+            Event::class,         // Final model we want to access
+            EventJob::class,      // Intermediate model
+            'job_id',             // Foreign key on EventJob (connecting to Transaction)
+            'event_id',           // Foreign key on Event (connecting to EventJob)
+            'job_id',             // Local key on Transaction (connecting to EventJob)
+            'event_id'            // Local key on EventJob (connecting to Event)
+        );
+    }
 
     public function Hiring_request()
     {
         return $this->belongsTo(Hiring_request::class, 'hiring_request_id');
+    }
+
+    public function payment_proofs(){
+        return $this->hasMany(PaymentProof::class, 'transaction_id');
     }
 }
