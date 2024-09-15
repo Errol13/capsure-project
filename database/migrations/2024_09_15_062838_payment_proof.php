@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('payment_proof', function (Blueprint $table) {
+        Schema::create('payment_proofs', function (Blueprint $table) {
             $table->id('proof_id');
             $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id')->onUpdate('cascade')->onDelete('cascade');
+            $table->string('payment_type');
             $table->text('file_path');
             $table->timestamps();
         });

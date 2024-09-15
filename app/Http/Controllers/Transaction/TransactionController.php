@@ -17,6 +17,7 @@ class TransactionController extends Controller
 
         // Fetch the client's events with only the necessary fields
         $events = $user->client->events()
+            ->with(['transactions.payment_proofs'])
             ->select('event_id', 'title', 'start_date', 'end_date') // Include start_date and end_date
             ->get();
 

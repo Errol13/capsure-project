@@ -75,9 +75,13 @@
                                         </div>
                                         <div class="col-2"></div>
                                         <div class="col-1 d-flex justify-content-center">
-                                            <a href="#" class="btn btn-outline-secondary btn-sm position-relative" style="white-space: nowrap; border-bottom-right-radius: 0px; border-top-right-radius: 0px;">
-                                                <i class="fas fa-receipt me-2"></i>View Receipt
-                                            </a>
+                                            <button class="btn btn-outline-secondary btn-sm position-relative"
+                                                style="white-space: nowrap; border-bottom-right-radius: 0px; border-top-right-radius: 0px;"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#receiptModal{{ $transaction->transaction_id }}">
+                                                <i class="fas fa-receipt me-2"></i>View Receipts
+                                            </button>
+
                                             <span class="upload-icon" style="background-color:#E1C1D7; padding: 0.2rem 0.5rem; border-bottom-right-radius: 4px; border-top-right-radius: 4px; z-index: 1; position: relative;">
                                                 <button type="button" class="btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" style="z-index: 2; position: relative;">
                                                     <i class="fas fa-upload" style="color: #000;"></i>
@@ -89,6 +93,11 @@
                                             <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width" data-bs-toggle="modal" data-bs-target="#reviewClientModal">Write a Review</button>
                                         </div>
                                     </div>
+
+                                    <!--include here the modal for viewing receipt-->
+                                    @include('modals.Transaction.view_receipt',
+                                    ['transactionId' => $transaction->transaction_id,
+                                    'paymentProofs' => $transaction->payment_proofs])
 
                                     <!--Upload Payment Proof -->
                                     @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
