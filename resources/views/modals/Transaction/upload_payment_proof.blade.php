@@ -8,26 +8,33 @@
             </div>
             <div class="modal-body open-sans-reg">
                 <!-- Modal Form -->
-                <form id="uploadPaymentProofForm{{ $uniqueId }}" method="POST" action="{{route('payment.upload', ['id' => $uniqueId] ) }}" enctype="multipart/form-data">
+                <form id="uploadPaymentProofForm{{ $uniqueId }}" method="POST" action="{{ route('payment.upload', ['id' => $uniqueId]) }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="transaction_id" value="{{ $uniqueId }}">
 
                     <!-- Payment Type -->
-                    <div class="form-group mb-3 p-3 rounded" style="background-color: #E1C1D7;">
+                    <div class="form-group mb-3 rounded pe-2">
                         <label for="paymentType{{ $uniqueId }}">Payment Type</label>
-                        <div class="form-check">
-                            <input class="form-check-input " type="radio" name="payment_type" id="partialPayment{{ $uniqueId }}" value="Partial Payment" required>
-                            <label class="form-check-label" for="partialPayment{{ $uniqueId }}">Partial Payment</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="payment_type" id="fullPayment{{ $uniqueId }}" value="Full Payment" required>
-                            <label class="form-check-label" for="fullPayment{{ $uniqueId }}">Full Payment</label>
+                        <select name="payment_type" id="paymentType{{ $uniqueId }}" class="form-select" style="border: #E1C1D7 solid 1px; "required>
+                            <option class="text-muted" value="" disabled selected>Select</option>
+                            <option value="Partial Payment">Partial Payment</option>
+                            <option value="Full Payment">Full Payment</option>
+                        </select>
+                    </div>
+
+                    <!-- Amount -->
+                    <div class="form-group mb-2">
+                        <label for="amountPaid{{ $uniqueId }}">Amount:</label>
+                        <div class="input-group d-flex justify-content-start align-items-center">
+                            <span class="bg-white me-2 fw-bold" style="color:#91216C;">₱</span>
+                            <input type="number" class="form-control" id="amountPaid{{ $uniqueId }}" 
+                            style="border: #E1C1D7 solid 1px;" name="amount_paid" min="1" step="0.01" required>
                         </div>
                     </div>
 
                     <!-- File Upload (Only Single File Allowed) -->
                     <div class="form-group mb-2">
-                        <label cass=for="uploadProof{{ $uniqueId }}">Upload Proof</label>
+                        <label for="uploadProof{{ $uniqueId }}">Upload Proof</label>
                         <input type="file" class="form-control-file" id="uploadProof{{ $uniqueId }}" name="proof_file" accept="image/*" required>
                     </div>
                     <small class="form-text text-muted">Only 1 picture is allowed.</small>

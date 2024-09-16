@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container my-4 pb-2">
-    <a href="#" onclick="window.history.go(-1); return false;" style="text-decoration:none; color:black;">
+    <a href="#" onclick="window.history.back(); return false;" style="text-decoration:none; color:black;">
         <i class="fas fa-arrow-left me-2 mb-4"></i>Back
 
     </a>

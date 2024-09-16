@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id('proof_id');
             $table->foreignId('transaction_id')->constrained('transactions', 'transaction_id')->onUpdate('cascade')->onDelete('cascade');
             $table->string('payment_type');
+            $table->decimal('amount_paid', 10, 2);
             $table->text('file_path');
             $table->timestamps();
         });

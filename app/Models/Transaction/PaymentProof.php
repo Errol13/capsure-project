@@ -15,6 +15,7 @@ class PaymentProof extends Model
     protected $fillable = [
         'transaction_id',
         'file_path',
+        'amount_paid',
         'payment_type',
     ];
 

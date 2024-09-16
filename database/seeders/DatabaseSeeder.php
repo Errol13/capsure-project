@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
         DB::table('transactions')->truncate();
     
         // Seed data
+        $this->call(UsersTableSeeder::class);
+        $this->call(ServicesTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(EventJobsTableSeeder::class);
         $this->call(JobApplicationsTableSeeder::class);

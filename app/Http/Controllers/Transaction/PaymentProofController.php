@@ -13,6 +13,7 @@ class PaymentProofController extends Controller
     {
         // Validate the form data
         $request->validate([
+            'amount_paid' => 'required|numeric|min:1',
             'payment_type' => 'required|in:Partial Payment,Full Payment',
             'proof_file' => 'required|mimes:jpeg,png,jpg|max:15360', // maximum of 15MB only
         ]);
@@ -32,6 +33,7 @@ class PaymentProofController extends Controller
             PaymentProof::create([
                 'transaction_id' => $transaction->transaction_id,
                 'file_path' => $filePath,
+                'amount_paid' => $request->input('amount_paid'),
                 'payment_type' => $request->input('payment_type'),
             ]);
         } else {

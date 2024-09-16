@@ -37,12 +37,25 @@
 
                     <!-- loop through the on-going events -->
                     @foreach($transactionsByEvent['ongoing'] as $eventGroup)
-                    <tr style="border:none;">
+
+                    <!--Check if there are unpaid transactions or not fully paid or no review -->
+                    @php
+                    $event = $eventGroup['event'];
+                    $hasOngoingTransaction = $eventGroup['transactions']->contains(function ($transaction) {
+                    return $transaction->transaction_status === 'On-going';
+                    });
+                    $isDue = $event->end_date < \Carbon\Carbon::now() && $hasOngoingTransaction;
+                        @endphp
+
+                        <tr style="border:none;">
                         <td colspan="7" class="p-0">
                             <div class="card mb-1 mt-3">
                                 <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                                    <span class="fs-5">{{$eventGroup['event']->title}}</span>
-                                    <span class="ms-3 text-muted">{{$eventGroup['event']->start_date_formatted}} - {{$eventGroup['event']->end_date_formatted}}</span>
+                                    <span class="fs-5">{{$eventGroup['event']->title}} @if ($isDue)
+                                        <span class="text-danger fs-6 fw-bold">(DUE)</span>
+                                        @endif</span>
+
+                                    <small class="text-muted">{{$eventGroup['event']->start_date_formatted}} - {{$eventGroup['event']->end_date_formatted}}</small>
                                     <a href="{{route('client-viewpost', [ 'id' => $eventGroup['event']->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                 </div>
                                 <div class="card-body">
@@ -63,6 +76,7 @@
 
                                             @php
                                             // Find the latest payment proof
+                                            $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
                                             $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
                                             @endphp
 
@@ -71,15 +85,15 @@
                                             <span class="text-danger fw-bold">{{$transaction->payment_status}}</span>
                                             @elseif($latestPaymentProof->payment_type === 'Partial Payment' && $transaction->payment_status === 'Pending' )
                                             <!-- Pending Partial Payment Confirmation -->
-                                            <div class="d-flex flex-column justify-content-start">
-                                                <span class="text-muted fw-bold">Partially Paid</span>
-                                                <small class="mx-3 text-muted">(pending)</small>
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <span class="text-muted fw-bold">Partially Paid - ₱{{$amountpaidTotal}}</span>
+                                                <small class="text-muted">(pending)</small>
                                             </div>
                                             @elseif($transaction->payment_status === 'Partially Paid')
-                                            <span class="text-primary fw-bold">{{$transaction->payment_status}}</span>
+                                            <span class="text-primary fw-bold">{{$transaction->payment_status}} - ₱{{$amountpaidTotal}} </span>
                                             @elseif($latestPaymentProof->payment_type === 'Full Payment' && $transaction->payment_status === 'Pending')
-                                            <div class="d-flex flex-column justify-content-start">
-                                                <span class="text-muted fw-bold">Fully Paid</span>
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <span class="text-muted fw-bold">Fully Paid - ₱{{$amountpaidTotal}}</span>
                                                 <small class="text-muted">(pending)</small>
                                             </div>
                                             @elseif($transaction->payment_status === 'Fully Paid')
@@ -97,14 +111,17 @@
                                             </button>
 
                                             <span class="upload-icon" style="background-color:#E1C1D7; padding: 0.2rem 0.5rem; border-bottom-right-radius: 4px; border-top-right-radius: 4px; z-index: 1; position: relative;">
-                                                <button type="button" class="btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" style="z-index: 2; position: relative;">
-                                                    <i class="fas fa-upload" style="color: #000;"></i>
+                                                <button type="button" class="btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" 
+                                                @if($transaction->payment_status === 'Fully Paid') disabled @endif style="z-index: 2; position: relative;">
+                                                    <i class="fas fa-upload" style="color: #000;" ></i>
                                                 </button>
                                             </span>
                                         </div>
 
                                         <div class="col-2 d-flex justify-content-end">
-                                            <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width" data-bs-toggle="modal" data-bs-target="#reviewClientModal">Write a Review</button>
+                                            <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                data-bs-toggle="modal" data-bs-target="#reviewClientModal"
+                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
                                         </div>
                                     </div>
 
@@ -121,14 +138,14 @@
                                 </div>
                             </div>
                         </td>
-                    </tr>
+                        </tr>
 
-                    @endforeach
+                        @endforeach
 
 
-                    @else
-                    <p class="fs-5">No on-going transactions.</p>
-                    @endif
+                        @else
+                        <p class="fs-5">No on-going transactions.</p>
+                        @endif
 
 
                 </tbody>
@@ -186,6 +203,7 @@
                                         <div class="col-2 d-flex  justify-content-center align-items-center">
                                             @php
                                             // Find the latest payment proof
+                                            $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
                                             $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
                                             @endphp
 
@@ -194,16 +212,16 @@
                                             <span class="text-danger fw-bold">{{$transaction->payment_status}}</span>
                                             @elseif($latestPaymentProof->payment_type === 'Partial Payment' && $transaction->payment_status === 'Pending' )
                                             <!-- Pending Partial Payment Confirmation -->
-                                            <div class="d-flex flex-column justify-content-start">
-                                                <span class="text-muted fw-bold">Partially Paid</span>
-                                                <small class="mx-3 text-muted">(pending)</small>
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <span class="text-muted fw-bold">Partially Paid - ₱{{$amountpaidTotal}}</span>
+                                                <small class="text-muted">(pending)</small>
                                             </div>
                                             @elseif($transaction->payment_status === 'Partially Paid')
-                                            <span class="text-primary fw-bold">{{$transaction->payment_status}}</span>
+                                            <span class="text-primary fw-bold">{{$transaction->payment_status}} - ₱{{$amountpaidTotal}} </span>
                                             @elseif($latestPaymentProof->payment_type === 'Full Payment' && $transaction->payment_status === 'Pending')
-                                            <div class="d-flex flex-column justify-content-start">
-                                                <span class="text-muted fw-bold">Fully Paid</span>
-                                                <small class="mx-3 text-muted">(pending)</small>
+                                            <div class="d-flex flex-column justify-content-center align-items-center">
+                                                <span class="text-muted fw-bold">Fully Paid - ₱{{$amountpaidTotal}}</span>
+                                                <small class="text-muted">(pending)</small>
                                             </div>
                                             @elseif($transaction->payment_status === 'Fully Paid')
                                             <span class="text-success fw-bold">{{$transaction->payment_status}}</span>
@@ -221,7 +239,8 @@
                                             </button>
 
                                             <span class="upload-icon" style="background-color:#E1C1D7; padding: 0.2rem 0.5rem; border-bottom-right-radius: 4px; border-top-right-radius: 4px; z-index: 1; position: relative;">
-                                                <button type="button" class="btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" style="z-index: 2; position: relative;">
+                                                <button type="button" class="btn p-0 m-0" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" 
+                                                style="z-index: 2; position: relative;" @if($transaction->payment_status === 'Fully Paid') disabled @endif>
                                                     <i class="fas fa-upload" style="color: #000;"></i>
                                                 </button>
                                             </span>
@@ -234,7 +253,9 @@
                                         </div>
                                         @endif
                                         <div class="col-2 d-flex justify-content-end">
-                                            <button class="btn btn-outline-secondary btn-sm btn-fit-width">Write a review</button>
+                                            <button class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                data-bs-toggle="modal" data-bs-target="#reviewClientModal"
+                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif> Write a review</button>
                                         </div>
                                     </div>
 
@@ -337,7 +358,9 @@
                                         <div class="col-2"></div>
                                         <div class="col-1 d-flex justify-content-center">
                                             <a href="#" class="btn btn-outline-secondary btn-sm"
-                                                data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" style="white-space: nowrap;"><i class="fas fa-receipt me-2"></i>View Receipt</a>
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#receiptModal{{ $transaction->transaction_id }}"
+                                                style="white-space: nowrap;"><i class="fas fa-receipt me-2"></i>View Receipt</a>
                                         </div>
                                         <div class="col-2 d-flex justify-content-end">
                                             <button class="btn btn-outline-secondary btn-sm btn-fit-width">View Review</button>
