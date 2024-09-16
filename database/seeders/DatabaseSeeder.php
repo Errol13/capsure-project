@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
-    public function run() : void
+    public function run(): void
     {
         // Truncate tables
         DB::table('events')->truncate();
@@ -20,13 +20,14 @@ class DatabaseSeeder extends Seeder
         DB::table('job_applications')->truncate();
         DB::table('hiring_requests')->truncate();
         DB::table('transactions')->truncate();
-    
+
         // Seed data
+        $this->call(UsersTableSeeder::class);
+        $this->call(ServicesTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(EventJobsTableSeeder::class);
         $this->call(JobApplicationsTableSeeder::class);
         $this->call(HiringRequestsTableSeeder::class);
         $this->call(TransactionsTableSeeder::class);
     }
-    
 }
