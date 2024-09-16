@@ -6,14 +6,14 @@
                 <h5 class="modal-title" id="uploadPaymentProofLabel{{ $uniqueId }}">Upload Payment Proof</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body open-sans-reg">
                 <!-- Modal Form -->
                 <form id="uploadPaymentProofForm{{ $uniqueId }}" method="POST" action="{{route('payment.upload', ['id' => $uniqueId] ) }}" enctype="multipart/form-data">
                     @csrf
                     <input type="hidden" name="transaction_id" value="{{ $uniqueId }}">
 
                     <!-- Payment Type -->
-                    <div class="form-group mb-3">
+                    <div class="form-group mb-3 p-3 rounded" style="background-color: #E1C1D7;">
                         <label for="paymentType{{ $uniqueId }}">Payment Type</label>
                         <div class="form-check">
                             <input class="form-check-input " type="radio" name="payment_type" id="partialPayment{{ $uniqueId }}" value="Partial Payment" required>
@@ -27,7 +27,7 @@
 
                     <!-- File Upload (Only Single File Allowed) -->
                     <div class="form-group mb-2">
-                        <label for="uploadProof{{ $uniqueId }}">Upload Proof</label>
+                        <label cass=for="uploadProof{{ $uniqueId }}">Upload Proof</label>
                         <input type="file" class="form-control-file" id="uploadProof{{ $uniqueId }}" name="proof_file" accept="image/*" required>
                     </div>
                     <small class="form-text text-muted">Only 1 picture is allowed.</small>

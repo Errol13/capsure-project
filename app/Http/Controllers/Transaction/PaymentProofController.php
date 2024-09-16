@@ -44,4 +44,26 @@ class PaymentProofController extends Controller
 
         return redirect()->back()->with('message', 'Payment proof uploaded successfully.');
     }
+
+
+    public function confirmPayment(Request $request, $transactionId)
+    {
+        // Validate payment_proof_id 
+        $request->validate([
+            'payment_proof_id' => 'required|exists:payment_proofs,proof_id',
+        ]);
+
+        // Fetch the transaction and the payment proof
+        $transaction = Transaction::findOrFail($transactionId);
+        $paymentProof = PaymentProof::findOrFail($request->input('payment_proof_id'));
+
+        // Determine the confirmed status based on payment type
+        $confirmedStatus = $paymentProof->payment_type === 'Partial Payment' ? 'Partially Paid' : 'Fully Paid';
+
+        // Update the transaction status
+        $transaction->update(['payment_status' => $confirmedStatus]);
+
+        // Redirect with success message
+        return redirect()->back()->with('success', 'Payment confirmed successfully!');
+    }
 }

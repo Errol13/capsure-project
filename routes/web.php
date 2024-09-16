@@ -102,6 +102,7 @@ Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_reque
 
 #payment proof
 Route::post('/transaction/paymentproof/upload/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'uploadPaymentProof'])->name('payment.upload');
+Route::patch('/transaction/paymentproof/confirm/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'confirmPayment'])->name('payment.confirm');
 
 #Validation
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');

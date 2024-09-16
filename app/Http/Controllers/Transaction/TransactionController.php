@@ -100,6 +100,42 @@ class TransactionController extends Controller
 
     public function showFreelancerTransact()
     {
-        return view('freelancer.f_myTransaction');
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        //get the freelancer's transactions
+        $transactions = $user->freelancer->transactions()->with(['event', 'client.user', 'payment_proofs'])->get();
+
+        // Set the timezone to Asia/Manila
+        $timezone = 'Asia/Manila';
+        $today = Carbon::now($timezone);
+
+
+        // Filter for upcoming transactions (start_date is in the future)
+        $upcomingTransactions = $transactions->filter(function ($transaction) use ($today) {
+            return Carbon::parse($transaction->event->start_date)->greaterThan($today);
+        });
+
+        // Filter for ongoing transactions (today is between start_date and end_date)
+        $ongoingTransactions = $transactions->filter(function ($transaction) use ($today) {
+            $startDate = Carbon::parse($transaction->event->start_date);
+            $endDate = Carbon::parse($transaction->event->end_date);
+            return $today->between($startDate, $endDate);
+        });
+
+        // Filter for previous transactions (end_date is in the past)
+        $previousTransactions = $transactions->filter(function ($transaction) use ($today) {
+            return Carbon::parse($transaction->event->end_date)->lessThan($today);
+        });
+
+        return view(
+            'freelancer.f_myTransaction',
+            [
+                'ongoing' => $ongoingTransactions,
+                'upcoming' => $upcomingTransactions,
+                'previous' => $previousTransactions
+            ]
+        );
     }
 }

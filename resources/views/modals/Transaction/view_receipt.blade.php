@@ -11,7 +11,9 @@
                 @foreach($paymentProofs as $index => $proof)
                 <div class="mb-4">
                     <!-- Payment Type -->
+                    <span class="text-muted">Date uploaded: {{ $proof->created_at->format('M j Y, h:i A') }}</span>
                     <p><strong>Payment Type:</strong> {{ $proof->payment_type }}</p>
+                    
 
                     <!-- Receipt Image with Fancybox integration -->
                     <a href="{{ Storage::url($proof->file_path) }}" data-fancybox="gallery" data-caption="Payment Type: {{ $proof->payment_type }}">

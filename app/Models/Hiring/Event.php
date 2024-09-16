@@ -27,6 +27,11 @@ class Event extends Model
         'client_id',
     ];
 
+    protected $casts = [
+        'start_date' => 'datetime',
+        'end_date'   => 'datetime',
+    ];
+
     protected $primaryKey = 'event_id';
 
     public function client()
@@ -34,7 +39,8 @@ class Event extends Model
         return $this->belongsTo(Client::class, 'client_id');
     }
 
-    public function event_jobs(){
+    public function event_jobs()
+    {
         return $this->hasMany(EventJob::class, 'event_id');
     }
 
