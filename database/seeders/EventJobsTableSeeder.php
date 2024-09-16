@@ -30,6 +30,22 @@ class EventJobsTableSeeder extends Seeder
                 'status' => 'open',
                 'event_id' => 2,
             ],
+
+            [
+                'service_needed' => 'Photographer',
+                'job_category' => 'Photography',
+                'number_of_people' => 1,
+                'status' => 'Closed',
+                'event_id' => 3,
+            ],
+
+            [
+                'service_needed' => 'Videographer',
+                'job_category' => 'Videography',
+                'number_of_people' => 1,
+                'status' => 'Closed',
+                'event_id' => 3,
+            ],
            
         ];
 

@@ -13,6 +13,7 @@
                     <!-- Payment Type -->
                     <span class="text-muted">Date uploaded: {{ $proof->created_at->format('M j Y, h:i A') }}</span>
                     <p><strong>Payment Type:</strong> {{ $proof->payment_type }}</p>
+                    <p><strong>Amount:</strong> {{ $proof->amount_paid }}</p>
                     
 
                     <!-- Receipt Image with Fancybox integration -->

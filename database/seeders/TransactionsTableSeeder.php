@@ -34,6 +34,26 @@ class TransactionsTableSeeder extends Seeder
                 'payment_status' => 'Unpaid',
                 'transaction_status' => 'Pending',
             ],
+
+            [
+                'client_id' => 1,
+                'freelancer_id' => 2,
+                'job_id' => 3,
+                'hiring_request_id' => 3,
+                'payment_amount' => 805.00,
+                'payment_status' => 'Unpaid',
+                'transaction_status' => 'On-going',
+            ],
+
+            [
+                'client_id' => 1,
+                'freelancer_id' => 4,
+                'job_id' => 4,
+                'hiring_request_id' => 4,
+                'payment_amount' => 800.00,
+                'payment_status' => 'Unpaid',
+                'transaction_status' => 'On-going',
+            ],
            
         ];
 

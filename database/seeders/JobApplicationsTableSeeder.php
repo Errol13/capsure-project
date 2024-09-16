@@ -28,6 +28,20 @@ class JobApplicationsTableSeeder extends Seeder
                 'job_id' => 2,
                 'status' => 'Accepted',
             ],
+
+            [
+                'freelancer_id' => 2,
+                'service_id' => 1,
+                'job_id' => 3,
+                'status' => 'Accepted',
+            ],
+
+            [
+                'freelancer_id' => 4,
+                'service_id' => 2,
+                'job_id' => 4,
+                'status' => 'Accepted',
+            ],
             // Add more job applications as needed
         ];
 
