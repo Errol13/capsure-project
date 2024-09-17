@@ -17,7 +17,7 @@ class TransactionController extends Controller
 
         // Fetch the client's events with necessary fields
         $events = $user->client->events()
-            ->with(['transactions.payment_proofs']) // Get related transactions and payment proofs
+            ->with(['transactions.payment_proofs', 'transactions.reviews']) // Include reviews in the transactions
             ->select('event_id', 'title', 'start_date', 'end_date') // Include relevant event fields
             ->get();
 
@@ -32,19 +32,35 @@ class TransactionController extends Controller
             });
         };
 
-        // Filter for ongoing events (start_date <= today <= end_date OR at least one transaction has status 'On-going')
         $ongoingEvents = $events->filter(function ($event) use ($today) {
+            // Check if the event is currently ongoing
+            $isOngoing = $event->start_date <= $today && $event->end_date >= $today;
+
+            // Check if there is at least one pending transaction
             $hasOngoingTransaction = $event->transactions->contains(function ($transaction) {
-                return $transaction->transaction_status === 'On-going';
+                return $transaction->transaction_status === 'Ongoing';
             });
 
-            return ($event->start_date <= $today && $event->end_date >= $today) || $hasOngoingTransaction;
+            // Check if the client has made a review for each transaction
+            $clientMadeReviews = $event->transactions->every(function ($transaction) {
+                // Check if the client has reviewed the freelancer for this transaction
+                return $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+            });
+
+            // Only include the event if it is ongoing or if it has ongoing transactions but is not upcoming
+            return $isOngoing || ($hasOngoingTransaction && !$clientMadeReviews) || (!$isOngoing && $hasOngoingTransaction  && !$clientMadeReviews) ;
         })->map(function ($event) use ($timezone) {
             $event = $this->formatEventDates($event, $timezone);
             $event->transactions = $event->transactions->sortBy('start_date');
             return $event;
         });
+
+
+        Log::info('Ongoing V: ', $ongoingEvents->toArray());
+
         $ongoingEvents = $sortEventsByDate($ongoingEvents);
+
+
 
         // Filter for upcoming events (start_date is in the future)
         $upcomingEvents = $events->filter(function ($event) use ($today) {
@@ -56,13 +72,19 @@ class TransactionController extends Controller
         });
         $upcomingEvents = $sortEventsByDate($upcomingEvents);
 
-        // Filter for previous events (end_date is in the past, and none of the transactions have status 'On-going')
+        // Filter for previous events (end_date is in the past, and none of the transactions have status 'On-going', and client has made reviews)
         $previousEvents = $events->filter(function ($event) use ($today) {
             $hasOngoingTransaction = $event->transactions->contains(function ($transaction) {
-                return $transaction->transaction_status === 'On-going';
+                return $transaction->transaction_status === 'Ongoing';
             });
 
-            return $event->end_date < $today && !$hasOngoingTransaction;
+            // Check if the client has made a review for each transaction
+            $clientMadeReviews = $event->transactions->every(function ($transaction) {
+                // Check if the client has reviewed the freelancer for this transaction
+                return $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+            });
+
+            return $event->end_date < $today && (!$hasOngoingTransaction && $clientMadeReviews) || ($hasOngoingTransaction && $clientMadeReviews);
         })->map(function ($event) use ($timezone) {
             $event = $this->formatEventDates($event, $timezone);
             $event->transactions = $event->transactions->sortBy('start_date');
@@ -92,13 +114,12 @@ class TransactionController extends Controller
             }),
         ];
 
-        Log::info('Previous: ', $transactionsByEvent['previous']->toArray());
+        // Log for debugging 
+        //Log::info('Ongoing: ', $transactionsByEvent['ongoing']->toArray());
 
         // Return the view with grouped transactions by event
         return view('client.c_myTransaction', compact('transactionsByEvent'));
     }
-
-
 
     /**
      * Format the start and end date of the event.
@@ -131,8 +152,8 @@ class TransactionController extends Controller
         /** @var User $user */
         $user = Auth::user();
 
-        // Get the freelancer's transactions with related event and other necessary relationships
-        $transactions = $user->freelancer->transactions()->with(['event', 'client.user', 'payment_proofs'])->get();
+        // Get the freelancer's transactions with related event and clients (eager load user table) as well as paymentproofs
+        $transactions = $user->freelancer->transactions()->with(['event', 'client.user', 'payment_proofs', 'reviews'])->get();
 
         // Set the timezone to Asia/Manila
         $timezone = 'Asia/Manila';
@@ -143,8 +164,11 @@ class TransactionController extends Controller
             $startDate = Carbon::parse($transaction->event->start_date);
             $endDate = Carbon::parse($transaction->event->end_date);
 
+            //check if the freelancer made a review
+            $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists();
+
             // Include transactions with "On-going" status or that are ongoing by date
-            return $transaction->transaction_status === 'On-going' || $today->between($startDate, $endDate);
+            return ($transaction->transaction_status === 'Ongoing' && $madeaReview !== true) || $today->between($startDate, $endDate);
         })->sortBy(function ($transaction) {
             // Sort by the event's start_date
             return Carbon::parse($transaction->event->start_date);
@@ -158,8 +182,10 @@ class TransactionController extends Controller
         // Filter for previous transactions (end_date is in the past)
         $previousTransactions = $transactions->filter(function ($transaction) use ($today) {
             return Carbon::parse($transaction->event->end_date)->lessThan($today)
-                && $transaction->transaction_status !== 'On-going'; // Exclude "On-going" transactions because of unpaid or unsettled payments or review
+                && $transaction->transaction_status !== 'Ongoing'; // Exclude "On-going" transactions because of unpaid or unsettled payments or review
         });
+
+
 
         return view(
             'freelancer.f_myTransaction',

@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Hiring\Event;
 use App\Models\Hiring\Hiring_request;
-use App\Models\Hiring\Review;
+use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;

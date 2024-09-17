@@ -32,7 +32,7 @@ class CreateEventForm extends Component
 
     public function addJob()
     {
-        $this->jobs[] = ['service_needed' => '', 'job_category' => '', 'number_of_people' => 1, 'status' => 'open'];
+        $this->jobs[] = ['service_needed' => '', 'job_category' => '', 'number_of_people' => 1, 'status' => 'Open'];
     }
 
     public function removeJob($index)

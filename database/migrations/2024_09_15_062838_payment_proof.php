@@ -18,6 +18,9 @@ return new class extends Migration
             $table->decimal('amount_paid', 10, 2);
             $table->text('file_path');
             $table->timestamps();
+
+            // Adding a unique composite index to prevent duplicate payment proofs
+            $table->unique(['proof_id', 'transaction_id'], 'unique_paymentproof');
         });
     }
 

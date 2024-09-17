@@ -44,16 +44,35 @@
                     @php
                     $event = $transaction->event;
                     $today = \Carbon\Carbon::now('Asia/Manila');
-                    $isDue = $event->end_date < $today && $transaction->transaction_status === 'On-going';
+                    $unsettledPayment = $transaction->payment_status !== 'Fully Paid';
+                    $noReview = !$transaction->reviews()->where('reviewee_role', 'client')->exists();
+                    $isDue = $event->end_date < $today && $transaction->transaction_status === 'Ongoing';
                         @endphp
 
                         <tr style="border:none;">
                             <td colspan="7" class="p-0">
                                 <div class="card mb-1 mt-3">
                                     <div class="card-header poppins-medium d-flex justify-content-between align-items-center">
-                                        <span>{{$transaction->event->title}} @if ($isDue)
-                                            <span class="text-danger fs-6 fw-bold">(DUE)</span>
+                                        <span>{{$transaction->event->title}}
+                                            @if ($isDue)
+
+                                            @php
+                                            //generate a unique id for modal warning due
+                                            $dueId = 'Modal-' . $transaction->transaction_id . '-freelancer-' . auth()->user()->id;
+                                            @endphp
+
+                                            <span class="text-danger fs-6 fw-bold" data-bs-toggle="modal" data-bs-target="#due{{$dueId}}">
+                                                <i class="fas fa-solid fa-circle-exclamation"></i>
+                                            </span>
+                                            
+                                            @include('modals.Transaction.due_modal', ['id' => $dueId, 'eventTitle' => $transaction->event->title,
+                                            'unsettledPayment' => $unsettledPayment, 'noReview' => $noReview])
+                                           
                                             @endif</span>
+
+                                           
+
+                                        <small>{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                         <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration:none;">View Post</a>
                                     </div>
                                     <div class="card-body">
@@ -62,6 +81,7 @@
                                         // Find the latest payment proof
                                         $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
                                         $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
+                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists() ?? false;
                                         @endphp
 
                                         <div class="row align-items-center mb-2">
@@ -138,16 +158,20 @@
                                             @endif
 
                                             <div class="col-2 d-flex justify-content-end">
-
+                                                @if($transaction->transaction_status !== 'Done')
                                                 <button type="button"
                                                     class="btn btn-outline-secondary btn-sm btn-fit-width"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#reviewFreelancerModal"
+                                                    data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
                                                     @if($transaction->payment_status !== 'Fully Paid') disabled @endif>
                                                     Write a Review
                                                 </button>
-
+                                                @elseif($transaction->transaction_status === 'Done' || $madeaReview)
+                                                <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
+                                                @endif
                                             </div>
+
                                             @if($transaction->payment_proofs->isNotEmpty())
                                             <!--include here the modal for viewing receipt-->
                                             @include('modals.Transaction.view_receipt',
@@ -160,6 +184,23 @@
                                             ['transaction_id' => $transaction->transaction_id,
                                             'payment_proof_id' => $latestPaymentProof->proof_id])
                                             @endif
+
+                                            <!--write review -->
+                                            @php
+                                            $reviewee_role = 'client';
+                                            $reviewee = $transaction->client;
+                                            $review = $transaction->reviews()->where('reviewee_role', 'client')->first(); //the freelancer's review
+                                            @endphp
+
+                                            @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
+                                            'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+
+                                            <!--view review -->
+                                            @if($madeaReview)
+                                            @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
+                                            'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
+                                            @endif
+
 
                                         </div>
                                     </div>
@@ -291,10 +332,55 @@
                                         </div>
                                         @endif
 
+                                        @php
+                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists() ?? false;
+                                        @endphp
+
                                         <div class="col-2 d-flex justify-content-end">
-                                            <button class="btn btn-outline-secondary btn-sm btn-fit-width"
-                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a review</button>
+                                            @if($transaction->transaction_status !== 'Done')
+                                            <button type="button"
+                                                class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif>
+                                                Write a Review
+                                            </button>
+                                            @elseif($transaction->transaction_status === 'Done' || $madeaReview)
+                                            <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
+                                            @endif
+
                                         </div>
+
+                                        @if($transaction->payment_proofs->isNotEmpty())
+                                        <!--include here the modal for viewing receipt-->
+                                        @include('modals.Transaction.view_receipt',
+                                        ['transactionId' => $transaction->transaction_id,
+                                        'paymentProofs' => $transaction->payment_proofs])
+
+                                        <!--confirmation modal-->
+
+                                        @include('modals.Transaction.confirm_payment',
+                                        ['transaction_id' => $transaction->transaction_id,
+                                        'payment_proof_id' => $latestPaymentProof->proof_id])
+                                        @endif
+
+                                        <!--write review -->
+                                        @php
+                                        $reviewee_role = 'client';
+                                        $reviewee = $transaction->client;
+                                        $review = $transaction->reviews()->where('reviewee_role', 'client')->first(); //the freelancer's review
+                                        @endphp
+
+                                        @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
+                                        'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+
+                                        <!--view review -->
+                                        @if($madeaReview)
+                                        @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
+                                        'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
+                                        @endif
+
                                     </div>
 
                                 </div>
@@ -330,6 +416,8 @@
                     <!--Loop through each project-->
                     @foreach($previous as $transaction)
 
+
+
                     <tr style="border:none;">
                         <td colspan="7" class="p-0">
                             <div class="card mb-1 mt-3">
@@ -346,6 +434,10 @@
                                 </div>
                                 <div class="card-body">
 
+                                    @php
+                                    $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists() ?? false;
+                                    @endphp
+
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
                                             <img src="{{asset($transaction->client->user->profile_image)}}" class="rounded-circle">
@@ -358,9 +450,9 @@
                                         <div class="col-2 text-left">₱ {{$transaction->payment_amount}}</div>
 
                                         <div class="col-2 d-flex align-items-center">
-                                            <span class="text-success">{{$transaction->payment_staus}}</span>
+                                            <span class="text-success">{{$transaction->payment_status}}</span>
                                         </div>
-                                        <div class="col-2 text-success">{{$transaction->payment_staus}}</div>
+                                        <div class="col-2 text-success">{{$transaction->payment_status}}</div>
 
                                         @if($transaction->payment_proofs->isNotEmpty())
                                         <div class="col-1 d-flex justify-content-center">
@@ -379,8 +471,26 @@
                                         @endif
 
                                         <div class="col-2 d-flex justify-content-end">
-                                            <button class="btn btn-outline-secondary btn-sm btn-fit-width">View Review</button>
+                                           @if($transaction->transaction_status === 'Done' || $madeaReview)
+                                            <button type="button" class="btn btn-outline-secondary btn-sm btn-fit-width"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
+                                            @endif
+
                                         </div>
+
+                                        @php
+                                        $reviewee_role = 'client';
+                                        $reviewee = $transaction->client;
+                                        $review = $transaction->reviews()->where('reviewee_role', 'client')->first(); //the freelancer's review
+                                        @endphp
+
+                                        <!--view review -->
+                                        @if($madeaReview)
+                                        @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
+                                        'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
+                                        @endif
+
                                     </div>
 
                                 </div>

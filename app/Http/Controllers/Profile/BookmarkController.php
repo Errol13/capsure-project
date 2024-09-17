@@ -7,7 +7,13 @@ use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
 {
-    public function showBookMark(){
+    public function showBookMark()
+    {
         return view('client.c_bookmarks');
-        }
+    }
+
+    //save the freelancer
+    public function bookmarkFreelancers($freelancer_id){
+        
+    }
 }

@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Transaction;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction\PaymentProof;
 use App\Models\Transaction\Transaction;
+use App\Models\User;
+use App\Notifications\PaymentProofSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentProofController extends Controller
 {
@@ -36,6 +39,14 @@ class PaymentProofController extends Controller
                 'amount_paid' => $request->input('amount_paid'),
                 'payment_type' => $request->input('payment_type'),
             ]);
+
+            /** @var User */
+            $user = Auth::user();
+
+            // notify freelancer
+            if ($transaction->freelancer->user) {
+                $transaction->freelancer->user->notify(new PaymentProofSent($user->first_name, $user->last_name, $request->input('amount_paid')));
+            }
         } else {
             return redirect()->back()->with('error', 'No file attachment!');
         }

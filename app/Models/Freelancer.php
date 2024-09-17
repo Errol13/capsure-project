@@ -5,7 +5,7 @@ namespace App\Models;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
-use App\Models\Hiring\Review;
+use App\Models\Transaction\Review;
 use App\Models\Profile\Certificates;
 use App\Models\Profile\Portfolio;
 use App\Models\Profile\Service;

@@ -48,6 +48,9 @@ Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::c
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
 
 
+#bookmark
+Route::post('/client-bookmark/save/{id}', [App\Http\Controllers\Profile\BookmarkController::class, 'bookmarkFreelancer'])->name('bookmark.save');
+
 #settings
 Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
 Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateFreelancer'])->name('freelancer.update');
@@ -106,6 +109,9 @@ Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_reque
 #payment proof
 Route::post('/transaction/paymentproof/upload/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'uploadPaymentProof'])->name('payment.upload');
 Route::patch('/transaction/paymentproof/confirm/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'confirmPayment'])->name('payment.confirm');
+
+#review 
+Route::post('/transaction/review/write/{id}', [App\Http\Controllers\Transaction\ReviewController::class, 'writeReview'])->name('submit.review');
 
 #Validation
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');

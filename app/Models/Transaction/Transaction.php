@@ -7,6 +7,7 @@ use App\Models\Freelancer;
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
+use App\Models\Transaction\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -64,5 +65,9 @@ class Transaction extends Model
 
     public function payment_proofs(){
         return $this->hasMany(PaymentProof::class, 'transaction_id');
+    }
+
+    public function reviews(){
+        return $this->hasMany(Review::class, 'transaction_id');
     }
 }
