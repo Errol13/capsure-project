@@ -30,7 +30,7 @@
                     <a class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center" href="{{ route('validphone') }}">
                         <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
                         Verify Account
-</a>
+                    </a>
                     @endif
                 </div>
             </div>
@@ -55,22 +55,22 @@
             <div class="col-md-12 d-flex align-items-center justify-content-center mt-2">
                 <div class="w-100">
 
-                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center">
+                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#createTeamModal">
                         <i class="fas fa-users me-3" style="color: gray;"></i>
                         Create Team
                     </button>
-
+                    @include('modals.createTeam')
                 </div>
             </div>
 
             <div class="col-md-12 d-flex align-items-center justify-content-center mt-2">
                 <div class="w-100">
 
-                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center">
+                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#joinTeamModal">
                         <i class="fas fa-users me-3" style="color: gray;"></i>
                         Join a Team
                     </button>
-
+                    @include('modals.joinTeam')
                 </div>
             </div>
 
