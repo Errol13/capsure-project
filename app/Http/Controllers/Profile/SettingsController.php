@@ -213,12 +213,14 @@ class SettingsController extends Controller
         return redirect()->back()->with('success', 'Skill deleted successfully!');
     }
 
-    public function showClientSettings(){
+    public function showClientSettings()
+    {
         return view('client.c_settings');
-      }
-    
-    
-    public function showBeFreelancer(){
+    }
+
+
+    public function showBeFreelancer()
+    {
         return view('freelancer.beFreelancer');
-      }  
+    }
 }

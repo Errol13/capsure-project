@@ -13,7 +13,6 @@
                 <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
                 <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
             </div>
-            <p class="text-muted">Posted {{ $event->created_at->diffForHumans() }}</p>
             <hr>
             <div class="row">
                 <div class="col-md-4">
