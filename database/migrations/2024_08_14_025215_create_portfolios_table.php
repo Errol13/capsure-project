@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('album_name', 255);
             $table->json('path')->nullable(); // Store file paths in JSON format
             $table->timestamps();
-            $table->unique(['freelancer_id', 'album_name']); // Ensure uniqueness of combination
+            $table->unique(['freelancer_id', 'album_name']); 
         });
     }
 

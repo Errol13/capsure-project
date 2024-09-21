@@ -15,6 +15,7 @@ class UsersTableSeeder extends Seeder
         $users = [];
         $clients = [];
         $freelancers = [];
+        $admin = [];
 
         for ($i = 1; $i <= 40; $i++) {
             $isFreelancer = $i % 2 === 0; // Even IDs for freelancers, odd IDs for clients
@@ -50,9 +51,37 @@ class UsersTableSeeder extends Seeder
             ];
         }
 
+        
+
         // Insert users and retrieve the inserted IDs
         DB::table('users')->insert($users);
         $insertedUsers = DB::table('users')->get();
+
+        //for admin 
+
+        $admin = [
+            'first_name' => 'Admin',
+            'last_name' => 'Istrator',
+            'email' => 'admin@gmail.com',
+            'email_verified_at' => Carbon::now(),
+            'password' => Hash::make('admin 1234!'),
+            'date_joined' => Carbon::now(),
+            'birthdate' => Carbon::now()->subYears(rand(20, 40))->format('Y-m-d'),
+            'age' =>  Carbon::parse($birthdate)->age,
+            'street' => rand(100, 999) . ' Random St',
+            'barangay' => 'Barangay ' . rand(1, 5),
+            'city' => 'Cityville',
+            'contact_number' => '09' . rand(100000000, 999999999),
+            'isNumberVerified' => true,
+            'profile_image' => 'assets/daisy.svg',
+            'isVerified' => true,
+            'user_type' => 'admin',
+            'remember_token' => Str::random(10),
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now(),
+        ];
+
+        DB::table('users')->insert($admin);
 
         // Create associated client or freelancer records using the correct user IDs
         foreach ($insertedUsers as $user) {

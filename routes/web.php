@@ -6,8 +6,9 @@ use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Livewire\AddPortfolio;
 use App\Http\Livewire\CreateEventForm;
-use App\Livewire\CreateEventForm as LivewireCreateEventForm;
+use App\Livewire\ClientHome;
 use App\Livewire\MyJobs;
+use App\Livewire\ShowServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 

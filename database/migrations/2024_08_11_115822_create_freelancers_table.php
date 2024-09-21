@@ -22,6 +22,11 @@ return new class extends Migration
             $table->boolean('isin_A_Team')->default(false);
             $table->timestamps();
         });
+
+        Schema::table('freelancers', function (Blueprint $table) {
+            $table->index('user_id');
+            $table->index('avg_rating');
+        });
     }
 
     /**

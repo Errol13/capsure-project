@@ -21,6 +21,11 @@ return new class extends Migration
             $table->decimal('job_fee',10,2);
             $table->timestamps();
         });
+
+        Schema::table('services', function (Blueprint $table) {
+            $table->index('job_category');
+            $table->index('job_title');
+        });
     }
 
     /**

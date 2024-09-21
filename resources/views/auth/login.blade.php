@@ -52,7 +52,7 @@
                         </div>
                         <p class="text-center fs-cstm-6">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
                         <div class="row row-md-6 d-grid gap-3">
-                            <button type="submit" class="btn-auth rounded-pill border-white">
+                            <button type="submit" class="btn-auth rounded-pill border-0 border-white">
                                 {{ __('Login') }}
                             </button>
                         </div>
