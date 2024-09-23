@@ -1,6 +1,6 @@
 <!-- Modal for Adding Awards -->
 <div class="modal fade" id="addAwardsModal" tabindex="-1" aria-labelledby="addAwardsModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form action="{{ route('certificates.store') }}" method="POST" enctype="multipart/form-data">
                 @csrf
@@ -32,7 +32,7 @@
 
 <!-- Modal for Editing Awards -->
 <div class="modal fade" id="editAwardModal" tabindex="-1" aria-labelledby="editAwardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form action="{{ route('certificates.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf

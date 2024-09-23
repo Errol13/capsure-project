@@ -86,13 +86,13 @@
                                         </select>
                                     </div>
                                     <div class="col-md-2 text-end">
-                                        <i class="fas fa-pen-to-square me-2" onclick="editService('{{ $service->id }}')"></i>
-                                        <button type="button" class="btn px-0 " onclick="confirmServiceDelete('{{ $service->id }}')"><i class="text-danger fas fa-trash"></i></button>
+                                        <i class="fas fa-pen-to-square me-2" id="edit-btn-{{ $service->id }}" onclick="editService('{{ $service->id }}')"></i>
+
                                     </div>
                                 </div>
                                 <div class="text-end mt-2">
                                     <button type="button" class="btn btn-primary d-none save-btn" id="save-btn-{{ $service->id }}" onclick="saveService('{{ $service->id }}')">Save</button>
-                                    <button type="button" class="btn btn-secondary d-none cancel-btn" id="cancel-btn-{{ $service->id }}" onclick="cancelEdit('{{ $service->id }}')">Cancel</button>
+                                    <button type="button" class="btn btn-secondary d-none cancel-btn" id="cancel-btn-{{ $service->id }}" onclick="cancelEditMobile('{{ $service->id }}')">Cancel</button>
                                 </div>
                             </div>
                         </div>
@@ -104,7 +104,7 @@
 </div>
 
 
-<!-- JavaScript to enable/disable edit mode as well as saving and deleting -->
+<!-- JavaScript to enable/disable edit mode as well as saving -->
 <script>
     // For Services
     function editService(id) {
@@ -115,9 +115,14 @@
         });
         serviceItem.querySelector('.save-btn').classList.remove('d-none');
         serviceItem.querySelector('.cancel-btn').classList.remove('d-none');
+        // Hide the edit icon
+        const editButton = serviceItem.querySelector(`#edit-btn-${id}`);
+        if (editButton) {
+            editButton.classList.add('d-none');
+        }
     }
 
-    function cancelEdit(id) {
+    function cancelEditMobile(id) {
         const serviceItem = document.querySelector(`[data-id="${id}"]`);
         serviceItem.querySelectorAll('input, select').forEach((input) => {
             input.setAttribute('readonly', 'readonly');
@@ -125,12 +130,12 @@
         });
         serviceItem.querySelector('.save-btn').classList.add('d-none');
         serviceItem.querySelector('.cancel-btn').classList.add('d-none');
-    }
-
-    function confirmServiceDelete(serviceId) {
-        if (confirm('Are you sure you want to delete this service?')) {
-            document.getElementById(`delete-form-${serviceId}`).submit();
+        // Show the edit icon again
+        const editButton = serviceItem.querySelector(`#edit-btn-${id}`);
+        if (editButton) {
+            editButton.classList.remove('d-none');
         }
+
     }
 
     function saveService(serviceId) {

@@ -53,4 +53,17 @@ class Client extends Model
     {
         return $this->hasMany(Transaction::class, 'client_id');
     }
+
+    public function getMyReviews()
+    {
+        return $this->reviews()->where('reviewee_role', 'client')->get();
+    }
+
+    //update avg_rating
+    public function updateAverageRating()
+    {
+        $average = $this->getMyReviews()->avg('rating');
+        $this->avg_rating = round($average, 1);
+        $this->save();
+    }
 }

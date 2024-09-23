@@ -11,7 +11,7 @@
             <div class="row my-3">
                 <div class="profile-container">
                     <img src="{{ asset('assets/daisy.svg') }}" alt="Profile Picture" class="rounded-circle img-fluid">
-                </div> 
+                </div>
             </div>
 
             <!--Address and Contacts -->
@@ -133,12 +133,19 @@
                         <div class="col">
                             <div class="d-flex align-items-center mt-1">
                                 @for ($i = 1; $i <= 5; $i++)
-                                    <i class="fas fa-star {{ $i <= $user->freelancer->avg_rating ? 'filled' : '' }}"></i>
+                                    @if ($i <=floor($user->freelancer->avg_rating))
+                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                    @elseif ($i == ceil($user->freelancer->avg_rating) && $user->freelancer->avg_rating - floor($user->freelancer->avg_rating) > 0)
+                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                    @else
+                                    <i class="far fa-star"></i> <!-- Empty star -->
+                                    @endif
                                     @endfor
                             </div>
                         </div>
                     </div>
                 </div>
+
                 @endif
 
                 <!--Hire Chat Report -->
@@ -149,7 +156,7 @@
                 </div>
 
                 <!-- Report Modal -->
-                 @include('modals.f_report')
+                @include('modals.f_report')
 
                 <!--Team -->
                 <div class=""></div>
@@ -202,124 +209,140 @@
         <div class="d-flex justify-content-between align-items-center">
             <div class="d-flex align-items-center">
                 <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Client Reviews</h2>
-                <p class="mb-0 fs-smaller">(10 reviews)</p>
+                @if($user->freelancer->reviews->isNotEmpty())
+                <p class="mb-0 fs-smaller">({{$user->freelancer->reviews->count()}} reviews)</p>
+                @endif
             </div>
+            @if($user->freelancer->reviews->isNotEmpty())
             <a class="fs-sm fs-md poppins-light txt-review" href="#">See All Reviews</a>
+            @endif
         </div>
+
+        @if($user->freelancer->reviews->isEmpty())
+        <p class="fs-6 text-center text-muted">No Reviews</p>
+        @else
 
         <p class="text-center fs-smaller fs-md mt-2">Recent Projects</p>
 
-
-
         <!-- Reviews -->
+        @foreach($reviews as $review)
+
+        @php
+        $start_date_formatted = \Carbon\Carbon::parse($review->transaction->event->start_date)->format('M j, Y');
+        $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
+        @endphp
         <div class="container">
             <div class="row d-flex align-items-center justify-content-between">
-                <!-- Review Item 1 -->
-                <div class="col-12 col-md-5 flex-grow-1 mb-4 rvw-container rounded">
-                    <div class="d-flex align-items-center justify-content-between mb-0">
+                <!-- Review Item  -->
+                <div class="col-sm-12 col-md-5 mb-4 rounded rvw-container ">
+                    <div class="d-flex align-items-center justify-content-between m-1 mb-0">
                         <div>
-                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
+                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>
                         </div>
-                        <a class="fs-sm fs-md poppins-light txt-review" href="#">See Post</a>
+                        <a class="fs-sm fs-md poppins-light txt-review" 
+                        href="{{route('client-viewpost', ['id' => $review->transaction->event->event_id] )}}">See Post</a>
                     </div>
-                    <p class="fs-sm fs-md poppins-light mt-0">June 27 2024</p>
+                    <p class="fs-sm poppins-light mt-0">{{$start_date_formatted}} - {{$end_date_formatted}}</p>
                     <div class="d-flex">
                         <div class="text-center me-3">
                             <!-- Profile Picture -->
-                            <img src="{{ asset('assets/daisy.svg') }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                            <img src="{{ asset($review->client->user->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
                         </div>
                         <div>
                             <!-- Review Content -->
-                            <h5 class="font-weight-bold">John Doe</h5>
-                            <div class="mb-2">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-half text-warning"></i>
+                            <h5 class="font-weight-bold">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </h5>
+                            <div class=" star-rating mb-2">
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($i <=floor($review->rating))
+                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                    @elseif ($i == ceil($review->rating) && $review->rating - floor($review->rating) > 0)
+                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                    @else
+                                    <i class="far fa-star"></i> <!-- Empty star -->
+                                    @endif
+                                   
+                                    @endfor
+                                    <span class="ms-1">{{ number_format($review->rating, 1) }}</span>
                             </div>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis auctor elit ut purus consectetur, sed tincidunt sapien luctus."</p>
+                            <p>{{$review->content}}</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="col-1"></div>
-                <!-- Review Item 2 -->
-                <div class="col-12 col-md-5 flex-grow-1 mb-4 rvw-container rounded">
-                    <div class="d-flex align-items-center justify-content-between mb-0">
-                        <div>
-                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">18th Birthday Celebration</h2>
-                        </div>
-                        <a class="fs-sm fs-md poppins-light txt-review" href="#">See Post</a>
-                    </div>
-                    <p class="fs-sm fs-md poppins-light">June 27 2024</p>
-                    <div class="d-flex">
-                        <div class="text-center me-3">
-                            <!-- Profile Picture -->
-                            <img src="{{ asset('assets/daisy.svg') }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
-                        </div>
-                        <div>
-                            <!-- Review Content -->
-                            <h5 class="font-weight-bold">John Doe</h5>
-                            <div class="mb-2">
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-fill text-warning"></i>
-                                <i class="bi bi-star-half text-warning"></i>
-                            </div>
-                            <p>"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis auctor elit ut purus consectetur, sed tincidunt sapien luctus."</p>
-                        </div>
-                    </div>
-                </div>
 
             </div>
         </div>
+        @endforeach
+        @endif
     </section>
 
     <!--Portfolio -->
     <section id="portfolio-freelancer">
         <div class="row">
-        <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">PORTFOLIO</h2>
-        </div>
-        <div class="container mt-2 mb-4">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="videos-tab" data-bs-toggle="tab" href="#videos" role="tab" aria-controls="videos" aria-selected="true">Videos</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="images-tab" data-bs-toggle="tab" href="#images" role="tab" aria-controls="images" aria-selected="false">Images</a>
-            </li>
-        </ul>
+            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">PORTFOLIO</h2>
 
-        <!-- Tab content -->
-        <div class="tab-content" id="portfolioTabsContent">
-            <div class="tab-pane fade show active" id="videos" role="tabpanel" aria-labelledby="videos-tab">
-                <!-- Videos content -->
-                <div class="row mt-3">
-                    <div class="col-md-4 mb-5 mb-md-3">
-                        <div class="embed-responsive embed-responsive-16by9">
-                            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/dQw4w9WgXcQ" allowfullscreen></iframe>
+            <div class="container mt-2 mb-4">
+
+                @if ($user->freelancer->portfolios->isEmpty())
+                <p class="text-muted">No portfolios found.</p>
+
+                @else
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
+                    @foreach ($user->freelancer->portfolios as $index => $portfolio)
+                    <li class="nav-item" role="presentation">
+                        <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ $portfolio->portfolio_id }}" data-bs-toggle="tab" href="#portfolio-{{ $portfolio->portfolio_id }}" role="tab" aria-controls="portfolio-{{ $portfolio->portfolio_id }}" aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
+                            {{ $portfolio->album_name }}
+                        </a>
+                    </li>
+                    @endforeach
+                </ul>
+
+                <!-- Tab content -->
+                <div class="tab-content mt-3" id="portfolioTabsContent">
+                    @foreach ($user->freelancer->portfolios as $index => $portfolio)
+                    <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="portfolio-{{ $portfolio->portfolio_id }}" role="tabpanel" aria-labelledby="tab-{{ $portfolio->portfolio_id }}">
+                        @if ($portfolio->path)
+                        <div class="d-flex flex-wrap">
+                            @foreach (json_decode($portfolio->path) as $filePath)
+                            @php
+                            $relativePath = str_replace('public/', '', $filePath);
+                            $fileName = basename($relativePath);
+                            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                            @endphp
+                            @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
+                            <div class="position-relative">
+                                @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+                                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
+                                    <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-profile-portfolio">
+                                </a>
+                                @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
+                                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
+                                    <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-profile-portfolio"></video>
+                                </a>
+                                @else
+                                <p>Unsupported file type: {{ $fileExtension }}</p>
+                                @endif
+                            </div>
+                            @else
+                            <p>File path mismatch: {{ $relativePath }}</p>
+                            @endif
+                            @endforeach
                         </div>
+                        @else
+                        <p>No media found for this album.</p>
+                        @endif
                     </div>
-                    <!-- Add more video items -->
+                    @endforeach
                 </div>
+                @endif
+
+
             </div>
-            <div class="tab-pane fade" id="images" role="tabpanel" aria-labelledby="images-tab">
-                <!-- Images content here -->
-                <div class="row mt-3">
-                    <div class="col-md-4 mb-5 mb-md-3">
-                        <img src="https://via.placeholder.com/300" class="img-fluid" alt="Image 1">
-                    </div>
-                    <!-- Add more image items -->
-                </div>
-            </div>
-        </div>
-    </div>
     </section>
 
-    
+
 </div>
 
 

@@ -75,7 +75,7 @@
                                         </span>
 
                                         @include('modals.Transaction.due_modal', ['id' => $dueId ,'eventTitle' => $eventGroup['event']->title,
-                                        'unsettledPayment' => '$unsettledPayment', 'noReview' => $noReview])
+                                        'unsettledPayment' => $unsettledPayment, 'noReview' => $noReview])
                                         @endif
                                     </span>
 

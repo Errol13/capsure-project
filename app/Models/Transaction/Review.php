@@ -34,7 +34,24 @@ class Review extends Model
         return $this->belongsTo(Freelancer::class, 'freelancer_id');
     }
 
-    public function transaction(){
+    public function transaction()
+    {
         return $this->belongsTo(Transaction::class, 'transaction_id');
+    }
+
+    protected static function booted()
+    {
+        static::created(function ($review) {
+            // Check if the review is for a freelancer
+            if ($review->reviewee_role === 'freelancer') {
+                $review->freelancer->updateAverageRating();
+            }
+            
+            // Check if the review is for a client
+            if ($review->reviewee_role === 'client') {
+                $review->client->updateAverageRating();
+            }
+        });
+        
     }
 }

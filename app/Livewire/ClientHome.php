@@ -67,8 +67,16 @@ class ClientHome extends Component
 
     private function fetchAllFreelancers()
     {
-        return User::whereHas('freelancer')->with('freelancer')->paginate(9);
+        return User::whereHas('freelancer')
+            ->with('freelancer')
+            ->join('freelancers', 'users.id', '=', 'freelancers.user_id')
+            ->orderBy('freelancers.avg_rating', 'desc')
+            ->orderBy('number_of_projects', 'desc')
+            ->orderBy('user_id')
+            ->select('users.*') 
+            ->paginate(9);
     }
+
 
     private function fetchFilteredUsers()
     {
@@ -104,7 +112,7 @@ class ClientHome extends Component
             })
             ->when($this->rating !== 'any-rate', function ($query) {
                 $query->whereHas('freelancer', function ($query) {
-                    $query->where('avg_rating', '>=', $this->rating); 
+                    $query->where('avg_rating', '>=', $this->rating);
                 });
             })
             ->when($this->location, function ($query) {
@@ -135,6 +143,7 @@ class ClientHome extends Component
         // Initially fetch all freelancers
         if ($this->query === '' && $this->firstDisplay) {
             $users = $this->fetchAllFreelancers();
+            Log::info('Filtered User Count: ', $users->toArray());
         } else {
             $users = $this->fetchFilteredUsers();
 
@@ -144,6 +153,8 @@ class ClientHome extends Component
                 $users = collect(); // or an empty array
             }
         }
+
+
 
         return view('livewire.client-home', [
             'users' => $users // Pass users to the view

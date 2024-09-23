@@ -3,8 +3,13 @@
 namespace App\Models;
 
 use App\Models\Hiring\Event;
+use App\Models\Profile\Chat;
+use App\Models\Profile\Otp;
+use App\Models\Profile\Report;
 use App\Models\Profile\Service;
 use App\Models\Profile\SocialMediaAccount;
+use App\Models\Profile\Suspension;
+use App\Models\Profile\Verification;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
@@ -99,6 +104,36 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function socmed()
     {
         return $this->hasMany(SocialMediaAccount::class, 'user_id');
+    }
+
+    public function sentChats()
+    {
+        return $this->hasMany(Chat::class, 'sender');
+    }
+
+    public function receivedChats()
+    {
+        return $this->hasMany(Chat::class, 'recipient');
+    }
+
+    public function otp()
+    {
+        return $this->hasOne(Otp::class, 'user_id');
+    }
+
+    public function verification()
+    {
+        return $this->hasOne(Verification::class, 'user_id');
+    }
+
+    public function submittedReports()
+    {
+        return $this->hasMany(Report::class, 'reporter_id');
+    }
+
+    public function suspension()
+    {
+        return $this->hasOne(Suspension::class, 'user_id');
     }
 
 }

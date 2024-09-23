@@ -3,6 +3,8 @@
 namespace App\Livewire;
 
 use App\Models\Profile\Portfolio;
+use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -21,11 +23,14 @@ class UpdatePortfolio extends Component
 
     public function mount($portfolios)
     {
+        Log::info('Component mounted.');
         $this->portfolios = $portfolios;
     }
 
+    #[On('filesUpdated')]
     public function updatedFiles()
     {
+        // Trigger the preview update
         $this->dispatch('fileUploaded');
     }
 
@@ -42,7 +47,8 @@ class UpdatePortfolio extends Component
 
         // Handle file uploads
         foreach ($this->files as $file) {
-            $path = $file->store('public/portfolios');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
             $portfolio->path = json_encode(array_merge(json_decode($portfolio->path, true) ?? [], [$path]));
         }
 
@@ -51,11 +57,13 @@ class UpdatePortfolio extends Component
         session()->flash('success', 'Album updated successfully.');
 
         $this->reset();
+
+        return redirect()->route('freelancer-settings');
     }
 
     public function resetForm()
     {
-        $this->selectedAlbumId= "";
+        $this->selectedAlbumId = "";
         $this->files = [];
     }
 
@@ -67,6 +75,7 @@ class UpdatePortfolio extends Component
 
     public function render()
     {
+
         return view('livewire.updateportfolio');
     }
 }

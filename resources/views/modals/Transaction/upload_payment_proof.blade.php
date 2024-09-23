@@ -28,7 +28,7 @@
                         <div class="input-group d-flex justify-content-start align-items-center">
                             <span class="bg-white me-2 fw-bold" style="color:#91216C;">₱</span>
                             <input type="number" class="form-control" id="amountPaid{{ $uniqueId }}" 
-                            style="border: #E1C1D7 solid 1px;" name="amount_paid" min="1" step="0.01" required>
+                            style="border: #E1C1D7 solid 1px;" name="amount_paid" min="0" step="0.01" required>
                         </div>
                     </div>
 

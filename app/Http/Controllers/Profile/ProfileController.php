@@ -20,8 +20,11 @@ class ProfileController extends Controller
 
       if ($user->user_type == 'freelancer') {
           // Load related data for freelancers
-          $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios');
-          return view('freelancer.f_profile', compact('user','fullName'));
+          $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios', 'freelancer.reviews.transaction.event');
+
+          //get the freelancer's reviews made by the clients
+          $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
+          return view('freelancer.f_profile', compact('user','fullName', 'reviews'));
       } elseif ($user->user_type == 'client') {
           // Load related data for clients
           $user->load('client');

@@ -45,8 +45,6 @@
 
 <body>
 
-
-
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
@@ -143,8 +141,12 @@
                             </a>
                         </li>
 
-                        <!--for livewire or dynamic notifications -->
-                        <livewire:notifications />
+                        <li>
+                            <!--for livewire or dynamic notifications -->
+                            <livewire:notifications />
+                        </li>
+
+
 
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

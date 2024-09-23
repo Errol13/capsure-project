@@ -181,8 +181,11 @@ class TransactionController extends Controller
 
         // Filter for previous transactions (end_date is in the past)
         $previousTransactions = $transactions->filter(function ($transaction) use ($today) {
+
+            $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists();
+            
             return Carbon::parse($transaction->event->end_date)->lessThan($today)
-                && $transaction->transaction_status !== 'Ongoing'; // Exclude "On-going" transactions because of unpaid or unsettled payments or review
+                && $transaction->transaction_status !== 'Ongoing' || $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
         });
 
 

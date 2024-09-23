@@ -7,8 +7,10 @@ use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
 use App\Models\Transaction\Review;
 use App\Models\Profile\Certificates;
+use App\Models\Profile\Membership;
 use App\Models\Profile\Portfolio;
 use App\Models\Profile\Service;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -79,5 +81,35 @@ class Freelancer extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'freelancer_id');
+    }
+
+    public function membership()
+    {
+        return $this->hasOne(Membership::class, 'freelancer_id');
+    }
+
+    public function team()
+    {
+        return $this->hasOneThrough(
+            Team::class, //final model to access
+            Membership::class, //intermediate model 
+            'freelancer_id', // Foreign key on memberships table
+            'team_id',       // Foreign key on teams table
+            'user_id',       // Local key on freelancers table
+            'team_id'       // Local key on memberships table
+        );
+    }
+
+    public function getMyReviews()
+    {
+        return $this->reviews()->where('reviewee_role', 'freelancer')->get();
+    }
+
+    // Update avg_rating
+    public function updateAverageRating()
+    {
+        $average = $this->getMyReviews()->avg('rating');
+        $this->avg_rating = round($average, 1);
+        $this->save();
     }
 }

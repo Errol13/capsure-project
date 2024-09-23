@@ -44,11 +44,11 @@
                                 <p class="card-text open-sans-light small text-success mb-0">No projects yet</p>
                                 @endif
                             </div>
-                            <div class="ms-auto d-flex align-items-center">
-                                @if ($user->avg_rating > 0)
+                            <div class="ms-auto d-flex justify-content-center align-items-center">
+                                @if ($user->freelancer->avg_rating > 0)
                                 <span class="text-warning me-1">★</span>
-                                <span class="fw-bold">{{ $user->freelancer->avg_rating }}</span>
-                                <span class="text-muted small ms-1">(10)</span>
+                                <span class="fw-bold">{{ number_format($user->freelancer->avg_rating, 1) }}</span>
+                                <span class="text-muted small ms-1">({{ $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count() }})</span>
                                 @else
                                 <span class="text-muted me-1 fs-smaller">No ratings yet</span>
                                 @endif
@@ -118,17 +118,17 @@
 
                         <!-- if no projects yet -->
                         @if($user->freelancer->number_of_projects > 0)
-                        <p class="card-text open-sans-light small text-success mb-0">{{ $user->freelancer->number_of_projects }} done</p>
+                        <p class="card-text open-sans-light small text-success mb-0">({{ $user->freelancer->number_of_projects }}) done</p>
                         @else
                         <p class="card-text open-sans-light small text-success mb-0">No projects yet</p>
                         @endif
                     </div>
-                    <div class="ms-auto d-flex align-items-center">
-                        @if($user->avg_rating > 0)
+                    <div class="ms-auto d-flex justify-content-center align-items-center">
+                        @if($user->freelancer->avg_rating > 0)
                         <span class="text-warning me-1">★</span>
                         <!-- Display Freelancer Rating and Reviews -->
-                        <span class="fw-bold">{{ $user->freelancer->avg_rating }}</span>
-                        <span class="text-muted small ms-1">(10)</span>
+                        <span class="fw-bold">{{ number_format($user->freelancer->avg_rating, 1) }}</span>
+                        <span class="text-muted ms-1">({{ $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count() }})</span>
                         @else
                         <span class="text-muted me-1 fs-smaller ">No ratings yet</span>
                         @endif
