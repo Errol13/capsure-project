@@ -73,11 +73,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     {
         return "{$this->first_name} {$this->last_name}";
     }
-   
+
 
     public function canAccessFilament(): bool
     {
-        return $this->user_type === 'admin'&& $this->hasVerifiedEmail(); // Access control for Filament
+        return $this->user_type === 'admin' && $this->hasVerifiedEmail(); // Access control for Filament
     }
 
     public function canAccessPanel(Panel $panel): bool
@@ -136,4 +136,15 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return $this->hasOne(Suspension::class, 'user_id');
     }
 
+
+    public function getProfileImageUrlAttribute()
+    {
+        // Check if the user has uploaded a profile image
+        if ($this->profile_image && $this->profile_image !== 'assets/daisy.svg') {
+            return asset('storage/' . $this->profile_image);
+        }
+
+        // Return default profile image if none is uploaded
+        return asset('assets/daisy.svg');
+    }
 }

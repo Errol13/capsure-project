@@ -11,13 +11,27 @@
         <!--Profile Pic and Personal Information -->
         <div class="row my-2">
             <div class="profile-container">
-                <img src="{{ asset('assets/daisy.svg') }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                <img id="profilePicPreview" src="{{ $user->profile_image == 'assets/daisy.svg' ? asset('assets/daisy.svg') : asset('storage/' . $user->profile_image) }}" alt="Profile Picture" class="rounded-circle img-fluid">
             </div>
+        
+            <!-- Change Profile Pic -->
+            <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
+                @csrf
+                <div class="d-flex align-items-center justify-content-center my-3">
+                    <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
+                    <span class="ms-2">
+                        <a href="#" class="p-0" onclick="showUploadOptions(); return false;">
+                            <i class="fas fa-solid fa-arrow-up-from-bracket"></i>
+                        </a>
+                    </span>
+                </div>
+                <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
 
-            <div class="d-flex align-items-center justify-content-center my-3">
-                <p class="poppins-regular f6 mb-0 text-muted">Edit your profile</p>
-                <span class="ms-2"><i class="fas fa-solid fa-pen-to-square"></i></span>
-            </div>
+                <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">
+                    <button type="submit" class="btn-verify rounded px-3 me-2">Submit</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                </div>
+            </form>
 
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="w-100">
@@ -348,7 +362,7 @@
         $portfolioCount = $user->freelancer->portfolios->count();
         @endphp
 
-        <!--content of the portfolio --> 
+        <!--content of the portfolio -->
         <div class="mt-2">
             @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
         </div>
@@ -396,5 +410,35 @@
             field.type = "password";
             button.innerHTML = '<i class="fas fa-eye"></i>';
         }
+    }
+
+
+    function showUploadOptions() {
+        // Show action buttons and hide the upload icon
+        document.getElementById('actionButtons').classList.remove('d-none');
+        document.querySelector('.fa-arrow-up-from-bracket').style.display = 'none';
+
+        // Trigger the file input
+        document.getElementById('profilePicUpload').click();
+    }
+
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('profilePicPreview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result; // Update the src with the new image
+            };
+            reader.readAsDataURL(input.files[0]); // Convert to base64 string
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('profilePicUpload').value = ''; // Clear file input
+        document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
+        document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
+        document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
     }
 </script>
