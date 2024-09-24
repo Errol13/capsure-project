@@ -72,7 +72,7 @@
                     <div class="d-flex">
                         <div class="text-center me-3">
                             <!-- Profile Picture -->
-                            <img src="{{ asset($clientUser->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                            <img src="{{ $clientUser->profile_image_url }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
                         </div>
                         <div>
                             <!-- Profile Content -->

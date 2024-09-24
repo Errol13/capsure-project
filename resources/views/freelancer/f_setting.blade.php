@@ -17,7 +17,7 @@
                 <!-- Basic Info -->
                 <div class="row my-4 ">
                     <div class="col-12 profile-container">
-                        <img src="{{ $user->profile_image }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <img src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
                 </div>
 

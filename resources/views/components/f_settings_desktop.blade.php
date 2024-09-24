@@ -11,8 +11,9 @@
         <!--Profile Pic and Personal Information -->
         <div class="row my-2">
             <div class="profile-container">
-                <img id="profilePicPreview" src="{{ $user->profile_image == 'assets/daisy.svg' ? asset('assets/daisy.svg') : asset('storage/' . $user->profile_image) }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                <img id="profilePicPreview" src="{{$user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
             </div>
+            <p>{{$user->profile_image}}</p>
         
             <!-- Change Profile Pic -->
             <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">

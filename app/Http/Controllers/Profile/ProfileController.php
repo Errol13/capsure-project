@@ -40,38 +40,38 @@ class ProfileController extends Controller
   }
 
   public function updateProfilePic(Request $request)
-{
-   /** @var User $user */
+  {
+    /** @var User $user */
     $user = Auth::user();
 
     // Validate the incoming request
     $request->validate([
-        'profile_picture' => 'required|image|mimes:jpg,png,gif|max:5120', // Adjust the max size as needed
+      'profile_picture' => 'required|image|mimes:jpg,png,gif|max:5120', // Adjust the max size as needed
     ]);
 
     // Handle the uploaded file
     if ($request->hasFile('profile_picture')) {
-        // Delete the old profile picture if it exists
-        if ($user->profile_image && Storage::exists($user->profile_image)) {
-            Storage::delete($user->profile_image);
-        }
+      // Delete the old profile picture if it exists
+      if ($user->profile_image && Storage::exists($user->profile_image)) {
+        Storage::delete($user->profile_image);
+      }
 
-        // Get the uploaded file
-        $file = $request->file('profile_picture');
+      // Get the uploaded file
+      $file = $request->file('profile_picture');
 
-        // Create a unique name for the file using the original name and the user's last name
-        $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
-        $lastName = $user->last_name;
-        $newFileName = "{$fileName}_{$lastName}." . $file->getClientOriginalExtension();
+      // Create a unique name for the file using the original name and the user's last name
+      $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+      $lastName = $user->last_name;
+      $newFileName = "{$fileName}_{$lastName}." . $file->getClientOriginalExtension();
 
-        // Store the file and get the path
-        $path = $file->storeAs('public/profile_pictures', $newFileName);
+      // Store the file and get the path
+      $path = $file->storeAs('profile_pictures', $newFileName, 'public');
 
-        // Update the user's profile picture path in the database
-        $user->profile_image = $path;
-        $user->save();
+      // Update the user's profile picture path in the database
+      $user->profile_image = $path;
+      $user->save();
     }
 
     return redirect()->back()->with('success', 'Profile picture updated successfully.');
-}
+  }
 }

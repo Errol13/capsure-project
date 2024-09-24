@@ -17,6 +17,8 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class User extends Authenticatable implements MustVerifyEmail, FilamentUser, HasName
 {
@@ -139,12 +141,15 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function getProfileImageUrlAttribute()
     {
-        // Check if the user has uploaded a profile image
-        if ($this->profile_image && $this->profile_image !== 'assets/daisy.svg') {
-            return asset('storage/' . $this->profile_image);
+        
+        $filePath = 'storage/' . $this->profile_image;
+        
+        if ($this->profile_image && Storage::disk('public')->exists($this->profile_image)) {
+            return asset(str_replace(' ', '%20', $filePath)); 
         }
-
-        // Return default profile image if none is uploaded
-        return asset('assets/daisy.svg');
+    
+        return asset('assets/daisy.svg'); 
     }
+    
+
 }

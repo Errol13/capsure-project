@@ -10,7 +10,7 @@
             <!--Profile Pic and Personal Information -->
             <div class="row my-3">
                 <div class="profile-container">
-                    <img src="{{ asset('assets/daisy.svg') }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                    <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
                 </div>
             </div>
 

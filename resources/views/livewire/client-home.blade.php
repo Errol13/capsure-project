@@ -101,8 +101,9 @@
             @php
             $paths = json_decode($portfolio->path, true);
             $firstImage = $paths[0];
+            $relativePath = str_replace('public/', '', $firstImage);
             @endphp
-            <img src="{{ $firstImage }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+            <img src="{{ asset('storage/' . $relativePath) }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
             @else
             <img src="{{ asset('assets/cover.svg') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
             @endif
@@ -110,7 +111,7 @@
             <div class="card-body open-sans-reg p-3">
                 <div class="d-flex align-items-center mb-2">
                     <!-- Display Freelancer Profile Image -->
-                    <img src="{{ $user->profile_image }}" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                    <img src="{{ $user->profile_image_url }}" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
                     <div class="ms-3">
                         <!-- Display Freelancer Name, Location, and Projects -->
                         <p class="card-text open-sans-reg fw-bold mb-0" style="line-height: 1;">{{ $user->first_name }} {{ $user->last_name }}</p>
