@@ -36,9 +36,9 @@
                 </form>
             </div>
             <div class="modal-footer" style="border-top: none;">
-                <button type="button" class="confirm">
+                <a class="confirm" href="/team-profile">
                     Create
-                </button>
+</a>
             </div>
         </div>
     </div>
