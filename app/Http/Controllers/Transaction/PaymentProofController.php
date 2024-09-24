@@ -16,7 +16,7 @@ class PaymentProofController extends Controller
     {
         // Validate the form data
         $request->validate([
-            'amount_paid' => 'required|numeric|min:1',
+            'amount_paid' => 'required|numeric|min:0',
             'payment_type' => 'required|in:Partial Payment,Full Payment',
             'proof_file' => 'required|mimes:jpeg,png,jpg|max:15360', // maximum of 15MB only
         ]);

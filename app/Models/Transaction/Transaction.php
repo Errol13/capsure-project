@@ -49,7 +49,7 @@ class Transaction extends Model
     public function event()
     {
         return $this->hasOneThrough(
-            Event::class,         // Final model we want to access
+            Event::class,         // Final model 
             EventJob::class,      // Intermediate model
             'job_id',             // Foreign key on EventJob (connecting to Transaction)
             'event_id',           // Foreign key on Event (connecting to EventJob)

@@ -1,6 +1,4 @@
-
-
-<div class="container mt-4">
+<div class="ps-0 ms-0 container mt-4">
     @if ($portfolios->isEmpty())
     <p class="fs-6 text-center open-sans-reg text-muted mt-5">No portfolios yet. Create one.</p>
     @else
@@ -9,7 +7,7 @@
         @foreach ($portfolios as $index => $portfolio)
         <li class="nav-item" role="presentation">
             <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ $portfolio->portfolio_id }}" data-bs-toggle="tab" href="#portfolio-{{ $portfolio->portfolio_id }}" role="tab" aria-controls="portfolio-{{ $portfolio->portfolio_id }}" aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
-                {{ $portfolio->album_name }}
+                {{ $portfolio->album_name }} <span><i class="ms-2 fas fa-solid fa-ellipsis-vertical"></i></span>
             </a>
         </li>
         @endforeach
@@ -30,20 +28,22 @@
                 <div class="position-relative">
                     @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-thumbnail">
+                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-profile-portfolio rounded">
                     </a>
                     @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-thumbnail"></video>
+                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-profile-portfolio rounded"></video>
                     </a>
                     @else
                     <p>Unsupported file type: {{ $fileExtension }}</p>
                     @endif
 
-                    <!-- Delete Button -->
-                    <button type="button" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-2" data-file-path="{{ $relativePath }}">
-                        Delete
-                    </button>
+                    <!-- Delete Checkbox -->
+                    <div class="form-check position-absolute top-0 end-0 m-2">
+                        <input type="checkbox" class="form-check-input" id="delete-checkbox-{{ $service->id }}" data-file-path="{{ $relativePath }}">
+                        <label class="form-check-label" for="delete-checkbox-{{ $service->id }}"> </label>
+                    </div>
+
                 </div>
                 @else
                 <p>File path mismatch: {{ $relativePath }}</p>

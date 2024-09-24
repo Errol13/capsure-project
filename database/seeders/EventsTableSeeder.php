@@ -28,7 +28,7 @@ class EventsTableSeeder extends Seeder
                 'payment_method' => 'Cash',
                 'budget_min' => 500.00,
                 'budget_max' => 1500.00,
-                'status' => 'open',
+                'status' => 'Open',
                 'created_at' => Carbon::now(), // Adding timestamps
                 'updated_at' => Carbon::now(), // Adding timestamps
             ],
@@ -44,7 +44,7 @@ class EventsTableSeeder extends Seeder
                 'payment_method' => 'Cash',
                 'budget_min' => 500.00,
                 'budget_max' => 1500.00,
-                'status' => 'open',
+                'status' => 'Open',
                 'created_at' => Carbon::now(), // Adding timestamps
                 'updated_at' => Carbon::now(), // Adding timestamps
             ],

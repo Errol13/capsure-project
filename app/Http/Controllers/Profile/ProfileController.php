@@ -13,11 +13,31 @@ class ProfileController extends Controller
 {
   //
 
+<<<<<<< HEAD
   public function showFreelancersProfile()
   {
     /** @var User $user */
     $user = Auth::user();
     $fullName = "{$user->first_name} {$user->last_name}";
+=======
+    public function showFreelancersProfile(){
+      /** @var User $user */
+      $user = Auth::user();
+      $fullName = "{$user->first_name} {$user->last_name}";
+
+      if ($user->user_type == 'freelancer') {
+          // Load related data for freelancers
+          $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios', 'freelancer.reviews.transaction.event');
+
+          //get the freelancer's reviews made by the clients
+          $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
+          return view('freelancer.f_profile', compact('user','fullName', 'reviews'));
+      } elseif ($user->user_type == 'client') {
+          // Load related data for clients
+          $user->load('client');
+          return view('client.c_profile', compact('user')); // No view created yet
+      }
+>>>>>>> 5fd78aa4d533e55c45f59a7fd38ef9958d9f1ff6
 
     if ($user->user_type == 'freelancer') {
       // Load related data for freelancers

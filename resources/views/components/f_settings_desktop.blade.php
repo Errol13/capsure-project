@@ -271,48 +271,7 @@
         </div>
 
         <!-- Services -->
-        <div class="row">
-            <!-- Add New Service Button -->
-            <div class="text-end mt-1 d-flex align-items-center">
-                <p class="mb-0 me-2 poppins-medium setting-color fs-5">Services</p>
-                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
-                </button>
-            </div>
-
-            @foreach ($user->freelancer->services as $service)
-            <div class="row mt-1 open-sans-reg" data-id="{{ $service->id }}">
-                <div class="col">
-                    <input type="text" class="form-control fs-smaller fs-md" value="{{ $service->job_title }}" readonly>
-                </div>
-                <div class="col">
-                    <input type="text" class="form-control fs-smaller fs-md" value="₱{{ $service->job_fee }} {{ $service->fee_type }}" readonly>
-                </div>
-                <div class="col-auto">
-                    <button type="button" class="btn edit-btn" onclick="toggleEdit('{{ $service->id }}')">
-                        <i class="fas fa-pen fs-6"></i>
-                    </button>
-
-                    <!-- Hidden elements -->
-                    <div class="edit-controls d-none">
-                        <button type="button" class="btn availability-toggle">
-                            <i class="fas fa-toggle-{{ $service->isAvailable ? 'on' : 'off' }} fs-6"></i>
-                        </button>
-                        <button type="button" class="btn text-danger delete-btn">
-                            <i class="fas fa-trash fs-6"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary save-btn">
-                            Save
-                        </button>
-                        <button type="button" class="btn btn-secondary cancel-btn">
-                            Cancel
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            @endforeach
-        </div>
+        <livewire:profile.service-manager :services="$user->freelancer->services" />
 
 
         <!--Skills -->
@@ -344,10 +303,12 @@
             </div>
             @include('modals.f_terms_desktop', ['freelancer' => $user->freelancer])
         </div>
+    </div>
 
+    <!--Portfolio -->
+    <div class="row mt-3">
 
-        <!--Portfolio -->
-        <div class="row mt-3">
+        <div class="d-flex justify-content-between align-items-center">
             <!-- Add New Service Button -->
             <div class="text-end mt-1 d-flex align-items-center">
                 <p class="mb-0 me-2 poppins-medium setting-color fs-5">Portfolio</p>
@@ -361,34 +322,39 @@
                     </button>
                     <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
                     @endif
-
             </div>
-            @php
-            $portfolioLimit = 3; // Maximum number of portfolios allowed
-            $portfolioCount = $user->freelancer->portfolios->count();
-            @endphp
 
-            <div class="mt-2">
-                @if ($user->freelancer->portfolios->isEmpty())
-                <div></div>
-                @else
-                <div class="d-flex justify-content-end mb-3">
-                    <!-- Upload Button -->
-                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                        <i class="fas fa-upload"></i> Upload
-                    </button>
-                    <!-- Delete Button -->
-                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        <i class="fas fa-trash"></i> Delete
-                    </button>
-                </div>
-                @endif
-
-                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+            <!--for the action buttons -->
+            @if ($user->freelancer->portfolios->isEmpty())
+            <div></div>
+            @else
+            <div class="d-flex justify-content-end mb-3">
+                <!-- Upload Button -->
+                <button type="button" class="btn-verify rounded p-1 px-2 me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                    <i class="fas fa-upload"></i> Upload
+                </button>
+                <!-- Delete Button -->
+                <button type="button" class="btn-report rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                    <i class="fas fa-trash"></i> Delete
+                </button>
             </div>
+            @endif
+
+        </div>
+
+
+        @php
+        $portfolioLimit = 3; // Maximum number of portfolios allowed
+        $portfolioCount = $user->freelancer->portfolios->count();
+        @endphp
+
+        <!--content of the portfolio --> 
+        <div class="mt-2">
+            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
         </div>
 
     </div>
+
 </div>
 
 <script>
@@ -431,42 +397,4 @@
             button.innerHTML = '<i class="fas fa-eye"></i>';
         }
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        // Function to toggle edit mode
-        window.toggleEdit = function(id) {
-            console.log('Editing service with ID:', id); // Verify ID is correct
-
-            const row = document.querySelector(`[data-id="${id}"]`);
-            if (!row) {
-                console.error(`No row found for id ${id}`);
-                return;
-            }
-
-            const isEditing = row.classList.toggle('editing');
-
-            // Toggle input and select fields
-            row.querySelectorAll('input').forEach(el => {
-                el.readOnly = !isEditing;
-                el.disabled = !isEditing;
-            });
-
-            // Toggle visibility of edit controls
-            const controls = row.querySelector('.edit-controls');
-            if (controls) {
-                controls.classList.toggle('d-none', !isEditing);
-            }
-
-            // Optionally update the button text or icon
-            const editButton = row.querySelector('.edit-btn');
-            if (editButton) {
-                editButton.innerHTML = isEditing ?
-                    '<i class="fas fa-check fs-6"></i>' // Change to check icon when in editing mode
-                    :
-                    '<i class="fas fa-pen fs-6"></i>'; // Pen icon when not in editing mode
-            }
-        };
-
-        // Optional: Add event listeners to existing edit buttons if needed
-    });
 </script>

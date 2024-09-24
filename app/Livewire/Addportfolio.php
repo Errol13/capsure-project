@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Profile\Portfolio;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 
@@ -94,10 +95,12 @@ class Addportfolio extends Component
         return redirect()->route('freelancer-settings');
     }
 
+    #[On('resetPortfolioForm')]
     public function resetForm()
     {
         $this->album_name = "";
         $this->files = [];
+        $this->resetErrorBag();
     }
 
     public function render()

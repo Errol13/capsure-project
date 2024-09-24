@@ -21,7 +21,12 @@ return new class extends Migration
             $table->string('dealer_user_type', 50); //who made or sent the offer
             $table->string('status', 50); // Request status (pending, accepted, rejected)
             $table->timestamps(); // Created at and updated at timestamps
-        });        
+        });
+        
+        Schema::table('hiring_requests', function (Blueprint $table) {
+            $table->index('hiring_request_id');
+            $table->index('job_id');
+        });
     }
 
     /**

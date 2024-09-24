@@ -20,6 +20,11 @@ class ClientController extends Controller
         return view('clients.index', compact('clients'));
     }
 
+    public function homeFilter(){
+
+        return view('client.client_home_test');
+    }
+
     /**
      * Display the specified client.
      *

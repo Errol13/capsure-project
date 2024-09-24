@@ -42,7 +42,7 @@ class TransactionsTableSeeder extends Seeder
                 'hiring_request_id' => 3,
                 'payment_amount' => 805.00,
                 'payment_status' => 'Unpaid',
-                'transaction_status' => 'On-going',
+                'transaction_status' => 'Ongoing',
             ],
 
             [
@@ -52,7 +52,7 @@ class TransactionsTableSeeder extends Seeder
                 'hiring_request_id' => 4,
                 'payment_amount' => 800.00,
                 'payment_status' => 'Unpaid',
-                'transaction_status' => 'On-going',
+                'transaction_status' => 'Ongoing',
             ],
            
         ];

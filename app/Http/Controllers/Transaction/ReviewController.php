@@ -42,17 +42,23 @@ class ReviewController extends Controller
         //update the transaction status to done
         $transaction = Transaction::findOrfail($transaction_id);
 
+        // If the freelancer made a review
+        if ($validatedData['reviewee_role'] === 'client') {
+            $transaction->freelancer->increment('number_of_projects');
+        }
+
+
         //find out if both parties already did the review
         $freelancerRated = $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
         $clientRated = $transaction->reviews()->where('reviewee_role', 'client')->exists();
 
         $bothPartyRated = $freelancerRated && $clientRated;
 
-        if($bothPartyRated){
+        if ($bothPartyRated) {
             $transaction->update(['transaction_status' => 'Done']);
         }
 
-      
+
         // Redirect back with success message
         return redirect()->back()->with('success', 'Review submitted successfully!');
     }

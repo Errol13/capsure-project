@@ -46,7 +46,7 @@ class HomeController extends Controller
                 return view('freelancer.f_home', compact('users'));
             } elseif ($user->user_type == 'admin') {
                 // Load admin-specific content
-                return view('admin.dashboard');
+                return redirect()->route('filament.admin.pages.dashboard');
             }
         } else {
             // Load general content for guests

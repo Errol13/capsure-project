@@ -49,8 +49,8 @@
                                 <div class="ms-auto d-flex align-items-center">
                                     @if ($user->client->avg_rating > 0)
                                     <span class="text-warning me-1">★</span>
-                                    <span class="fw-bold">{{ $user->client->avg_rating }}</span>
-                                    <span class="text-muted small ms-1">(10)</span>
+                                    <span class="fw-bold">{{ number_format($user->client->avg_rating, 1) }}</span>
+                                    <span class="text-muted small ms-1">({{ $user->client->reviews()->where('reviewee_role', 'client')->count() }})</span>
                                     @else
                                     <span class="text-muted me-1 fs-6">No ratings yet</span>
                                     @endif

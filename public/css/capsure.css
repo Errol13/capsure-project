@@ -845,6 +845,7 @@ select#year {
 
 .rvw-container {
     background-color: white;
+    border: #91216C solid 1px;
 }
 
 /* Create Event Page <-------------------------------------------------------------------------*/
@@ -1243,6 +1244,15 @@ select:disabled {
         max-height: 150px; 
         width: 150px;
         height: 100px;
+        object-fit: cover; 
+        margin: 5px;
+    }
+
+    .img-profile-portfolio{
+        max-width: 500px; 
+        max-height: 450px; 
+        width: 250px;
+        height: 200px;
         object-fit: cover; 
         margin: 5px;
     }

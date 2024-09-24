@@ -1,4 +1,4 @@
-<div wire:poll.5s>
+<div wire:poll.10s>
     <div class="ms-4 mt-5 mb-4">
         <h3 class="ms-5 mt-3 poppins-medium">My Jobs</h3>
     </div>
@@ -194,9 +194,6 @@
 
                                
 
-                                
-
-
                                 <!-- Negotiate Modal-->
                                 @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
                                 'service' => $job->serviceDetails])
@@ -252,7 +249,7 @@
 
                             <td class="open-sans-reg ">
                                
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-4 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-2 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
                             </td>
 
 

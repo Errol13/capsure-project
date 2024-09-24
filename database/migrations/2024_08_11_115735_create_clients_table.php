@@ -18,12 +18,15 @@ return new class extends Migration
             $table->integer('total_successful_hiring')->default(0);
             $table->decimal('hiring_rate', 5, 2)->default(0);
             $table->decimal('avg_rating', 3, 2)->default(0);
+            $table->json('favorites')->nullable(); //store the freelancer's ids
             $table->timestamps();
         });
 
-        // Adding the integer array directly in the same migration
+        Schema::table('clients', function (Blueprint $table) {
+            $table->index('user_id');
+            $table->index('avg_rating');
+        });
 
-        DB::statement('ALTER TABLE clients ADD COLUMN favorites INTEGER[]');
     }
 
     /**
