@@ -40,8 +40,8 @@
 
                     <!-- Delete Checkbox -->
                     <div class="form-check position-absolute top-0 end-0 m-2">
-                        <input type="checkbox" class="form-check-input" id="delete-checkbox-{{ $service->id }}" data-file-path="{{ $relativePath }}">
-                        <label class="form-check-label" for="delete-checkbox-{{ $service->id }}"> </label>
+                        <input type="checkbox" class="form-check-input delete-checkbox rounded border border-primary-subtle" id="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}" data-file-path="{{ $relativePath }}" data-portfolio-id="{{ $portfolio->portfolio_id }}">
+                        <label class="form-check-label" for="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}"> </label>
                     </div>
 
                 </div>
@@ -56,6 +56,52 @@
         </div>
         @endforeach
     </div>
+
+    
+
+    <!-- JavaScript to Handle Batch Deletion -->
+    <script>
+        document.getElementById('batchDeleteButton').addEventListener('click', function() {
+            const checkboxes = document.querySelectorAll('.delete-checkbox:checked');
+            const filesToDelete = [];
+
+            checkboxes.forEach(checkbox => {
+                filesToDelete.push({
+                    path: checkbox.getAttribute('data-file-path'),
+                    portfolioId: checkbox.getAttribute('data-portfolio-id')
+                });
+            });
+
+            if (filesToDelete.length > 0) {
+                // Send AJAX request to delete the selected files
+                fetch('/path/to/your/delete/endpoint', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
+                        },
+                        body: JSON.stringify({
+                            files: filesToDelete
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            // Handle successful deletion (e.g., refresh the page or remove deleted items from the DOM)
+                            location.reload();
+                        } else {
+                            alert('An error occurred while deleting files.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('An error occurred while deleting files.');
+                    });
+            } else {
+                alert('No files selected for deletion.');
+            }
+        });
+    </script>
     @endif
 
 </div>

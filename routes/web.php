@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FreelancerController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
+use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\AddPortfolio;
 use App\Http\Livewire\CreateEventForm;
 use App\Livewire\ClientHome;
@@ -12,9 +14,9 @@ use App\Livewire\ShowServices;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+
+Route::get('/', [WelcomePageController::class, 'showWelcomePage'])->name('welcome');
 
 Auth::routes([
     'register' => false,  // Disable default registration route

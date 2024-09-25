@@ -13,8 +13,7 @@
             <div class="profile-container">
                 <img id="profilePicPreview" src="{{$user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
             </div>
-            <p>{{$user->profile_image}}</p>
-        
+
             <!-- Change Profile Pic -->
             <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
                 @csrf
@@ -37,7 +36,7 @@
             <div class="col-md-12 d-flex justify-content-center">
                 <div class="w-100">
                     @if ($user->isVerified)
-                    <button class="w-100 rounded-3 btn-verified fs-5 d-flex align-items-center justify-content-center">
+                    <button class="w-100 rounded-3 btn-verified fs-5 d-flex align-items-center justify-content-center" disabled>
                         <i class="fas fa-check-circle me-3" style="color: #8FE2ED;"></i>
                         Verified
                     </button>
@@ -350,8 +349,11 @@
                 </button>
                 <!-- Delete Button -->
                 <button type="button" class="btn-report rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                    <i class="fas fa-trash"></i> Delete
+                    <i class="fas fa-trash"></i> Delete an Album
                 </button>
+
+                <!-- Batch Delete Button -->
+                <button id="batchDeleteButton" class="ms-2 btn-report rounded">Delete Selected Items</button>
             </div>
             @endif
 

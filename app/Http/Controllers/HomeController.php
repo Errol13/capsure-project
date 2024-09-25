@@ -50,7 +50,15 @@ class HomeController extends Controller
             }
         } else {
             // Load general content for guests
-            return view('welcome');
+
+            $freelancers = Freelancer::with('user')->orderBy('avg_rating', 'desc')
+                ->orderBy('number_of_projects', 'desc')
+                ->take(8)
+                ->get();
+
+            return view('welcome', compact('freelancers'));
         }
     }
+
+  
 }

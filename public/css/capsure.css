@@ -483,6 +483,29 @@ select#year {
     /* Three cards per row */
 }
 
+.freelancer-card {
+    background-color: #E1C1D7;
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+}
+
+.freelancer-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+
+
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
+}
+
+
 
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/
 
