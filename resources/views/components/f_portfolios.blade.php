@@ -6,8 +6,19 @@
     <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
         @foreach ($portfolios as $index => $portfolio)
         <li class="nav-item" role="presentation">
-            <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ $portfolio->portfolio_id }}" data-bs-toggle="tab" href="#portfolio-{{ $portfolio->portfolio_id }}" role="tab" aria-controls="portfolio-{{ $portfolio->portfolio_id }}" aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
-                {{ $portfolio->album_name }} <span><i class="ms-2 fas fa-solid fa-ellipsis-vertical"></i></span>
+            <a class="nav-link {{ $index == 0 ? 'active' : '' }}"
+                @if($desktopView)
+                id="tabDesktop-{{ $portfolio->portfolio_id }}"
+                href="#portfolioDesktop-{{ $portfolio->portfolio_id }}"
+                @else
+                id="tab-{{ $portfolio->portfolio_id }}"
+                href="#portfolioMobile-{{ $portfolio->portfolio_id }}"
+                @endif
+                data-bs-toggle="tab"
+                role="tab"
+                aria-controls="portfolio-{{ $portfolio->portfolio_id }}"
+                aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
+                {{ $portfolio->album_name }}
             </a>
         </li>
         @endforeach
@@ -15,7 +26,15 @@
 
     <div class="tab-content mt-3" id="portfolioTabsContent">
         @foreach ($portfolios as $index => $portfolio)
-        <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="portfolio-{{ $portfolio->portfolio_id }}" role="tabpanel" aria-labelledby="tab-{{ $portfolio->portfolio_id }}">
+        <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}"
+            @if($desktopView)
+            id="portfolioDesktop-{{ $portfolio->portfolio_id }}"
+            @else
+            id="portfolioMobile-{{ $portfolio->portfolio_id }}"
+            @endif
+            role="tabpanel"
+            aria-labelledby="{{ $desktopView ? 'tabDesktop-' : 'tab-' }}{{ $portfolio->portfolio_id }}">
+
             @if ($portfolio->path)
             <div class="d-flex flex-wrap">
                 @foreach (json_decode($portfolio->path) as $filePath)
@@ -24,6 +43,7 @@
                 $fileName = basename($relativePath);
                 $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
                 @endphp
+
                 @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
                 <div class="position-relative">
                     @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
@@ -43,7 +63,6 @@
                         <input type="checkbox" class="form-check-input delete-checkbox rounded border border-primary-subtle" id="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}" data-file-path="{{ $relativePath }}" data-portfolio-id="{{ $portfolio->portfolio_id }}">
                         <label class="form-check-label" for="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}"> </label>
                     </div>
-
                 </div>
                 @else
                 <p>File path mismatch: {{ $relativePath }}</p>
@@ -54,54 +73,82 @@
             <p>No media found for this album.</p>
             @endif
         </div>
+
         @endforeach
     </div>
 
-    
 
-    <!-- JavaScript to Handle Batch Deletion -->
-    <script>
-        document.getElementById('batchDeleteButton').addEventListener('click', function() {
-            const checkboxes = document.querySelectorAll('.delete-checkbox:checked');
-            const filesToDelete = [];
 
-            checkboxes.forEach(checkbox => {
-                filesToDelete.push({
-                    path: checkbox.getAttribute('data-file-path'),
-                    portfolioId: checkbox.getAttribute('data-portfolio-id')
+    @endif
+</div>
+
+
+<!-- JavaScript to Handle Batch Deletion -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const deleteButtonId = '{{ $desktopView ? "batchDeleteButtonDesktop" : "batchDeleteButtonMobile" }}';
+
+        // Use event delegation
+        document.body.addEventListener('click', function(event) {
+            if (event.target.closest(`#${deleteButtonId}`)) {
+                // Confirmation prompt before deletion
+                const confirmDelete = confirm("Are you sure you want to delete the selected items?");
+
+                if (!confirmDelete) {
+                    return; // Exit if the user cancels the operation
+                }
+
+                const checkboxes = document.querySelectorAll('.delete-checkbox:checked');
+                const portfolios = {};
+
+                checkboxes.forEach(checkbox => {
+                    const portfolioId = checkbox.getAttribute('data-portfolio-id');
+                    const filePath = checkbox.getAttribute('data-file-path');
+
+                    // Initialize array for each portfolio if it doesn't exist
+                    if (!portfolios[portfolioId]) {
+                        portfolios[portfolioId] = [];
+                    }
+
+                    // Add the file path to the correct portfolio
+                    portfolios[portfolioId].push(filePath);
                 });
-            });
 
-            if (filesToDelete.length > 0) {
-                // Send AJAX request to delete the selected files
-                fetch('/path/to/your/delete/endpoint', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
-                        },
-                        body: JSON.stringify({
-                            files: filesToDelete
+                if (Object.keys(portfolios).length > 0) {
+                    // Send AJAX request to delete the selected files
+                    fetch('/delete/portfolio/files', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
+                            },
+                            body: JSON.stringify({
+                                portfolios: portfolios // Use the structured portfolios object
+                            })
                         })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Handle successful deletion (e.g., refresh the page or remove deleted items from the DOM)
-                            location.reload();
-                        } else {
-                            alert('An error occurred while deleting files.');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('An error occurred while deleting files.');
-                    });
-            } else {
-                alert('No files selected for deletion.');
+                        .then(response => {
+                            // Check for response status to handle redirects or errors
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            if (data.success) {
+                                // Handle successful deletion (e.g., refresh the page or remove deleted items from the DOM)
+                                location.reload();
+                            } else {
+                                alert('An error occurred while deleting files: ' + (data.message || ''));
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('An error occurred while deleting files: ' + error.message);
+                        });
+                } else {
+                    alert('No files selected for deletion.');
+                }
             }
         });
-    </script>
-    @endif
-
-</div>
+    });
+</script>

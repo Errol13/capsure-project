@@ -84,7 +84,7 @@ Route::delete('/certificates/delete', [App\Http\Controllers\Profile\CertificateC
 
 #portfolio 
 Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
-Route::post('/delete/image', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteImage'])->name('delete.image');
+Route::post('/delete/portfolio/files', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteFiles'])->name('files.delete');
 Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteAlbum'])->name('delete-album');
 
 #My Events Page Client

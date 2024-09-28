@@ -7,6 +7,7 @@ use App\Models\Freelancer;
 use App\Models\Profile\Portfolio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 
 class PortfolioController extends Controller
@@ -83,37 +84,74 @@ class PortfolioController extends Controller
 
 
 
-    public function deleteImage(Request $request)
-    {
-        $filePath = $request->input('filePath');
-        $portfolioId = $this->extractPortfolioId($filePath); // Implement this method to extract portfolio ID from the path
+    public function deleteFiles(Request $request)
+{
+    // Validate the incoming request
+    $request->validate([
+        'portfolios' => 'required|array',
+        'portfolios.*' => 'required|array',
+        'portfolios.*.*' => 'required|string', // Each file path within each portfolio
+    ]);
 
-        // Find the portfolio and its images
+    Log::info('Delete Files requests:', $request->all());
+
+    $deletedFiles = [];
+    $failedFiles = [];
+
+    foreach ($request->portfolios as $portfolioId => $files) {
+        // Find the portfolio
         $portfolio = Portfolio::find($portfolioId);
         if (!$portfolio) {
-            return response()->json(['success' => false, 'message' => 'Portfolio not found.']);
+            $failedFiles[] = "Portfolio ID {$portfolioId} not found.";
+            continue;
         }
 
-        $paths = json_decode($portfolio->path, true);
+        // Get existing paths from the portfolio (including 'public/' prefix)
+        $paths = json_decode($portfolio->path, true) ?: [];
 
-        // Check if deleting this image will empty the portfolio
-        if (count($paths) === 1 && $paths[0] === $filePath) {
-            // Delete the portfolio record if it's the last image
+        foreach ($files as $filePath) {
+            // Prepend 'public/' to the relative path for comparison
+            $relativePath = 'public/portfolios/' . $portfolioId . '/' . basename($filePath);
+            Log::info("Checking file path: {$relativePath} against stored paths: ", $paths);
+
+            // Check if the file exists in the current portfolio paths
+            if (in_array($relativePath, $paths)) {
+                // Remove the file path from the paths array
+                $paths = array_filter($paths, fn($path) => $path !== $relativePath);
+
+                // Delete the file from storage
+                if (Storage::exists($relativePath)) { // Ensure correct path for deletion
+                    if (Storage::delete($relativePath)) {
+                        $deletedFiles[] = $relativePath;
+                    } else {
+                        $failedFiles[] = "Failed to delete file: {$relativePath}.";
+                    }
+                } else {
+                    $failedFiles[] = "File not found in storage: {$relativePath}.";
+                }
+            } else {
+                Log::warning("File path mismatch or not found in portfolio: {$relativePath}.");
+                $failedFiles[] = "File path mismatch or not found in portfolio: {$relativePath}.";
+            }
+        }
+
+        // Update the portfolio or delete it if empty
+        if (empty($paths)) {
+            // Delete the portfolio if there are no remaining images
             $portfolio->delete();
         } else {
-            // Remove the image path from the portfolio
-            $paths = array_filter($paths, fn($path) => $path !== $filePath);
-            $portfolio->path = json_encode($paths);
+            // Update the portfolio with the remaining paths
+            $portfolio->path = json_encode(array_values($paths));
             $portfolio->save();
         }
-
-        // Delete the actual file from storage
-        if (Storage::exists('public/' . $filePath)) {
-            Storage::delete('public/' . $filePath);
-        }
-
-        return response()->json(['success' => true]);
     }
+
+    if (empty($failedFiles)) {
+        return response()->json(['success' => true, 'deleted' => $deletedFiles]);
+    } else {
+        return response()->json(['success' => false, 'message' => 'Some files could not be deleted.', 'failed' => $failedFiles]);
+    }
+}
 
 
 

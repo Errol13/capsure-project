@@ -28,7 +28,7 @@
                         </div>
                         <div class="mb-4">
                             <!-- File Input -->
-                            <input type="file" id="fileUploadUpdate" wire:model="files" multiple accept="image/*,video/*" class="d-none"/>
+                            <input type="file" id="fileUploadUpdate" wire:model="files" multiple accept="image/*,video/*" class="d-none" required>
                             <!-- Custom Upload Button -->
                             <button type="button" class="btn-seeprof border-secondary-subtle w-100" onclick="document.getElementById('fileUploadUpdate').click();">
                                 <i class="fas fa-upload"></i> Upload Images/Videos

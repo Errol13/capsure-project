@@ -18,7 +18,7 @@ class UpdatePortfolio extends Component
 
     protected $rules = [
         'selectedAlbumId' => 'required|exists:portfolios,portfolio_id',
-        'files.*' => 'file|mimes:jpg,png,gif,mp4|max:51200' // Maximum size 50MB
+        'files.*' => 'required|file|mimes:jpg,png,gif,mp4|max:51200' // Maximum size 50MB
     ];
 
     public function mount($portfolios)

@@ -17,9 +17,28 @@
                 <!-- Basic Info -->
                 <div class="row my-4 ">
                     <div class="col-12 profile-container">
-                        <img src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
                 </div>
+
+                <!-- Change Profile Pic -->
+                <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
+                    @csrf
+                    <div class="d-flex align-items-center justify-content-center my-3">
+                        <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
+                        <span class="ms-2">
+                            <a href="#" class="p-0" onclick="showUploadOptions(); return false;">
+                                <i class="fas fa-solid fa-arrow-up-from-bracket"></i>
+                            </a>
+                        </span>
+                    </div>
+                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
+
+                    <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">
+                        <button type="submit" class="btn-verify rounded px-3 me-2">Submit</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                    </div>
+                </form>
 
                 <div class="row text-center mb-1 mt-4">
                     <div class="col-12 d-flex align-items-center justify-content-center">
@@ -272,33 +291,41 @@
                         @endphp
 
                         @if ($portfolioCount < $portfolioLimit)
-                            <button type="button" class="btn btn-primary mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
+                            <button type="button" class="btn-seeprof rounded mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
                             Create Album
                             </button>
                             @else
-                            <button type="button" class="btn btn-primary mt-3" disabled>
-                                Create Album
-                            </button>
-                            <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
+                            <div class="d-flex justify-content-start align-items-center">
+                                <button class="btn-seeprof mt-3" disabled>
+                                    Create Album
+                                </button>
+                                <span class="ms-2 text-danger mt-2"><small>You exceed the limit ({{ $portfolioLimit }})</small></span>
+                            </div>
                             @endif
 
-                            <div class="mt-2">
+                            <div class="mt-4">
                                 @if ($user->freelancer->portfolios->isEmpty())
                                 <div></div>
                                 @else
-                                <div class="d-flex justify-content-end mb-3">
+                                <div class="d-flex justify-content-end align-items-center mb-3">
                                     <!-- Upload Button -->
-                                    <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                    <button type="button" class="btn-verify rounded me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
                                         <i class="fas fa-upload"></i> Upload
                                     </button>
                                     <!-- Delete Button -->
-                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        <i class="fas fa-trash"></i> Delete
+                                    <button type="button" class="btn-cancel rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                    <i class="fa-solid fa-images"></i> Edit
                                     </button>
+
+                                    <!-- Batch Delete Button -->
+                                    <button id="batchDeleteButtonMobile" class="ms-2 btn-report rounded"><i class=" me-2 fas fa-trash"></i>Delete Selected</button>
+
                                 </div>
                                 @endif
 
-                                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+
+
+                                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => false])
                             </div>
                     </div>
 
@@ -372,6 +399,35 @@
             field.type = "password";
             button.innerHTML = '<i class="fas fa-eye"></i>';
         }
+    }
+
+    function showUploadOptions() {
+        // Show action buttons and hide the upload icon
+        document.getElementById('actionButtons').classList.remove('d-none');
+        document.querySelector('.fa-arrow-up-from-bracket').style.display = 'none';
+
+        // Trigger the file input
+        document.getElementById('profilePicUpload').click();
+    }
+
+    function previewImage(event) {
+        const input = event.target;
+        const preview = document.getElementById('profilePicPreview');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result; // Update the src with the new image
+            };
+            reader.readAsDataURL(input.files[0]); // Convert to base64 string
+        }
+    }
+
+    function resetForm() {
+        document.getElementById('profilePicUpload').value = ''; // Clear file input
+        document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
+        document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
+        document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
     }
 </script>
 

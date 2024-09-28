@@ -322,21 +322,25 @@
     <!--Portfolio -->
     <div class="row mt-3">
 
+        @php
+        $portfolioLimit = 3; // Maximum number of portfolios allowed
+        $portfolioCount = $user->freelancer->portfolios->count();
+        @endphp
+
         <div class="d-flex justify-content-between align-items-center">
             <!-- Add New Service Button -->
-            <div class="text-end mt-1 d-flex align-items-center">
+            <div class="text-end mt-1 d-flex justify-content-center align-items-center">
                 <p class="mb-0 me-2 poppins-medium setting-color fs-5">Portfolio</p>
                 @if ($portfolioCount < $portfolioLimit)
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#albumModal">
                     <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
                     </button>
                     @else
-                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#albumModal">
-                        <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
-                    </button>
-                    <span class="text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
+                    <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
+                    <span class=" ms-2 text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
                     @endif
             </div>
+
 
             <!--for the action buttons -->
             @if ($user->freelancer->portfolios->isEmpty())
@@ -353,21 +357,15 @@
                 </button>
 
                 <!-- Batch Delete Button -->
-                <button id="batchDeleteButton" class="ms-2 btn-report rounded">Delete Selected Items</button>
+                <button id="batchDeleteButtonDesktop" class="ms-2 btn-report rounded"><i class=" me-2 fas fa-trash"></i>Delete Selected</button>
             </div>
             @endif
 
         </div>
 
-
-        @php
-        $portfolioLimit = 3; // Maximum number of portfolios allowed
-        $portfolioCount = $user->freelancer->portfolios->count();
-        @endphp
-
         <!--content of the portfolio -->
         <div class="mt-2">
-            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios])
+        @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => true])
         </div>
 
     </div>
