@@ -49,6 +49,7 @@ Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 
 Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
 Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
+Route::get('/team-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showTeamProfile'])->name('team-profile');
 
 #profie-pic
 Route::post('/profilepic/update', [App\Http\Controllers\Profile\ProfileController::class, 'updateProfilePic'])->name('profilepic.update');
