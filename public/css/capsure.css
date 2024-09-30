@@ -623,6 +623,12 @@ select#year {
     text-decoration: none;
 }
 
+.btn-seemore:hover{
+    background-color: #ad3d88 !important;
+    color: white !important;
+    border: 1px #ad3d88 solid !important ;
+}
+
 .rw-height-eventdesc {
     display: -webkit-box; 
     -webkit-line-clamp: 3; 
@@ -659,6 +665,12 @@ select#year {
     background-color: white;
     text-decoration: none;
     border: 1px solid #91216C;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn-seeprof:hover{
+    background-color: #ad3d88 !important;
+    color: white !important;
 }
 
 

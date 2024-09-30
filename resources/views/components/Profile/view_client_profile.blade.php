@@ -2,8 +2,12 @@
 
 @section('content')
 <div class="container open-sans-reg mt-4">
-    <div class="row">
 
+    <a href="/freelancer-homepage" class="fs-5" style="text-decoration:none; color:black;">
+        <i class="mt-3 fas fa-arrow-left me-2 mb-4"></i>Back
+    </a>
+
+    <div class="row">
         <!--First Column -->
         <div class="col-4 col-md-4 col-lg-4">
             <!--Profile Pic and Personal Information -->

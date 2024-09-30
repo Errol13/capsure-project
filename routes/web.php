@@ -50,15 +50,20 @@ Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileControlle
 Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
 Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
 Route::get('/team-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showTeamProfile'])->name('team-profile');
+Route::get('/view/freelancer-profile\{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewFreelancerProfile'])->name('view-freelancer-profile');
+Route::get('/view/client-profile\{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewClientProfile'])->name('view-client-profile');
 
 #profie-pic
 Route::post('/profilepic/update', [App\Http\Controllers\Profile\ProfileController::class, 'updateProfilePic'])->name('profilepic.update');
 
 
 #bookmark
+Route::post('/favorites/add/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'addFavorite'])->name('favorites.add');
+Route::delete('/favorites/remove/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'removeFavorite'])->name('favorites.remove');
 Route::post('/client-bookmark/save/{id}', [App\Http\Controllers\Profile\BookmarkController::class, 'bookmarkFreelancer'])->name('bookmark.save');
 
-#settings
+
+#settings(freelancer)
 Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
 Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateFreelancer'])->name('freelancer.update');
 Route::patch('/freelancer/services/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateServices'])->name('service.update');
@@ -66,8 +71,12 @@ Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceContro
 Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
 Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
 
+
 Route::get('/client-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showClientSettings'])->name('client-settings');
 Route::get('/freelancer-freelancer', [App\Http\Controllers\Profile\SettingsController::class, 'showBeFreelancer'])->name('freelancer-freelancer');
+
+#settings(client)
+Route::patch('/client/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateClientInfo'])->name('client.update');
 
 #socmed
 Route::get('/social-media', [App\Http\Controllers\Profile\SocMedController::class, 'showSocMed'])->name('social-media');

@@ -69,22 +69,22 @@
             <div class="col-md-12 d-flex align-items-center justify-content-center mt-2">
                 <div class="w-100">
 
-                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#createTeamModal">
+                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#createTeamModalDesktop">
                         <i class="fas fa-users me-3" style="color: gray;"></i>
                         Create Team
                     </button>
-                    @include('modals.createTeam')
+                    @include('modals.createTeam', ['view' => 'Desktop'])
                 </div>
             </div>
 
             <div class="col-md-12 d-flex align-items-center justify-content-center mt-2">
                 <div class="w-100">
 
-                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#joinTeamModal">
+                    <button class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" data-toggle="modal" data-target="#joinTeamModalDesktop">
                         <i class="fas fa-users me-3" style="color: gray;"></i>
                         Join a Team
                     </button>
-                    @include('modals.joinTeam')
+                    @include('modals.joinTeam', ['view' => 'Desktop'])
                 </div>
             </div>
 
@@ -337,7 +337,7 @@
                     </button>
                     @else
                     <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
-                    <span class=" ms-2 text-danger mt-2">You exceed the limit ({{ $portfolioLimit }})</span>
+                    <span class=" ms-2 text-danger mt-1">You've reached the limit ({{ $portfolioLimit }})</span>
                     @endif
             </div>
 

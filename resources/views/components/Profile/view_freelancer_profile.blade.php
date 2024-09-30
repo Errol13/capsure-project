@@ -3,6 +3,11 @@
 @section('content')
 
 <div class="container  open-sans-reg">
+
+    <a href="/client-homepage" class="fs-5" style="text-decoration:none; color:black;">
+        <i class="mt-3 fas fa-arrow-left me-2 mb-4"></i>Back
+    </a>
+
     <div class="row">
 
         <!--First Column -->
@@ -48,21 +53,21 @@
                 </div>
             </div>
 
-            <!-- Social Media Accounts -->
-            <div class="row my-1 text-center mb-4 mt-3">
+            <!--Social Media Accounts -->
+            <div class="row my-1 text-center mb-1 mt-3">
                 <div class="col-12 d-flex align-items-center justify-content-center">
                     <div class="d-flex align-items-center">
-                        <a href="{{ $socialMediaLinks['Facebook'] ?? '#' }}" target="_blank">
+                        <a href="#">
                             <img class="socmed-container" src="{{ asset('assets/Facebook.svg') }}" alt="Facebook">
                         </a>
                     </div>
                     <div class="ms-1 ">
-                        <a href="{{ $socialMediaLinks['LinkedIn'] ?? '#' }}" target="_blank">
-                            <img class="socmed-container" src="{{ asset('assets/LinkedIn.svg') }}" alt="LinkedIn">
+                        <a href="#">
+                            <img class="socmed-container" src="{{ asset('assets/LinkedIn.svg') }}" alt="Linkedin">
                         </a>
                     </div>
                     <div class="ms-1">
-                        <a href="{{ $socialMediaLinks['Instagram'] ?? '#' }}" target="_blank">
+                        <a href="#">
                             <img class="socmed-container" src="{{ asset('assets/Instagram.svg') }}" alt="Instagram">
                         </a>
                     </div>
@@ -112,12 +117,11 @@
                         <p class="fs-sm-name fs-md-name text-start mb-0 poppins-medium">
                             {{ $fullName }}
                         </p>
-                        @if($user->isVerified)
                         <span class="d-flex align-items-center mt-2 mb-0">
                             <i class="fas fa-check-circle fs-6 ms-2 ms-md-1 me-md-1 ms-lg-4 verify-icon mb-1 mb-md-0" title="Verified"></i>
                             <span class="fs-sm fs-md ms-1 mb-1 mb-md-0 poppins-medium">Verified</span>
                         </span>
-                        @endif
+
                     </div>
                 </div>
                 <p class="mt-0 m-0 open-sans-reg light-color-prof">{{$user->age}} years old</p>
@@ -208,22 +212,13 @@
     <!--Client Review -->
     <section id="client-reviews">
         <div class="d-flex justify-content-between align-items-center">
-
-        <!--count the reviews for freelancer --> 
-        @php 
-        $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
-        @endphp
             <div class="d-flex align-items-center">
                 <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Client Reviews</h2>
                 @if($user->freelancer->reviews->isNotEmpty())
-                @if($totalReviews > 1)
-                <p class="mb-0 fs-smaller">({{$totalReviews}} reviews)</p>
-                @else 
-                <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
-                @endif
+                <p class="mb-0 fs-smaller">({{$user->freelancer->reviews->count()}} reviews)</p>
                 @endif
             </div>
-            @if($totalReviews > 0)
+            @if($user->freelancer->reviews->isNotEmpty())
             <a class="fs-sm fs-md poppins-light txt-review" href="#">See All Reviews</a>
             @endif
         </div>
@@ -256,7 +251,7 @@
                     <div class="d-flex">
                         <div class="text-center me-3">
                             <!-- Profile Picture -->
-                            <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                            <img src="{{ asset($review->client->user->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
                         </div>
                         <div>
                             <!-- Review Content -->

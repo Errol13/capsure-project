@@ -138,6 +138,17 @@ class ClientHome extends Component
         Log::info('Filtered User Count: ' . $this->users->count());
     }
 
+    public function toggleFavorite($freelancerId)
+    {
+        $client = auth()->user()->client;
+
+        if ($client->isFavorite($freelancerId)) {
+            $client->removeFavorite($freelancerId);
+        } else {
+            $client->addFavorite($freelancerId);
+        }
+    }
+
     public function render()
     {
         // Initially fetch all freelancers
@@ -154,10 +165,11 @@ class ClientHome extends Component
             }
         }
 
-
+        Log::info('category: ' . $this->category);
 
         return view('livewire.client-home', [
-            'users' => $users // Pass users to the view
+            'users' => $users,
+            'category' => $this->category
         ]);
     }
 }

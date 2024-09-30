@@ -88,7 +88,7 @@
     document.addEventListener('DOMContentLoaded', function() {
         const deleteButtonId = '{{ $desktopView ? "batchDeleteButtonDesktop" : "batchDeleteButtonMobile" }}';
 
-        // Use event delegation
+        // Uses event delegation
         document.body.addEventListener('click', function(event) {
             if (event.target.closest(`#${deleteButtonId}`)) {
                 // Confirmation prompt before deletion
@@ -120,7 +120,7 @@
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include CSRF token for security
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}' 
                             },
                             body: JSON.stringify({
                                 portfolios: portfolios // Use the structured portfolios object
@@ -135,7 +135,6 @@
                         })
                         .then(data => {
                             if (data.success) {
-                                // Handle successful deletion (e.g., refresh the page or remove deleted items from the DOM)
                                 location.reload();
                             } else {
                                 alert('An error occurred while deleting files: ' + (data.message || ''));

@@ -215,7 +215,52 @@ class SettingsController extends Controller
 
     public function showClientSettings()
     {
-        return view('client.c_settings');
+
+        /** @var User $user */
+        $user = Auth::user();
+
+        $socmed = $user->socmed()->orderBy('id', 'asc')->get();
+
+        return view('client.c_settings', compact('user', 'socmed'));
+    }
+
+    public function updateClientInfo(Request $request, $id)
+    {
+        // Validate the request data
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'birthdate' => 'required|date',
+            'street' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'contact_number' => 'nullable|numeric|digits:11',
+            'password' => 'nullable|string|min:8|confirmed',
+        ]);
+
+        // Find the user by ID
+        $user = User::findOrFail($id);
+
+        // Prepare data for update
+        $updateData = $validated;
+
+        //Update the age when birthdate is changed
+        $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
+
+        // Hash the password only if provided
+        if (!empty($validated['password'])) {
+            $updateData['password'] = Hash::make($validated['password']);
+        } else {
+            // Remove the password from the update data if it’s null or empty
+            unset($updateData['password']);
+        }
+
+        // Update the user's information with validated data
+        $user->update($updateData);
+
+        // Redirect 
+        return redirect()->route('client-settings')
+            ->with('success', 'Profile updated successfully.');
     }
 
 

@@ -165,7 +165,7 @@
                                     <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-hiringid = "{{$job->hiring_request_id}}"
                                     class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
                                     @elseif($job->status == 'Accepted')
-                                    <button class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</button>
+                                    <a href="{{route('freelancer-transaction')}}" class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</a>
                                     @endif
                                     <!--if accepted, this will be gone --> 
                                     @if($job->status != 'Accepted')

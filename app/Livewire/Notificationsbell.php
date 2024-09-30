@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
-class Notifications extends Component
+class Notificationsbell extends Component
 {
     public $notifications;
 
@@ -36,7 +36,7 @@ class Notifications extends Component
     public function render()
     {
         Log::info('Notifications rendered.');
-        return view('livewire.notifications', [
+        return view('livewire.notificationsbell', [
             'notifications' => $this->notifications,
         ]);
     }

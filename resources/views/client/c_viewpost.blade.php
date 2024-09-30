@@ -134,13 +134,15 @@
                                         </div>
                                         <div>
                                             <small class="mb-0">Service Fee:</small><br>
+                                            @if(isset($applicant['service']) && $applicant['service']->job_fee)
                                             <span class="fw-bold p-1" style="background-color:whitesmoke; border-radius:12px;">{{ $applicant['service']->job_fee }}</span>
+                                            @endif
                                         </div>
                                     </div>
                                     <hr class="mb-2" style="color:#CBCACA;">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-3 pt-0">
-                                        <img src="{{ asset($applicant['applicant']->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($applicant['applicant']->user->profile_image_url) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
                                             <h6 class="mb-0">{{ $applicant['applicant']->user->first_name }} {{ $applicant['applicant']->user->last_name }}</h6>
                                             <p class="text-muted mb-0">{{ $applicant['applicant']->user->city }}</p>
@@ -241,7 +243,7 @@
                                     <hr class="mb-2" style="color:#CBCACA;">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-3 pt-0">
-                                        <img src="{{ asset($freelancer->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($freelancer->user->profile_image_url) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
                                             <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }} </h6>
                                             <p class="text-muted mb-0">{{ $freelancer->user->city }}</p>
@@ -300,7 +302,7 @@
                                             data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
                                             data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
                                         @elseif($freelancer->hiringRequestData->status == 'Accepted')
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</button>
+                                        <a href = "{{route('client-transaction')}} "class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</a>
                                         @endif
 
                                         <!--if accepted this will be gone-->
@@ -353,7 +355,7 @@
                                 <div class="card p-3 rounded-4" style="border:none; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                                     <!-- Profile Info -->
                                     <div class="d-flex pb-0 pt-0">
-                                        <img src="{{ asset($recomm->user->profile_image) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <img src="{{ asset($recomm->user->profile_image_url) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
                                         <div class="ms-4">
                                             <h6 class="mb-0">{{ $recomm->user->first_name }} {{ $recomm->user->last_name }}</h6>
                                             <p class="text-muted mb-0">{{ $recomm->user->street }}, {{ $recomm->user->barangay }}, {{ $recomm->user->city }}</p>
