@@ -4,7 +4,7 @@
 
 <div class="container  open-sans-reg">
 
-    <a href="/client-homepage" class="fs-5" style="text-decoration:none; color:black;">
+    <a href="#" onclick="window.history.go(-1); return false;" style="text-decoration:none; color:black;">
         <i class="mt-3 fas fa-arrow-left me-2 mb-4"></i>Back
     </a>
 
@@ -155,10 +155,15 @@
 
                 <!--Hire Chat Report -->
                 <div class="d-flex justify-content-start align-items-start mt-2 mt-md-3">
-                    <a href="#" class="text-center btn-seemore rounded-1 px-3 py-1 px-md-5 me-3 me-md-4 poppins-light fs-sm">Hire</a>
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyModal-{{ $user->user_id }}"
+                        class="text-center btn-seemore rounded-1 px-3 py-1 px-md-5 me-3 me-md-4 poppins-light fs-sm">Hire</a>
                     <a href="#" class=" rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</a>
                     <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm " data-bs-toggle="modal" data-bs-target="#reportProfileModal">Report</button>
                 </div>
+
+                <!-- Hire Modal -->
+                @include('modals.Hiring.hire_from_profile', ['uniqueId' => $user->user_id,'freelancer' => $user->freelancer,
+                 'events'=> $events])
 
                 <!-- Report Modal -->
                 @include('modals.f_report')

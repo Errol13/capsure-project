@@ -103,7 +103,11 @@ class Hiring_requestController extends Controller
         $acceptedJobApplication = Job_application::where('job_id', $eventJob->job_id)
             ->where('freelancer_id', $validated['freelancer_id'])
             ->firstOrFail();
-        $acceptedJobApplication->update(['status' => 'Accepted']);
+
+        //if there is a job application update the status
+        if ($acceptedJobApplication) {
+            $acceptedJobApplication->update(['status' => 'Accepted']);
+        }
 
         // Retrieve client and event details
         $client = User::find($validated['client_id']);
@@ -113,7 +117,9 @@ class Hiring_requestController extends Controller
         $freelancer = User::find($validated['freelancer_id']);
         $freelancer->notify(new HiringRequestSent($client->first_name, $eventTitle));
 
-        return redirect()->back()->with('success', 'Hiring request was sent successfully!');
+        Log::info('Redirecting to client-viewpost with ID: ' . $event->event_id);
+
+        return redirect()->route('client-viewpost', ['id' => $event->event_id])->with('success', 'Hiring request was sent successfully!');
     }
 
 
@@ -158,14 +164,12 @@ class Hiring_requestController extends Controller
         $jobApplication = $hiringRequest->getJobApplication();
 
         if ($jobApplication) {
+            $jobApplication->status = 'Pending';
+            $jobApplication->save();
             Log::info('Retrieved Job App:', $jobApplication->toArray());
         } else {
             Log::warning('Job Application is null.');
         }
-
-
-        $jobApplication->status = 'Pending';
-        $jobApplication->save();
 
         //delete the record
         $hiringRequest->delete();

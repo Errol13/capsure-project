@@ -6,8 +6,10 @@ namespace App\Http\Controllers\Profile;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Hiring\Event;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class ProfileController extends Controller
@@ -110,7 +112,7 @@ class ProfileController extends Controller
 
   public function viewFreelancerProfile($id)
   {
-
+    // Find the freelancer's user by ID
     $user = User::find($id);
     $fullName = "{$user->first_name} {$user->last_name}";
 
@@ -122,9 +124,28 @@ class ProfileController extends Controller
       'freelancer.reviews.transaction.event'
     );
 
-    //get the freelancer's reviews made by the clients
+    // Get the freelancer's reviews made by the clients
     $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
-    return view('components.Profile.view_freelancer_profile', compact('user', 'fullName', 'reviews'));
+
+    // Retrieve the events for the authenticated user
+    $events = auth()->user()->events()->where('status', 'Open')->get();
+
+    return view('components.Profile.view_freelancer_profile', compact('user', 'fullName', 'reviews', 'events'));
+  }
+
+  public function findSelectedEvent($id)
+  {
+    $event = Event::with('event_jobs')->findOrFail($id); 
+    $start = Carbon::parse($event->start_date);
+    $end = Carbon::parse($event->end_date);
+    $durationInHours = $start->diffInHours($end);
+
+    Log::info('event:', $event->toArray());
+    // Return the event jobs associated with the event
+    return response()->json([
+      'event_jobs' => $event->event_jobs,
+      'durationInHours' => $durationInHours,
+    ]);
   }
 
   public function viewClientProfile($id)

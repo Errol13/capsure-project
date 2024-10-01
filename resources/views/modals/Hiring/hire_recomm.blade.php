@@ -3,12 +3,12 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="#" method="POST">
+                <form action="/hire/applicant" method="POST">
                     @csrf
                     <!-- Profile Section -->
                     <div class="d-flex mb-4 align-items-center">
                         <!-- Profile Image -->
-                        <img src="{{ asset($freelancer->user->profile_image) }}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($freelancer->user->profile_image_url) }}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
                         <!-- Profile Info -->
                         <div class="ms-3">
                             <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }}</h6>
@@ -16,8 +16,8 @@
                             <div class="d-flex align-items-center">
                                 @if($freelancer->avg_rating != 0)
                                 <span class="text-warning">⭐</span>
-                                <small class="fw-bold ms-1">{{ $freelancer->avg_rating }}</small>
-                                <small class="text-muted ms-2">(10) Reviews</small>
+                                <small class="fw-bold ms-1">{{ number_format($freelancer->avg_rating, 1) }}</small>
+                                <small class="text-muted ms-2">{{$freelancer->reviews()->where('reviewee_role', 'freelancer')->count()}} Reviews</small>
                                 @else
                                 <span class="text-muted">No ratings yet</span>
                                 @endif
@@ -40,21 +40,40 @@
 
                     <!-- Hire as role -->
                     <div class="row d-flex mb-1 align-items-center">
+
+                        <!-- Select Job -->
+                        <div class="col">
+                            <label for="eventjobsRecomm" class="form-label">Select Job</label>
+                        </div>
+                        <div class="col">
+                            <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsRecomm" required>
+                                <option value="" selected disabled></option>
+                                @foreach($job_services as $job)
+                                @if($job)
+                                <option value="{{ $job->job_id }}">
+                                    {{ $job->service_needed }}
+                                </option>
+                                @endif
+                                @endforeach
+                            </select>
+                        </div>
+
                         <div class="col">
                             <label for="roleRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
                         </div>
                         <div class="col">
-                            <select class="form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
+                            <select class="border-secondary-subtle form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
                                 <option value="" selected disabled></option>
                                 @foreach($freelancer->services as $service)
                                 @if($service->isAvailable == true)
-                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}" data-fee-type="{{$service->fee_type}}"> 
+                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}" data-fee-type="{{$service->fee_type}}">
                                     {{ $service->job_title }}
                                 </option>
                                 @endif
                                 @endforeach
                             </select>
                         </div>
+
                     </div>
 
                     <!-- Computed Fee -->
@@ -71,22 +90,14 @@
                     </div>
 
                     <!-- Payment Method -->
-                    <div class="row mb-3 align-items-center">
-                        <div class="col">
-                            <label for="payment-{{ $uniqueId }}" class="form-label">Payment Method</label>
-                        </div>
-                        <div class="col">
-                            <select class="form-select" name="payment_method" id="payment-{{ $uniqueId }}" required>
-                                <option value="CASH">CASH</option>
-                                <option value="ONLINE">ONLINE</option>
-                            </select>
-                        </div>
+                    <div class="d-flex mb-3 justify-content-between align-items-center">
+                        <label for="payment-{{ $freelancer->user_id }}" class="form-label">Payment Method</label>
+                        <p class="text-uppercase fw-bold me-4">{{$payment_method}}</p>
                     </div>
 
                     <!-- Hidden Inputs -->
                     <input type="hidden" name="freelancer_id" value="{{ $freelancer->user_id }}">
                     <input type="hidden" name="client_id" value="{{ auth()->user()->id }}">
-                    <input type="hidden" name="status" value="pending">
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
@@ -103,7 +114,6 @@
     if (typeof durationInHours === 'undefined') {
         const durationInHours = <?php echo json_encode($durationInHours ?? 0); ?>;
     }
-
 
     function updateFee(uniqueId) {
         const selectElement = document.getElementById('roleRecomm-' + uniqueId);
@@ -144,4 +154,28 @@
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
         document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
     }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all forms within modals (assuming multiple modals)
+        document.querySelectorAll('.modal form').forEach(function(form) {
+            form.addEventListener('submit', function(event) {
+                // Prevent the default form submission to log details first
+                event.preventDefault();
+
+                // Create a FormData object from the form
+                var formData = new FormData(form);
+
+                // Log each form field and its value
+                formData.forEach(function(value, key) {
+                    console.log(key + ": " + value);
+                });
+
+                // Optionally delay the actual submission to see logs
+                setTimeout(function() {
+                    // Submit the form after logging
+                    form.submit();
+                }, 1000); // 1 second delay to check logs
+            });
+        });
+    });
 </script>

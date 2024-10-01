@@ -154,7 +154,10 @@
                                         </div>
                                         <div class="ms-auto text-end">
                                             @if ( $applicant['applicant']->avg_rating > 0)
-                                            <span class="badge text-black">{{ $applicant['applicant']->avg_rating }}</span>
+                                            <div class="d-flex justify-content-center align-items-center">
+                                            <span class="fs-6 text-warning">⭐</span>
+                                            <small class="badge text-black">{{ number_format($applicant['applicant']->avg_rating, 1) }}</small>
+                                            </div>
                                             @else
                                             <span class="badge text-black">No ratings yet</span>
                                             @endif
@@ -164,7 +167,7 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $applicant['applicant']->user_id ] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
 
                                         @if(($applicant['status'] == 'Accepted'))
                                         <button type="button"
@@ -255,7 +258,10 @@
                                         </div>
                                         <div class="ms-auto text-end">
                                             @if($freelancer->avg_rating > 0)
-                                            <span class="badge text-black">{{ $freelancer->avg_rating }}</span>
+                                            <div class="d-flex justify-content-evenly align-items-center">
+                                            <span class="fs-6 text-warning">⭐</span>
+                                            <small class="badge text-black">{{ number_format($freelancer->avg_rating, 1) }}</small>
+                                            </div>
                                             @else
                                             <span class="badge text-muted">No ratings yet</span>
                                             @endif
@@ -329,10 +335,6 @@
                                     method="PATCH" />
 
 
-
-
-
-
                                 <!-- Negotiate Modal-->
                                 @livewire('negotiate-modal', ['hiringRequestId' => $freelancer->hiringRequestData->hiring_request_id,
                                 'service' => $freelancer->serviceDetails])
@@ -367,7 +369,10 @@
                                         </div>
                                         <div class="ms-auto text-end">
                                             @if($recomm->avg_rating != 0)
-                                            <span class="badge text-black">{{ $recomm->avg_rating }}</span>
+                                            <div class="d-flex justify-content-evenly align-items-center">
+                                            <span class="fs-6 text-warning">⭐</span>
+                                            <small class="badge text-black">{{ number_format($recomm->avg_rating, 1) }}</small>
+                                            </div>
                                             @else
                                             <span class="badge text-black">No ratings yet</span>
                                             @endif
@@ -387,12 +392,14 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <button class="btn me-2 mb-2 mb-sm-0" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">See Profile</button>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $recomm->user_id] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireRecommModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                     </div>
 
                                     <!-- Hire Modal -->
-                                    @include('modals.Hiring.hire_recomm', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, 'durationInHours' => $durationInHours, 'eventId'=> $event->event_id])
+                                    @include('modals.Hiring.hire_recomm', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, 
+                                    'durationInHours' => $durationInHours, 'eventId'=> $event->event_id, 'payment_method' => $event->payment_method, 
+                                    'job_services' => $event->event_jobs])
                                 </div>
                             </div>
                             @endforeach

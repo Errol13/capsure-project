@@ -8,7 +8,7 @@
                     <!-- Profile Section -->
                     <div class="d-flex mb-4 align-items-center">
                         <!-- Profile Image -->
-                        <img src="{{ asset($freelancer->user->profile_image) }}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($freelancer->user->profile_image_url) }}" alt="Profile" class="rounded-circle" style="width: 80px; height: 80px;">
                         <!-- Profile Info -->
                         <div class="ms-3">
                             <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }}</h6>
@@ -16,8 +16,8 @@
                             <div class="d-flex align-items-center">
                                 @if($freelancer->avg_rating != 0)
                                 <span class="text-warning">⭐</span>
-                                <small class="fw-bold ms-1">{{ $freelancer->avg_rating }}</small>
-                                <small class="text-muted ms-2">(10) Reviews</small>
+                                <small class="fw-bold ms-1">{{ number_format($freelancer->avg_rating, 1) }}</small>
+                                <small class="text-muted ms-2">{{$freelancer->reviews()->where('reviewee_role', 'freelancer')->count()}} Reviews</small>
                                 @else
                                 <span class="text-muted">No ratings yet</span>
                                 @endif

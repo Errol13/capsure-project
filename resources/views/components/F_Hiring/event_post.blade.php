@@ -66,7 +66,7 @@
                         <div>
                             <h5 class="text-start mb-0 poppins-medium me-2">CLIENT</h5>
                         </div>
-                        <a class="fs-sm fs-md poppins-medium txt-review " href="#">See Profile</a>
+                        <a class="fs-sm fs-md poppins-medium txt-review " href="{{route('view-client-profile', ['id' => $event->client_id] ) }}">See Profile</a>
                     </div>
 
                     <div class="d-flex">
@@ -119,7 +119,7 @@
                                     @if($hiringSuccessRate == 0)
                                     <p class="fs-sm fs-md fw-bold me-2 mb-0">0%</p>
                                     @else
-                                    <p class="fs-sm fs-mdfw-bold me-2 mb-0">{{ number_format($hiringSuccessRate, 2) }}%</p>
+                                    <p class="fs-sm fs-md fw-bold me-2 mb-0">{{ number_format($hiringSuccessRate, 2) }}%</p>
                                     @endif
                                     <p class="fs-sm fs-md txt-reviewer mb-0">Hiring Success Rate</p>
                                 </div>

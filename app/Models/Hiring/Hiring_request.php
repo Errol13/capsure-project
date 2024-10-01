@@ -37,26 +37,65 @@ class Hiring_request extends Model
     // Relationship to JobApplication through EventJob
     public function getJobApplication()
     {
-        
+
         return $this->eventjob->jobApplications()->where('freelancer_id', $this->freelancer_id)->first();
     }
 
     public function getServiceId()
     {
-        $jobApplication = $this->getJobApplication(); // Use the new method
+        // First, try to get the service_id from JobApplication
+        $jobApplication = $this->getJobApplication();
 
-        return $jobApplication ? $jobApplication->service_id : null;
+        if ($jobApplication) {
+            return $jobApplication->service_id;
+        }
+
+        // If no JobApplication, try to find a matching service by service_needed
+        return $this->getServiceIdFromEventJob();
     }
+
+    public function getServiceIdFromEventJob()
+    {
+        $eventJob = $this->eventjob; // Access the related EventJob model via the relationship
+
+        if ($eventJob && $eventJob->service_needed) {
+            // Find a service that matches the service_needed
+            return $this->findMatchingService($eventJob->service_needed);
+        }
+
+        return null;
+    }
+
+
+    public function findMatchingService($serviceNeeded)
+    {
+        $freelancerServices = $this->freelancer->services;
+        $bestMatch = null;
+        $highestSimilarity = 0;
+
+        foreach ($freelancerServices as $service) {
+            similar_text($service->job_title, $serviceNeeded, $percent);
+
+            // If similarity percentage is above a threshold get the best match
+            if ($percent > 80 && $percent > $highestSimilarity) {
+                $highestSimilarity = $percent;
+                $bestMatch = $service->id;
+            }
+        }
+
+        return $bestMatch;
+    }
+
 
     public function serviceDetails()
     {
         $serviceId = $this->getServiceId();
 
         if ($serviceId) {
-            return Service::find($serviceId);
+            return Service::find($serviceId); // Fetch the service details
         }
 
-        return null;
+        return null; // Return null if no service is found
     }
 
     public function freelancer()
