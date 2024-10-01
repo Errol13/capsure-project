@@ -122,45 +122,53 @@
                     <a href="#" class="rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</a>
                     <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm" data-bs-toggle="modal" data-bs-target="#reportClientModal">Report Profile</button>
                 </div>
+                <div class="row mt-3">
+                    <div class="col-md-5">
+                        <!-- Events Posted -->
+                        <div class="card p-3 border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12 d-flex justify-content-start align-items-center">
+                                    <h3 class="fs-5 fs-md-3 me-3" style="color: #91216C;">{{$user->client->events->count()}}</h3>
+                                    <h3 class="fs-6 fs-md-4 open-sans-reg light-color-prof me-3" style="white-space: nowrap;">Events posted</h3>
+                                    <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted d-none d-md-inline" style="white-space: nowrap;">
+                                        <small>See Events Posts</small>
+                                    </a>
+                                </div>
+                                <!-- Show the link on smaller screens -->
+                                <div class="col-12 d-md-none mt-1">
+                                    <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted" style="white-space: nowrap;">
+                                        <small>See Events Posts</small>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <small class="mb-0" style="line-height: 1; color:lightgray;">Total number of events posted by the client.</small>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="row mt-4 pt-2">
-                    <div class="col-1 text-end">
-                        <h3 style="color: #91216C;">{{$user->client->events->count()}}</h3>
-                    </div>
-                    <div class="col-2 me-2 d-flex justify-content-center" style="white-space: nowrap;">
-                        <h4 class="mb-0 open-sans-reg light-color-prof">Events posted</h4>
-                    </div>
-                    <div class="col-3">
-                        <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted"><small>See Events Posts</small></a>
-                    </div>
-                    <div class="col-1 me-2">
-                        <h3 style="color: #91216C;">
-                            @if($hiringSuccessRate == 0)
-                            0%
-                            @else
-                            {{ number_format($hiringSuccessRate, 1) }}%
-                            @endif
-                        </h3>
-                    </div>
-                    <div class="col ms-3 ">
-                        <h4 class="mb-0 open-sans-reg light-color-prof">Hiring Success Rate</h4>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row note">
-                            <span class="mb-0" style="line-height: 1; color:lightgray;">Total number of of events posted by the client. </span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="row note">
-                            <span class="mb-0" style="line-height: 1; color:lightgray;">Represents how often a client successfully hires </span>
-                        </div>
-                        <div class="row note">
-                            <span style=" color:lightgray;">after posting an event.</span>
+                    <div class="col-md-5">
+                        <!-- Hiring Success Rate -->
+                        <div class="card p-3 border-0">
+                            <div class="row align-items-center">
+                                <div class="col-12 d-flex justify-content-start align-items-center">
+                                    <h3 class="fs-5 fs-md-3 me-3" style="color: #91216C;">
+                                        @if($hiringSuccessRate == 0)
+                                        0%
+                                        @else
+                                        {{ number_format($hiringSuccessRate, 1) }}%
+                                        @endif
+                                    </h3>
+                                    <h3 class="fs-6 fs-md-4 open-sans-reg light-color-prof me-3" style="white-space:nowrap;">Hiring Success Rate</h3>
+                                </div>
+                            </div>
+                            <div class="row mt-1">
+                                <small class="mb-0" style="line-height: 1.2; color:lightgray;">Represents how often a client successfully hires after posting an event.</small>
+                            </div>
                         </div>
                     </div>
                 </div>
+
                 <p class="mt-3 mb-0 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
             </div>
         </div>
