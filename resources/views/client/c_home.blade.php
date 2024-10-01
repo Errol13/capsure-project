@@ -66,7 +66,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <a href="#" class="see-prof-btn btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
+                                        <a href="#" class="btn btn-seeprof rounded-pill w-100 me-2" style="border-color: #91216C; color:#91216C;">>See Profile</a>
                                         <img src="assets/bookmark.svg" alt="Bookmark" class="bookmark-icon">
                                     </div>
                                 </div>
@@ -212,7 +212,7 @@
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
-                                    <a href="#" class="see-prof-btn btn btn-outline-primary w-100 me-2" style="border-radius: 25px; font-weight: 600; border-color: #91216C; color: #91216C">See Profile</a>
+                                    <a href="#" class="btn btn-seeprof rounded-pill w-100 me-2" style="border-color: #91216C; color:#91216C;">See Profile</a>
                                     <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon">
                                 </div>
                             </div>

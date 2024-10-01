@@ -139,8 +139,6 @@ class EventsController extends Controller
                 // Get the freelancer's service data
                 $freelancerService = $applicant->services()->where('id', $service)->first();
 
-
-
                 // Add the applicant with additional job details
                 $applicants->push([
                     'applicant' => $applicant,
@@ -149,7 +147,11 @@ class EventsController extends Controller
                     'job_id' => $job->job_id,
                     'status' => $status
                 ]);
+                
             }
+
+            //display the contents for debugging
+            Log::info('Applicants Data: ', $applicants ? $applicants->toArray() : []);
 
             // Sort applicants by status: 'Pending' first, 'Rejected' last
             $sortedApplicants = $applicants->sortBy(function ($applicant) {
@@ -230,7 +232,7 @@ class EventsController extends Controller
 
         $successfulEvents = Event::where('client_id', $clientUser->id)
             ->whereHas('event_jobs.transactions', function ($query) {
-                $query->where('transaction_status', 'successful');
+                $query->where('transaction_status', 'Done');
             })
             ->count();
 
@@ -287,7 +289,5 @@ class EventsController extends Controller
     }
 
     //edit the post
-    public function editPost($event_id){
-
-    }
+    public function editPost($event_id) {}
 }

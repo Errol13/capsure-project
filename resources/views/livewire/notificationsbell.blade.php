@@ -1,5 +1,5 @@
 <div>
-    <li class="nav-item dropdown mx-1 ms-md-2">
+    <li class="nav-item dropdown mx-1 me-md-0">
         <a class="nav-link dropdown-toggle-notif" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-bell"></i>
             @if($notifications->count() > 0)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Hiring\Event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -13,67 +14,64 @@ class ProfileController extends Controller
 {
   //
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 32086fbf9ce339f269106a55befb686bbdc59e9e
   public function showFreelancersProfile()
   {
     /** @var User $user */
     $user = Auth::user();
     $fullName = "{$user->first_name} {$user->last_name}";
-<<<<<<< HEAD
+    $socialMediaLinks = $user->socmed()->pluck('url', 'platform')->toArray();
 
     if ($user->user_type == 'freelancer') {
       // Load related data for freelancers
-      $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios', 'freelancer.reviews.transaction.event');
+      $user->load(
+        'freelancer.services',
+        'freelancer.certificates',
+        'freelancer.portfolios',
+        'freelancer.reviews.transaction.event'
+      );
 
       //get the freelancer's reviews made by the clients
       $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
-      return view('freelancer.f_profile', compact('user', 'fullName', 'reviews'));
-=======
-=======
-    public function showFreelancersProfile(){
-      /** @var User $user */
-      $user = Auth::user();
-      $fullName = "{$user->first_name} {$user->last_name}";
-
-      if ($user->user_type == 'freelancer') {
-          // Load related data for freelancers
-          $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios', 'freelancer.reviews.transaction.event');
-
-          //get the freelancer's reviews made by the clients
-          $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
-          return view('freelancer.f_profile', compact('user','fullName', 'reviews'));
-      } elseif ($user->user_type == 'client') {
-          // Load related data for clients
-          $user->load('client');
-          return view('client.c_profile', compact('user')); // No view created yet
-      }
->>>>>>> 5fd78aa4d533e55c45f59a7fd38ef9958d9f1ff6
-
-    if ($user->user_type == 'freelancer') {
-      // Load related data for freelancers
-      $user->load('freelancer.services', 'freelancer.certificates', 'freelancer.portfolios');
-      return view('freelancer.f_profile', compact('user', 'fullName'));
->>>>>>> 32086fbf9ce339f269106a55befb686bbdc59e9e
-    } elseif ($user->user_type == 'client') {
-      // Load related data for clients
-      $user->load('client');
-      return view('client.c_profile', compact('user')); // No view created yet
+      return view('freelancer.f_profile', compact('user', 'fullName', 'reviews', 'socialMediaLinks'));
     }
   }
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 32086fbf9ce339f269106a55befb686bbdc59e9e
   public function showClientsProfile()
   {
-    return view('client.c_profile');
+    $user = Auth::user();
+    $fullName = "{$user->first_name} {$user->last_name}";
+    $socialMediaLinks = $user->socmed()->pluck('url', 'platform')->toArray();
+
+    // Count the client's total job posts and hiring success rate
+    $clientTotalPosts = Event::where('client_id', $user->id)->count();
+
+    $successfulEvents = Event::where('client_id', $user->id)
+      ->whereHas('event_jobs.transactions', function ($query) {
+        $query->where('transaction_status', 'Done');
+      })
+      ->count();
+
+    $hiringSuccessRate = 0;
+
+    if ($successfulEvents > 0) {
+      $hiringSuccessRate = ($successfulEvents / $clientTotalPosts) * 100;
+    }
+
+    if ($user->user_type == 'client') {
+      // Get events with completed transactions and load reviews grouped by event
+      $eventsWithReviews = Event::with(['transactions.reviews' => function ($query) {
+        $query->where('reviewee_role', 'client');
+      }])
+        ->where('client_id', $user->id)
+        ->whereHas('transactions', function ($query) {
+          $query->where('transaction_status', 'Done');
+        })
+        ->paginate(4);
+
+      return view('client.c_profile', compact('user', 'fullName', 'eventsWithReviews', 'socialMediaLinks', 'hiringSuccessRate'));
+    }
   }
 
-<<<<<<< HEAD
   public function updateProfilePic(Request $request)
   {
     /** @var User $user */
@@ -108,10 +106,63 @@ class ProfileController extends Controller
     }
 
     return redirect()->back()->with('success', 'Profile picture updated successfully.');
-=======
-  public function showTeamProfile()
+  }
+
+  public function viewFreelancerProfile($id)
   {
-    return view('freelancer.Team_profile');
->>>>>>> 32086fbf9ce339f269106a55befb686bbdc59e9e
+
+    $user = User::find($id);
+    $fullName = "{$user->first_name} {$user->last_name}";
+
+    // Load related data for freelancers
+    $user->load(
+      'freelancer.services',
+      'freelancer.certificates',
+      'freelancer.portfolios',
+      'freelancer.reviews.transaction.event'
+    );
+
+    //get the freelancer's reviews made by the clients
+    $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->paginate(4);
+    return view('components.Profile.view_freelancer_profile', compact('user', 'fullName', 'reviews'));
+  }
+
+  public function viewClientProfile($id)
+  {
+    $user = User::find($id);
+    $fullName = "{$user->first_name} {$user->last_name}";
+    $socialMediaLinks = $user->socmed()->pluck('url', 'platform')->toArray();
+
+    // Count the client's total job posts and hiring success rate
+    $clientTotalPosts = Event::where('client_id', $user->id)->count();
+
+    $successfulEvents = Event::where('client_id', $user->id)
+      ->whereHas('event_jobs.transactions', function ($query) {
+        $query->where('transaction_status', 'Done');
+      })
+      ->count();
+
+    $hiringSuccessRate = 0;
+
+    if ($successfulEvents > 0) {
+      $hiringSuccessRate = ($successfulEvents / $clientTotalPosts) * 100;
+    }
+
+    if ($user->user_type == 'client') {
+      // Get events with completed transactions and load reviews grouped by event
+      $eventsWithReviews = Event::with(['transactions.reviews' => function ($query) {
+        $query->where('reviewee_role', 'client');
+      }])
+        ->where('client_id', $user->id)
+        ->whereHas('transactions', function ($query) {
+          $query->where('transaction_status', 'Done');
+        })
+        ->paginate(4);
+
+      return view(
+        'components.Profile.view_client_profile',
+        compact('user', 'fullName', 'eventsWithReviews', 'socialMediaLinks', 'hiringSuccessRate')
+      );
+    }
   }
 }

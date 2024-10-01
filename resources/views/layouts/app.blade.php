@@ -141,10 +141,10 @@
                             </a>
                         </li>
 
-                        <li>
+                        
                             <!--for livewire or dynamic notifications -->
-                            <livewire:notifications />
-                        </li>
+                            <livewire:notificationsbell />
+                        
 
 
 

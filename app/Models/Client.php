@@ -66,4 +66,47 @@ class Client extends Model
         $this->avg_rating = round($average, 1);
         $this->save();
     }
+
+    //for favorites
+    public function addFavorite($freelancerId)
+    {
+        // Decode the current favorites into an array
+        $favorites = $this->favorites ? json_decode($this->favorites, true) : [];
+
+        // Check if the freelancer ID is not already in the favorites
+        if (!in_array($freelancerId, $favorites)) {
+            // Add the freelancer ID to the favorites array
+            $favorites[] = $freelancerId;
+
+            // Encode the array back to JSON and save it
+            $this->favorites = json_encode($favorites);
+            $this->save();
+        }
+    }
+
+
+    public function removeFavorite($freelancerId)
+    {
+        // Decode the current favorites into an array
+        $favorites = $this->favorites ? json_decode($this->favorites, true) : [];
+
+        // Check if the freelancer ID is in the favorites
+        if (in_array($freelancerId, $favorites)) {
+            // Remove the freelancer ID from the favorites array
+            $favorites = array_diff($favorites, [$freelancerId]);
+
+            // Encode the array back to JSON and save it
+            $this->favorites = json_encode($favorites);
+            $this->save();
+        }
+    }
+
+    public function isFavorite($freelancerId)
+    {
+        // Decode the favorites JSON into an array
+        $favorites = $this->favorites ? json_decode($this->favorites, true) : [];
+
+        // Check if the freelancer ID is in the favorites
+        return in_array($freelancerId, $favorites);
+    }
 }

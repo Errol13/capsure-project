@@ -1,9 +1,9 @@
 <!--Create Team Modal -->
-<div class="modal" id="createTeamModal" tabindex="-1" role="dialog" aria-labelledby="createTeamLabel" aria-hidden="true">
+<div class="modal" id="createTeamModal{{$view}}" tabindex="-1" role="dialog" aria-labelledby="createTeamLabel{{$view}}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content" style="border-radius: 20px; padding: 20px;">
             <div class="modal-header py-0" style="border-bottom:none;">
-                <h4 class="modal-title poppins-medium" id="createTeamLabel">Create <span style="color: #91216C;">Team Page</span></h4>
+                <h4 class="modal-title poppins-medium" id="createTeamLabel{{$view}}">Create <span style="color: #91216C;">Team Page</span></h4>
                 <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">

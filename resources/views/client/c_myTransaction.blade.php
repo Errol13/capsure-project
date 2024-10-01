@@ -88,7 +88,7 @@
                                     @foreach($eventGroup['transactions'] as $transaction)
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
-                                            <img src="{{asset($transaction->freelancer->user->profile_image)}}" class="rounded-circle">
+                                            <img src="{{asset($transaction->freelancer->user->profile_image_url)}}" class="rounded-circle">
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column align-items-start">
@@ -240,7 +240,7 @@
                                     @foreach($eventGroup['transactions'] as $transaction)
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
-                                            <img src="{{asset($transaction->freelancer->user->profile_image)}}" class="rounded-circle">
+                                            <img src="{{asset($transaction->freelancer->user->profile_image_url)}}" class="rounded-circle">
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column align-items-start">
@@ -391,7 +391,7 @@
                                     @foreach($eventGroup['transactions'] as $transaction)
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
-                                            <img src="{{asset($transaction->freelancer->user->profile_image)}}" class="rounded-circle">
+                                            <img src="{{asset($transaction->freelancer->user->profile_image_url)}}" class="rounded-circle">
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column justify-content-center align-items-start">

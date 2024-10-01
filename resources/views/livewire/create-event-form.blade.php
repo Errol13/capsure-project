@@ -6,13 +6,13 @@
     </div>
     @endif
 
-    <div class="row justify-content-center pt-4">
-        <div class="col-md-9 col-lg-9">
+    <div class="row d-flex justify-content-center pt-4">
+        <div class="col-sm-12 col-md-9 col-lg-9 ">
             <div class="card p-4 shadow-sm rounded-4">
 
                 <!-- Title and Buttons Inside Form -->
                 <form wire:submit.prevent="saveEvent">
-                    <div class="d-flex justify-content-between mb-3 open-sans-reg">
+                    <div class="d-flex justify-content-between align-items-center mb-3 open-sans-reg">
                         <h3 class="event-title">Create an Event</h3>
                         <div class="d-flex justify-content-end">
                             <button type="button" class="btn-outline open-sans-reg me-2" onclick="cancelForm(event)">Cancel</button>
@@ -98,55 +98,57 @@
 
                     <!-- Job Information -->
                     <div class="form-group mb-3 open-sans-reg">
-                        <div class="d-flex align-items-center mb-3">
+                        <div class="d-flex justify-content-start align-items-center mb-3">
                             <img src="{{ asset('assets/add_jobs.svg') }}" alt="add_jobs_icon" class="socmed-container me-2">
                             <span class="fs-5 poppins-medium">Add Job/s</span>
                         </div>
 
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <tr class="text-center">
-                                    <th scope="col">Service Needed</th>
-                                    <th scope="col">Job Category</th>
-                                    <th scope="col">No. of People</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($jobs as $index => $job)
-                                <tr>
-                                    <td class="align-middle px-2">
-                                        <input type="text" class="form-control mt-4 fs-6" wire:model="jobs.{{ $index }}.service_needed" placeholder="Eg. Photographer" data-autocomplete>
-                                        @error("jobs.$index.service_needed") <span class="text-danger">{{ $message }}</span> @enderror
-                                        <div id="editor-data" data-services="{{ json_encode($services) }}"></div>
-                                    </td>
-                                    <td class="align-middle">
-                                        <select class="form-select w-100" wire:model="jobs.{{ $index }}.job_category">
-                                            <option value="">Select Category</option>
-                                            <option value="Arts">Arts</option>
-                                            <option value="Entertainment">Entertainment</option>
-                                            <option value="Event Planner">Event Planner</option>
-                                            <option value="Food Service">Food Service</option>
-                                            <option value="Handicrafts">Handicrafts</option>
-                                            <option value="Online Services">Online Services</option>
-                                            <option value="Photography">Photography</option>
-                                            <option value="Styling">Styling</option>
-                                            <option value="Videography">Videography</option>
-                                            <option value="Voice Talent">Voice Talent</option>
-                                        </select>
-                                        @error("jobs.$index.job_category") <span class="text-danger">{{ $message }}</span> @enderror
-                                    </td>
-                                    <td class="align-middle">
-                                        <input type="number" class="form-control" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
-                                        @error("jobs.$index.number_of_people") <span class="text-danger">{{ $message }}</span> @enderror
-                                    </td>
-                                    <td class="align-middle">
-                                        <button type="button" class="btn btn-danger" wire:click="removeJob({{ $index }})">Remove</button>
-                                    </td>
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr class="text-center">
+                                        <th scope="col col-sm-auto">Service Needed</th>
+                                        <th scope="col col-sm-auto">Job Category</th>
+                                        <th scope="col col-sm-auto">No. of People</th>
+                                        <th scope="col col-sm-auto">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($jobs as $index => $job)
+                                    <tr>
+                                        <td class="align-middle px-2">
+                                            <input type="text" class="form-control mt-4 fs-6" wire:model="jobs.{{ $index }}.service_needed" placeholder="Eg. Photographer" data-autocomplete>
+                                            @error("jobs.$index.service_needed") <span class="text-danger">{{ $message }}</span> @enderror
+                                            <div id="editor-data" data-services="{{ json_encode($services) }}"></div>
+                                        </td>
+                                        <td class="align-middle">
+                                            <select class="form-select w-100" wire:model="jobs.{{ $index }}.job_category">
+                                                <option value="">Select Category</option>
+                                                <option value="Arts">Arts</option>
+                                                <option value="Entertainment">Entertainment</option>
+                                                <option value="Event Planner">Event Planner</option>
+                                                <option value="Food Service">Food Service</option>
+                                                <option value="Handicrafts">Handicrafts</option>
+                                                <option value="Online Services">Online Services</option>
+                                                <option value="Photography">Photography</option>
+                                                <option value="Styling">Styling</option>
+                                                <option value="Videography">Videography</option>
+                                                <option value="Voice Talent">Voice Talent</option>
+                                            </select>
+                                            @error("jobs.$index.job_category") <span class="text-danger">{{ $message }}</span> @enderror
+                                        </td>
+                                        <td class="align-middle">
+                                            <input type="number" class="form-control" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
+                                            @error("jobs.$index.number_of_people") <span class="text-danger">{{ $message }}</span> @enderror
+                                        </td>
+                                        <td class="align-middle">
+                                            <button type="button" class="btn btn-danger" wire:click="removeJob({{ $index }})">Remove</button>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>

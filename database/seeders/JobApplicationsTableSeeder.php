@@ -31,14 +31,14 @@ class JobApplicationsTableSeeder extends Seeder
 
             [
                 'freelancer_id' => 2,
-                'service_id' => 1,
+                'service_id' => 2,
                 'job_id' => 3,
                 'status' => 'Accepted',
             ],
 
             [
                 'freelancer_id' => 4,
-                'service_id' => 2,
+                'service_id' => 3,
                 'job_id' => 4,
                 'status' => 'Accepted',
             ],

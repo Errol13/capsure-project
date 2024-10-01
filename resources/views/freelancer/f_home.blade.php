@@ -58,8 +58,7 @@
                             </div>
                             <div class="d-flex align-items-center mt-3">
                                 <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="text-center btn-seemore rounded-3 me-2 flex-grow-1 poppins-light fs-6 py-1">See More</a>
-                                <a href="#" class=" rounded-3 btn-seeprof me-2 px-2 poppins-light fs-6 py-1">See Profile</a>
-                                <img src="{{ asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
+                                <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class=" rounded-3 btn-seeprof me-2 px-2 poppins-light fs-6 py-1">See Profile</a>
                             </div>
                         </div>
                     </div>

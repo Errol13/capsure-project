@@ -19,7 +19,7 @@
                     <div class="col-12 profile-container">
                         <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
-                </div>
+                </div> 
 
                 <!-- Change Profile Pic -->
                 <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
@@ -77,7 +77,15 @@
                         </div>
                         <div class="ms-2 me-4">
                             <a href="#" class="mb-0  text-start txt-purple">
-                                <button class="rounded-3 btn-save fs-6">Join/Create Team</button></a>
+                                <button class="rounded-3 btn-save fs-6"
+                                    @if($user->freelancer->isin_A_Team)
+                                    data-toggle="modal" data-target="#createTeamModalMobile"
+                                    @else
+                                    data-toggle="modal" data-target="#joinTeamModalMobile"
+                                    @endif
+                                    >Join/Create Team</button></a>
+                            @include('modals.createTeam', ['view' => 'Mobile'])
+                            @include('modals.joinTeam', ['view' => 'Mobile'])
                         </div>
                         <div class="d-flex align-items-center ms-2">
                             <i class="fs-5 fas fa-trash " style="color: #BEBEBE;"></i>
@@ -299,7 +307,7 @@
                                 <button class="btn-seeprof mt-3" disabled>
                                     Create Album
                                 </button>
-                                <span class="ms-2 text-danger mt-2"><small>You exceed the limit ({{ $portfolioLimit }})</small></span>
+                                <span class="ms-2 text-danger mt-2"><small>You've reached the limit ({{ $portfolioLimit }})</small></span>
                             </div>
                             @endif
 
@@ -314,7 +322,7 @@
                                     </button>
                                     <!-- Delete Button -->
                                     <button type="button" class="btn-cancel rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                    <i class="fa-solid fa-images"></i> Edit
+                                        <i class="fa-solid fa-images"></i> Edit
                                     </button>
 
                                     <!-- Batch Delete Button -->
