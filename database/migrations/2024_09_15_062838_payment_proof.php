@@ -20,7 +20,7 @@ return new class extends Migration
             $table->timestamps();
 
             // Adding a unique composite index to prevent duplicate payment proofs
-            $table->unique(['proof_id', 'transaction_id'], 'unique_paymentproof');
+            $table->unique(['proof_id', 'transaction_id', 'file_path'], 'unique_paymentproof');
         });
     }
 

@@ -244,6 +244,14 @@
                             </div>
 
                             <!-- Password -->
+                            <label for="password_current" class="form-label">{{ __('Current Password') }}</label>
+                            <div class="input-group m-0 p-0">
+                                <input id="password_current" type="password" placeholder="Enter Current Password" class="form-control @error('password_cuurent') is-invalid @enderror"
+                                    name="password_current" autocomplete="new-password" disabled>
+                                <button type="button" class="btn border" onclick="togglePasswordVisibility('password_current')" disabled>
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
                             <label for="password" class="form-label">{{ __('Password') }}</label>
                             <div class="input-group m-0 p-0">
                                 <input id="password" type="password" placeholder="Enter New Password" class="form-control @error('password') is-invalid @enderror"

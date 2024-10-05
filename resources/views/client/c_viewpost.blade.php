@@ -280,7 +280,7 @@
                                             </thead>
                                             <tbody>
                                                 <tr>
-                                                    <td>₱{{$freelancer->hiringRequestData->freelancer_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
+                                                    <td class="fw-bold" style="color: #ad3d88 ; ">₱{{$freelancer->hiringRequestData->freelancer_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
                                                     <td>₱{{$freelancer->hiringRequestData->client_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
                                                 </tr>
                                             </tbody>

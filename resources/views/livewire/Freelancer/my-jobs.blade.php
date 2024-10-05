@@ -144,7 +144,7 @@
 
                             <!--Client's Offer -->
                             <td>
-                                <span class="text-uppercase fw-bold ">
+                                <span class="text-uppercase fw-bold " style="color: #ad3d88 ;">
                                     ₱{{ $job->client_pricing }}
                                 </span>
                             </td>
