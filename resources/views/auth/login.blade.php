@@ -71,4 +71,18 @@
     </div>
 </div>
 </div>
+
+<script>
+        function togglePasswordVisibility(id) {
+            const input = document.getElementById(id);
+            const button = event.currentTarget;
+            if (input.type === 'password') {
+                input.type = 'text';
+                button.innerHTML = '<i class="bi bi-eye-slash"></i>'; // Eye slash icon
+            } else {
+                input.type = 'password';
+                button.innerHTML = '<i class="bi bi-eye"></i>'; // Eye icon
+            }
+        }
+    </script>
 @endsection
