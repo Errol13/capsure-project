@@ -18,7 +18,7 @@ class Addportfolio extends Component
 
     protected $messages = [
         'files.required' => 'Upload at least 1 file.',
-        'files.*.max' => 'The file may not be greater than 50MB.',
+        'files.*.max' => 'The file may not be greater than 100MB.',
     ]; 
 
     public function mount()
@@ -59,7 +59,7 @@ class Addportfolio extends Component
         $this->validate([
             'album_name' => 'required|string|max:255',
             'files' => 'required|array|min:1|max:10', // Ensure at least one file and no more than 5
-            'files.*' => 'mimes:jpg,jpeg,png,gif,mp4,mov,avi|max:51200', // Validate file types and size (max 50MB per file)
+            'files.*' => 'mimes:jpg,jpeg,png,gif,mp4,mov,avi|max:102400', // Validate file types and size (max 100MB per file)
         ]);
 
         if ($this->titleExists) {

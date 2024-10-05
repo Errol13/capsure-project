@@ -83,5 +83,16 @@
         albumModal.addEventListener('hidden.bs.modal', function() {
             Livewire.emit('resetPortfolioForm');
         });
+
+        Livewire.on('upload:error', (file, message) => {
+            console.error('File upload error:', file.name, message);
+        });
+
+        Livewire.onError(statusCode => {
+            if (statusCode === 413) {
+                console.error('Error: Uploaded file is too large.');
+                return false;
+            }
+        });
     });
 </script>

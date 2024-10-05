@@ -883,6 +883,11 @@ select#year {
     border: #91216C solid 1px;
 }
 
+.fancybox-button--download {
+    display: none !important;
+}
+
+
 /* Create Event Page <-------------------------------------------------------------------------*/
 .custom-bg-page {
     background-color: #FCF2F9;

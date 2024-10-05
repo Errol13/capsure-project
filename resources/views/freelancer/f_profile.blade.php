@@ -209,16 +209,16 @@
     <section id="client-reviews">
         <div class="d-flex justify-content-between align-items-center">
 
-        <!--count the reviews for freelancer --> 
-        @php 
-        $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
-        @endphp
+            <!--count the reviews for freelancer -->
+            @php
+            $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
+            @endphp
             <div class="d-flex align-items-center">
                 <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Client Reviews</h2>
                 @if($user->freelancer->reviews->isNotEmpty())
                 @if($totalReviews > 1)
                 <p class="mb-0 fs-smaller">({{$totalReviews}} reviews)</p>
-                @else 
+                @else
                 <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
                 @endif
                 @endif
@@ -348,8 +348,20 @@
                 </div>
                 @endif
 
-                
+
             </div>
+            <script>
+                $("[data-fancybox]").fancybox({
+                    buttons: [
+                        "speed", // Speed button
+                        "pip", // Picture in Picture button
+                        "close", // Close button
+                        // "download" is omitted, so it won't show
+                        // Add any other buttons you want here
+                    ],
+                    protect: true // Optional: Disable right-click
+                });
+            </script>
     </section>
 
 
