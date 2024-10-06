@@ -50,6 +50,11 @@
         "wdth" 100;
 }
 
+.wrapper {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
 
 /*Buttons and Horizontal Lines Styles <-------------------------------- */
 
@@ -396,20 +401,11 @@ select#year {
 /*Welcome Page <-------------------------------------------------------------------------------------------------------*/
 
 .hero {
-    background: url('/assets/bg_center.svg');
-    opacity: 90%;
-    background-size: contain;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: #181717;
-    padding: 10px;
-    padding-right: 10px;
-    padding-left: 10px;
-    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
-    width: 100%;
-    height: 120px;
+    background: url('/assets/bg_center.svg') repeat center;
+    width: 50%;
+    min-height: 250px;
+    padding: 20px 0;
 }
-
 
 .service-categories {
     display: grid;
@@ -424,7 +420,6 @@ select#year {
     overflow-x: scroll;
     padding: 20px;
 }
-
 
 .hero .input-group {
     width: 600px;
@@ -455,14 +450,12 @@ select#year {
     margin-bottom: 1rem;
     margin: 0;
     box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
-    border: none;
 
 }
 
-
 .service-pic-size {
     height: 120px;
-    width: 100px;
+    width: 120px;
     object-fit: contain;
     align-self: center;
     margin-bottom: 20px;
@@ -470,11 +463,8 @@ select#year {
 
 .custom-card .card-body {
     padding-top: 5px;
-    /* Adjust the top padding to reduce space */
     padding-bottom: 10px;
-    /* Adjust the bottom padding */
     margin-top: -40px;
-    /* If needed, adjust the margin to move the text closer to the image */
 }
 
 .carousel-item .col-4 {
@@ -484,12 +474,19 @@ select#year {
 }
 
 .freelancer-card {
-    background-color: #E1C1D7;
-    border-radius: 10px;
+    background-color: white;
+    border-radius: 20px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     margin: 10px;
+    margin-bottom: 20px;
+    object-fit: cover;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .freelancer-card img {
@@ -499,12 +496,10 @@ select#year {
     margin-bottom: 10px;
 }
 
-
-
 .carousel-control-prev, .carousel-control-next {
-    width: 5%;
+    width: 10%;
+    background-color: none;
 }
-
 
 
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/

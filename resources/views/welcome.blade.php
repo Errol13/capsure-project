@@ -19,11 +19,11 @@ $cards = [
 
 @endphp
 <!-- Contents -->
-<div class="d-flex align-items-center justify-content-center">
-    <section class="hero text-center rounded-3 mt-2 mt-md-4 mt-lg-4 col-md-12 col-lg-12 col-sm-12 ">
-        <div class="container-fluid">
+<div class="d-flex">
+    <section class="text-center col-md-12 col-lg-12 col-sm-12">
+        <div class="hero container-fluid" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
             <div class="row d-flex justify-content-center">
-                <div class="col-12 col-md-12 col-lg-12">
+                <div class="col-12">
                     <div class="row px-0 my-1 fs-3 d-flex justify-content-center">
                         <h1 class="m-0">
                             <span class="text-black sedan-regular-italic size-bigger">Capture</span>
@@ -32,8 +32,8 @@ $cards = [
                         </h1>
                     </div>
                     <div class="input-group my-md-4 pb-2">
-                        <input type="text" class="form-control fw-lighter poppins-light fw-medium" placeholder="What service do you need?">
-                        <div class="input-group-append">
+                        <input type="text" class="form-control fw-light poppins-light " placeholder="What service do you need?">
+                        <div class="input-group-append ms-1">
                             <button class="btn btn-outline-secondary" type="button"><i class="fas fa-search m-1 fs-3"></i></button>
                         </div>
                     </div>
@@ -41,14 +41,15 @@ $cards = [
             </div>
         </div>
 
-        <section class="service-categories">
+
+        <section class="container service-categories">
 
             <!--Mobile View -->
 
             <div id="mobileCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     @php
-                    $chunks = array_chunk($cards, 2);
+                    $chunks = array_chunk($cards, 3);
                     @endphp
 
                     @foreach($chunks as $index => $chunk)
@@ -81,58 +82,58 @@ $cards = [
 
 
             <!--For Bigger screens -->
-            <div class="d-none d-md-flex d-lg-flex flex-wrap justify-content-between poppins-regular">
+            <div class="mt-4 d-none d-md-flex d-lg-flex flex-wrap justify-content-between poppins-regular">
                 @foreach ($cards as $card)
-                <div class="card custom-card mb-2">
+                <div class="card custom-card mb-3">
                     <img src="{{ asset($card['image']) }}" class="service-pic-size" alt="{{ $card['text'] }}">
                     <div class="card-body">
-                        <p class="card-text mt-0">{{ $card['text'] }}</p>
+                        <p class="card-text mt-1">{{ $card['text'] }}</p>
                     </div>
                 </div>
                 @endforeach
             </div>
         </section>
 
-        <section class="freelancers">
+        <section class="container freelancers">
 
             <div class="container-fluid">
                 <div class="row">
-                    <h2 class="poppins-medium text-uppercase letter-spacing">Hire Competitive Freelancers</h2>
-                    <span class="text-wrap">Elevate your event with our exceptional freelancers!
+                    <h1 class="mt-4 poppins-medium text-uppercase letter-spacing">Hire Competitive Freelancers</h1>
+                    <big class="mb-4" style="line-height: 1.2;">Elevate your event with our exceptional freelancers!
                         From talented event planners and creative designers to dynamic performers, our professionals ensure every detail is perfect. Hire now and make your next event extraordinary!
-                    </span>
+                    </big>
                     <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
                                 <div class="row">
-                                    @foreach($freelancers->slice(0,4) as $freelancer)
-                                    <div class="col-md-3">
+                                    @foreach($freelancers->slice(0,6) as $freelancer)
+                                    <div class="col-md-2">
                                         <!--fetch the first service of the freelancer-->
                                         @php
                                         $firstService = $freelancer->services->where('isAvailable', true)->first();
                                         @endphp
                                         <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                            <img src="{{ $freelancer->user->profile_image_url }}" alt="Freelancer-{{$freelancer->user_id}}" class="img-fluid">
-                                            <h6 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}} </h6>
+                                            <img src="{{ $freelancer->user->profile_image_url }}" alt="Freelancer-{{$freelancer->user_id}}" class="img-fluid mt-2">
+                                            <h5 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}} </h5>
                                             <span class="mt-0">{{ optional($firstService)->job_title ?? 'No service found with ID 1.' }}</span>
 
                                             <div class="d-flex align-items-center mt-1">
                                                 @if($freelancer->avg_rating > 0)
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <=floor($freelancer->avg_rating))
-                                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                    <i class="fas fa-star filled mb-3"></i> <!-- Filled star -->
                                                     @elseif ($i == ceil($freelancer->avg_rating) && $freelancer->avg_rating - floor($freelancer->avg_rating) > 0)
-                                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                                    <i class="fas fa-star-half-alt filled mb-3"></i> <!-- Half star -->
                                                     @else
-                                                    <i class="far fa-star"></i> <!-- Empty star -->
+                                                    <i class="far fa-star mb-3"></i> <!-- Empty star -->
                                                     @endif
                                                     @endfor
                                                     @else
-                                                    <p class="text-muted">No ratings yet.</p>
+                                                    <span class="text-muted mb-2">No ratings yet.</span>
                                                     @endif
                                             </div>
-                                            <button class="btn-seemore fs-6 text-uppercase 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-2 ">View Profile</button>
+                                            <button class="btn-seemore fs-6 
+                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " >View Profile</button>
                                         </div>
                                     </div>
                                     @endforeach
@@ -141,7 +142,7 @@ $cards = [
 
                             <div class="carousel-item">
                                 <div class="row">
-                                    @foreach($freelancers->slice(4,4) as $freelancer)
+                                    @foreach($freelancers->slice(5,5) as $freelancer)
 
                                     <!--fetch the first service of the freelancer-->
                                     @php
@@ -149,13 +150,13 @@ $cards = [
                                     $firstService = $freelancer->services->where('isAvailable', true)->first();
                                     @endphp
 
-                                    <div class="col-md-3">
+                                    <div class="col-md-2">
                                         <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
                                             <img src="{{ $freelancer->user->profile_image_url }}" alt="Freelancer-{{$freelancer->user_id}}" class="img-fluid">
                                             <h5 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}} </h5>
                                             <span class="mt-0">{{ optional($firstService)->job_title ?? 'No service found with ID 1.' }}</span>
 
-                                            <div class="d-flex align-items-center mt-1">
+                                            <div class="d-flex align-items-center mt-1 mb-3">
                                                 @if($freelancer->avg_rating > 0)
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <=floor($freelancer->avg_rating))
@@ -167,11 +168,11 @@ $cards = [
                                                     @endif
                                                     @endfor
                                                     @else
-                                                    <p class="text-muted">No ratings yet.</p>
+                                                    <span class="text-muted">No ratings yet.</span>
                                                     @endif
                                             </div>
-                                            <button class="btn-seemore fs-6 text-uppercase 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-2 ">View Profile</button>
+                                            <button class="btn-seemore fs-6  
+                                            poppins-regular w-100 border-0 text-nowrap rounded-4 ">View Profile</button>
                                         </div>
                                     </div>
                                     @endforeach
@@ -195,14 +196,14 @@ $cards = [
 
         </section>
 
-        <section class="jobs">
+        <section class="container jobs">
             <div class="container-fluid">
                 <div class="row">
-                    <h2 class="poppins-medium text-uppercase letter-spacing">FInd a Job</h2>
-                    <span class="text-wrap">Unlock new opportunities and grow your career by becoming a CAPSURE freelancer..
+                    <h1 class="poppins-medium text-uppercase letter-spacing">Find Your Event Job</h1>
+                    <big class="mb-4" style="line-height: 1.2;">Unlock new opportunities and grow your career by becoming a CAPSURE freelancer.
                         Take control of your professional journey and join a community that values your skills and creativity.
                         Apply now to start your CAPSURE adventure!
-                    </span>
+                    </big>
                     <div id="eventsCarousel" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
                             <div class="carousel-item active">
@@ -222,19 +223,19 @@ $cards = [
                                                 @if($freelancer->avg_rating > 0)
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <=floor($freelancer->avg_rating))
-                                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                    <i class="fas fa-star filled mb-3"></i> <!-- Filled star -->
                                                     @elseif ($i == ceil($freelancer->avg_rating) && $freelancer->avg_rating - floor($freelancer->avg_rating) > 0)
-                                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                                    <i class="fas fa-star-half-alt filled mb-3"></i> <!-- Half star -->
                                                     @else
-                                                    <i class="far fa-star"></i> <!-- Empty star -->
+                                                    <i class="far fa-star mb-3"></i> <!-- Empty star -->
                                                     @endif
                                                     @endfor
                                                     @else
-                                                    <p class="text-muted">No ratings yet.</p>
+                                                    <span class="text-muted mb-2">No ratings yet.</span>
                                                     @endif
                                             </div>
-                                            <button class="btn-seemore fs-6 text-uppercase 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-2 ">View Profile</button>
+                                            <button class="btn-seemore fs-6 
+                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " style="background-color:#FCF2F9;">View Profile</button>
                                         </div>
                                     </div>
                                     @endforeach
@@ -261,19 +262,19 @@ $cards = [
                                                 @if($freelancer->avg_rating > 0)
                                                 @for ($i = 1; $i <= 5; $i++)
                                                     @if ($i <=floor($freelancer->avg_rating))
-                                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                    <i class="fas fa-star filled mb-3"></i> <!-- Filled star -->
                                                     @elseif ($i == ceil($freelancer->avg_rating) && $freelancer->avg_rating - floor($freelancer->avg_rating) > 0)
-                                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                                    <i class="fas fa-star-half-alt filled mb-3"></i> <!-- Half star -->
                                                     @else
-                                                    <i class="far fa-star"></i> <!-- Empty star -->
+                                                    <i class="far fa-star mb-3"></i> <!-- Empty star -->
                                                     @endif
                                                     @endfor
                                                     @else
-                                                    <p class="text-muted">No ratings yet.</p>
+                                                    <span class="text-muted mb-2">No ratings yet.</span>
                                                     @endif
                                             </div>
-                                            <button class="btn-seemore fs-6 text-uppercase 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-2 ">View Profile</button>
+                                            <button class="btn-seemore fs-6
+                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " style="background-color:#FCF2F9;">View Profile</button>
                                         </div>
                                     </div>
                                     @endforeach
@@ -291,14 +292,81 @@ $cards = [
                             <span class="visually-hidden">Next</span>
                         </button>
                     </div>
-
                 </div>
             </div>
-
         </section>
+        <footer class="footer mt-5 py-4 text-white">
+            <div class="container-fluid">
+                <div class="row">
+                    <!-- About Section -->
+                    <div class="col-md-4 me-4">
+                        <h5>About Us</h5>
+                        <p>
+                            We provide exceptional freelance services, helping you elevate your event or project with the right talent.
+                            From event planners to videographers, we’ve got you covered.
+                        </p>
+                    </div>
 
-        <footer class="footer text-center">
-            <p>&copy; 2024, CapSure</p>
+                    <!-- Quick Links -->
+                    <div class="col-md-3 ms-4">
+                        <h5>Quick Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">Home</a></li>
+                            <li><a href="#" class="text-white">Services</a></li>
+                            <li><a href="#" class="text-white">Freelancers</a></li>
+                            <li><a href="#" class="text-white">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact Section -->
+                    <div class="col-md-4">
+                        <h5>Contact Us</h5>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-map-marker-alt"></i> 123 Freelancer St, City, Country</li>
+                            <li><i class="fas fa-phone"></i> +1 234 567 890</li>
+                            <li><i class="fas fa-envelope"></i> info@capsure.com</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="row mt-3">
+                    <div class="col text-center">
+                        <p>&copy; 2024 CAPSURE. All Rights Reserved.</p>
+                    </div>
+                </div>
+            </div>
         </footer>
 </div>
+
+<style>
+    .footer {
+        color: #ffffff;
+        background-color: #91216C;
+        position: relative;
+        width: 100%;
+    }
+
+    .footer h5 {
+        font-weight: 600;
+    }
+
+    .footer a {
+        color: #ffffff;
+        text-decoration: none;
+    }
+
+    .footer a:hover {
+        color: #ffc107;
+    }
+
+    .footer .list-unstyled li {
+        margin-bottom: 10px;
+    }
+
+    .footer .text-center {
+        border-top: 1px solid #444;
+        padding-top: 15px;
+        margin-top: 20px;
+    }
+</style>
 @endsection

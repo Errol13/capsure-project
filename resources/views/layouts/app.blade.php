@@ -95,7 +95,7 @@
 
                         @if (Route::has('choose'))
                         <li class="nav-item">
-                            <a class="btn-purple rounded-2 px-3" href="{{ route('choose') }}"> SIGN UP</a>
+                            <a class="btn-purple rounded-4 px-3" href="{{ route('choose') }}"> SIGN UP</a>
                         </li>
                         @endif
 
