@@ -29,22 +29,22 @@
 
 <body>
     <div class=" bg-signup"></div>
-    <div class="container mt-3 mt-md-4 txt-smaller poppins-light">
-        <div class="row justify-content-center">
+    <div class="container d-flex justify-content-center align-items-center vh-100 txt-smaller poppins-light">
+        <div class="row justify-content-center w-100">
             <div class="col-12 col-md-6">
-                <div class="card rounded bg-white px-4">
-                    <div class="card-header border-0 bg-white fs-4 text-center poppins-medium">Sign up as <b class="text-purple poppins-medium">Client</b> <a href="{{ route('choose') }}" class="text-black position-absolute end-0 top-0 m-2">
-                            <i class="fas fa-times"></i>
-                        </a></div>
+                <div class="card rounded-4 bg-white px-4 mb-2">
+                    <div class="card-header border-0 bg-white fs-3 text-center poppins-medium">Sign up as <b class="text-purple poppins-medium">Client</b>
+                        <a class="btn-close position-absolute" href="{{ route('choose') }}" style="top: 8px; right: 8px; height: 5px; width: 5px;" aria-label="Close"></a>
+                    </div>
 
-                    <div class="card-body  ">
+                    <div class="card-body">
                         <form method="POST" action="{{ route('register.client.post') }}">
                             @csrf
 
                             <!-- First Name and Last Name -->
                             <div class="row mb-1">
                                 <div class="col-md-6">
-                                    <label for="first_name" class="form-label">{{ __('First Name') }}</label>
+                                    <label for="first_name" class="form-label mb-0">{{ __('First Name') }}</label>
                                     <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror" name="first_name" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
 
                                     @error('first_name')
@@ -55,7 +55,7 @@
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
+                                    <label for="last_name" class="form-label mb-0">{{ __('Last Name') }}</label>
                                     <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror" name="last_name" value="{{ old('last_name') }}" required autocomplete="last_name">
 
                                     @error('last_name')
@@ -68,7 +68,7 @@
 
                             <!-- Email Address -->
                             <div class="mb-1">
-                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                <label for="email" class="form-labelmb-0">{{ __('Email Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
 
                                 @error('email')
@@ -78,11 +78,46 @@
                                 @enderror
                             </div>
 
+                            <!--Password and Confirm Password -->
+                            <div class="row mb-1">
+                                <div class="col-md-6 ">
+                                    <label for="password" class="form-label mb-0">{{ __('Password') }}</label>
+                                    <div class="input-group m-0 p-0">
+                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                        <button type="button" class="btn border " onclick="togglePasswordVisibility('password')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+
+                                    @error('password')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="password_confirmation" class="form-label mb-0">{{ __('Confirm Password') }}</label>
+                                    <div class="input-group m-0 p-0">
+                                        <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
+                                        <button type="button" class="btn border" onclick="togglePasswordVisibility('password_confirmation')">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+
+                                    @error('password_confirmation')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+                            </div>
+
                             <!-- Birthdate -->
                             <p class="fw-bold mb-1"> What's your date of birth? </p>
                             <div class="row mb-1 ">
                                 <div class="col-md-4">
-                                    <label for="birth_month" class="form-label">{{ __('Month') }}</label>
+                                    <label for="birth_month" class="form-label mb-0">{{ __('Month') }}</label>
                                     <select id="birth_month" class="form-select @error('birth_month') is-invalid @enderror" name="birth_month" required>
                                         <option value="" disabled selected class="text-gray"></option>
                                         @foreach(range(1, 12) as $month)
@@ -99,7 +134,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="birth_day" class="form-label">{{ __('Day') }}</label>
+                                    <label for="birth_day" class="form-label mb-0">{{ __('Day') }}</label>
                                     <select id="birth_day" class="form-select @error('birth_day') is-invalid @enderror" name="birth_day" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(1, 31) as $day)
@@ -116,7 +151,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="birth_year" class="form-label">{{ __('Year') }}</label>
+                                    <label for="birth_year" class="form-label mb-0">{{ __('Year') }}</label>
                                     <select id="birth_year" class="form-select @error('birth_year') is-invalid @enderror" name="birth_year" required>
                                         <option value="" disabled selected></option>
                                         @foreach(range(date('Y') - 100, date('Y')) as $year)
@@ -138,7 +173,7 @@
 
                             <div class="row mb-1">
                                 <div class="col-md-4">
-                                    <label for="street" class="form-label">{{ __('Street') }}</label>
+                                    <label for="street" class="form-label mb-0">{{ __('Street') }}</label>
                                     <input id="street" type="text" class="form-control @error('street') is-invalid @enderror" name="street" value="{{ old('street') }}" required autocomplete="street">
                                     @error('street')
                                     <span class="invalid-feedback" role="alert">
@@ -148,7 +183,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="barangay" class="form-label">{{ __('Barangay') }}</label>
+                                    <label for="barangay" class="form-label mb-0">{{ __('Barangay') }}</label>
                                     <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror" name="barangay" value="{{ old('barangay') }}" required autocomplete="barangay">
                                     @error('barangay')
                                     <span class="invalid-feedback" role="alert">
@@ -158,46 +193,9 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="city" class="form-label">{{ __('City') }}</label>
+                                    <label for="city" class="form-label mb-0">{{ __('City') }}</label>
                                     <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
                                     @error('city')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                            </div>
-
-
-
-                            <!--Password and Confirm Password -->
-                            <div class="row mb-1">
-                                <div class="col-md-6 ">
-                                    <label for="password" class="form-label">{{ __('Password') }}</label>
-                                    <div class="input-group m-0 p-0">
-                                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-                                        <button type="button" class="btn border " onclick="togglePasswordVisibility('password')">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6">
-                                    <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
-                                    <div class="input-group m-0 p-0">
-                                        <input id="password_confirmation" type="password" class="form-control @error('password_confirmation') is-invalid @enderror" name="password_confirmation" required autocomplete="new-password">
-                                        <button type="button" class="btn border" onclick="togglePasswordVisibility('password_confirmation')">
-                                            <i class="fas fa-eye"></i>
-                                        </button>
-                                    </div>
-
-                                    @error('password_confirmation')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -208,7 +206,7 @@
                             <p class="text-center fs-cstm-6">By creating an account, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
 
                             <div class="text-center">
-                                <button type="submit" class="btn-auth rounded-pill fs-6 ">
+                                <button type="submit" class="btn-auth rounded-pill border-0">
                                     {{ __('Sign up') }}
                                 </button>
                             </div>
@@ -216,7 +214,7 @@
                             <div class="mt-1 mt-md-1">
                                 <div class="d-flex justify-content-center align-items-center">
                                     <p class="mb-0 me-2">Already have an account?</p>
-                                    <a href="{{ route('login') }}" class="text-purple fs-6">Log in</a>
+                                    <a href="{{ route('login') }}" class="text-purple fs-6 fw-medium">Log in</a>
                                 </div>
                             </div>
                         </form>
@@ -240,6 +238,13 @@
         }
     </script>
 
+    <style>
+        html,
+        body {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
 </body>
 
 </html>

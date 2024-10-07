@@ -3,17 +3,16 @@
 @section('content')
 <div class="container px-5 poppins-light py-5 mt-1">
     <div class="row justify-content-center">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <div class>
-                <div class="card-header text-center py-4 fs-1 fw-bold">{{ __('Log In') }}</div>
-
+                <div class="text-center py-4 fs-1 fw-medium">{{ __('Log In') }}</div>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-                        <label for="email" class="row-12 row-md-4 row-form-label text-md-end fs-cstm-5">{{ __('Email Address') }}</label>
+                        <label for="email" class="row-12 row-md-4 row-form-label text-md-end fs-cstm-3">{{ __('Email Address') }}</label>
                         <div class="row mb-4">
                             <div class="row-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" placeholder="Enter your email" style="background-color:white;" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus>
 
                                 @error('email')
                                 <span class="invalid-feedback" role="alert">
@@ -22,16 +21,16 @@
                                 @enderror
                             </div>
                         </div>
-                        <label for="password" class="row-form-label text-md-end fs-cstm-5">{{ __('Password') }}</label>
+                        <label for="password" class="row-form-label text-md-end fs-cstm-3">{{ __('Password') }}</label>
                         <div class="row mb-2">
                             <div class="row-md-6">
                                 <div class="input-group m-0 p-0">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
+                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" placeholder="Enter your password" style="background-color:white;" name="password" required autocomplete="new-password">
                                     <button type="button" class="btn border " onclick="togglePasswordVisibility('password')">
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
-                                
+
                                 @error('password')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -42,7 +41,7 @@
                         <div class="row mb-5">
                             <div class="row-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="checkbox" style="background-color: white;" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
@@ -52,37 +51,36 @@
                         </div>
                         <p class="text-center fs-cstm-6">By continuing, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
                         <div class="row row-md-6 d-grid gap-3">
-                            <button type="submit" class="btn-auth rounded-pill border-0 border-white">
+                            <button type="submit" class="btn-auth rounded-pill border-0">
                                 {{ __('Login') }}
                             </button>
                         </div>
-                        <div class="row mb-4 gap-3">
+                        <div class="row mt-2 mb-4 gap-3">
                             @if (Route::has('password.request'))
                             <a class="btn btn-link text-black" href="{{ route('password.request') }}">
                                 {{ __('Forgot your password?') }}
                             </a>
                             @endif
-                            <p class="text-center">Don't have an account yet?<a href="{{ route('choose') }}" class="text-purple fs-6 ms-1">Sign Up</a>
+                            <p class="text-center">Don't have an account yet?<a href="{{ route('choose') }}" class="text-purple fw-medium fs-6 ms-1">Sign Up</a>
                         </div>
+                    </form>
                 </div>
-                </form>
             </div>
         </div>
     </div>
 </div>
-</div>
 
 <script>
-        function togglePasswordVisibility(id) {
-            const input = document.getElementById(id);
-            const button = event.currentTarget;
-            if (input.type === 'password') {
-                input.type = 'text';
-                button.innerHTML = '<i class="bi bi-eye-slash"></i>'; // Eye slash icon
-            } else {
-                input.type = 'password';
-                button.innerHTML = '<i class="bi bi-eye"></i>'; // Eye icon
-            }
+    function togglePasswordVisibility(id) {
+        const input = document.getElementById(id);
+        const button = event.currentTarget;
+        if (input.type === 'password') {
+            input.type = 'text';
+            button.innerHTML = '<i class="bi bi-eye-slash"></i>'; // Eye slash icon
+        } else {
+            input.type = 'password';
+            button.innerHTML = '<i class="bi bi-eye"></i>'; // Eye icon
         }
-    </script>
+    }
+</script>
 @endsection
