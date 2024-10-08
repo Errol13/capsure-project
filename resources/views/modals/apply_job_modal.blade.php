@@ -17,9 +17,9 @@
                         $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
                         @endphp
                         @if($eventJob->number_of_people != $completedHiredCount)
-                        <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
+                        <option value="{{ $eventJob->service_needed }}">{{ $eventJob->service_needed }}</option>
                         @else
-                        <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
+                        <option value="{{ $eventJob->service_needed }}" disabled>{{ $eventJob->service_needed }}</option>
                         @endif
                         @endforeach
                     </select>
@@ -28,16 +28,22 @@
                     <select class="form-select border border-danger-subtle" id="service_id" name="service_id" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($freelancer->services as $service)
-                        <option value="{{ $service->id }}">{{ $service->job_title }}</option>
+                        <option value="{{ $service->id }}" data-job-title="{{ $service->job_title }}">
+                            {{ $service->job_title }}
+                        </option>
                         @endforeach
                     </select>
+
 
                     <!-- Hidden input for passing the freelancer ID -->
                     <input type="hidden" id="user_id" name="user_id" value="{{ $freelancer->user_id }}">
                 </form>
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <button type="submit" form="apply-job-form" class="flex-grow-1 rounded-pill border-0 btn-seemore poppins-regular fw-light">Confirm Application</button>
+                <!-- Confirm Application Button -->
+                <button type="submit" id="confirm-application" form="apply-job-form" class="flex-grow-1 rounded-pill border-0 btn-cancel poppins-regular fw-light" disabled>
+                    Confirm Application
+                </button>
                 <button type="button" class="flex-grow-1 btn-seeprof" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -66,6 +72,67 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        const applyAsSelect = document.getElementById('apply_as');
+        const serviceSelect = document.getElementById('service_id');
+        const confirmButton = document.getElementById('confirm-application');
+        const servicesOptions = Array.from(serviceSelect.options); // Store all service options
+
+        // Function to check if both selects have valid selections
+        function checkButtonState() {
+            const isJobSelected = applyAsSelect.value !== "";
+            const isServiceSelected = serviceSelect.value !== "";
+            const isEnabled = isJobSelected && isServiceSelected; // Check if both are selected
+            
+            confirmButton.disabled = !isEnabled; // Enable button only if both are selected
+            
+            // Change button classes based on enabled state
+            if (isEnabled) {
+                confirmButton.classList.remove('btn-cancel');
+                confirmButton.classList.add('btn-seeeprof');
+            } else {
+                confirmButton.classList.remove('btn-seeprof');
+                confirmButton.classList.add('btn-cancel');
+            }
+        }
+
+        applyAsSelect.addEventListener('change', function () {
+            const selectedJob = applyAsSelect.options[applyAsSelect.selectedIndex].text.toLowerCase(); // Get selected job name as text
+
+            // Clear the current service options
+            serviceSelect.innerHTML = '<option value="" disabled selected class="text-muted"></option>';
+
+            // Filter services based on the selected job
+            let matchFound = false;
+            servicesOptions.forEach(option => {
+                const jobTitle = option.getAttribute('data-job-title');
+
+                if (jobTitle) { // Ensure data-job-title exists
+                    const jobTitleLower = jobTitle.toLowerCase(); // Convert to lowercase
+                    
+                    // Only add options that match the selected job title
+                    if (jobTitleLower === selectedJob) {
+                        serviceSelect.appendChild(option); // Add matching option back to the select element
+                        matchFound = true;
+                    }
+                }
+            });
+
+            // If no matching services, add a "No matching service" option
+            if (!matchFound) {
+                const noMatchOption = document.createElement('option');
+                noMatchOption.disabled = true;
+                noMatchOption.textContent = 'No matching service available';
+                serviceSelect.appendChild(noMatchOption);
+            }
+
+            checkButtonState(); // Check button state after filtering
+        });
+
+        serviceSelect.addEventListener('change', function () {
+            checkButtonState(); // Check button state when the service selection changes
+        });
+
+
         document.getElementById('apply-job-form').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 

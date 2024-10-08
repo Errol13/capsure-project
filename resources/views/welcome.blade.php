@@ -21,7 +21,7 @@ $cards = [
 <!-- Contents -->
 <div class="d-flex">
     <section class="text-center col-md-12 col-lg-12 col-sm-12">
-        <div class="hero container-fluid" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
+        <div class="hero container rounded" style="text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);">
             <div class="row d-flex justify-content-center">
                 <div class="col-12">
                     <div class="row px-0 my-1 fs-3 d-flex justify-content-center">
@@ -142,7 +142,7 @@ $cards = [
 
                             <div class="carousel-item">
                                 <div class="row">
-                                    @foreach($freelancers->slice(5,5) as $freelancer)
+                                    @foreach($freelancers->slice(6,6) as $freelancer)
 
                                     <!--fetch the first service of the freelancer-->
                                     @php
@@ -336,6 +336,7 @@ $cards = [
                 </div>
             </div>
         </footer>
+</section>
 </div>
 
 <style>

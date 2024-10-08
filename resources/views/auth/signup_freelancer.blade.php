@@ -36,10 +36,9 @@
                         <a class="btn-close position-absolute" href="{{ route('choose') }}" style="top: 8px; right: 8px; height: 5px; width: 5px;" aria-label="Close"></a>
                     </div>
 
-                    <div class="card-body  ">
-                        <form method="POST" action="{{ route('register.freelancer.post') }}">
-                            @csrf
-
+                    <form method="POST" action="{{ route('register.freelancer.post') }}">
+                        @csrf
+                        <div class="card-body ">
                             <!-- First Name and Last Name -->
                             <div class="row mb-1">
                                 <div class="col-md-6">
@@ -112,37 +111,15 @@
                                 </div>
                             </div>
 
-                            <!-- Job Title -->
                             <div class="row mb-1">
-                                <div class="col-6 col-md-4">
-                                    <label for="job_title" class="form-label mb-0">{{ __('Job Title') }}</label>
-                                    <input id="job_title" type="text" class="mx-1 form-control @error('job_title') is-invalid @enderror" name="job_title" value="{{ old('job_title') }}" required autocomplete="job_title">
-
-                                    @error('job_title')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-
                                 <!-- Job Category -->
-
-                                <div class="col-6 col-md-4">
+                                <div class="col-sm-4 col-md-4">
                                     <label for="job_category" class="form-label mb-0">{{ __('Job Category') }}</label>
-                                    <select id="job_category" class=" mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
+                                    <select id="job_category" class="mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
                                         <option value="" disabled selected></option>
-                                        <option value="Arts" {{ old('job_category') == 'Arts' ? 'selected' : '' }}>Arts</option>
-                                        <option value="Entertainment" {{ old('job_category') == 'Entertainment' ? 'selected' : '' }}>Entertainment</option>
-                                        <option value="Event Planner" {{ old('job_category') == 'Event Planner' ? 'selected' : '' }}>Event Planner</option>
-                                        <option value="Food Service" {{ old('job_category') == 'Food Service' ? 'selected' : '' }}>Food Service</option>
-                                        <option value="Handicrafts" {{ old('job_category') == 'Handicrafts' ? 'selected' : '' }}>Handicrafts</option>
-                                        <option value="Online Services" {{ old('job_category') == 'Online Services' ? 'selected' : '' }}>Online Services</option>
-                                        <option value="Photography" {{ old('job_category') == 'Photography' ? 'selected' : '' }}>Photography</option>
-                                        <option value="Styling" {{ old('job_category') == 'Styling' ? 'selected' : '' }}>Styling</option>
-                                        <option value="Videography" {{ old('job_category') == 'Videography' ? 'selected' : '' }}>Videography</option>
-                                        <option value="Voice Talent" {{ old('job_category') == 'Voice Talent' ? 'selected' : '' }}>Voice Talent</option>
-
-
+                                        @foreach(array_keys($jobTitles) as $category)
+                                        <option value="{{ $category }}" {{ old('job_category') == $category ? 'selected' : '' }}>{{ $category }}</option>
+                                        @endforeach
                                     </select>
                                     @error('job_category')
                                     <span class="invalid-feedback" role="alert">
@@ -151,8 +128,23 @@
                                     @enderror
                                 </div>
 
+                                <!-- Job Title -->
+                                <div class="col-sm-4 col-md-4">
+                                    <label for="job_title" class="form-label mb-0">{{ __('Job Title') }}</label>
+                                    <select id="job_title" class="mx-1 form-select @error('job_title') is-invalid @enderror" name="job_title" required>
+                                        <option value="" disabled selected></option>
+                                        <!-- Options will be populated dynamically -->
+                                    </select>
+                                    <input type="text" id="custom_job_title" name="custom_job_title" class="form-control @error('custom_job_title') is-invalid @enderror" style="display:none;" placeholder="Enter Job Title" />
+                                    @error('custom_job_title')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                    @enderror
+                                </div>
+
                                 <!-- Job Fee -->
-                                <div class=" col-6 col-md-2">
+                                <div class="col-6 col-md-2">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
                                     <input id="job_fee" type="number" step="0.01" class="mx-1 form-control @error('job_fee') is-invalid @enderror" name="job_fee" value="{{ old('job_fee') }}" required autocomplete="job_fee">
 
@@ -178,6 +170,8 @@
                                     @enderror
                                 </div>
                             </div>
+
+
 
 
                             <!-- Birthdate -->
@@ -261,7 +255,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="city" class="form-label mb-0">{{ __('City') }}</label>
+                                    <label for="city" class="form-label mb-0">{{ __('City/Municipality') }}</label>
                                     <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
                                     @error('city')
                                     <span class="invalid-feedback" role="alert">
@@ -270,8 +264,6 @@
                                     @enderror
                                 </div>
                             </div>
-
-
 
 
                             <p class="text-center fs-cstm-6">By creating an account, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
@@ -288,11 +280,14 @@
                                     <a href="{{ route('login') }}" class="text-purple fs-6">Log in</a>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+
+                        </div>
+                    </form>
                 </div>
+
             </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -307,6 +302,52 @@
                 button.innerHTML = '<i class="bi bi-eye"></i>'; // Eye icon
             }
         }
+
+        // initialize the variable with data from controller
+        var jobTitles = <?php echo json_encode($jobTitles); ?>; 
+
+        document.getElementById('job_category').addEventListener('change', function() {
+            var selectedCategory = this.value;
+            var jobTitleSelect = document.getElementById('job_title');
+            var customJobTitleInput = document.getElementById('custom_job_title');
+
+            // Clear previous options and input field
+            jobTitleSelect.innerHTML = '<option value="" disabled selected></option>';
+            customJobTitleInput.style.display = 'none'; // Hide the custom job title input
+
+            // Add job titles for the selected category
+            if (jobTitles[selectedCategory]) {
+                jobTitles[selectedCategory].forEach(function(title) {
+                    var option = document.createElement('option');
+                    option.value = title;
+                    option.text = title;
+                    jobTitleSelect.appendChild(option);
+                });
+            }
+
+            // Add option for custom input
+            var customOption = document.createElement('option');
+            customOption.value = 'custom';
+            customOption.text = 'Other (Please specify)';
+            jobTitleSelect.appendChild(customOption);
+
+            // Show the dropdown again
+            jobTitleSelect.style.display = 'block'; // Ensure dropdown is visible
+        });
+
+        // Show custom input if 'Other' is selected
+        document.getElementById('job_title').addEventListener('change', function() {
+            var selectedJobTitle = this.value;
+            var customJobTitleInput = document.getElementById('custom_job_title');
+
+            if (selectedJobTitle === 'custom') {
+                customJobTitleInput.style.display = 'block'; // Show the custom job title input
+                this.style.display = 'none'; // Hide the dropdown
+            } else {
+                customJobTitleInput.style.display = 'none'; // Hide the custom job title input
+                this.style.display = 'block'; // Ensure the dropdown is visible
+            }
+        });
     </script>
     <style>
         html,
@@ -319,9 +360,11 @@
             .container {
                 overflow-y: auto;
             }
+
             .card {
                 margin-top: 150px;
             }
+        }
     </style>
 </body>
 

@@ -28,7 +28,7 @@
 
 <body>
     <div class="verification-container">
-        <div class="verification-box">
+        <div class="verification-box d-flex flex-column justify-content-center align-items-center " style="border-color: #91216C;">
             <h2 class="text-center">Verify Your Email Address</h2>
 
             @if (session('resent'))

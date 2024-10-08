@@ -7,7 +7,6 @@ use App\Models\Client;
 use App\Models\Freelancer;
 use App\Models\Profile\Service as ProfileService;
 use App\Models\Profile\SocialMediaAccount as ProfileSocialMediaAccount;
-use App\Models\Service;
 use App\Models\SocialMediaAccount;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
@@ -59,8 +58,44 @@ class RegisterController extends Controller
     // Show freelancer registration form
     public function showFreelancerRegisterForm()
     {
-        return view('auth.signup_freelancer');
+        //Define default job titles for each category
+        $defaultJobTitles = [
+            'Arts' => ['Painter', 'Sculptor', 'Illustrator'],
+            'Entertainment' => ['Actor', 'Musician', 'Dancer', 'Choreographer', 'Comedian', 'Clown Artist'],
+            'Event Planner' => ['Wedding Coordinator', 'Corporate Event Planner'],
+            'Food Service' => ['Chef', 'Food Caterer'],
+            'Handicrafts' => ['Craft Maker', 'Jewelry Designer', 'Beader'],
+            'Online Services' => ['Virtual Assistant', 'SEO Specialist', 'Tutor'],
+            'Photography' => ['Photographer', 'Photo Editor'],
+            'Styling' => ['Fashion Stylist', 'Makeup Artist'],
+            'Videography' => ['Event Videographer', 'Corporate Videographer', 'Videographer'],
+            'Voice Talent' => ['Narrator', 'Singer', 'Host', 'Voice Actor'],
+            'Package' => ['Wedding Package', 'Birthday Package'],
+        ];
+
+        //Fetch existing job titles from the database
+        $existingJobTitles = ProfileService::select('job_category', 'job_title')
+            ->groupBy('job_category', 'job_title')
+            ->get()
+            ->groupBy('job_category')
+            ->toArray();
+
+        // Merge default and existing job titles (no duplicates)
+        $jobTitles = [];
+        foreach ($defaultJobTitles as $category => $titles) {
+            // Existing titles for this category
+            $existingTitles = isset($existingJobTitles[$category])
+                ? array_column($existingJobTitles[$category], 'job_title')
+                : [];
+
+            // Merge default and existing titles, remove duplicates
+            $jobTitles[$category] = array_unique(array_merge($titles, $existingTitles));
+        }
+
+        //Send the combined list to the view
+        return view('auth.signup_freelancer', compact('jobTitles'));
     }
+
 
     // Handle client registration
     public function registerClient(Request $request)
@@ -80,20 +115,41 @@ class RegisterController extends Controller
     // Handle freelancer registration
     public function registerFreelancer(Request $request)
     {
-        $this->validator($request->all())->validate();
+        $validator = Validator::make($request->all(), [
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:users',
+            'password' => 'required|string|min:8|confirmed',
+            'job_category' => 'required|string',
+            'job_title' => 'required|string',
+            'custom_job_title' => 'nullable|string|max:255',
+            'job_fee' => 'required|numeric|min:0',
+            'fee_type' => 'required|string|in:/hour,/project',
+            'birth_month' => 'required|integer|between:1,12',
+            'birth_day' => 'required|integer|between:1,31',
+            'birth_year' => 'required|integer|between:' . (date('Y') - 100) . ',' . date('Y'),
+            'street' => 'required|string|max:255',
+            'barangay' => 'required|string|max:255',
+        ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        // Creating freelancer and associated service in one go
         $user = $this->createFreelancer($request->all());
-
-        // Create the associated service record for the freelancer
-        $this->createService($user->id, $request->all());
 
         // Trigger the email verification event
         event(new Registered($user));
 
+        // Log the user in
         $this->guard()->login($user);
 
         return redirect($this->redirectPath());
     }
+
 
     // Create client
     protected function createClient(array $data)
@@ -140,6 +196,7 @@ class RegisterController extends Controller
         $birthdate = "{$data['birth_year']}-{$data['birth_month']}-{$data['birth_day']}";
         $age = \Carbon\Carbon::parse($birthdate)->age;
 
+        // Create user record
         $user = User::create([
             'first_name' => $data['first_name'],
             'last_name' => $data['last_name'],
@@ -155,9 +212,8 @@ class RegisterController extends Controller
             'contact_number' => $data['contact_number'] ?? null,
         ]);
 
-        // Define the platforms
+        // Initialize default social media accounts
         $platforms = ['Facebook', 'LinkedIn', 'Instagram'];
-
         foreach ($platforms as $platform) {
             ProfileSocialMediaAccount::create([
                 'user_id' => $user->id,
@@ -166,25 +222,26 @@ class RegisterController extends Controller
             ]);
         }
 
+        // Create freelancer-specific data
         Freelancer::create([
             'user_id' => $user->id,
+        ]);
 
+        // Determine job title
+        $jobTitle = !empty($data['custom_job_title']) ? $data['custom_job_title'] : $data['job_title'];
+
+        // Create associated service
+        ProfileService::create([
+            'freelancer_id' => $user->id,
+            'job_category' => $data['job_category'],
+            'job_title' => $jobTitle, // Use custom job title if provided
+            'fee_type' => $data['fee_type'],
+            'job_fee' => $data['job_fee'],
         ]);
 
         return $user;
     }
 
-    // Create service record for freelancer
-    protected function createService(int $userId, array $data)
-    {
-        ProfileService::create([
-            'user_id' => $userId,
-            'job_category' => $data['job_category'],
-            'job_title' => $data['job_title'],
-            'fee_type' => $data['fee_type'],
-            'job_fee' => $data['job_fee'],
-        ]);
-    }
 
     protected function redirectTo()
     {

@@ -1067,6 +1067,16 @@ select:disabled {
     font-size: 1.25rem; /* Font size of h5 */
 }
 
+/* Transactions */
+.due-container {
+    display: inline-block; 
+}
+
+.due-container:hover {
+    cursor: pointer; /* Changes cursor to pointer on hover */
+}
+
+
 
 /*dito Phoebe lahat ng styles for large to medium screens ilagay*/
 
