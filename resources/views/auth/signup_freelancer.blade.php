@@ -142,7 +142,7 @@
                                     </span>
                                     @enderror
                                 </div>
-
+ 
                                 <!-- Job Fee -->
                                 <div class="col-6 col-md-2">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
@@ -349,6 +349,7 @@
             }
         });
     </script>
+
     <style>
         html,
         body {

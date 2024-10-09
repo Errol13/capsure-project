@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" wire:poll>
     <!-- Flash Message -->
     @if (session()->has('message'))
     <div class="alert alert-success">
@@ -107,8 +107,8 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr class="text-center">
-                                        <th scope="col col-sm-auto">Service Needed</th>
                                         <th scope="col col-sm-auto">Job Category</th>
+                                        <th scope="col col-sm-auto">Service Needed</th>
                                         <th scope="col col-sm-auto">No. of People</th>
                                         <th scope="col col-sm-auto">Actions</th>
                                     </tr>
@@ -116,33 +116,44 @@
                                 <tbody>
                                     @foreach($jobs as $index => $job)
                                     <tr>
-                                        <td class="align-middle px-2">
-                                            <input type="text" class="form-control mt-4 fs-6" wire:model="jobs.{{ $index }}.service_needed" placeholder="Eg. Photographer" data-autocomplete>
-                                            @error("jobs.$index.service_needed") <span class="text-danger">{{ $message }}</span> @enderror
-                                            <div id="editor-data" data-services="{{ json_encode($services) }}"></div>
-                                        </td>
                                         <td class="align-middle">
-                                            <select class="form-select w-100" wire:model="jobs.{{ $index }}.job_category">
+                                            <select id="job_category" class="form-select mt-4 w-100" wire:model="jobs.{{ $index }}.job_category" wire:change="updateServiceDropdown({{ $index }})">
                                                 <option value="">Select Category</option>
-                                                <option value="Arts">Arts</option>
-                                                <option value="Entertainment">Entertainment</option>
-                                                <option value="Event Planner">Event Planner</option>
-                                                <option value="Food Service">Food Service</option>
-                                                <option value="Handicrafts">Handicrafts</option>
-                                                <option value="Online Services">Online Services</option>
-                                                <option value="Photography">Photography</option>
-                                                <option value="Styling">Styling</option>
-                                                <option value="Videography">Videography</option>
-                                                <option value="Voice Talent">Voice Talent</option>
+                                                @foreach(array_keys($jobTitles) as $category)
+                                                <option value="{{ $category }}">{{ $category }}</option>
+                                                @endforeach
                                             </select>
                                             @error("jobs.$index.job_category") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
+                                        <td class="align-middle px-2">
+                                            @if(isset($jobs[$index]['job_category']) && array_key_exists($jobs[$index]['job_category'], $jobTitles))
+                                            @if($jobs[$index]['service_needed'] === 'Others' || (isset($jobs[$index]['custom_service_needed']) && $jobs[$index]['custom_service_needed'] !== ''))
+                                            <!-- Input field when "Others" is selected or custom service input is provided -->
+                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
+                                            @else
+                                            <!-- Dropdown for selecting services -->
+                                            <select class="form-control" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
+                                                <option value="" disabled>Select Service</option>
+                                                @foreach ($jobTitles[$jobs[$index]['job_category']] as $service)
+                                                <option value="{{ $service }}">{{ $service }}</option>
+                                                @endforeach
+                                                <option value="Others">Others</option>
+                                            </select>
+                                            @endif
+                                            @else
+                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete>
+                                            @endif
+
+                                            @error("jobs.$index.custom_service_needed") <span class="text-danger">{{ $message }}</span> @enderror
+                                        </td>
+
+
                                         <td class="align-middle">
                                             <input type="number" class="form-control" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
                                             @error("jobs.$index.number_of_people") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
                                         <td class="align-middle">
-                                            <button type="button" class="btn btn-danger" wire:click="removeJob({{ $index }})">Remove</button>
+                                            <button type="button" class="btn" wire:click="removeJob({{ $index }})"><i class="fas fa-trash text-danger"></i></button>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -179,9 +190,6 @@
                 console.warn('No data element found.');
             }
         });
-
-
-
 
         function cancelForm(event) {
             event.preventDefault();
