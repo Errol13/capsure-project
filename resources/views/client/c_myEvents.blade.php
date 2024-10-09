@@ -6,10 +6,10 @@
         <div class="col-12">
             <div class="row d-flex align-items-center">
                 <div class="col-auto pt-3">
-                    <h2>My Posts</h2>
+                    <h2 class="poppins-medium">My Posts</h2>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ url('/events') }}" class="btn btn-primary" style="background-color:#8FE2ED; border:none; color:black;">+</a>
+                    <a href="{{ url('/events') }}" class="btn rounded-3" style="background-color:#8FE2ED; border:none; color:black; height:28px;">Create an Event</a>
                 </div>
                 <div class="col ms-auto text-end">
                     <div class="dropdown">

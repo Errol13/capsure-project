@@ -7,7 +7,7 @@
     </a>
 
     <!-- Event Details -->
-    <div class="row">
+    <div class="container row-md-4 d-lg-flex">
         <div class="col-md-8 pb-4" style="border-radius:12px;">
             <div class="d-flex justify-content-between align-items-center">
                 <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
@@ -59,7 +59,7 @@
 
 
         <!-- Event Jobs -->
-        <div class="card col-md-4" style="border-radius: 15px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border:none;">
+        <div class="card col-md-4 ms-lg-3" style="border-radius: 15px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); border:none;">
             <div class="card-body poppins-medium">
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
@@ -90,10 +90,10 @@
     </div>
 
     <!-- Tabs -->
-    <div class="card mt-4 py-2 ">
-        <div class="container mt-2">
+    <div class="card my-4 p-0 rounded-4">
+        <div class="container px-0">
             <!-- Nav tabs -->
-            <ul class="nav nav-fill pt-2 poppins-medium fixed-tabs" style="background-color: #FCF2F9;">
+            <ul class="nav nav-fill pt-2 poppins-medium fixed-tabs" style="border-radius:15px 15px 0 0; background-color: #FCF2F9;">
                 @foreach ($tabs as $tabId => $tabName)
                 <li class="nav-item">
                     <a class="nav-link {{ $tabId === 'application' ? 'active' : '' }}"
@@ -119,7 +119,7 @@
             <div class="tab-content">
 
                 <!-- Application Tab -->
-                <div class="tab-pane fade show active" id="application" role="tabpanel" aria-labelledby="application-tab">
+                <div class="tab-pane fade show active px-3" id="application" role="tabpanel" aria-labelledby="application-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
                             @if($applicants->isNotEmpty())
@@ -155,8 +155,8 @@
                                         <div class="ms-auto text-end">
                                             @if ( $applicant['applicant']->avg_rating > 0)
                                             <div class="d-flex justify-content-center align-items-center">
-                                            <span class="fs-6 text-warning">⭐</span>
-                                            <small class="badge text-black">{{ number_format($applicant['applicant']->avg_rating, 1) }}</small>
+                                                <span class="fs-6 text-warning">⭐</span>
+                                                <small class="badge text-black">{{ number_format($applicant['applicant']->avg_rating, 1) }}</small>
                                             </div>
                                             @else
                                             <span class="badge text-black">No ratings yet</span>
@@ -167,12 +167,12 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <a href="{{route('view-freelancer-profile' , ['id' => $applicant['applicant']->user_id ] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $applicant['applicant']->user_id ] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-3" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
 
                                         @if(($applicant['status'] == 'Accepted'))
                                         <button type="button"
                                             class="btn mb-2 mb-sm-0 text-success fw-bold"
-                                            style="flex: 1; width: 100%; background-color: none; border-color: darkgrey; border-radius: 20px"
+                                            style="flex: 1; width: 100%; background-color:#f2f2f2; border:none; border-radius: 20px"
                                             data-toggle="modal"
                                             data-target="#"
                                             data-url="#" disabled>
@@ -221,7 +221,7 @@
                 </div>
 
                 <!-- Hiring Requests Tab -->
-                <div class="tab-pane fade" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
+                <div class="tab-pane fade px-3" id="hiring-requests" role="tabpanel" aria-labelledby="hiring-requests-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
                             @if($hiringRequests->isNotEmpty())
@@ -259,8 +259,8 @@
                                         <div class="ms-auto text-end">
                                             @if($freelancer->avg_rating > 0)
                                             <div class="d-flex justify-content-evenly align-items-center">
-                                            <span class="fs-6 text-warning">⭐</span>
-                                            <small class="badge text-black">{{ number_format($freelancer->avg_rating, 1) }}</small>
+                                                <span class="fs-6 text-warning">⭐</span>
+                                                <small class="badge text-black">{{ number_format($freelancer->avg_rating, 1) }}</small>
                                             </div>
                                             @else
                                             <span class="badge text-muted">No ratings yet</span>
@@ -308,7 +308,7 @@
                                             data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
                                             data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
                                         @elseif($freelancer->hiringRequestData->status == 'Accepted')
-                                        <a href = "{{route('client-transaction')}} "class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</a>
+                                        <a href="{{route('client-transaction')}} " class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</a>
                                         @endif
 
                                         <!--if accepted this will be gone-->
@@ -349,7 +349,7 @@
                 </div>
 
                 <!-- Recommendation Tab -->
-                <div class="tab-pane fade" id="recommendation" role="tabpanel" aria-labelledby="recommendation-tab">
+                <div class="tab-pane fade px-3" id="recommendation" role="tabpanel" aria-labelledby="recommendation-tab">
                     <div class="application-content mt-4">
                         <div class="row mb-4">
                             @foreach ($recommendations as $recomm)
@@ -370,8 +370,8 @@
                                         <div class="ms-auto text-end">
                                             @if($recomm->avg_rating != 0)
                                             <div class="d-flex justify-content-evenly align-items-center">
-                                            <span class="fs-6 text-warning">⭐</span>
-                                            <small class="badge text-black">{{ number_format($recomm->avg_rating, 1) }}</small>
+                                                <span class="fs-6 text-warning">⭐</span>
+                                                <small class="badge text-black">{{ number_format($recomm->avg_rating, 1) }}</small>
                                             </div>
                                             @else
                                             <span class="badge text-black">No ratings yet</span>
@@ -392,13 +392,13 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <a href="{{route('view-freelancer-profile' , ['id' => $recomm->user_id] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $recomm->user_id] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-3" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireRecommModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
                                     </div>
 
                                     <!-- Hire Modal -->
-                                    @include('modals.Hiring.hire_recomm', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm, 
-                                    'durationInHours' => $durationInHours, 'eventId'=> $event->event_id, 'payment_method' => $event->payment_method, 
+                                    @include('modals.Hiring.hire_recomm', ['uniqueId' => $recomm->user_id,'freelancer' => $recomm,
+                                    'durationInHours' => $durationInHours, 'eventId'=> $event->event_id, 'payment_method' => $event->payment_method,
                                     'job_services' => $event->event_jobs])
                                 </div>
                             </div>

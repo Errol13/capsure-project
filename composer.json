@@ -7,7 +7,7 @@
     "require": {
         "php": "^8.2",
         "djl997/laravel-search-query-builder": "^1.2",
-        "filament/filament": "^3.2",
+        "filament/filament": "*",
         "laravel/framework": "^11.9",
         "laravel/tinker": "^2.9",
         "laravel/ui": "^4.5",

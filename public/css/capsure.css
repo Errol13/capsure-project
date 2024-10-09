@@ -425,7 +425,6 @@ select#year {
     width: 600px;
     max-width: 100%;
     margin: 0 auto;
-    /* Centers the input group*/
 }
 
 .hero .form-control {
@@ -514,13 +513,11 @@ select#year {
 
 .input-group {
     border-radius: 50px;
-    /* Fully rounded input */
     padding: 10px 15px;
 }
 
 .form-control {
     border: none;
-    /* Removes the default border */
     border-radius: 50px;
 }
 
@@ -1209,8 +1206,8 @@ select:disabled {
     }
 
     .search-bar {
-        flex: 2;
-        max-width: 70%;
+        max-width: 60%;
+        height: 65px;
     }
 
     .create-event-btn {

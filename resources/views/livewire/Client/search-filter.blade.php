@@ -2,7 +2,7 @@
     <div class="search-container rounded-4">
         <!-- Search bar -->
         <div class="input-group search-bar mt-3 mb-3 position-relative">
-            <input type="text" class="form-control fw-lighter rounded-5 py-1 md-2" placeholder="What service do you need?" 
+            <input type="text" class="form-control fw-lighter rounded-5 py-1 md-3" placeholder="What service do you need?" 
             wire:model.debounce.500ms="query">
             <span class="input-group-text border-0 bg-transparent position-absolute end-0 mx-2 d-flex align-items-center">
                 <i class="fas fa-search m-2 fs-5"></i>
