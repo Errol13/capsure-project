@@ -70,7 +70,7 @@
                                         $dueId = 'Modal-' . $eventGroup['event']->event_id . '-user-' . auth()->user()->id;
                                         @endphp
 
-                                        <span class="text-danger fs-6 fw-bold" data-bs-toggle="modal" data-bs-target="#due{{$dueId}}">
+                                        <span class="text-danger fs-6 fw-bold due-container" data-bs-toggle="modal" data-bs-target="#due{{$dueId}}">
                                             <i class="fas fa-solid fa-circle-exclamation"></i>
                                         </span>
 

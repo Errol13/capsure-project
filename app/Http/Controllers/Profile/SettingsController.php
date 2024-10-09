@@ -124,6 +124,8 @@ class SettingsController extends Controller
             'terms_and_conditions' => 'required|string|max:500',
         ]);
 
+        Log::info('Edited terms and conditions: '. $validatedData['terms_and_conditions']);
+
         //find the freelancer
         $freelancer = Freelancer::findOrfail($id);
 

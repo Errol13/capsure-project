@@ -15,7 +15,7 @@ class WelcomePageController extends Controller
         $freelancers = Freelancer::with(['user', 'services'])->orderBy('avg_rating', 'desc')
             ->orderBy('number_of_projects', 'desc')
             ->orderBy('user_id', 'asc')
-            ->take(8)
+            ->take(12)
             ->get();
 
         $events = Event::with(['client.user'])->where('status', 'Open')->orderBy('budget_max', 'desc')
