@@ -33,8 +33,8 @@ class EventsController extends Controller
 
         // Get events for the authenticated user
         $eventsQuery = Event::where('client_id', $user->id)
-            ->whereHas('event_jobs') // Ensure the event has associated event_jobs
-            ->orderBy('created_at');
+            ->whereHas('event_jobs') 
+            ->orderBy('created_at'); //displays from oldest to latest
 
         // Apply filtering by status if it's not 'All'
         if ($status != 'All') {

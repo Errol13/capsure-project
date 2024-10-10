@@ -44,7 +44,7 @@
                 <button type="submit" id="confirm-application" form="apply-job-form" class="flex-grow-1 rounded-pill border-0 btn-cancel poppins-regular fw-light" disabled>
                     Confirm Application
                 </button>
-                <button type="button" class="flex-grow-1 btn-seeprof" data-bs-dismiss="modal">Cancel</button>
+                <button id="cancelButton" type="button" class="flex-grow-1 btn-seeprof" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -88,12 +88,17 @@
             // Change button classes based on enabled state
             if (isEnabled) {
                 confirmButton.classList.remove('btn-cancel');
-                confirmButton.classList.add('btn-seeeprof');
+                confirmButton.classList.add('btn-seemore');
             } else {
-                confirmButton.classList.remove('btn-seeprof');
+                confirmButton.classList.remove('btn-seemore');
                 confirmButton.classList.add('btn-cancel');
             }
         }
+
+        //reset the form when cancelled
+        document.getElementById('cancelButton').addEventListener('click', function() {
+        document.getElementById('apply-job-form').reset();
+    });
 
         applyAsSelect.addEventListener('change', function () {
             const selectedJob = applyAsSelect.options[applyAsSelect.selectedIndex].text.toLowerCase(); // Get selected job name as text
@@ -106,7 +111,7 @@
             servicesOptions.forEach(option => {
                 const jobTitle = option.getAttribute('data-job-title');
 
-                if (jobTitle) { // Ensure data-job-title exists
+                if (jobTitle) { 
                     const jobTitleLower = jobTitle.toLowerCase(); // Convert to lowercase
                     
                     // Only add options that match the selected job title
