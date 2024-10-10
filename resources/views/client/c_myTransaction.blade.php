@@ -21,6 +21,7 @@
         <!-- ON-GOING Tab ------------------------------------------------------------------------------------------------------------------------------>
         <div class="tab-pane show active" id="ongoing">
             @if($transactionsByEvent['ongoing']->isNotEmpty())
+
             <!-- Table for larger screens -->
             <table id="unique-payment-table" class="table table-borderless d-none d-md-table mt-3">
                 <thead class="table-primary poppins-extralight">
@@ -55,7 +56,7 @@
                     });
 
                     $isDue = $event->end_date < \Carbon\Carbon::now() && $hasOngoingTransaction;
-                    @endphp
+                        @endphp
 
                         <tr style="border:none;">
                         <td colspan="7" class="p-0">
@@ -181,8 +182,9 @@
                                     @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
                                     'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
                                     @endif
-
+                                    @if (!$loop->last)
                                     <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -191,14 +193,15 @@
 
                         @endforeach
 
-
                         @else
                         <p class="fs-5">No on-going transactions.</p>
                         @endif
 
 
                 </tbody>
+                @include('components.client.c_OngoingMobile')
             </table>
+
         </div>
 
         <!-- UPCOMING Tab --------------------------------------------------------------------------------------------------------------------------------------------->
@@ -338,8 +341,9 @@
                                     @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
                                     'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
                                     @endif
-
+                                    @if (!$loop->last)
                                     <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -350,6 +354,7 @@
                     <p class="fs-5">No upcoming transactions.</p>
                     @endif
                 </tbody>
+                @include('components.client.c_UpcomingMobile')
             </table>
         </div>
 
@@ -395,11 +400,11 @@
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column justify-content-center align-items-start">
-                                                <div>{{$transaction->freelancer->user->first_name}} {{$transaction->freelancer->user->last_name}}</div> <!-- Dynamic freelancer name -->
-                                                <small class="text-muted">{{$transaction->Hiring_request->serviceDetails()->job_title}}</small> <!-- Static profession -->
+                                                <div>{{$transaction->freelancer->user->first_name}} {{$transaction->freelancer->user->last_name}}</div>
+                                                <small class="text-muted">{{$transaction->Hiring_request->serviceDetails()->job_title}}</small>
                                             </div>
                                         </div>
-                                        <div class="col-2 text-left">₱ {{$transaction->payment_amount}}</div> <!-- Static payment fee -->
+                                        <div class="col-2 text-left">₱ {{$transaction->payment_amount}}</div>
                                         <div class="col-2 d-flex justify-content-center align-items-center">
 
                                             @php
@@ -452,11 +457,12 @@
                                     $reviewee = $transaction->freelancer;
                                     $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first(); //the client's review
                                     @endphp
-                                    
+
                                     @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
                                     'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
-
+                                    @if (!$loop->last)
                                     <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                    @endif
                                     @endforeach
                                 </div>
                             </div>
@@ -468,6 +474,7 @@
                     <p class="fs-5">No previous transactions.</p>
                     @endif
                 </tbody>
+                @include('components.client.c_HistoryMobile')
             </table>
         </div>
 
@@ -476,5 +483,71 @@
 
     </div>
 </div>
+
+<style>
+    #unique-payment-table {
+        display: table;
+    }
+
+    @media (max-width: 768px) {
+        #unique-payment-table {
+            display: none;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .card-header {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            font-size: 1rem;
+        }
+
+        .card-body {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-body .row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .card-body .col-auto,
+        .card-body .col-2,
+        .card-body .col-1 {
+            flex: 1;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-body img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .card-body button {
+            width: 100%;
+            margin-top: 0.5rem;
+        }
+
+        .btn {
+            font-size: 0.875rem;
+            padding: 0.5rem;
+        }
+
+        .btn-fit-width {
+            width: 100%;
+        }
+
+        .text-muted {
+            font-size: 0.75rem;
+        }
+    }
+</style>
 
 @endsection
