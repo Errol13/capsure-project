@@ -129,6 +129,7 @@ class ProfileController extends Controller
 
     // Retrieve the events for the authenticated user
     $events = auth()->user()->events()->where('status', 'Open')->get();
+    $events = $events->isEmpty() ? null : $events;
 
     return view('components.Profile.view_freelancer_profile', compact('user', 'fullName', 'reviews', 'events'));
   }

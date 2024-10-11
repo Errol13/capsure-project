@@ -24,6 +24,8 @@ class Job_applicationController extends Controller
             'service_id' => 'required|exists:services,id',
         ]);
 
+        Log::info('Apply Job:', $validated);
+
         // Retrieve the job being applied for
         $eventJob = EventJob::find($validated['apply_as']);
 

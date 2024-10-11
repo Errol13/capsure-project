@@ -167,7 +167,7 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <a href="{{route('view-freelancer-profile' , ['id' => $applicant['applicant']->user_id ] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-3" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $applicant['applicant']->user_id ] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-1" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
 
                                         @if(($applicant['status'] == 'Accepted'))
                                         <button type="button"
@@ -392,8 +392,8 @@
 
                                     <!-- Action Buttons -->
                                     <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
-                                        <a href="{{route('view-freelancer-profile' , ['id' => $recomm->user_id] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-3" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C;">See Profile</a>
-                                        <button class="btn btn-primary me-2 mb-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireRecommModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px">Hire</button>
+                                        <a href="{{route('view-freelancer-profile' , ['id' => $recomm->user_id] ) }}" class="btn btn-seeprof rounded-pill w-100 me-2 mb-1" style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; ">See Profile</a>
+                                        <button class="btn btn-verify rounded-pill w-100 me-2 mb-sm-0" data-bs-toggle="modal" data-bs-target="#hireRecommModal-{{$recomm->user_id}}" style="flex: 1; width: 100%; color:black; background-color:#8FE2ED;">Hire</button>
                                     </div>
 
                                     <!-- Hire Modal -->

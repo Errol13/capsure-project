@@ -121,7 +121,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-    // Select all forms within modals (assuming multiple modals)
+    // Select all forms within modals 
     document.querySelectorAll('.modal form').forEach(function(form) {
         form.addEventListener('submit', function(event) {
             // Prevent the default form submission to log details first

@@ -17,9 +17,9 @@
                         $completedHiredCount = $completedHiredCounts->get($eventJob->job_id, 0);
                         @endphp
                         @if($eventJob->number_of_people != $completedHiredCount)
-                        <option value="{{ $eventJob->service_needed }}">{{ $eventJob->service_needed }}</option>
+                        <option value="{{ $eventJob->job_id }}">{{ $eventJob->service_needed }}</option>
                         @else
-                        <option value="{{ $eventJob->service_needed }}" disabled>{{ $eventJob->service_needed }}</option>
+                        <option value="{{ $eventJob->job_id }}" disabled>{{ $eventJob->service_needed }}</option>
                         @endif
                         @endforeach
                     </select>
@@ -82,9 +82,9 @@
             const isJobSelected = applyAsSelect.value !== "";
             const isServiceSelected = serviceSelect.value !== "";
             const isEnabled = isJobSelected && isServiceSelected; // Check if both are selected
-            
+
             confirmButton.disabled = !isEnabled; // Enable button only if both are selected
-            
+
             // Change button classes based on enabled state
             if (isEnabled) {
                 confirmButton.classList.remove('btn-cancel');
@@ -97,10 +97,10 @@
 
         //reset the form when cancelled
         document.getElementById('cancelButton').addEventListener('click', function() {
-        document.getElementById('apply-job-form').reset();
-    });
+            document.getElementById('apply-job-form').reset();
+        });
 
-        applyAsSelect.addEventListener('change', function () {
+        applyAsSelect.addEventListener('change', function() {
             const selectedJob = applyAsSelect.options[applyAsSelect.selectedIndex].text.toLowerCase(); // Get selected job name as text
 
             // Clear the current service options
@@ -111,9 +111,9 @@
             servicesOptions.forEach(option => {
                 const jobTitle = option.getAttribute('data-job-title');
 
-                if (jobTitle) { 
+                if (jobTitle) {
                     const jobTitleLower = jobTitle.toLowerCase(); // Convert to lowercase
-                    
+
                     // Only add options that match the selected job title
                     if (jobTitleLower === selectedJob) {
                         serviceSelect.appendChild(option); // Add matching option back to the select element
@@ -133,7 +133,7 @@
             checkButtonState(); // Check button state after filtering
         });
 
-        serviceSelect.addEventListener('change', function () {
+        serviceSelect.addEventListener('change', function() {
             checkButtonState(); // Check button state when the service selection changes
         });
 
