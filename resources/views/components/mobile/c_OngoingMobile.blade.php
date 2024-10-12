@@ -75,6 +75,7 @@
             <span class="text-success fw-bold">{{$transaction->payment_status}}</span>
             @endif
             </p>
+            
             <div class="col d-flex justify-content-center align-items-center mb-2">
                 <button class="btn btn-outline-secondary btn-sm position-relative"
                     style="white-space: nowrap;border-bottom-right-radius: 0; border-top-right-radius: 0;"

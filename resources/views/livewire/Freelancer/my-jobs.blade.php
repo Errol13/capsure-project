@@ -1,28 +1,33 @@
 <div wire:poll.10s>
-    <div class="ms-4 mt-5 mb-4">
-        <h3 class="ms-5 mt-3 poppins-medium">My Jobs</h3>
-    </div>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="poppins-medium text-center text-md-start">My Jobs</h3>
+            </div>
+        </div>
 
-
-    <div class="container ms-5 me-1">
-        <!-- Navigations -->
-        <ul class="nav border-bottom-0 d-flex justify-content-between pt-2 poppins-medium fixed-tabs mb-3" style="background-color: #FCF2F9;">
-            <li class="nav-item flex-fill text-start me-2">
-                <a wire:click="$set('activeTab', 'application')" class="nav-link {{ $activeTab === 'application' ? 'active' : '' }} tabs-bg-color rounded-top letter-spacing d-flex justify-content-between align-items-center" data-bs-toggle="tab" href="#application" aria-controls="application" aria-selected="true">
-                    APPLICATION <span class="badge text-black" style="background-color: #E1C1D7;">{{$appliedJobsCount}}</span>
-                </a>
-            </li>
-            <li class="nav-item flex-fill text-center me-2">
-                <a wire:click="$set('activeTab', 'hiring-request')" class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : '' }} tabs-bg-color rounded-top letter-spacing d-flex justify-content-between align-items-center" data-bs-toggle="tab" href="#hiring-request" aria-controls="hiring-request" aria-selected="false">
-                    HIRING REQUEST <span class="badge text-black" style="background-color: #E1C1D7;">{{$hiringRequestsCount}}</span>
-                </a>
-            </li>
-            <li class="nav-item flex-fill text-center">
-                <a wire:click="$set('activeTab', 'recommendation')" class="nav-link {{ $activeTab === 'recommendation' ? 'active' : '' }} tabs-bg-color rounded-top letter-spacing d-flex justify-content-between align-items-center" data-bs-toggle="tab" href="#recommendation" aria-controls="recommendation" aria-selected="false">
-                    RECOMMENDATION <span class="badge text-black" style="background-color: #E1C1D7;">{{$recommendationsCount}}</span>
-                </a>
-            </li>
-        </ul>
+        <div class="row mt-2">
+            <div class="col-12">
+                <!-- Navigations -->
+                <ul class="nav border-bottom-0 d-flex justify-content-between pt-2 poppins-medium fixed-tabs mb-3" style="background: none;box-shadow:none;">
+                    <li class="nav-item flex-fill text-start me-2">
+                        <a wire:click="$set('activeTab', 'application')" class="nav-link {{ $activeTab === 'application' ? 'active ' : '' }} tabs-bg rounded-top-4 letter-spacing d-flex justify-content-between align-items-center" data-bs-toggle="tab" href="#application" aria-controls="application" aria-selected="true">
+                            APPLICATION <span class="badge text-black" style="background-color: #E1C1D7;">{{$appliedJobsCount}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item flex-fill text-center me-2">
+                        <a wire:click="$set('activeTab', 'hiring-request')" class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : '' }} tabs-bg  rounded-top-4 letter-spacing d-flex justify-content-between align-items-center" data-bs-toggle="tab" href="#hiring-request" aria-controls="hiring-request" aria-selected="false">
+                            HIRING REQUEST <span class="badge text-black" style="background-color: #E1C1D7;">{{$hiringRequestsCount}}</span>
+                        </a>
+                    </li>
+                    <li class="nav-item flex-fill text-center">
+                        <a wire:click="$set('activeTab', 'recommendation')" class="nav-link {{ $activeTab === 'recommendation' ? 'active ' : '' }} tabs-bg rounded-top-4 letter-spacing d-flex justify-content-between align-items-center space" data-bs-toggle="tab" href="#recommendation" aria-controls="recommendation" aria-selected="false">
+                            RECOMMENDATION <span class="badge text-black" style="background-color: #E1C1D7;">{{$recommendationsCount}}</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
 
         <div class="tab-content">
             <!-- Application Content -->
@@ -30,79 +35,82 @@
 
                 <!--If no applications -->
                 @if($appliedJobs->isNotEMpty())
+                <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped">
+                        <thead class="text-center mb-2">
+                            <tr>
+                                <th style="background-color: #FCF2F9;">Job</th>
+                                <th style="background-color: #FCF2F9;">Applied as</th>
+                                <th style="background-color: #FCF2F9;">Availability</th>
+                                <th style="background-color: #FCF2F9;">Status</th>
+                                <th style="background-color: #FCF2F9;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Jobs Applied -->
+                            <tr>
+                                @foreach($appliedJobs as $job)
+                                <td class="open-sans-reg">
+                                    <strong>{{ $job->event->title }}</strong><br>
+                                    <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $job->event->start_date_formatted }} - {{ $job->event->end_date_formatted }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->event->street }}, {{ $job->event->barangay }}, {{ $job->event->city }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->event->budget_min }} - ₱{{ $job->event->budget_max }}</span>
+                                </td>
+                                <td>{{$job->service_needed}}</td>
 
-                <table class="table table-striped">
-                    <thead class="text-center mb-2">
-                        <tr>
-                            <th style="background-color: #FCF2F9;">Job</th>
-                            <th style="background-color: #FCF2F9;">Applied as</th>
-                            <th style="background-color: #FCF2F9;">Availability</th>
-                            <th style="background-color: #FCF2F9;">Status</th>
-                            <th style="background-color: #FCF2F9;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Jobs Applied -->
-                        <tr>
-                            @foreach($appliedJobs as $job)
-                            <td class="open-sans-reg">
-                                <strong>{{ $job->event->title }}</strong><br>
-                                <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $job->event->start_date_formatted }} - {{ $job->event->end_date_formatted }}</span><br>
-                                <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->event->street }}, {{ $job->event->barangay }}, {{ $job->event->city }}</span><br>
-                                <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->event->budget_min }} - ₱{{ $job->event->budget_max }}</span>
-                            </td>
-                            <td>{{$job->service_needed}}</td>
+                                <!--Availability of event-->
+                                <td>
+                                    <span class="{{ $job->event->status == 'Open' ? 'text-success' : 'text-danger' }} text-uppercase fw-bold">
+                                        {{ $job->event->status }}
+                                    </span>
+                                </td>
 
-                            <!--Availability of event-->
-                            <td>
-                                <span class="{{ $job->event->status == 'Open' ? 'text-success' : 'text-danger' }} text-uppercase fw-bold">
-                                    {{ $job->event->status }}
-                                </span>
-                            </td>
-
-                            <td>
-                                <span class="{{ $job->pivot->status == 'Pending' ? 'pending-color' : 
+                                <td>
+                                    <span class="{{ $job->pivot->status == 'Pending' ? 'pending-color' : 
                                 ($job->pivot->status == 'Accepted' ? 'text-success' : 'text-danger')}} text-uppercase fw-bold">
-                                    {{ $job->pivot->status }}
-                                </span>
-                            </td>
+                                        {{ $job->pivot->status }}
+                                    </span>
+                                </td>
 
 
-                            <td>
-                                <a href="{{ route('client-viewpost', ['id' => $job->event->event_id]) }}" class="btn btn-link pt-0" style="white-space: nowrap; color: #91216C; text-decoration: none; display: block;">View Post</a>
-                                @if($job->pivot->status == 'Pending')
-                                <a href="#" class="btn btn-link pt-0 text-danger" style="text-decoration: none; display: block;" wire:click="openModal({{ $job->job_id }})">Cancel</a>
-                                @endif
-                            </td>
+                                <td>
+                                    <a href="{{ route('client-viewpost', ['id' => $job->event->event_id]) }}" class="btn btn-link pt-0" style="white-space: nowrap; color: #91216C; text-decoration: none; display: block;">View Post</a>
+                                    @if($job->pivot->status == 'Pending')
+                                    <a href="#" class="btn btn-link pt-0 text-danger" style="text-decoration: none; display: block;" wire:click="openModal({{ $job->job_id }})">Cancel</a>
+                                    @endif
+                                </td>
 
-                        </tr>
+                            </tr>
 
-                        <!-- Modal for Confirming Cancellation -->
-                        <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" wire:ignore>
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
-                                        <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p>Are you sure you want to cancel this job application?</p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" wire:click="confirmCancellation">Confirm</button>
-                                        <button type="button" class="btn btn-secondary" wire:click="closeModal">Cancel</button>
+                            <!-- Modal for Confirming Cancellation -->
+                            <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false" wire:ignore>
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmationModalLabel">Confirm Deletion</h5>
+                                            <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to cancel this job application?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-danger" wire:click="confirmCancellation">Confirm</button>
+                                            <button type="button" class="btn btn-secondary" wire:click="closeModal">Cancel</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
 
-                        @endforeach
-                    </tbody>
-                </table>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                @else
-                <p class="text-center mt-5 text-muted fs-4">No Applications</p>
-                @endif
+                    @else
+                    <p class="text-center mt-5 text-muted fs-4">No Applications</p>
+                    @endif
+
+                </div>
+                @include('components.mobile.f_Application')
 
             </div>
 
@@ -113,102 +121,106 @@
                 @if($hiringRequests->isNotEmpty())
 
                 <!-- Content for Hiring Requests -->
-                <table class="table table-striped">
-                    <thead class="text-center mb-2">
-                        <tr>
-                            <th style="background-color: #FCF2F9;">Event</th>
-                            <th style="background-color: #FCF2F9;">Service</th>
-                            <th style="background-color: #FCF2F9;">Client's Fee Offer</th>
-                            <th style="background-color: #FCF2F9;">My Fee</th>
-                            <th style="background-color: #FCF2F9;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!-- Jobs Offered-->
-                        <tr>
-                            @foreach($hiringRequests as $job)
+                <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped">
+                        <thead class="text-center mb-2">
+                            <tr>
+                                <th style="background-color: #FCF2F9;">Event</th>
+                                <th style="background-color: #FCF2F9;">Service</th>
+                                <th style="background-color: #FCF2F9;">Client's Fee Offer</th>
+                                <th style="background-color: #FCF2F9;">My Fee</th>
+                                <th style="background-color: #FCF2F9;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Jobs Offered-->
+                            <tr>
+                                @foreach($hiringRequests as $job)
 
-                            <td class="open-sans-reg">
-                                <div class="d-flex justify-content-between align-items-center">
-                                    <strong>{{ $job->eventjob->event->title }}</strong>
-                                    <a href="{{ route('client-viewpost', ['id' => $job->eventjob->event->event_id]) }}" class="btn btn-link pt-0 me-3" style="white-space: nowrap; color: #91216C;">
-                                        View Post
-                                    </a>
-                                </div>
+                                <td class="open-sans-reg">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <strong>{{ $job->eventjob->event->title }}</strong>
+                                        <a href="{{ route('client-viewpost', ['id' => $job->eventjob->event->event_id]) }}" class="btn btn-link pt-0 me-3" style="white-space: nowrap; color: #91216C;">
+                                            View Post
+                                        </a>
+                                    </div>
 
-                                <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $job->eventjob->event->start_date_formatted }} - {{ $job->eventjob->event->end_date_formatted }}</span><br>
-                                <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->eventjob->event->street }}, {{ $job->eventjob->event->barangay }}, {{ $job->eventjob->event->city }}</span><br>
-                                <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->eventjob->event->budget_min }} - ₱{{ $job->eventjob->event->budget_max }}</span>
-                            </td>
-                            <td>{{$job->eventjob->service_needed}}</td>
+                                    <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $job->eventjob->event->start_date_formatted }} - {{ $job->eventjob->event->end_date_formatted }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $job->eventjob->event->street }}, {{ $job->eventjob->event->barangay }}, {{ $job->eventjob->event->city }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $job->eventjob->event->budget_min }} - ₱{{ $job->eventjob->event->budget_max }}</span>
+                                </td>
+                                <td>{{$job->eventjob->service_needed}}</td>
 
-                            <!--Client's Offer -->
-                            <td>
-                                <span class="text-uppercase fw-bold " style="color: #ad3d88 ;">
-                                    ₱{{ $job->client_pricing }}
-                                </span>
-                            </td>
+                                <!--Client's Offer -->
+                                <td>
+                                    <span class="text-uppercase fw-bold " style="color: #ad3d88 ;">
+                                        ₱{{ $job->client_pricing }}
+                                    </span>
+                                </td>
 
-                            <td>
-                                <span class="text-uppercase fw-bold">
-                                    ₱{{ $job->freelancer_pricing }}
-                                </span>
-                            </td>
-
-
-                            <td>
-                                <div class="d-flex flex-column justify-content-start">
-                                    @if($job->status != 'Rejected')
-                                    @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
-                                    <a href="#" class="btn btn-save rounded pt-0 pb-0 mb-1 border-secondary-subtle " style="white-space: nowrap; color: black; background-color:#D9D9D9; text-decoration: none; display: block;">Pending</a>
-                                    @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-hiringid = "{{$job->hiring_request_id}}"
-                                    class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
-                                    @elseif($job->status == 'Accepted')
-                                    <a href="{{route('freelancer-transaction')}}" class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</a>
-                                    @endif
-                                    <!--if accepted, this will be gone --> 
-                                    @if($job->status != 'Accepted')
-                                    <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiate</button>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="decline" data-hiringid = "{{$job->hiring_request_id}}"
-                                        class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</button>
-                                    @endif
-
-                                    @elseif($job->status == 'Rejected')
-                                    <button class="btn btn-danger pt-0 pb-0 mb-1 border-1 border-secondary-subtle " disabled style="color:white;">Offer Declined</button>
-                                    @endif
+                                <td>
+                                    <span class="text-uppercase fw-bold">
+                                        ₱{{ $job->freelancer_pricing }}
+                                    </span>
+                                </td>
 
 
-                                    
-                                </div>
+                                <td>
+                                    <div class="d-flex flex-column justify-content-start">
+                                        @if($job->status != 'Rejected')
+                                        @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
+                                        <a href="#" class="btn btn-save rounded pt-0 pb-0 mb-1 border-secondary-subtle " style="white-space: nowrap; color: black; background-color:#D9D9D9; text-decoration: none; display: block;">Pending</a>
+                                        @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
+                                        <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-hiringid="{{$job->hiring_request_id}}"
+                                            class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
+                                        @elseif($job->status == 'Accepted')
+                                        <a href="{{route('freelancer-transaction')}}" class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</a>
+                                        @endif
+                                        <!--if accepted, this will be gone -->
+                                        @if($job->status != 'Accepted')
+                                        <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiate</button>
+                                        <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="decline" data-hiringid="{{$job->hiring_request_id}}"
+                                            class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</button>
+                                        @endif
 
-                                <!--modal component -->
-                                <div wire:ignore>
-                                    <x-confirmation-modal
-                                        :id="$job->hiring_request_id"
-                                        title="Confirmation"
-                                        message="Are you sure you want to decline this offer?"
-                                        :actionUrl="''"
-                                        method="POST" />
-                                </div>
+                                        @elseif($job->status == 'Rejected')
+                                        <button class="btn btn-danger pt-0 pb-0 mb-1 border-1 border-secondary-subtle " disabled style="color:white;">Offer Declined</button>
+                                        @endif
 
-                               
 
-                                <!-- Negotiate Modal-->
-                                @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
-                                'service' => $job->serviceDetails])
 
-                            </td>
+                                    </div>
 
-                        </tr>
+                                    <!--modal component -->
+                                    <div wire:ignore>
+                                        <x-confirmation-modal
+                                            :id="$job->hiring_request_id"
+                                            title="Confirmation"
+                                            message="Are you sure you want to decline this offer?"
+                                            :actionUrl="''"
+                                            method="POST" />
+                                    </div>
 
-                        @endforeach
-                    </tbody>
-                </table>
 
-                @else
-                <p class="text-muted text-center mt-4 fs-4">No Hiring Requests</p>
-                @endif
+
+                                    <!-- Negotiate Modal-->
+                                    @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
+                                    'service' => $job->serviceDetails])
+
+                                </td>
+
+                            </tr>
+
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                    @else
+                    <p class="text-muted text-center mt-4 fs-4">No Hiring Requests</p>
+                    @endif
+                </div>
+                @include('components.mobile.f_HiringReq')
+
             </div>
 
             <!--Recommendation Content-->
@@ -218,52 +230,57 @@
                 @if($eventRecommendations->isNotEmpty())
 
                 <!-- Content for Recommendations-->
-                <table class="table table-striped">
-                    <thead class="text-center mb-2">
-                        <tr>
-                            <th style="background-color: #FCF2F9;">Event</th>
-                            <th style="background-color: #FCF2F9;">Services Required</th>
-                            <th style="background-color: #FCF2F9;">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <!--Jobs Recommendations-->
-                        <tr>
-                            @foreach($eventRecommendations as $event)
-                            <td class="open-sans-reg">
-                                <strong>{{ $event->title }}</strong><br>
-                                <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $event->start_date_formatted }} - {{ $event->end_date_formatted }}</span><br>
-                                <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $event->street }}, {{ $event->barangay }}, {{ $event->city }}</span><br>
-                                <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</span>
-                            </td>
+                <div class="table-responsive d-none d-md-block">
+                    <table class="table table-striped">
+                        <thead class="text-center mb-2">
+                            <tr>
+                                <th style="background-color: #FCF2F9;">Event</th>
+                                <th style="background-color: #FCF2F9;">Services Required</th>
+                                <th style="background-color: #FCF2F9;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!--Jobs Recommendations-->
+                            <tr>
+                                @foreach($eventRecommendations as $event)
+                                <td class="open-sans-reg">
+                                    <strong>{{ $event->title }}</strong><br>
+                                    <span class="me-2" style="color: #91216C;">DATE & TIME:</span> <span>{{ $event->start_date_formatted }} - {{ $event->end_date_formatted }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">LOCATION:</span> <span>{{ $event->street }}, {{ $event->barangay }}, {{ $event->city }}</span><br>
+                                    <span class="me-2" style="color: #91216C;">BUDGET:</span> <span>₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</span>
+                                </td>
 
-                            <!--Needed Services -->
-                            <td>
-                                <div class="d-flex flex-wrap justify-content-center align-items-start" style="height: 100%;">
-                                    @foreach($event->event_jobs as $job)
-                                    <span class="me-2 rounded-3 border border-secondary-subtle bg-primary-subtle p-2 mb-2">{{$job->service_needed}}</span>
-                                    @endforeach
-                                </div>
+                                <!--Needed Services -->
+                                <td>
+                                    <div class="d-flex flex-wrap justify-content-center align-items-start" style="height: 100%;">
+                                        @foreach($event->event_jobs as $job)
+                                        <span class="me-2 rounded-3 border border-secondary-subtle bg-primary-subtle p-2 mb-2">{{$job->service_needed}}</span>
+                                        @endforeach
+                                    </div>
 
-                            </td>
+                                </td>
 
-                            <td class="open-sans-reg ">
-                               
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-2 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
-                            </td>
+                                <td class="open-sans-reg ">
+
+                                    <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="btn btn-link pt-2 me-2" style=" white-space: nowrap; color: #91216C;">View Post</a>
+                                </td>
 
 
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
 
-                @else
-                <p class="text-muted text-center mt-4 fs-4">No Available Events</p>
-                @endif
+                    @else
+                    <p class="text-muted text-center mt-4 fs-4">No Available Events</p>
+                    @endif
+
+                </div>
+                @include('components.mobile.f_Recomm')
 
             </div>
         </div>
+
     </div>
 
     <script>
@@ -284,4 +301,12 @@
             });
         });
     </script>
+
+    <style>
+        @media (max-width: 768px) {
+            .space {
+                margin-top: 10px;
+            }
+        }
+    </style>
 </div>
