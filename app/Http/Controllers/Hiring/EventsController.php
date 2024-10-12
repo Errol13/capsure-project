@@ -114,7 +114,7 @@ class EventsController extends Controller
             // Fetch job applications
             $applications = Job_application::where('job_id', $job->job_id)->get();
             $jobApplications = $jobApplications->merge($applications);
-
+ 
 
             // Fetch freelancers who applied for the job
             $jobApplicants = $job->applicants()->with('services')->get();

@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Profile;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Hiring\Event;
+use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -136,17 +137,31 @@ class ProfileController extends Controller
 
   public function findSelectedEvent($id)
   {
-    $event = Event::with('event_jobs')->findOrFail($id); 
+    $event = Event::with('event_jobs')->findOrFail($id);
     $start = Carbon::parse($event->start_date);
     $end = Carbon::parse($event->end_date);
     $durationInHours = $start->diffInHours($end);
+
+    //get the completedHiredCounts
+    $completedHiredCounts = collect();
+
+    foreach ($event->event_jobs as $job) {
+      // Getting hired freelancers count for each job
+      $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();
+      $hiredCount = $jobApplicantsHired->count();
+
+      // Store the count of hired freelancers for the job
+      $completedHiredCounts->put($job->job_id, $hiredCount);
+    }
 
     Log::info('event:', $event->toArray());
     // Return the event jobs associated with the event
     return response()->json([
       'event_jobs' => $event->event_jobs,
       'durationInHours' => $durationInHours,
+      'completedHiredCounts' => $completedHiredCounts,
     ]);
+
   }
 
   public function viewClientProfile($id)

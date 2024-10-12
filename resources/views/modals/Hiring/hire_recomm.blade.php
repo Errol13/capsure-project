@@ -49,8 +49,18 @@
                             <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsHireRecomm-<?php echo $uniqueId; ?>" required>
                                 <option value="" selected disabled></option>
                                 @foreach($job_services as $job)
-                                @if($job)
+
+                                @php
+                                $completedHiredCount = $completedHiredCounts->get($job->job_id, 0);
+                                @endphp
+                                <!--if there is an available slot make it an option -->
+                                @if($job->number_of_people != $completedHiredCount)
                                 <option value="{{ $job->job_id }}">
+                                    {{ $job->service_needed }}
+                                </option>
+                                @else 
+                                <!--otherwise disable it --> 
+                                <option value="{{ $job->job_id }}" disabled>
                                     {{ $job->service_needed }}
                                 </option>
                                 @endif
@@ -102,7 +112,7 @@
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
                         <button id="hireRecommSubmit-<?php echo $uniqueId; ?>" type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;" disabled>Hire</button>
-                        <button id="cancelHireButton" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
+                        <button id="cancelHireButton-{{$uniqueId}}" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -229,7 +239,7 @@
         checkButtonState();
 
         // Reset the form when cancelled
-        document.getElementById('cancelHireButton').addEventListener('click', function() {
+        document.getElementById('cancelHireButton-<?php echo $uniqueId; ?>').addEventListener('click', function() {
             document.getElementById('hire-from-recom-<?php echo $uniqueId; ?>').reset();
 
             //reset also the button state
@@ -284,49 +294,49 @@
 
         const form = document.getElementById('hire-from-recom-<?php echo $uniqueId; ?>');
 
-form.addEventListener('submit', function(event) {
-    event.preventDefault(); // Prevent the default form submission
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
 
-    const formData = new FormData(form); // Create a FormData object from the form
+            const formData = new FormData(form); // Create a FormData object from the form
 
-    fetch('/hire/applicant', {
-        method: 'POST',
-        body: formData,
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
-        }
-    })
-    .then(response => {
-        // Check if the response's content-type is JSON
-        const contentType = response.headers.get('content-type');
-        
-        if (contentType && contentType.includes('application/json')) {
-            // Parse and return JSON data if it's valid JSON
-            return response.json();
-        } else {
-            // If it's not JSON (like a redirect), return null to trigger page reload
-            return null;
-        }
-    })
-    .then(data => {
-        if (data) {
-            // Handle the JSON response
-            if (data.success) {
-                alert(data.success);
-                window.location.reload(); // Reload the page on success
-            } else if (data.error) {
-                alert("Error: " + data.error); // Show error message
-            }
-        } else {
-            // If no data (not JSON), assume it's a redirect and reload the page
-            window.location.reload();
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An unexpected error occurred.'); // Generic error message
-    });
-});
+            fetch('/hire/applicant', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
+                    }
+                })
+                .then(response => {
+                    // Check if the response's content-type is JSON
+                    const contentType = response.headers.get('content-type');
+
+                    if (contentType && contentType.includes('application/json')) {
+                        // Parse and return JSON data if it's valid JSON
+                        return response.json();
+                    } else {
+                        // If it's not JSON , trigger page reload
+                        return null;
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        // Handle the JSON response
+                        if (data.success) {
+                            alert(data.success);
+                            window.location.reload(); // Reload the page on success
+                        } else if (data.error) {
+                            alert("Error: " + data.error); // Show error message
+                        }
+                    } else {
+                        // If no data (not JSON), reload the page
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred.'); // Generic error message
+                });
+        });
 
 
 
