@@ -1370,4 +1370,8 @@ select:disabled {
        height: 130px;
     }
 
+    .space {
+        margin-top: 10px;
+    }
+
 }

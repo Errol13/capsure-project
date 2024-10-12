@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
-                <form action="/hire/applicant" method="POST">
+                <form action="/hire/applicant" method="POST" id="hire-from-jobapp-{{$applicantId}}">
                     @csrf
                     <!-- Profile Section -->
                     <div class="d-flex mb-4 align-items-center">
@@ -121,27 +121,51 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-    // Select all forms within modals 
-    document.querySelectorAll('.modal form').forEach(function(form) {
+        const form = document.getElementById('hire-from-jobapp-<?php echo $uniqueId; ?>');
+
         form.addEventListener('submit', function(event) {
-            // Prevent the default form submission to log details first
-            event.preventDefault();
+            event.preventDefault(); // Prevent the default form submission
 
-            // Create a FormData object from the form
-            var formData = new FormData(form);
+            const formData = new FormData(form); // Create a FormData object from the form
 
-            // Log each form field and its value
-            formData.forEach(function(value, key) {
-                console.log(key + ": " + value);
-            });
+            fetch('/hire/applicant', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
+                    }
+                })
+                .then(response => {
+                    // Check if the response's content-type is JSON
+                    const contentType = response.headers.get('content-type');
 
-            // Optionally delay the actual submission to see logs
-            setTimeout(function() {
-                // Submit the form after logging
-                form.submit();
-            }, 1000);  // 1 second delay to check logs
+                    if (contentType && contentType.includes('application/json')) {
+                        // Parse and return JSON data if it's valid JSON
+                        return response.json();
+                    } else {
+                        // If it's not JSON , trigger page reload
+                        return null;
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        // Handle the JSON response
+                        if (data.success) {
+                            alert(data.success);
+                            window.location.reload(); // Reload the page on success
+                        } else if (data.error) {
+                            alert("Error: " + data.error); // Show error message
+                        }
+                    } else {
+                        // If no data (not JSON), reload the page
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred.'); // Generic error message
+                });
         });
-    });
-});
 
+    });
 </script>

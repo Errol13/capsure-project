@@ -1,4 +1,4 @@
-<div class="d-md-none d-block">
+<div class="d-md-none d-lg-none d-block">
     @foreach($appliedJobs as $job)
     <div class="card mb-3 shadow-sm rounded-4">
         <div class="card-body">

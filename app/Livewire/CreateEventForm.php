@@ -8,6 +8,7 @@ use App\Models\Profile\Service;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class CreateEventForm extends Component
 {
@@ -81,11 +82,11 @@ class CreateEventForm extends Component
         if (array_key_exists($selectedCategory, $this->jobTitles)) {
             $this->jobs[$index]['available_services'] = $this->jobTitles[$selectedCategory];
             // Reset the service_needed when the category changes
-            $this->jobs[$index]['service_needed'] = null; // or '' if you prefer
+            $this->jobs[$index]['service_needed'] = ''; // or '' if you prefer
             $this->jobs[$index]['custom_service_needed'] = null; // Reset custom service field if needed
         } else {
             $this->jobs[$index]['available_services'] = [];
-            $this->jobs[$index]['service_needed'] = null; // Reset if no category is selected
+            $this->jobs[$index]['service_needed'] = ''; // Reset if no category is selected
             $this->jobs[$index]['custom_service_needed'] = null; // Reset custom service field if needed
         }
     } 
@@ -144,6 +145,8 @@ class CreateEventForm extends Component
             'jobs.*.number_of_people' => 'required|integer|min:1',
             'jobs.*.status' => 'required|string|max:50'
         ]);
+
+        Log::info('POST CREATED');
 
 
         /** @var User $user */

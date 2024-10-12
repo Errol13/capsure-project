@@ -10,11 +10,7 @@
             <!--Profile Pic and Personal Information -->
             <div class="row my-3">
                 <div class="profile-container d-flex justify-content-center align-items-center">
-<<<<<<< HEAD
-                    <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle">
-=======
                     <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
->>>>>>> 11edb30d0dc80619cbb21b3f0b5577c58bce5bfa
                 </div>
             </div>
 

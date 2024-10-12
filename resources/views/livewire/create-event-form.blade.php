@@ -125,10 +125,10 @@
                                             @if(isset($jobs[$index]['job_category']) && array_key_exists($jobs[$index]['job_category'], $jobTitles))
                                             @if($jobs[$index]['service_needed'] === 'Others' || (isset($jobs[$index]['custom_service_needed']) && $jobs[$index]['custom_service_needed'] !== ''))
                                             <!-- Input field when "Others" is selected or custom service input is provided -->
-                                            <input type="text" class="transition form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
+                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
                                             @else
                                             <!-- Dropdown for selecting services -->
-                                            <select class="form-select transition" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
+                                            <select class="form-select" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
                                                 <option value="" disabled>Select Service</option>
                                                 @foreach ($jobs[$index]['available_services'] as $service) 
                                                 <option value="{{ $service }}">{{ $service }}</option>
@@ -137,13 +137,11 @@
                                             </select>
                                             @endif
                                             @else
-                                            <input type="text" class="form-control fs-6 transition" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete disabled>
+                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete disabled>
                                             @endif
 
                                             @error("jobs.$index.custom_service_needed") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
-
-
 
                                         <td class="align-middle">
                                             <input type="number" class="form-control" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
@@ -163,7 +161,7 @@
                     <div class="d-flex justify-content-end  my-4 pb-4">
                         <div class="flex-grow-1"></div>
                         <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
-                        <button class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" type="submit">Post</button>
+                        <button type="submit" class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" >Post</button>
                         <div class="flex-grow-1"></div>
                     </div>
                 </form>

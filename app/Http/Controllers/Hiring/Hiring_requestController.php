@@ -28,8 +28,8 @@ class Hiring_requestController extends Controller
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
 
-         Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
-         Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
+        Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
+        Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
         // Convert cleaned values to float
         $cleanedData = [
@@ -66,6 +66,22 @@ class Hiring_requestController extends Controller
             return  response()->json(['error' => 'You already hired this freelancer.'], 400);
         }
 
+        //count the hired for this job, if full return error if not then proceed
+        $completedHiredCounts = Transaction::where('job_id', $validated['job_id'])->count();
+
+        //find the event job and compare the number of people needed
+        $findEventJob = $event->event_jobs()->where('job_id', $validated['job_id'])->first();
+        $numberOfPeople = $findEventJob->number_of_people;
+
+        // Check if there are available slots for hiring
+        $noAvailableSlot = $numberOfPeople <= $completedHiredCounts;
+
+        if ($noAvailableSlot) {
+            
+            return response()->json(['error' => 'No available slots for this job.'], 400);
+        }
+
+
         $hasTransactions = Transaction::where('freelancer_id', $validated['freelancer_id'])->exists();
 
         if ($hasTransactions) {
@@ -89,7 +105,7 @@ class Hiring_requestController extends Controller
         }
 
 
-        
+
         Hiring_request::create([
             'freelancer_id' => $validated['freelancer_id'],
             'job_id' => $validated['job_id'],
@@ -119,7 +135,7 @@ class Hiring_requestController extends Controller
         $freelancer = User::find($validated['freelancer_id']);
         $freelancer->notify(new HiringRequestSent($client->first_name, $eventTitle));
 
-    
+
         Log::info('Redirecting to Viewpost of Client with ID: ' . $event->event_id);
 
         if ($request->ajax()) {
