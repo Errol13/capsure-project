@@ -208,12 +208,16 @@
                             </td>
                         </tr>
                         @endforeach
-                </tbody>
+                </tbody>  
+                
             </table>
             @else
             <p>No on-going transactions.</p>
             @endif
+
+            @include('components.mobile.f_Ongoing')
         </div>
+      
 
         <!-- UPCOMING Tab --------------------------------------------------------------------------------------------------------------------------------------------->
         <div class="tab-pane" id="upcoming">
@@ -393,6 +397,8 @@
             @else
             <p>No upcoming transactions.</p>
             @endif
+
+            @include('components.mobile.f_Upcoming')
         </div>
 
         <!-- HISTORY Tab ----------------------------------------------------------------------------------------------------------------------------------------------->
@@ -504,6 +510,8 @@
             @else
             <p>No previous transactions.</p>
             @endif
+
+            @include('components.mobile.f_History')
         </div>
         @include('modals.f_review')
     </div>
