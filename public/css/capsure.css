@@ -803,6 +803,10 @@ select#year {
     border-radius: 50%;
 }
 
+.transition {
+    transition: all 0.1s ease-in-out;
+}
+
 .fs-sm-name {
     font-size: 1.5rem;
     /* Font size for small screens */

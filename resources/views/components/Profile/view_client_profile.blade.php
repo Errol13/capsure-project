@@ -12,7 +12,7 @@
         <div class="col-4 col-md-4 col-lg-4">
             <!--Profile Pic and Personal Information -->
             <div class="row my-3">
-                <div class="profile-container">
+                <div class="profile-container d-flex justify-content-center align-items-center">
                     <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
                 </div>
             </div>
