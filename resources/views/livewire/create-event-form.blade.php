@@ -128,20 +128,21 @@
                                             <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
                                             @else
                                             <!-- Dropdown for selecting services -->
-                                            <select class="form-control" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
+                                            <select class="form-select" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
                                                 <option value="" disabled>Select Service</option>
-                                                @foreach ($jobTitles[$jobs[$index]['job_category']] as $service)
+                                                @foreach ($jobs[$index]['available_services'] as $service) 
                                                 <option value="{{ $service }}">{{ $service }}</option>
                                                 @endforeach
                                                 <option value="Others">Others</option>
                                             </select>
                                             @endif
                                             @else
-                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete>
+                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete disabled>
                                             @endif
 
                                             @error("jobs.$index.custom_service_needed") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
+
 
 
                                         <td class="align-middle">
