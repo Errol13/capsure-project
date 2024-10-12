@@ -7,17 +7,13 @@
     @endif
 
     <div class="row d-flex justify-content-center pt-4">
-        <div class="col-sm-12 col-md-9 col-lg-9 ">
+        <div class="col-sm-12 col-md-9 col-lg-8 ">
             <div class="card p-4 shadow-sm rounded-4">
 
                 <!-- Title and Buttons Inside Form -->
                 <form wire:submit.prevent="saveEvent">
-                    <div class="d-flex justify-content-between align-items-center mb-3 open-sans-reg">
-                        <h3 class="event-title">Create an Event</h3>
-                        <div class="d-flex justify-content-end">
-                            <button type="button" class="btn-outline open-sans-reg me-2" onclick="cancelForm(event)">Cancel</button>
-                            <button class="btn-link open-sans-reg" style="text-decoration: none;" type="submit">Post</button>
-                        </div>
+                    <div class="d-flex justify-content-center align-items-center mb-3 open-sans-reg">
+                        <h3 class="event-title text-purple">Create an Event</h3>
                     </div>
 
                     <!-- Event Information -->
@@ -163,6 +159,12 @@
                         </div>
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
+                    </div>
+                    <div class="d-flex justify-content-end  my-4 pb-4">
+                        <div class="flex-grow-1"></div>
+                        <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
+                        <button class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" type="submit">Post</button>
+                        <div class="flex-grow-1"></div>
                     </div>
                 </form>
 
