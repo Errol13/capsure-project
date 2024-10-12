@@ -12,8 +12,8 @@
         <div class="col-md-3 col-lg-3">
             <!--Profile Pic and Personal Information -->
             <div class="row my-2">
-                <div class="profile-container">
-                    <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
+                <div class="profile-container d-flex justify-content-center align-items-center">
+                    <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="img fluid">
                 </div>
 
                 <!-- Change Profile Pic -->

@@ -8,8 +8,8 @@
         <div class="col-4 col-md-4 col-lg-4">
             <!--Profile Pic and Personal Information -->
             <div class="row my-3">
-                <div class="profile-container">
-                    <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
+                <div class="profile-container d-flex justify-content-center align-items-center">
+                    <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle ">
                 </div>
             </div>
 
@@ -36,7 +36,7 @@
                 </div>
             </div>
 
-            @if($user->contact_number->isNotEmpty())
+            @if($user->contact_number)
             <div class="row my-1 text-center mb-1 ms-md-4">
                 <div class="col-12 d-flex align-items-center justify-content-start">
                     <div class="d-flex align-items-center">
@@ -177,7 +177,7 @@
 
                 <!--count the reviews for client -->
                 @php
-                $totalReviews = $user->client->reviews()->where('reviewee_role', 'freelancer')->count();
+                $totalReviews = $user->client->reviews()->where('reviewee_role', 'client')->count();
                 @endphp
                 <div class="d-flex align-items-center">
                     <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Freelancer's Reviews</h2>
@@ -187,8 +187,6 @@
                     @else
                     <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
                     @endif
-                    @else
-                    <p class="text-center text-muted">No reviews</p>
                     @endif
                 </div>
                 @if($totalReviews > 0)
@@ -196,6 +194,10 @@
                 @endif
             </div>
 
+
+            @if($totalReviews === 0)
+            <p class="text-center fs-5 text-muted">No reviews</p>
+            @else
             <!-- Reviews -->
             @foreach($eventsWithReviews as $eventsWithReview)
 
@@ -253,6 +255,7 @@
                 </div>
             </div>
             @endforeach
+            @endif
         </section>
     </div>
     @include('modals.c_report')

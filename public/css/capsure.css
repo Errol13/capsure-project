@@ -796,9 +796,11 @@ select#year {
 }
 
 .profile-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
 }
 
 .fs-sm-name {
@@ -1357,6 +1359,11 @@ select:disabled {
         height: 100px;
         object-fit: cover; 
         margin: 5px;
+    }
+
+    .profile-container img{
+       width: 130px;
+       height: 130px;
     }
 
 }
