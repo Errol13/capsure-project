@@ -36,6 +36,7 @@
                 </div>
             </div>
 
+            @if($user->contact_number->isNotEmpty())
             <div class="row my-1 text-center mb-1 ms-md-4">
                 <div class="col-12 d-flex align-items-center justify-content-start">
                     <div class="d-flex align-items-center">
@@ -46,6 +47,7 @@
                     </div>
                 </div>
             </div>
+            @endif
 
             <!-- Social Media Accounts -->
             <div class="row my-1 text-center mb-4 mt-3">
@@ -117,11 +119,7 @@
 
                 @endif
 
-                <!-- Buttons -->
-                <div class="d-flex justify-content-start align-items-start mt-2 mt-md-3">
-                    <a href="#" class="rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</a>
-                    <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm" data-bs-toggle="modal" data-bs-target="#reportClientModal">Report Profile</button>
-                </div>
+
                 <div class="row mt-3">
                     <div class="col-md-5">
                         <!-- Events Posted -->
@@ -189,6 +187,8 @@
                     @else
                     <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
                     @endif
+                    @else
+                    <p class="text-center text-muted">No reviews</p>
                     @endif
                 </div>
                 @if($totalReviews > 0)
