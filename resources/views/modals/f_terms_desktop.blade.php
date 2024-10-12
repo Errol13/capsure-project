@@ -11,12 +11,12 @@
                  <div class="modal-body">
                      <div class="mb-3">
                          <label for="terms_and_conditions_dt" class="form-label">Terms and Conditions</label>
-                         <textarea class="form-control" id="terms_and_conditions_dt" name="terms_and_conditions_dt" rows="5" maxlength="500" required>{{ old('terms_and_conditions', $freelancer->terms_and_conditions ?? '') }}</textarea>
+                         <textarea class="form-control" id="terms_and_conditions_dt" name="terms_and_conditions" rows="5" maxlength="500" required>{{ old('terms_and_conditions', $freelancer->terms_and_conditions ?? '') }}</textarea>
                          <small class="form-text text-muted">Maximum 500 characters.</small>
                          <div class="text-end">
                              <span id="charCount_dt">0</span>/500 characters
                          </div>
-                     </div>
+                     </div> 
                  </div>
                  <div class="modal-footer">
                      <button type="button" class="rounded btn-cancel px-2" data-bs-dismiss="modal">Close</button>

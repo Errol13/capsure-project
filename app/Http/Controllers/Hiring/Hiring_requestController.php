@@ -28,8 +28,8 @@ class Hiring_requestController extends Controller
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
 
-        // Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
-        // Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
+         Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
+         Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
         // Convert cleaned values to float
         $cleanedData = [
@@ -56,6 +56,16 @@ class Hiring_requestController extends Controller
 
         Log::info('Validated Data:', $event->toArray());
 
+        // Prevent duplication of hiring request
+        $hiringRequestExists = Hiring_request::where('freelancer_id', $validated['freelancer_id'])
+            ->where('job_id', $validated['job_id'])
+            ->where('client_id', $validated['client_id'])
+            ->exists();
+
+        if ($hiringRequestExists) {
+            return  response()->json(['error' => 'You already hired this freelancer.'], 400);
+        }
+
         $hasTransactions = Transaction::where('freelancer_id', $validated['freelancer_id'])->exists();
 
         if ($hasTransactions) {
@@ -79,15 +89,7 @@ class Hiring_requestController extends Controller
         }
 
 
-        // Prevent duplication of hiring request
-        $hiringRequestExists = Hiring_request::where('freelancer_id', $validated['freelancer_id'])
-            ->where('job_id', $validated['job_id'])
-            ->where('client_id', $validated['client_id'])
-            ->exists();
-
-        if ($hiringRequestExists) {
-            return redirect()->back()->with('failed', 'You already hired this freelancer.');
-        }
+        
         Hiring_request::create([
             'freelancer_id' => $validated['freelancer_id'],
             'job_id' => $validated['job_id'],
@@ -117,7 +119,13 @@ class Hiring_requestController extends Controller
         $freelancer = User::find($validated['freelancer_id']);
         $freelancer->notify(new HiringRequestSent($client->first_name, $eventTitle));
 
-        Log::info('Redirecting to client-viewpost with ID: ' . $event->event_id);
+    
+        Log::info('Redirecting to Viewpost of Client with ID: ' . $event->event_id);
+
+        if ($request->ajax()) {
+            // Return JSON response for AJAX requests
+            return response()->json(['success' => 'Hired successfully.'], 200);
+        }
 
         return redirect()->route('client-viewpost', ['id' => $event->event_id])->with('success', 'Hiring request was sent successfully!');
     }

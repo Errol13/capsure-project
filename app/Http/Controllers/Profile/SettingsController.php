@@ -126,7 +126,7 @@ class SettingsController extends Controller
 
         Log::info('Edited terms and conditions: '. $validatedData['terms_and_conditions']);
 
-        //find the freelancer
+        //find the freelancer 
         $freelancer = Freelancer::findOrfail($id);
 
         $freelancer->terms_and_conditions = $validatedData['terms_and_conditions'];

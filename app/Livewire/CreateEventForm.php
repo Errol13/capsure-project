@@ -20,7 +20,7 @@ class CreateEventForm extends Component
     public function mount()
     {
 
-        /** @var User $user */
+        /** @var User $user */ 
         $user = Auth::user();
 
         // Initialize public properties with user data

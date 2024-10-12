@@ -2,8 +2,8 @@
 <div class="modal" id="hireRecommModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireRecommModalLabel-{{ $uniqueId }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-body">
-                <form action="/hire/applicant" method="POST">
+            <div class="modal-body" style="height: auto; overflow-y: auto; overflow-x: hidden;">
+                <form action="/hire/applicant" method="POST" id="hire-from-recom-{{$uniqueId}}">
                     @csrf
                     <!-- Profile Section -->
                     <div class="d-flex mb-4 align-items-center">
@@ -43,14 +43,24 @@
 
                         <!-- Select Job -->
                         <div class="col">
-                            <label for="eventjobsRecomm" class="form-label">Select Job</label>
+                            <label for="eventjobsHireRecomm-<?php echo $uniqueId; ?>" class="form-label">Select Job</label>
                         </div>
                         <div class="col">
-                            <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsRecomm" required>
+                            <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsHireRecomm-<?php echo $uniqueId; ?>" required>
                                 <option value="" selected disabled></option>
                                 @foreach($job_services as $job)
-                                @if($job)
+
+                                @php
+                                $completedHiredCount = $completedHiredCounts->get($job->job_id, 0);
+                                @endphp
+                                <!--if there is an available slot make it an option -->
+                                @if($job->number_of_people != $completedHiredCount)
                                 <option value="{{ $job->job_id }}">
+                                    {{ $job->service_needed }}
+                                </option>
+                                @else 
+                                <!--otherwise disable it --> 
+                                <option value="{{ $job->job_id }}" disabled>
                                     {{ $job->service_needed }}
                                 </option>
                                 @endif
@@ -59,14 +69,14 @@
                         </div>
 
                         <div class="col">
-                            <label for="roleRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
+                            <label for="roleHireRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
                         </div>
                         <div class="col">
-                            <select class="border-secondary-subtle form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
+                            <select class="border-secondary-subtle form-select" id="roleHireRecomm-<?php echo $uniqueId; ?>" onchange="updateFeeRecomm('<?php echo $uniqueId; ?>', <?php echo json_encode($durationInHours ?? 0); ?>)" required>
                                 <option value="" selected disabled></option>
                                 @foreach($freelancer->services as $service)
                                 @if($service->isAvailable == true)
-                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}" data-fee-type="{{$service->fee_type}}">
+                                <option value="{{ $service->id }}" data-job-fee="{{ $service->job_fee }}" data-fee-type="{{$service->fee_type}}" data-job-title="{{ $service->job_title }}">
                                     {{ $service->job_title }}
                                 </option>
                                 @endif
@@ -101,8 +111,8 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
-                        <button type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
-                        <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
+                        <button id="hireRecommSubmit-<?php echo $uniqueId; ?>" type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;" disabled>Hire</button>
+                        <button id="cancelHireButton-{{$uniqueId}}" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -110,15 +120,36 @@
     </div>
 </div>
 
-<script>
-    if (typeof durationInHours === 'undefined') {
-        const durationInHours = <?php echo json_encode($durationInHours ?? 0); ?>;
-    }
+<!-- Error Modal -->
+<div class="modal fade" id="errorModal-{{ $uniqueId }}" tabindex="-1" role="dialog" aria-labelledby="errorModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="errorModalLabel">Response Status</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="errorModalBody">
+                <!-- Error message will be injected here -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    function updateFee(uniqueId) {
-        const selectElement = document.getElementById('roleRecomm-' + uniqueId);
+
+<script>
+    function updateFeeRecomm(uniqueId, durationInHours) {
+
+        console.log('Function called for ID:', uniqueId);
+
+        const selectElement = document.getElementById('roleHireRecomm-' + uniqueId);
+        console.log(selectElement);
         if (!selectElement) {
-            console.error('Select element not found for roleRecomm-' + uniqueId);
+            console.error('Select element not found for roleHireRecomm-' + uniqueId);
             return;
         }
 
@@ -127,8 +158,13 @@
         //get corresponding data from the selected option
         const jobFee = parseFloat(selectedOption.getAttribute('data-job-fee')) || 0;
         const feeType = selectedOption.getAttribute('data-fee-type');
+        const serviceTitle = selectedOption.getAttribute('data-job-title');
 
         let totalFee = 0;
+        console.log('Job Fee:', jobFee, 'Fee type:', feeType);
+        console.log('Title:', serviceTitle);
+        console.log('Service ID', selectedOption.value);
+
 
         // Check fee type and calculate total fee
         if (feeType === '/hour') {
@@ -150,32 +186,159 @@
             maximumFractionDigits: 2
         });
 
+        console.log('formattedFee:', formattedFee);
+
         document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
         document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
+
+        var freelancerPricing = document.getElementById('fee-hidden-' + uniqueId);
+        var clientPricing = document.getElementById('fee-' + uniqueId);
+        if (freelancerPricing) {
+            console.log('Freelancer Pricing:', freelancerPricing.value);
+        } else {
+            console.log('Freelancer Pricing element not found.');
+        }
+
+        if (clientPricing) {
+            console.log('Client Pricing:', clientPricing.value);
+        } else {
+            console.log('Client Pricing element not found.');
+        }
+
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        // Select all forms within modals (assuming multiple modals)
-        document.querySelectorAll('.modal form').forEach(function(form) {
-            form.addEventListener('submit', function(event) {
-                // Prevent the default form submission to log details first
-                event.preventDefault();
 
-                // Create a FormData object from the form
-                var formData = new FormData(form);
+        // For hiring 
+        const selectJob = document.getElementById('eventjobsHireRecomm-<?php echo $uniqueId; ?>');
+        const hireServiceSelect = document.getElementById('roleHireRecomm-<?php echo $uniqueId; ?>');
+        const confirmButton = document.getElementById('hireRecommSubmit-<?php echo $uniqueId; ?>');
+        const hireServicesOptions = Array.from(hireServiceSelect.options); // Store all service options
 
-                // Log each form field and its value
-                formData.forEach(function(value, key) {
-                    console.log(key + ": " + value);
-                });
+        // Function to check if both selects have valid selections
+        function checkButtonState() {
+            const isJobSelected = selectJob.value !== "";
+            const isServiceSelected = hireServiceSelect.value !== "";
+            const isEnabled = isJobSelected && isServiceSelected; // Check if both are selected
 
-                // Optionally delay the actual submission to see logs
-                setTimeout(function() {
-                    // Submit the form after logging
-                    form.submit();
-                }, 1000); // 1 second delay to check logs
-            });
+            confirmButton.disabled = !isEnabled; // Enable button only if both are selected
+
+            // Change button classes based on enabled state
+            if (isEnabled) {
+                confirmButton.classList.remove('btn-cancel');
+                confirmButton.classList.add('btn-seemore');
+            } else {
+                confirmButton.classList.remove('btn-seemore');
+                confirmButton.classList.add('btn-cancel');
+            }
+            console.log('Hire button is ' + (isEnabled ? 'enabled' : 'disabled'));
+        }
+
+        //check the button state when modal is opened
+        checkButtonState();
+
+        // Reset the form when cancelled
+        document.getElementById('cancelHireButton-<?php echo $uniqueId; ?>').addEventListener('click', function() {
+            document.getElementById('hire-from-recom-<?php echo $uniqueId; ?>').reset();
+
+            //reset also the button state
+            checkButtonState();
         });
+
+        // Filter services when job is selected
+        selectJob.addEventListener('change', function() {
+            checkButtonState(); // Check button state after selecting job
+
+            const selectedJobHire = selectJob.options[selectJob.selectedIndex].text.toLowerCase(); // Get selected job name as text
+
+            // Clear the current service options
+            hireServiceSelect.innerHTML = '<option value="" disabled selected class="text-muted"></option>';
+
+            // Filter services based on the selected job
+            let matchFound = false;
+
+            hireServicesOptions.forEach(option => {
+                const jobTitle = option.getAttribute('data-job-title');
+
+                if (jobTitle) {
+                    const jobTitleLower = jobTitle.toLowerCase(); // Convert to lowercase
+
+                    console.log('Title:', jobTitleLower, 'Selected:', selectedJobHire);
+
+                    // Only add options that match the selected job title
+                    if (jobTitleLower === selectedJobHire) {
+                        hireServiceSelect.appendChild(option); // Add matching option back to the select element
+                        matchFound = true;
+                    }
+                }
+            });
+
+            // If no matching services, add a "No matching service" option
+            if (!matchFound) {
+                const noMatchOption = document.createElement('option');
+                noMatchOption.disabled = true;
+                noMatchOption.textContent = 'No matching service available';
+                hireServiceSelect.appendChild(noMatchOption);
+            }
+
+            checkButtonState(); // Check button state after filtering
+        });
+
+        // Check button state when the service selection changes
+        hireServiceSelect.addEventListener('change', function() {
+            updateFeeRecomm('<?php echo $uniqueId; ?>', <?php echo json_encode($durationInHours ?? 0); ?>);
+            checkButtonState();
+        });
+
+
+        const form = document.getElementById('hire-from-recom-<?php echo $uniqueId; ?>');
+
+        form.addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const formData = new FormData(form); // Create a FormData object from the form
+
+            fetch('/hire/applicant', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content') // CSRF token
+                    }
+                })
+                .then(response => {
+                    // Check if the response's content-type is JSON
+                    const contentType = response.headers.get('content-type');
+
+                    if (contentType && contentType.includes('application/json')) {
+                        // Parse and return JSON data if it's valid JSON
+                        return response.json();
+                    } else {
+                        // If it's not JSON , trigger page reload
+                        return null;
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        // Handle the JSON response
+                        if (data.success) {
+                            alert(data.success);
+                            window.location.reload(); // Reload the page on success
+                        } else if (data.error) {
+                            alert("Error: " + data.error); // Show error message
+                        }
+                    } else {
+                        // If no data (not JSON), reload the page
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred.'); // Generic error message
+                });
+        });
+
+
+
     });
 </script>
