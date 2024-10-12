@@ -149,15 +149,7 @@
 
                 @endif
 
-                <!--Hire Chat Report -->
-                <div class="d-flex justify-content-start align-items-start mt-2 mt-md-3">
-                    <a href="#" class="text-center btn-seemore rounded-1 px-3 py-1 px-md-5 me-3 me-md-4 poppins-light fs-sm">Hire</a>
-                    <a href="#" class=" rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</a>
-                    <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm " data-bs-toggle="modal" data-bs-target="#reportProfileModal">Report</button>
-                </div>
-
-                <!-- Report Modal -->
-                @include('modals.f_report')
+               
 
                 <!--Team -->
                 <div class=""></div>

@@ -162,7 +162,7 @@
                                     @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
                                     <a href="#" class="btn btn-save rounded pt-0 pb-0 mb-1 border-secondary-subtle " style="white-space: nowrap; color: black; background-color:#D9D9D9; text-decoration: none; display: block;">Pending</a>
                                     @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-hiringid = "{{$job->hiring_request_id}}"
+                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="accept" data-modal-type="confirm-modal" data-hiringid = "{{$job->hiring_request_id}}"
                                     class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">Accept Offer</button>
                                     @elseif($job->status == 'Accepted')
                                     <a href="{{route('freelancer-transaction')}}" class="btn btn-primary  pt-0 pb-0 mb-1 border-1 border-secondary-subtle" style="color:black; background-color:#8FE2ED;">View Transaction</a>
@@ -170,7 +170,7 @@
                                     <!--if accepted, this will be gone --> 
                                     @if($job->status != 'Accepted')
                                     <button data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$job->hiring_request_id}}" class="btn-save rounded pt-0 text-purple border-1 mb-1 text-black" style="text-decoration: none; display: block;">Negotiate</button>
-                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-action="decline" data-hiringid = "{{$job->hiring_request_id}}"
+                                    <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}" data-modal-type="confirm-modal"  data-action="decline" data-hiringid = "{{$job->hiring_request_id}}"
                                         class="btn-cancel rounded pt-0 text-danger border-1" style="text-decoration: none; display: block;">Decline Offer</button>
                                     @endif
 
@@ -191,8 +191,6 @@
                                         :actionUrl="''"
                                         method="POST" />
                                 </div>
-
-                               
 
                                 <!-- Negotiate Modal-->
                                 @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,

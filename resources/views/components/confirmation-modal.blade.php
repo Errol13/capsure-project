@@ -22,19 +22,67 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // Select the modal by ID dynamically using Bootstrap's show.bs.modal event
-        document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+        // Function to handle form submission and AJAX request
+        function handleFormSubmit(event) {
+            event.preventDefault(); // Prevent default form submission
+            const form = this; // Reference to the form that triggered this event
+            const modal = new bootstrap.Modal(form.closest('.modal')); // Get the modal instance
+            const formData = new FormData(form);
+            const actionUrl = form.getAttribute('action');
+            const method = form.querySelector('input[name="_method"]').value || 'POST';
+
+            // Make the AJAX request using fetch
+            fetch(actionUrl, {
+                    method: method,
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(response => {
+                    // Check if response is JSON
+                    const contentType = response.headers.get('content-type');
+                    if (contentType && contentType.includes('application/json')) {
+                        return response.json().then(data => {
+                            // Handle JSON error messages
+                            if (data.error) {
+                                alert(data.error || 'An error occurred');
+                                // Close the modal after the alert
+                                setTimeout(() => {
+                                    const closeButton = modal._element.querySelector('.btn-close'); // Get close button
+                                    if (closeButton) {
+                                        closeButton.click(); // Simulate click to close the modal
+                                    }
+                                }, 100);
+                            } else {
+                                window.location.reload(); // Reload the page 
+                            }
+                        });
+                    } else {
+                        // If not JSON, assume it's a redirect, so reload the page
+                        window.location.reload();
+                    }
+                })
+                .catch(error => {
+                    // Handle network or other unexpected errors
+                    alert('An unexpected error occurred. Please try again.');
+                    console.error('Error:', error);
+                    modal.hide(); // Close the modal when alert is shown
+                });
+        }
+
+        // Select all buttons that trigger modals
+        document.querySelectorAll('[data-modal-type="confirm-modal"]').forEach(button => {
             button.addEventListener('click', function(event) {
                 let action = this.getAttribute('data-action');
-                let hiringRequestId = this.getAttribute('data-hiringid')
+                let hiringRequestId = this.getAttribute('data-hiringid');
                 let modalId = this.getAttribute('data-bs-target'); // Get the modal ID
 
                 let modal = document.querySelector(modalId);
                 let title = modal.querySelector('.modal-title');
                 let message = modal.querySelector('.modal-body');
                 let form = modal.querySelector('form');
-
-                console.log(hiringRequestId);
 
                 // Update modal content based on the action
                 if (action === 'decline') {
@@ -47,12 +95,18 @@
                     message.textContent = 'Are you sure you want to accept this offer?';
                     form.setAttribute('action', `/hire/offer/accept/${hiringRequestId}`);
                     form.querySelector('input[name="_method"]').value = 'POST';
-                }
-                else if (action === 'cancel') {
+                } else if (action === 'cancel') {
                     title.textContent = 'Confirm Cancellation';
                     message.textContent = 'Are you sure you want to cancel this offer?';
                     form.setAttribute('action', `/hire/offer/cancel/${hiringRequestId}`);
                     form.querySelector('input[name="_method"]').value = 'PATCH';
+                }
+
+                // Remove any previously bound event listeners to prevent duplicates
+                const existingListener = form.getAttribute('data-listener-bound');
+                if (!existingListener) {
+                    form.addEventListener('submit', handleFormSubmit);
+                    form.setAttribute('data-listener-bound', 'true'); // Set a flag indicating listener is bound
                 }
             });
         });

@@ -77,7 +77,6 @@ class Hiring_requestController extends Controller
         $noAvailableSlot = $numberOfPeople <= $completedHiredCounts;
 
         if ($noAvailableSlot) {
-            
             return response()->json(['error' => 'No available slots for this job.'], 400);
         }
 
@@ -211,7 +210,7 @@ class Hiring_requestController extends Controller
         $hiringRequest->status = 'Rejected';
         $hiringRequest->save();
 
-        return redirect()->back()->with('success', 'Hiirng request was successfully cancelled.');
+        return redirect()->back()->with('success', 'Hiring request was successfully cancelled.');
     }
 
     //accept the offer 
@@ -222,6 +221,17 @@ class Hiring_requestController extends Controller
         //find the request
         $hiringRequest = Hiring_request::find($hiring_request_id);
 
+        $completedHiredCounts = Transaction::where('job_id', $hiringRequest->eventjob->job_id)->count();
+
+        //find the event job and compare the number of people needed
+        $numberOfPeople = $hiringRequest->eventjob->number_of_people;
+
+        // Check if there are available slots for hiring
+        $noAvailableSlot = $numberOfPeople <= $completedHiredCounts;
+
+        if ($noAvailableSlot) {
+            return response()->json(['error' => 'No available slots for this job.'], 400);
+        }
         //check if its existing
 
         if ($hiringRequest) {

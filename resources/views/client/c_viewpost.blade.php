@@ -306,7 +306,7 @@
                                         @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer' && $freelancer->hiringRequestData->status != 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px"
                                             data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
-                                            data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Accept Offer</button>
+                                            data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Accept Offer</button>
                                         @elseif($freelancer->hiringRequestData->status == 'Accepted')
                                         <a href="{{route('client-transaction')}} " class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</a>
                                         @endif
@@ -315,7 +315,7 @@
                                         @if($freelancer->hiringRequestData->status != 'Accepted')
                                         <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px"
                                             data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
-                                            data-action="cancel" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}">Cancel</button>
+                                            data-action="cancel" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Cancel</button>
                                         @endif
 
                                         @elseif($freelancer->hiringRequestData->status == 'Rejected')
