@@ -16,7 +16,7 @@
 
                 <!-- Basic Info -->
                 <div class="row my-4 ">
-                    <div class="col-12 profile-container">
+                    <div class="col-12 profile-container -flex align-items-center justify-content-center d-flex">
                         <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
                 </div> 
