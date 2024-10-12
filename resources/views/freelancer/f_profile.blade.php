@@ -356,10 +356,9 @@
                         "speed", // Speed button
                         "pip", // Picture in Picture button
                         "close", // Close button
-                        // "download" is omitted, so it won't show
-                        // Add any other buttons you want here
+                        
                     ],
-                    protect: true // Optional: Disable right-click
+                    protect: true // Disable right-click
                 });
             </script>
     </section>

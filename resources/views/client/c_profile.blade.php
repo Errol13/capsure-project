@@ -195,9 +195,15 @@
             </div>
 
 
+<<<<<<< HEAD
             @if($totalReviews === 0)
             <p class="text-center fs-5 text-muted">No reviews</p>
             @else
+=======
+            @if($totalReviews == 0)
+            <p class="text-center fs-5 text-muted">No reviews</p>
+            @else 
+>>>>>>> fb34cb2a0cbcf6e263f62b9d6e4e015448b3cc7f
             <!-- Reviews -->
             @foreach($eventsWithReviews as $eventsWithReview)
 
