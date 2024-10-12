@@ -195,9 +195,9 @@
             </div>
 
 
-            @if($totalReviews == 0)
+            @if($totalReviews === 0)
             <p class="text-center fs-5 text-muted">No reviews</p>
-            @else 
+            @else
             <!-- Reviews -->
             @foreach($eventsWithReviews as $eventsWithReview)
 
