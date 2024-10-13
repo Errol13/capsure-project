@@ -11,7 +11,7 @@
                     @csrf
                     <!-- User Info -->
                     <div class="d-flex align-items-center justify-content-center mb-4">
-                        <img src="{{ asset($reviewee->user->profile_image) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($reviewee->user->profile_image_url) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
                         <div class="text-start">
                             <h6 class="mb-0">{{$reviewee->user->first_name}} {{$reviewee->user->last_name}}</h6>
                             <p class="text-muted mb-0">{{ucfirst($reviewee_role)}}</p>
