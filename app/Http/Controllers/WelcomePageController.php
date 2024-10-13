@@ -19,7 +19,7 @@ class WelcomePageController extends Controller
             ->get();
 
         $events = Event::with(['client.user'])->where('status', 'Open')->orderBy('budget_max', 'desc')
-            ->take(8)
+            ->take(3)
             ->get();
 
         return view('welcome', compact('freelancers', 'events'));

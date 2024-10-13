@@ -133,7 +133,7 @@ $cards = [
                                                     @endif
                                             </div>
                                             <button class="btn-seemore fs-6 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " >View Profile</button>
+                                            poppins-regular w-100 border-0 text-nowrap rounded-4 ">View Profile</button>
                                         </div>
                                     </div>
                                     @endforeach
@@ -204,96 +204,51 @@ $cards = [
                         Take control of your professional journey and join a community that values your skills and creativity.
                         Apply now to start your CAPSURE adventure!
                     </big>
-                    <div id="eventsCarousel" class="carousel slide" data-bs-ride="carousel">
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="row">
-                                    @foreach($freelancers->slice(0,4) as $freelancer)
-                                    <div class="col-md-3">
-                                        <!--fetch the first service of the freelancer-->
-                                        @php
-                                        $firstService = $freelancer->services->where('isAvailable', true)->first();
-                                        @endphp
-                                        <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                            <img src="{{ $freelancer->user->profile_image_url }}" alt="Freelancer-{{$freelancer->user_id}}" class="img-fluid">
-                                            <h5 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}} </h5>
-                                            <span class="mt-0">{{ optional($firstService)->job_title ?? 'No service found with ID 1.' }}</span>
 
-                                            <div class="d-flex align-items-center mt-1">
-                                                @if($freelancer->avg_rating > 0)
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <=floor($freelancer->avg_rating))
-                                                    <i class="fas fa-star filled mb-3"></i> <!-- Filled star -->
-                                                    @elseif ($i == ceil($freelancer->avg_rating) && $freelancer->avg_rating - floor($freelancer->avg_rating) > 0)
-                                                    <i class="fas fa-star-half-alt filled mb-3"></i> <!-- Half star -->
-                                                    @else
-                                                    <i class="far fa-star mb-3"></i> <!-- Empty star -->
-                                                    @endif
-                                                    @endfor
-                                                    @else
-                                                    <span class="text-muted mb-2">No ratings yet.</span>
-                                                    @endif
-                                            </div>
-                                            <button class="btn-seemore fs-6 
-                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " style="background-color:#FCF2F9;">View Profile</button>
+                    <div class="row d-flex justify-content-center align-items-center">
+                        @foreach($events as $event)
+                        <div class="col-md-3">
+                            <!--for event posts-->
+                            <div class="freelancer-card border-1 d-flex flex-column justify-content-center align-items-center "
+                                style="box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5); border:rgb(196, 194, 194) 1px solid;">
+                                <div class="row ">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="{{ $event->client->user->profile_image_url }}" alt="Freelancer-{{$event->client->user->id}}" style="width: 50px; height: 50px;" class="me-3 img-fluid">
+                                        <div class="d-flex flex-column justify-content-start align-items-center">
+                                            <h6 class="mb-0">{{$event->client->user->first_name}} {{$event->client->user->last_name}} </h6>
+                                            <small class="text-gray">{{$event->client->user->barangay}}, {{$event->client->user->city}}</small>
                                         </div>
+
                                     </div>
-                                    @endforeach
-                                </div>
-                            </div>
 
-                            <div class="carousel-item">
-                                <div class="row">
-                                    @foreach($freelancers->slice(4,4) as $freelancer)
+                                    <h6 class="my-2 text-start fw-bold">{{$event->title}}</h6>
+                                    <small class="open-sans-reg">{{$event->description}}</small>
 
-                                    <!--fetch the first service of the freelancer-->
-                                    @php
-                                    // Get the first service where it is available
-                                    $firstService = $freelancer->services->where('isAvailable', true)->first();
-                                    @endphp
-
-                                    <div class="col-md-3">
-                                        <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                            <img src="{{ $freelancer->user->profile_image_url }}" alt="Freelancer-{{$freelancer->user_id}}" class="img-fluid">
-                                            <h5 class="mb-0">{{$freelancer->user->first_name}} {{$freelancer->user->last_name}} </h5>
-                                            <span class="mt-0">{{ optional($firstService)->job_title ?? 'No service found with ID 1.' }}</span>
-
-                                            <div class="d-flex align-items-center mt-1">
-                                                @if($freelancer->avg_rating > 0)
-                                                @for ($i = 1; $i <= 5; $i++)
-                                                    @if ($i <=floor($freelancer->avg_rating))
-                                                    <i class="fas fa-star filled mb-3"></i> <!-- Filled star -->
-                                                    @elseif ($i == ceil($freelancer->avg_rating) && $freelancer->avg_rating - floor($freelancer->avg_rating) > 0)
-                                                    <i class="fas fa-star-half-alt filled mb-3"></i> <!-- Half star -->
-                                                    @else
-                                                    <i class="far fa-star mb-3"></i> <!-- Empty star -->
-                                                    @endif
-                                                    @endfor
-                                                    @else
-                                                    <span class="text-muted mb-2">No ratings yet.</span>
-                                                    @endif
-                                            </div>
-                                            <button class="btn-seemore fs-6
-                                            poppins-regular w-100 border-0 text-nowrap rounded-4 " style="background-color:#FCF2F9;">View Profile</button>
-                                        </div>
+                                    <div class="d-flex justify-content-start">
+                                        @foreach($event->event_jobs as $job)
+                                        <p class="px-2 rounded-3 border border-secondary-subtle bg-primary-subtle mt-2 mb-2">{{$job->service_needed}}</p>
+                                        @endforeach
                                     </div>
-                                    @endforeach
+
                                 </div>
 
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button class=" me-2 btn-seeprof fs-6 
+                                            poppins-regular w-100 border-1 px-1 text-nowrap rounded-4 " style="background-color:#FCF2F9;">View Details</button>
+                                    <button class="btn-save fs-6 
+                                            poppins-regular w-100 border-1 px-1 text-nowrap rounded-4 ">Interested</button>
+
+                                </div>
                             </div>
                         </div>
-
-                        <button class="carousel-control-prev" type="button" data-bs-target="#eventsCarousel" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#eventsCarousel" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        @endforeach
                     </div>
+
+
                 </div>
             </div>
+
+
         </section>
         <footer class="footer mt-5 py-4 text-white">
             <div class="container-fluid">
@@ -336,7 +291,7 @@ $cards = [
                 </div>
             </div>
         </footer>
-</section>
+    </section>
 </div>
 
 <style>
