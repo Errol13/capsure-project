@@ -128,8 +128,8 @@
                         <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm" data-bs-toggle="modal" data-bs-target="#reportClientModal">Report Profile</button>
                     </div>
 
-                    <div class="row mt-3">
-                        <div class="col-md-5">
+                    <div class="row mt-3 d-flex align-items-center">
+                        <div class="col-md-5 flex-grow-1">
                             <!-- Events Posted -->
                             <div class="card rounded-4 p-3 pb-4 border-0" style="height: 116px; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                                 <div class="row align-items-center">
@@ -153,7 +153,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-5">
+                        <div class="col-md-5 flex-grow-1">
                             <!-- Hiring Success Rate -->
                             <div class="card p-3 border-0 rounded-4" style="box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                                 <div class="row align-items-center">
