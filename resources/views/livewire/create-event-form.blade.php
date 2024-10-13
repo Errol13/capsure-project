@@ -93,14 +93,14 @@
                     </div>
 
                     <!-- Job Information -->
-                    <div class="form-group mb-3 open-sans-reg">
+                    <div class="form-group my-3 pt-3 open-sans-reg">
                         <div class="d-flex justify-content-start align-items-center mb-3">
                             <img src="{{ asset('assets/add_jobs.svg') }}" alt="add_jobs_icon" class="socmed-container me-2">
                             <span class="fs-5 poppins-medium">Add Job/s</span>
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-bordered table-striped">
+                            <table class="table table-borderless">
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col col-sm-auto">Job Category</th>
@@ -111,9 +111,9 @@
                                 </thead>
                                 <tbody>
                                     @foreach($jobs as $index => $job)
-                                    <tr>
-                                        <td class="align-middle">
-                                            <select id="job_category" class="form-select mt-4 w-100" wire:model="jobs.{{ $index }}.job_category" wire:change="updateServiceDropdown({{ $index }})">
+                                    <tr style="border-bottom: 0.5px solid; border-color:lightgray;">
+                                        <td class="align-middle my-1 py-1 px-2">
+                                            <select id="job_category" style="background-color:white;" class="form-select w-100" wire:model="jobs.{{ $index }}.job_category" wire:change="updateServiceDropdown({{ $index }})">
                                                 <option value="">Select Category</option>
                                                 @foreach(array_keys($jobTitles) as $category)
                                                 <option value="{{ $category }}">{{ $category }}</option>
@@ -121,14 +121,14 @@
                                             </select>
                                             @error("jobs.$index.job_category") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
-                                        <td class="align-middle px-2">
+                                        <td class="align-middle my-1 py-1 px-2">
                                             @if(isset($jobs[$index]['job_category']) && array_key_exists($jobs[$index]['job_category'], $jobTitles))
                                             @if($jobs[$index]['service_needed'] === 'Others' || (isset($jobs[$index]['custom_service_needed']) && $jobs[$index]['custom_service_needed'] !== ''))
                                             <!-- Input field when "Others" is selected or custom service input is provided -->
-                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
+                                            <input type="text" class="transition form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Specify Other Service" wire:keydown.enter="validateServiceInput({{ $index }})">
                                             @else
                                             <!-- Dropdown for selecting services -->
-                                            <select class="form-select" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
+                                            <select class="form-select transition" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
                                                 <option value="" disabled>Select Service</option>
                                                 @foreach ($jobs[$index]['available_services'] as $service) 
                                                 <option value="{{ $service }}">{{ $service }}</option>
@@ -137,17 +137,19 @@
                                             </select>
                                             @endif
                                             @else
-                                            <input type="text" class="form-control fs-6" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete disabled>
+                                            <input type="text" class="form-control fs-6 transition" wire:model="jobs.{{ $index }}.custom_service_needed" placeholder="Eg. Photographer" data-autocomplete disabled>
                                             @endif
 
                                             @error("jobs.$index.custom_service_needed") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
 
-                                        <td class="align-middle">
-                                            <input type="number" class="form-control" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
+
+
+                                        <td class="align-middle my-1 py-1">
+                                            <input type="number" class="form-control" style="background-color:white;" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
                                             @error("jobs.$index.number_of_people") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
-                                        <td class="align-middle">
+                                        <td class="align-middle my-1 py-1">
                                             <button type="button" class="btn" wire:click="removeJob({{ $index }})"><i class="fas fa-trash text-danger"></i></button>
                                         </td>
                                     </tr>
@@ -158,10 +160,10 @@
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
-                    <div class="d-flex justify-content-end  my-4 pb-4">
+                    <div class="d-flex justify-content-end my-4 pb-4">
                         <div class="flex-grow-1"></div>
                         <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
-                        <button type="submit" class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" >Post</button>
+                        <button class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" type="submit">Post</button>
                         <div class="flex-grow-1"></div>
                     </div>
                 </form>

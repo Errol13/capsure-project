@@ -58,7 +58,10 @@
 
 /*Buttons and Horizontal Lines Styles <-------------------------------- */
 
-
+.page-item.active .page-link{
+    background-color: #91216C;
+    border-color: #91216C;
+}
 
 .icon-img {
     width: 24px;
@@ -557,8 +560,11 @@ select#year {
 .bookmark-icon {
 
     cursor: pointer;
-    /* Makes the icon clickable */
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
 }
+
 
 .bookmarks-container {
     display: grid;

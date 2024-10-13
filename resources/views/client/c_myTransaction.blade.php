@@ -27,10 +27,10 @@
                 <thead class="table-primary poppins-extralight">
                     <tr>
                         <th style="width: 10%;"></th>
-                        <th style="width: 13%;"></th>
-                        <th style="width: 17%;">Payment Amount</th>
-                        <th style="width: 23%;">Payment Status</th>
-                        <th style="width: 14%;">Payment Proof</th>
+                        <th style="width: 8%;"></th>
+                        <th style="width: 20%;">Payment Amount</th>
+                        <th style="width: 25%;">Payment Status</th>
+                        <th style="width: 12%;">Payment Proof</th>
                         <th style="width: 15%;"></th>
                     </tr>
                 </thead>

@@ -4,10 +4,10 @@
 <div class="container mb-4 pb-4">
     <div class="row justify-content-center mb-4">
 
+        <h3 class="my-4 text-start poppins-medium ">Favorites</h3>
         @if ($freelancers->isEmpty())
         <p>No favorites found.</p>
         @else
-        <h4 class="my-3 text-start text-purple open-sans-reg fw-bold">Favorites</h4>
         <div class="card-grid d-md-flex row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
 
             @foreach ($freelancers as $freelancer)
@@ -55,7 +55,7 @@
                             @csrf
                             @method('DELETE') <!-- Use DELETE method for removing -->
                             <button type="submit" style="border: none; background: none; cursor: pointer;">
-                                <img src="{{ asset('assets/saved.svg') }}" alt="Unbookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
+                                <img src="{{ asset('assets/saved.svg') }}" alt="Unbookmark" class="bookmark-icon" style="width: 30px; height: 30px;">
                             </button>
                         </form>
                     </div>

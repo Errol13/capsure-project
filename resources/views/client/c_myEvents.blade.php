@@ -5,11 +5,11 @@
     <div class="row">
         <div class="col-12">
             <div class="row d-flex align-items-center">
-                <div class="col-auto pt-3">
-                    <h2>My Posts</h2>
+                <div class="col-auto pt-3 poppins-medium">
+                    <h3>My Posts</h3>
                 </div>
                 <div class="col-auto">
-                    <a href="{{ url('/events') }}" class="btn btn-primary" style="background-color:#8FE2ED; border:none; color:black;">+</a>
+                    <a href="{{ url('/events') }}" class="btn btn-primary rounded-5" style="background-color:#8FE2ED; border:none; color:black;"><i class="fas fa-plus"></i></a>
                 </div>
                 <div class="col ms-auto text-end">
                     <div class="dropdown">

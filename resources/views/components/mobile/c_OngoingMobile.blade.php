@@ -17,18 +17,6 @@
         <div class="card mb-4 rounded-4 p-0" style="background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
         <div class="card-header" style="background-color:#FCF2F9;">
             <h5 class="poppins-medium">{{$eventGroup['event']->title}}
-                @if ($isDue)
-                @php
-                $dueId = 'Modal-' . $eventGroup['event']->event_id . '-user-' . auth()->user()->id;
-                @endphp
-                <span class="text-danger fs-6 fw-bold due-container" data-bs-toggle="modal"
-                    data-bs-target="#due{{$dueId}}">
-                    <i class="fas fa-solid fa-circle-exclamation"></i>
-                </span>
-                @include('modals.Transaction.due_modal', ['id' => $dueId ,'eventTitle' =>
-                $eventGroup['event']->title, 'unsettledPayment' => $unsettledPayment, 'noReview' =>
-                $noReview])
-                @endif
             </h5>
             <small class="text-muted" style="line-height: 0.5;">{{$eventGroup['event']->start_date_formatted}} - {{$eventGroup['event']->end_date_formatted}}</small>
             <a href="{{route('client-viewpost', [ 'id' => $eventGroup['event']->event_id] )}}"
