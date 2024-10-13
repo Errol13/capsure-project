@@ -158,7 +158,8 @@
                                             @endif
 
                                             <div class="col-2 d-flex justify-content-end">
-                                                @if($transaction->transaction_status !== 'Done')
+                                                <!--change the write a review only if the transaction is done and made a review -->
+                                            @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
                                                 <button type="button"
                                                     class="btn btn-outline-secondary btn-sm btn-fit-width"
                                                     data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
@@ -200,7 +201,6 @@
                                             @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
                                             'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
                                             @endif
-
 
                                         </div>
                                     </div>

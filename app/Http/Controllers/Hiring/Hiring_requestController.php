@@ -134,7 +134,6 @@ class Hiring_requestController extends Controller
         $freelancer = User::find($validated['freelancer_id']);
         $freelancer->notify(new HiringRequestSent($client->first_name, $eventTitle));
 
-
         Log::info('Redirecting to Viewpost of Client with ID: ' . $event->event_id);
 
         if ($request->ajax()) {
