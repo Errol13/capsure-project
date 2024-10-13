@@ -86,7 +86,7 @@
 
                                         <div class="row align-items-center mb-2">
                                             <div class="col-auto pe-1">
-                                                <img src="{{asset($transaction->client->user->profile_image)}}" class="rounded-circle">
+                                                <img src="{{asset($transaction->client->user->profile_image_url)}}" class="rounded-circle">
                                             </div>
                                             <div class="col-2 pe-4">
                                                 <div class="d-flex flex-column align-items-start">
@@ -215,7 +215,7 @@
             <p>No on-going transactions.</p>
             @endif
 
-            @include('components.mobile.f_Ongoing')
+       
         </div>
       
 
@@ -266,7 +266,7 @@
 
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
-                                            <img src="{{asset($transaction->client->user->profile_image)}}" class="rounded-circle">
+                                            <img src="{{asset($transaction->client->user->profile_image_url)}}" class="rounded-circle">
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column align-items-start">
@@ -398,7 +398,7 @@
             <p>No upcoming transactions.</p>
             @endif
 
-            @include('components.mobile.f_Upcoming')
+         
         </div>
 
         <!-- HISTORY Tab ----------------------------------------------------------------------------------------------------------------------------------------------->
@@ -446,7 +446,7 @@
 
                                     <div class="row align-items-center mb-2">
                                         <div class="col-auto pe-1">
-                                            <img src="{{asset($transaction->client->user->profile_image)}}" class="rounded-circle">
+                                            <img src="{{asset($transaction->client->user->profile_image_url)}}" class="rounded-circle">
                                         </div>
                                         <div class="col-2 pe-4">
                                             <div class="d-flex flex-column align-items-start">
@@ -511,7 +511,7 @@
             <p>No previous transactions.</p>
             @endif
 
-            @include('components.mobile.f_History')
+            
         </div>
         @include('modals.f_review')
     </div>

@@ -199,7 +199,6 @@
 
 
                 </tbody>
-                @include('components.mobile.c_OngoingMobile')
             </table>
 
         </div>
@@ -354,7 +353,6 @@
                     <p class="fs-5">No upcoming transactions.</p>
                     @endif
                 </tbody>
-                @include('components.mobile.c_UpcomingMobile')
             </table>
         </div>
 
@@ -474,7 +472,6 @@
                     <p class="fs-5">No previous transactions.</p>
                     @endif
                 </tbody>
-                @include('components.mobile.c_HistoryMobile')
             </table>
         </div>
 
