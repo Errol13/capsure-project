@@ -121,7 +121,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('hire-from-jobapp-<?php echo $uniqueId; ?>');
+        const form = document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission

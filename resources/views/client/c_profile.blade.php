@@ -147,7 +147,7 @@
 
                         <div class="col-md-5 flex-grow-1">
                             <!-- Hiring Success Rate -->
-                            <div class="card p-3 border-0 rounded-4"  style="box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                            <div class="card p-3 border-0 rounded-4" style="box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                                 <div class="row align-items-center">
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <h1 class="fs-md-3 me-3" style="color: #91216C;">
