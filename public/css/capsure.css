@@ -169,6 +169,7 @@
 .input-group {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .prefix {
@@ -412,22 +413,14 @@ select#year {
 
 .service-categories {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: 15px;
+    grid-template-columns: fr;
     padding: 20px;
+    height: 33%;
 }
 
-.freelancers,
-.jobs {
-    display: flex;
-    overflow-x: scroll;
-    padding: 20px;
-}
 
 .hero .input-group {
-    width: 600px;
     max-width: 100%;
-    margin: 0 auto;
 }
 
 .hero .form-control {
@@ -443,7 +436,7 @@ select#year {
 .custom-mob-card {
     box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5);
     border: none;
-    flex: 0 0 calc(25% - 1rem);
+    flex: 0 0 calc(20% - 1rem);
 }
 
 
@@ -455,25 +448,7 @@ select#year {
 
 }
 
-.service-pic-size {
-    height: 120px;
-    width: 120px;
-    object-fit: contain;
-    align-self: center;
-    margin-bottom: 20px;
-}
 
-.custom-card .card-body {
-    padding-top: 5px;
-    padding-bottom: 10px;
-    margin-top: -40px;
-}
-
-.carousel-item .col-4 {
-    flex: 0 0 auto;
-    width: 33.3333%;
-    /* Three cards per row */
-}
 
 .freelancer-card {
     background-color: white;
@@ -500,7 +475,6 @@ select#year {
 
 .carousel-control-prev, .carousel-control-next {
     width: 10%;
-    background-color: none;
 }
 
 
@@ -583,8 +557,8 @@ select#year {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: gray;
-    border-radius: 12px;
+    background-color: #464646;
+    border-radius: 50%;
 }
 
 .shadow-box {
@@ -1340,11 +1314,6 @@ select:disabled {
         /* Ensure cards stretch to fill available space */
         display: flex;
         flex-direction: column;
-    }
-
-    .custom-mob-card .card-body .card-text {
-        margin-top: -20px;
-        /* If needed, adjust the margin to move the text closer to the image */
     }
 
     #nav-item-mobile {
