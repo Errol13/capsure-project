@@ -82,12 +82,12 @@ class CreateEventForm extends Component
         if (array_key_exists($selectedCategory, $this->jobTitles)) {
             $this->jobs[$index]['available_services'] = $this->jobTitles[$selectedCategory];
             // Reset the service_needed when the category changes
-            $this->jobs[$index]['service_needed'] = ''; // or '' if you prefer
-            $this->jobs[$index]['custom_service_needed'] = null; // Reset custom service field if needed
+            $this->jobs[$index]['service_needed'] = ''; 
+            $this->jobs[$index]['custom_service_needed'] = null; 
         } else {
             $this->jobs[$index]['available_services'] = [];
-            $this->jobs[$index]['service_needed'] = ''; // Reset if no category is selected
-            $this->jobs[$index]['custom_service_needed'] = null; // Reset custom service field if needed
+            $this->jobs[$index]['service_needed'] = ''; 
+            $this->jobs[$index]['custom_service_needed'] = null; 
         }
     } 
 

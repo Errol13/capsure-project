@@ -169,6 +169,8 @@
                                     </span>
                                     @enderror
                                 </div>
+
+                                <small class="text-purple text-start">You can add more job roles in the setting.</small>
                             </div>
 
 
@@ -263,6 +265,8 @@
                                     </span>
                                     @enderror
                                 </div>
+
+                                <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
                             </div>
 
 

@@ -155,7 +155,14 @@ class EventsController extends Controller
 
             // Sort applicants by status: 'Pending' first, 'Rejected' last
             $sortedApplicants = $applicants->sortBy(function ($applicant) {
-                return $applicant['status'] === 'Rejected' ? 1 : 0;
+                switch($applicant['status']) {
+                    case 'Pending':
+                        return 0; // pending should be first shown
+                    case 'Accepted': 
+                        return 1; // followed by accepted
+                    case 'Rejected': 
+                        return 2; //last those who are rejected
+                }
             });
 
             // Fetch recommendations
@@ -174,6 +181,16 @@ class EventsController extends Controller
             // Getting hired freelancers count for each job
             $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();
             $hiredCount = $jobApplicantsHired->count();
+
+            //delete the remaining pending hiring requests and job applications if full
+            if($eventJob->number_of_people === $hiredCount){
+
+                //fdelete the pending hiring requests
+                $eventJob->hiringRequests()->where('status', 'Pending')->delete();
+
+                //delete the job applications that are pending for this job
+                $eventJob->jobApplications()->where('status', 'Pending')->delete();
+            }
 
             // Store the count of hired freelancers for the job
             $completedHiredCounts->put($job->job_id, $hiredCount);
@@ -223,7 +240,6 @@ class EventsController extends Controller
         //for freelancers 
         $freelancer = Freelancer::whereHas('services')->where('user_id', $user->id)->first();
 
-
         // Event post's client's data
         $clientUser = User::where('id', $event->client_id)->with('client')->first();
 
@@ -241,6 +257,8 @@ class EventsController extends Controller
         if ($successfulEvents > 0) {
             $hiringSuccessRate = ($successfulEvents / $clientTotalPosts) * 100;
         }
+        Log::info('Successfull Events:'. $successfulEvents);
+        Log::info('Hiring SUccess:'. $hiringSuccessRate);
 
 
         if ($user->user_type === 'client') {

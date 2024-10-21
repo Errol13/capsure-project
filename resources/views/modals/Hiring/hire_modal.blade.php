@@ -80,7 +80,7 @@
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
                         <button type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
-                        <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
+                        <button id="cancelJobApplication-{{$applicantId}}" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>
@@ -121,7 +121,11 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('hire-from-jobapp-<?php echo $uniqueId; ?>');
+
+        document.getElementById('cancelJobApplication-<?php echo $applicantId; ?>').addEventListener('click', function ()){
+            document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>').reset();
+        }
+        const form = document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>');
 
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission

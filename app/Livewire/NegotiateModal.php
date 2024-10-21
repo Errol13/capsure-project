@@ -3,8 +3,11 @@
 namespace App\Livewire;
 
 use App\Models\Hiring\Hiring_request;
+use App\Models\User;
+use App\Notifications\NewOffer;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class NegotiateModal extends Component
 {
@@ -14,6 +17,7 @@ class NegotiateModal extends Component
     public $service;
     public $freelancerPricing;
     public $dealerUserType;
+    public $isLower = false;
 
     public function mount($hiringRequestId, $service)
     {
@@ -32,18 +36,52 @@ class NegotiateModal extends Component
         return view('livewire.negotiate-modal');
     }
 
+    //show the warning if the freelancer offers lower offer compared to current client offer
+    public function warningLowerOffer($freelancerPricing)
+    {
+        // Clean the input and check if the offer is lower
+        $this->freelancerPricing = preg_replace('/[^0-9.]/', '', $freelancerPricing);
+        
+        if ($this->freelancerPricing < $this->clientPricing) {
+            $this->isLower = true;
+        } else {
+            $this->isLower = false;
+        }
+
+        $this->dispatch('showWarning', isLower: $this->isLower);
+    }
+
     public function updateOffer()
     {
+        // Clean up the input values by removing non-numeric characters
+        $this->clientPricing = preg_replace('/[^0-9.]/', '', $this->clientPricing);
+        $this->freelancerPricing = preg_replace('/[^0-9.]/', '', $this->freelancerPricing);
+
+        //find the one who will be notified, by default empty
+        $dealee = null;
         // Update pricing based on dealer user type
         if ($this->dealerUserType === 'client') {
             $this->hiringRequestData->client_pricing = $this->clientPricing;
             $this->hiringRequestData->dealer_user_type = 'client';
+            $dealee = User::find($this->hiringRequestData->freelancer_id);
         } elseif ($this->dealerUserType === 'freelancer') {
             $this->hiringRequestData->freelancer_pricing = $this->freelancerPricing;
             $this->hiringRequestData->dealer_user_type = 'freelancer';
+            $dealee = User::find($this->hiringRequestData->client_id);
         }
 
         $this->hiringRequestData->save();
+
+        //determine the name of the one who made the deal
+        $dealer =  auth()->user();
+        $dealerName = "{$dealer->first_name} {$dealer->last_name}";
+
+
+        $dealee->notify(new NewOffer(
+            $dealerName,
+            $this->hiringRequestData->eventjob->event->title,
+            $this->hiringRequestData->eventjob->event->event_id
+        ));
 
         $this->dispatch('offerUpdated');
     }

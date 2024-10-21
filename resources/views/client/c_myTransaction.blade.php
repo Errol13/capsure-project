@@ -199,10 +199,6 @@
 
 
                 </tbody>
-<<<<<<< HEAD
-=======
-               
->>>>>>> d67e53d251fd99281fc7aa09132189fcfe04df01
             </table>
 
         </div>
@@ -357,10 +353,6 @@
                     <p class="fs-5">No upcoming transactions.</p>
                     @endif
                 </tbody>
-<<<<<<< HEAD
-=======
-               
->>>>>>> d67e53d251fd99281fc7aa09132189fcfe04df01
             </table>
         </div>
 
@@ -480,10 +472,6 @@
                     <p class="fs-5">No previous transactions.</p>
                     @endif
                 </tbody>
-<<<<<<< HEAD
-=======
-               
->>>>>>> d67e53d251fd99281fc7aa09132189fcfe04df01
             </table>
         </div>
 

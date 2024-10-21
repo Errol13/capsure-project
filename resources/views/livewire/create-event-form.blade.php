@@ -68,7 +68,7 @@
                     <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
                         <div class="row">
                             <div class="col-8">
-                                <label for="budget_min">Budget:</label>
+                                <label for="budget_min">Budget Range:</label>
                             </div>
                             <div class="col-3" style="white-space: nowrap; font-size:small;">
                                 <label for="payment_method">Payment Method:</label>
@@ -157,9 +157,11 @@
                                 </tbody>
                             </table>
                         </div>
+                        
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
+                    <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
                     <div class="d-flex justify-content-end my-4 pb-4">
                         <div class="flex-grow-1"></div>
                         <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
@@ -168,6 +170,7 @@
                     </div>
                 </form>
 
+                
             </div>
         </div>
     </div>

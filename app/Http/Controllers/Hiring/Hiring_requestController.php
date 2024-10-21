@@ -137,7 +137,7 @@ class Hiring_requestController extends Controller
         Log::info('Redirecting to Viewpost of Client with ID: ' . $event->event_id);
 
         if ($request->ajax()) {
-            // Return JSON response for AJAX requests
+            // Return JSON response for async requests
             return response()->json(['success' => 'Hired successfully.'], 200);
         }
 

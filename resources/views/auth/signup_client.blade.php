@@ -201,6 +201,8 @@
                                     </span>
                                     @enderror
                                 </div>
+
+                                <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
                             </div>
 
                             <p class="text-center fs-cstm-6">By creating an account, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
