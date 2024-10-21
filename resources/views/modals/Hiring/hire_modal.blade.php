@@ -121,10 +121,13 @@
     }
 
     document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
 
         document.getElementById('cancelJobApplication-<?php echo $applicantId; ?>').addEventListener('click', function ()){
             document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>').reset();
         }
+=======
+>>>>>>> 34b3341374db9590cbfb062c2054ac35ba2bd83d
         const form = document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>');
 
         form.addEventListener('submit', function(event) {

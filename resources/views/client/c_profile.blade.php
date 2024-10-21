@@ -165,6 +165,61 @@
                             </div>
                         </div>
                     </div>
+<<<<<<< HEAD
+=======
+
+                    @endif
+
+
+                    <div class="row mt-3 d-flex align-items-center">
+                        <div class="col-md-5 flex-grow-1">
+                            <!-- Events Posted -->
+                            <div class="card rounded-4 p-3 pb-4 border-0" style="height: 116px; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                                <div class="row align-items-center">
+                                    <div class="col-12 d-flex justify-content-center align-items-center">
+                                        <h1 class=" fs-md-3 me-3" style="color: #91216C;">{{$user->client->events->count()}}</h1>
+                                        <h5 class=" fs-md-4 poppins-medium light-color-prof me-3" style="white-space: nowrap;">Events posted</h5>
+                                        <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted d-none d-md-inline" style="white-space: nowrap;">
+                                            <small class="text-purple align-items-center justify-content-end">See Posts</small>
+                                        </a>
+                                    </div>
+                                    <!-- Show the link on smaller screens -->
+                                    <div class="col-12 d-md-none mt-1">
+                                        <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted" style="white-space: nowrap;">
+                                            <small>See Events Posts</small>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <small class="mb-0 text-center" style="line-height: 1; color:darkgray;">Total number of events posted by the client.</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-5 flex-grow-1">
+                            <!-- Hiring Success Rate -->
+                            <div class="card p-3 border-0 rounded-4" style="box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                                <div class="row align-items-center">
+                                    <div class="col-12 d-flex justify-content-center align-items-center">
+                                        <h1 class="fs-md-3 me-3" style="color: #91216C;">
+                                            @if($hiringSuccessRate == 0)
+                                            0%
+                                            @else
+                                            {{ number_format($hiringSuccessRate, 1) }}%
+                                            @endif
+                                        </h1>
+                                        <h5 class=" fs-md-4 poppins medium light-color-prof me-3" style="white-space:nowrap;">Hiring Success Rate</h5>
+                                    </div>
+                                </div>
+                                <div class="row mt-1">
+                                    <small class="mb-0 text-center" style="line-height: 1.2; color:darkgray;">Represents how often a client successfully hires after posting an event.</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="mt-3 pt-4 mb-0 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
+>>>>>>> 34b3341374db9590cbfb062c2054ac35ba2bd83d
                 </div>
 
                 <p class="mt-3 mb-0 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
