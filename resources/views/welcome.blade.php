@@ -135,9 +135,9 @@ $cards = [
                         Take control of your professional journey and join a community that values your skills and creativity.
                         Apply now to start your CAPSURE adventure!
                     </small>
-                    <div class="row">
+                    <div class="row d-flex justify-content-center align-items-center">
                         @foreach($events as $event)
-                        <div class="col-12 col-md-6 col-lg-4 mb-2"> <!-- Adjust the grid for responsiveness -->
+                        <div class="col-12 col-md-6 col-lg-4 mb-2"> 
                             <!-- Event Post Card -->
                             <div class="freelancer-card border-1 d-flex flex-column justify-content-center align-items-center"
                                 style="box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5); border:rgb(196, 194, 194) 1px solid; padding: 1rem; width: 100%;">
@@ -148,13 +148,13 @@ $cards = [
                                             style="width: 50px; height: 50px;"
                                             class="mx-2 img-fluid rounded-circle">
                                         <div class="d-flex flex-column">
-                                            <span class="mb-0">{{$event->client->user->first_name}} {{$event->client->user->last_name}}</span>
+                                            <span class="mb-0 fw-bold text-start">{{$event->client->user->first_name}} {{$event->client->user->last_name}}</span>
                                             <small class="text-gray">{{$event->client->user->barangay}}, {{$event->client->user->city}}</small>
                                         </div>
                                     </div>
                                     <h6 class="my-2 text-center fw-bold">{{$event->title}}</h6>
                                     <small class="open-sans-reg">{{$event->description}}</small>
-                                    <div class="d-flex justify-content-center flex-wrap"> <!-- Added flex-wrap for better responsiveness -->
+                                    <div class="d-flex justify-content-center flex-wrap"> 
                                         @foreach($event->event_jobs as $job)
                                         <p class="me-2 px-2 rounded-4 border-secondary-subtle bg-primary-subtle mt-2 mb-2"
                                             style=" box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);">
