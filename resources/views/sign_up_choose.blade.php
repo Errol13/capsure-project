@@ -4,10 +4,10 @@
 
 <div class="container poppins-light">
     <div class="row justify-content-center">
+        <span class="fs-1 fw-medium text-center p-2 mt-4">Choose to Sign Up</span>
 
-        <span class="fs-1 fw-medium text-center p-4 mt-4"> Choose to Sign Up </span>
         <!-- First Box -->
-        <div class="col-12 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-1 mb-md-1 p-1 p-md-2"  id="box1">
+        <div class="col-12 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-1 mb-md-1 p-1 p-md-2 mx-md-5" id="box1">
             <div class="text-center p-md-3 border-1 rounded-4 box box-content" data-page="client">
                 <img src="{{ asset('assets/Account.svg') }}" type="image/svg+xml" alt="Image 1" class="mt-4 p-4 img-fluid mb-2">
                 <p class="pt-1 pt-md-4 fw-medium">I am Client</p>
@@ -15,9 +15,9 @@
         </div>
 
         <!-- Second Box -->
-        <div class="col-12 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-md-1 p-1 p-md-2 "  id="box2">
-            <div class=" box text-center p-md-3 border-1 rounded-4  box-content" data-page="freelancer">
-                <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class=" mt-4 p-4 img-fluid mb-2">
+        <div class="col-12 col-md-4 col-lg-3 d-flex flex-column align-items-center mb-md-1 p-1 p-md-2 mx-md-5" id="box2">
+            <div class="box text-center p-md-3 border-1 rounded-4 box-content" data-page="freelancer">
+                <img src="{{ asset('assets/Lawyer.svg') }}" type="image/svg+xml" alt="Image 2" class="mt-4 p-4 img-fluid mb-2">
                 <p class="pt-2 pt-md-4 fw-medium">I am a Freelancer</p>
             </div>
         </div>
@@ -38,8 +38,6 @@
         </div>
     </div>
 </div>
-
-
 @endsection
 
 <script>
@@ -52,13 +50,13 @@
             box.addEventListener('click', () => {
                 // Remove selected class from all boxes
                 boxes.forEach(b => b.classList.remove('selected'));
-                
+
                 // Add selected class to the clicked box
                 box.classList.add('selected');
 
                 // Store the page to navigate to
                 selectedPage = box.getAttribute('data-page');
-                
+
                 // Enable the continue button
                 continueBtn.disabled = false;
             });

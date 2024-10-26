@@ -3,7 +3,7 @@
         <a class="nav-link dropdown-toggle-notif" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fas fa-bell"></i>
             @if($notifications->count() > 0)
-                <span class="badge bg-danger">{{ $notifications->count() }}</span>
+                <sup class="badge bg-danger" style="border-radius: 50%;">{{ $notifications->count() }}</sup>
             @endif
         </a>
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationDropdown" style="width: 300px;">

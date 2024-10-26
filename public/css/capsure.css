@@ -1,5 +1,4 @@
 /* Font Styles <------------------------------*/
-
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sedan:ital@0;1&display=swap');
@@ -9,38 +8,31 @@
     font-weight: 400;
     font-style: normal;
 }
-
 .poppins-light {
     font-family: "Poppins", sans-serif;
     font-weight: 300;
     font-style: normal;
 }
-
 .poppins-thin {
     font-family: "Poppins", sans-serif;
     font-weight: 100;
     font-style: normal;
 }
-
-
 .poppins-medium {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-style: normal;
 }
-
 .sedan-regular-italic {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: italic;
 }
-
 .sedan-regular {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: normal;
 }
-
 .open-sans-reg {
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
@@ -49,46 +41,37 @@
     font-variation-settings:
         "wdth" 100;
 }
-
 .wrapper {
     min-height: 100%;
     display: flex;
     flex-direction: column;
 }
 
-/*Buttons and Horizontal Lines Styles <-------------------------------- */
 
+
+/*Buttons and Horizontal Lines Styles <----------------------------------------------------- */
 .page-item.active .page-link{
     background-color: #91216C;
     border-color: #91216C;
 }
-
 .icon-img {
     width: 24px;
-    /* Adjust icon size as needed */
     height: 24px;
-    /* Adjust icon size as needed */
 }
-
 .navbar-nav .nav-link span {
     font-size: 0.75rem;
-    /* Adjust label size as needed */
 }
-
 .btn-purple {
     background-color: #91216C;
     color: white;
     text-decoration: none;
 }
-
 .navbar-nav .nav-item {
     display: flex;
     align-items: center;
     margin-left: 10px;
-    /* Space between button and other links */
     margin-right: 20px;
 }
-
 .btn-outline {
     color: gray;
     background-color: white;
@@ -98,21 +81,18 @@
     height: 35px;
     width: 80px;
 }
-
 .stepper {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
 }
-
 .step {
     display: flex;
-    align-items: center; /* Align items (circle and text) horizontally */
-    flex-direction: row; /* Ensure the text is beside the circle */
+    align-items: center;
+    flex-direction: row; 
     text-align: left;
 }
-
 .circle {
     width: 30px;
     height: 30px;
@@ -124,7 +104,6 @@
     color: #000;
     font-weight: bold;
 }
-
 .vbox {
     width: 100%;
     max-width: 600px; 
@@ -132,53 +111,45 @@
     margin: 0 auto; 
     border: 1px solid #ccc; 
     background-color: white; 
-  }
-
-  .xbox {
+}
+.xbox {
     width: 100%;
     max-width: 750px; 
     padding: 30px;
     margin: 0 auto; 
     border: 1px solid #ccc; 
     background-color: white; 
-  }
-
-  .upload-section {
+}
+.upload-section {
     border: 2px dashed #d9d9d9;
     border-radius: 10px;
     padding: 20px;
     min-height: 150px;
-  }
-
-  .upload-section .icon {
+}
+.upload-section .icon {
     text-align: center;
     font-size: 50px;
     color: #6c757d;
     margin-bottom: 5px;
-  }
-
-  .upload-section input {
+}
+.upload-section input {
     text-align: center;
     display: none;
-  }
-
+}
 .form-section {
     margin-bottom: 20px;
 }
-
 .input-group {
     display: flex;
     align-items: center;
     justify-content: center;
 }
-
 .prefix {
     padding: 10px;
     background-color: #e9ecef;
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
 }
-
 input[type="tel"] {
     flex: 1;
     padding: 10px;
@@ -186,7 +157,6 @@ input[type="tel"] {
     border-left: none;
     border-radius: 0 5px 5px 0;
 }
-
 .send-otp {
     padding: 10px 20px;
     background-color: #8b206a;
@@ -197,23 +167,19 @@ input[type="tel"] {
     cursor: pointer;
     text-decoration: none;
 }
-
 .note {
     font-size: 12px;
     color: #666;
 }
-
 .otp-inputs {
     display: flex;
     margin: 10px 0; 
     gap: 10px;
 }
-
 .otp-inputs input,
 .btn.confirm {
     height: 40px;
 }
-
 .otp-wrapper {
     display: flex;
     align-items: center;
@@ -270,17 +236,17 @@ input[type="tel"] {
     transition: border-color 0.3s ease;
 }
 .step.active .circle {
-    background-color: #8b206a; /* Dark magenta color */
+    background-color: #91216C; 
     color: white;
 }
 
 .step.done .circle {
-    background-color: lightgreen; /* Dark magenta color */
+    background-color: lightgreen;
     color: white;
 }
 
 .step p {
-    margin-left: 10px; /* Add some space between the circle and the text */
+    margin-left: 10px; 
     font-size: 14px;
     color: #666;
     
@@ -323,16 +289,13 @@ input[type="tel"] {
 
 .btn-auth:disabled {
     background-color: rgba(145, 33, 108, 0.5);
-    /* 50% transparent color */
     border-color: none;
     cursor: default;
-    /* Change cursor to indicate the button is not clickable */
 }
 
 .custom-hr {
     border: none;
     border-bottom: 3px solid #9B9A9E;
-    /* Light gray color for the line */
     margin-right: 0;
     margin-left: 0;
     margin-top: 0;
@@ -348,22 +311,26 @@ input[type="tel"] {
     align-items: center;
 }
 
-/*Text Colors <---------------------------------------*/
 
+
+
+/*Text Colors <---------------------------------------*/
 .text-purple {
     color: #91216C;
     text-decoration: none;
 }
-
 .txt-purple {
     color: #91216C;
 }
+
 
 body,
 html {
     height: 100%;
     margin: 0;
 }
+
+
 
 /*Sign Up Page <------------------------------------------------------------------------------------------------------*/
 .bg-signup {
@@ -383,24 +350,20 @@ html {
     height: calc(100% + 40px);
     display: flex;
     align-items: center;
-    /* Center content vertically */
     justify-content: center;
-    /* Center content horizontally */
     position: fixed;
 }
-
 .txt-smaller {
     font-size: 12px;
 }
-
 select#day,
 select#month,
 select#year {
     background-color: #f8f9fa;
-    /* Light gray background */
     color: #6c757d;
-    /* Dark gray text */
 }
+
+
 
 /*Welcome Page <-------------------------------------------------------------------------------------------------------*/
 
@@ -410,46 +373,34 @@ select#year {
     min-height: 250px;
     padding: 20px 0;
 }
-
 .service-categories {
     display: grid;
     grid-template-columns: fr;
     padding: 20px;
     height: 33%;
 }
-
-
 .hero .input-group {
     max-width: 100%;
 }
-
 .hero .form-control {
     height: 40px;
 }
-
 .hero .btn {
     height: 40px;
     border: none;
     background-color: white;
 }
-
 .custom-mob-card {
     box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5);
     border: none;
     flex: 0 0 calc(20% - 1rem);
 }
-
-
 .custom-card {
     flex: 0 0 calc(20% - 1rem);
     margin-bottom: 1rem;
     margin: 0;
     box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
-
 }
-
-
-
 .freelancer-card {
     background-color: white;
     border-radius: 20px;
@@ -465,7 +416,6 @@ select#year {
     justify-content: space-between;
     align-items: center;
 }
-
 .freelancer-card img {
     width: 80px;
     height: 80px;
@@ -473,9 +423,6 @@ select#year {
     margin-bottom: 10px;
 }
 
-.carousel-control-prev, .carousel-control-next {
-    width: 10%;
-}
 
 
 /* Client Homepage <-------------------------------------------------------------------------------------------------*/
