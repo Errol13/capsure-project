@@ -30,6 +30,7 @@
     
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
     <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
@@ -129,7 +130,7 @@
                         <!-- Common navbar items for both freelancers and clients -->
 
                         <li class="nav-item me-md-0" id="nav-item-mobile">
-                            <a class="nav-link" href="#">
+                            <a class="nav-link" href="/chat">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>

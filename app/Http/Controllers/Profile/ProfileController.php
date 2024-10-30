@@ -161,7 +161,6 @@ class ProfileController extends Controller
       'durationInHours' => $durationInHours,
       'completedHiredCounts' => $completedHiredCounts,
     ]);
-
   }
 
   public function viewClientProfile($id)
@@ -202,4 +201,27 @@ class ProfileController extends Controller
       );
     }
   }
+
+  public function showChat()
+  {
+    return view('chat_ui');
+  }
+
+  //redirect to chatpage
+  public function redirectToChat(Request $request)
+  {
+    // Validate and get the recipient ID
+    $validated = $request->validate([
+      'recipientId' => 'required|integer|exists:users,id', // Ensure the ID exists
+    ]);
+
+    Log::info('CHAT:', $validated);
+
+    // Store the selected recipient ID in the session
+    session(['selectedUserId' => $validated['recipientId']]);
+
+    // Redirect to the chat page
+    return redirect()->route('show-chat'); 
+  }
+
 }
