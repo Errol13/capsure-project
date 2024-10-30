@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Events\MessageSent;
+use App\Models\Conversation;
 use App\Models\Profile\Chat as ProfileChat;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -13,32 +14,53 @@ class Chat extends Component
 {
     public $messages = [];
     public $newMessage;
+    public $selectedConversationId;
     public $recipientId;
 
-    #[On('userSelected')]
-    public function mount($recipientId)
+    public function mount()
     {
-        $this->recipientId = $recipientId;
-        // Log recipientId to check if it is being set correctly
-        Log::info('Recipient ID: ' . $this->recipientId);
-
-        $this->loadMessages();
+        // Load initial messages if selectedConversationId is set from session
+        $this->selectedConversationId = session('selectedConversationId');
+        if ($this->selectedConversationId) {
+            $this->loadMessages();
+            $this->setRecipient();
+        }
+        // Log selectedConversationId to check if it is being set correctly
+        Log::info('Selected Conversation ID: ' . $this->selectedConversationId);
     }
 
-    // Load the chat messages between the authenticated user and the recipient
+    #[On('conversationSelected')] // Update the event name to conversationSelected
+    public function conversationSelected($conversationId)
+    {
+        $this->selectedConversationId = $conversationId;
+        $this->messages = []; // Clear current messages
+        $this->loadMessages(); // Load new messages
+        $this->setRecipient();
+        Log::info('Conversation selected: ' . $conversationId);
+    }
+
+    // Load the chat messages for the selected conversation
     public function loadMessages()
     {
-        $this->messages = ProfileChat::where(function ($query) {
-            $query->where('sender', Auth::id())
-                ->where('recipient', $this->recipientId);
-        })
-            ->orWhere(function ($query) {
-                $query->where('sender', $this->recipientId)
-                    ->where('recipient', Auth::id());
-            })
+        if (!$this->selectedConversationId) return;
+
+        $this->messages = ProfileChat::where('conversation_id', $this->selectedConversationId) // Ensure this field exists in ProfileChat
             ->orderBy('created_at')
             ->get()
             ->toArray();
+    }
+
+    // Set the recipient based on the selected conversation
+    protected function setRecipient()
+    {
+        $conversation = Conversation::find($this->selectedConversationId);
+        if ($conversation) {
+            // Determine recipient ID based on sender and authenticated user
+            $this->recipientId = ($conversation->sender_id === Auth::id()) ? $conversation->recipient_id : $conversation->sender_id;
+            Log::info('Recipient ID set: ' . $this->recipientId);
+        } else {
+            Log::error('Conversation not found for ID: ' . $this->selectedConversationId);
+        }
     }
 
     // Method to send a new message
@@ -48,23 +70,28 @@ class Chat extends Component
             'newMessage' => 'required|string',
         ]);
 
-        // Check if recipientId is set
-        if (is_null($this->recipientId)) {
-            // Log or throw an error
-            Log::error('Recipient ID is not set while sending message.');
-            return; 
+        // Check if selectedConversationId is set
+        if (is_null($this->selectedConversationId)) {
+            Log::error('Selected Conversation ID is not set while sending message.');
+            return;
         }
 
+        // Create a new chat message
         $message = ProfileChat::create([
             'sender' => Auth::id(),
             'recipient' => $this->recipientId,
+            'conversation_id' => $this->selectedConversationId, // Use the conversation ID
             'message' => $validatedData['newMessage'],
         ]);
+
+        // Optionally, update the conversation's last message timestamp
+        Conversation::where('conversation_id', $this->selectedConversationId) // Update last_time_message for the selected conversation
+            ->update(['last_time_message' => now()]);
 
         // Clear the input field
         $this->newMessage = '';
 
-        // Trigger a frontend event to notify Pusher
+        // Trigger a frontend event to notify others
         broadcast(new MessageSent($message))->toOthers();
 
         Log::info('Message sent: ' . $message->message);
@@ -74,13 +101,11 @@ class Chat extends Component
     }
 
     // Listener method for receiving new messages
-    
     #[On('messageReceived')]
     public function onMessageReceived()
     {
         $this->loadMessages();
-
-        Log::info('Message Recevied!');
+        Log::info('Message received!');
     }
 
     public function render()

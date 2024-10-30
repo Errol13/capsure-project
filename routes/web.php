@@ -114,8 +114,8 @@ Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\Transacti
 
 #Chat
 
-Route::get('/chat', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat');
-Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect');
+Route::get('/chat', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
+Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');

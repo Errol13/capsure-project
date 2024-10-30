@@ -119,13 +119,24 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return $this->hasMany(Chat::class, 'recipient');
     }
 
-    public function isPartOfChat($recipientId)
-    {
-        // Check if the user has sent or received a chat with the recipient
-        return $this->sentChats()->where('recipient', $recipientId)->exists() ||
-            $this->receivedChats()->where('sender', $recipientId)->exists();
-    }
+    // // Check if the user is part of a conversation with the specified recipient
+    // public function isPartOfChat($recipientId)
+    // {
+    //     // Check if a conversation exists between this user and the recipient
+    //     return Conversation::where(function ($query) use ($recipientId) {
+    //         $query->where('user1_id', $this->id)
+    //             ->where('user2_id', $recipientId);
+    //     })->orWhere(function ($query) use ($recipientId) {
+    //         $query->where('user1_id', $recipientId)
+    //             ->where('user2_id', $this->id);
+    //     })->exists();
+    // }
 
+    // Get all conversations where the user is involved
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('recipient_id', $this->id);
+    }
 
     public function otp()
     {

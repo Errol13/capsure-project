@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Profile;
 
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Conversation;
 use App\Models\Hiring\Event;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
@@ -207,7 +208,8 @@ class ProfileController extends Controller
     return view('chat_ui');
   }
 
-  //redirect to chatpage
+
+  // Redirect to chat page
   public function redirectToChat(Request $request)
   {
     // Validate and get the recipient ID
@@ -217,11 +219,32 @@ class ProfileController extends Controller
 
     Log::info('CHAT:', $validated);
 
-    // Store the selected recipient ID in the session
-    session(['selectedUserId' => $validated['recipientId']]);
+    // Check for existing conversation with the recipient
+    $conversation = Conversation::where(function ($query) use ($validated) {
+      $query->where('sender_id', Auth::id())
+        ->where('recipient_id', $validated['recipientId']);
+    })->orWhere(function ($query) use ($validated) {
+      $query->where('recipient_id', Auth::id())
+        ->where('sender_id', $validated['recipientId']);
+    })->first();
+
+    if ($conversation) {
+      // If conversation exists, use its ID
+      $conversationId = $conversation->conversation_id;
+    } else {
+      // Create a new conversation if it doesn't exist
+      $conversation = Conversation::create([
+        'sender_id' => Auth::id(),
+        'recipient_id' => $validated['recipientId'],
+        'last_time_message' => now(), // Optionally set this to current time
+      ]);
+      $conversationId = $conversation->conversation_id;
+    }
+
+    // Store the selected conversation ID in the session
+    session(['selectedConversationId' => $conversationId]);
 
     // Redirect to the chat page
-    return redirect()->route('show-chat'); 
+    return redirect()->route('show-chat');
   }
-
 }

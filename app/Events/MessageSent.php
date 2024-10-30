@@ -26,7 +26,6 @@ class MessageSent implements ShouldBroadcastNow
 
     public function broadcastOn() : Channel
     {
-        Log::info("Broadcasting event on channel: chat." . $this->chat->recipient);
         return new PrivateChannel('chat.' . $this->chat->recipient);
     }
 

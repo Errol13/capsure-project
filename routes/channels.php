@@ -7,6 +7,7 @@ Broadcast::channel('App.Models.User.{id}', function ($user, $id) {
 });
 
 Broadcast::channel('chat.{recipientId}', function ($user, $recipientId) {
-    return $user->id === (int) $recipientId || $user->isPartOfChat($recipientId); 
+    return $user->id === (int) $recipientId;
 });
+
 
