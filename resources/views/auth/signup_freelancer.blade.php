@@ -36,9 +36,11 @@
                         <a class="btn-close position-absolute" href="{{ route('choose') }}" style="top: 8px; right: 8px; height: 5px; width: 5px;" aria-label="Close"></a>
                     </div>
 
-                    <form method="POST" action="{{ route('register.freelancer.post') }}">
-                        @csrf
-                        <div class="card-body ">
+                    <div class="card-body ">
+                        <form method="POST" action="{{ route('register.freelancer.post') }}">
+                            @csrf
+                            <small class="open-sans-reg my-2 text-danger"><i>All fields are required.</i></small>
+
                             <!-- First Name and Last Name -->
                             <div class="row mb-1">
                                 <div class="col-md-6">
@@ -142,7 +144,7 @@
                                     </span>
                                     @enderror
                                 </div>
- 
+
                                 <!-- Job Fee -->
                                 <div class="col-6 col-md-2">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
@@ -170,7 +172,7 @@
                                     @enderror
                                 </div>
 
-                                <small class="text-purple text-start">You can add more job roles in the setting.</small>
+                                <small class="text-danger text-start">You can add more job roles in profile settings</small>
                             </div>
 
 
@@ -266,15 +268,14 @@
                                     @enderror
                                 </div>
 
-                                <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
                             </div>
 
 
                             <p class="text-center fs-cstm-6">By creating an account, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
 
                             <div class="text-center">
-                                <button type="submit" class="btn-auth rounded-pill border-0">
-                                    {{ __('Sign up') }}
+                                <button type="submit" class="confirm rounded-pill border-0">
+                                    {{ __('SIGN UP') }}
                                 </button>
                             </div>
 
@@ -285,8 +286,9 @@
                                 </div>
                             </div>
 
-                        </div>
-                    </form>
+
+                        </form>
+                    </div>
                 </div>
 
             </div>
@@ -308,7 +310,7 @@
         }
 
         // initialize the variable with data from controller
-        var jobTitles = <?php echo json_encode($jobTitles); ?>; 
+        var jobTitles = <?php echo json_encode($jobTitles); ?>;
 
         document.getElementById('job_category').addEventListener('change', function() {
             var selectedCategory = this.value;
@@ -358,18 +360,8 @@
         html,
         body {
             height: 100%;
-            overflow: hidden;
         }
 
-        @media (max-width: 767px) {
-            .container {
-                overflow-y: auto;
-            }
-
-            .card {
-                margin-top: 150px;
-            }
-        }
     </style>
 </body>
 

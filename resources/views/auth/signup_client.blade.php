@@ -38,6 +38,8 @@
                     </div>
 
                     <div class="card-body">
+                        <small class="open-sans-reg my-2  text-danger text-center"><i>All fields are required.</i></small>
+
                         <form method="POST" action="{{ route('register.client.post') }}">
                             @csrf
 
@@ -202,14 +204,13 @@
                                     @enderror
                                 </div>
 
-                                <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
                             </div>
 
                             <p class="text-center fs-cstm-6">By creating an account, you agree to <u>Terms of Use</u> and <u>Privacy Policy</u>.</p>
 
                             <div class="text-center">
-                                <button type="submit" class="btn-auth rounded-pill border-0">
-                                    {{ __('Sign up') }}
+                                <button type="submit" class="confirm rounded-pill border-0">
+                                    {{ __('SIGN UP') }}
                                 </button>
                             </div>
 
@@ -244,7 +245,6 @@
         html,
         body {
             height: 100%;
-            overflow: hidden;
         }
     </style>
 </body>
