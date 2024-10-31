@@ -17,16 +17,13 @@ class Chat extends Component
     public $selectedConversationId;
     public $recipientId;
 
-    public function mount()
+    public function mount($conversationId = null)
     {
-        // Load initial messages if selectedConversationId is set from session
-        $this->selectedConversationId = session('selectedConversationId');
-        if ($this->selectedConversationId) {
-            $this->loadMessages();
+        if ($conversationId) {
+            $this->selectedConversationId = $conversationId; //make the convo selected based on id in the url
+            $this->loadMessages(10);
             $this->setRecipient();
         }
-        // Log selectedConversationId to check if it is being set correctly
-        Log::info('Selected Conversation ID: ' . $this->selectedConversationId);
     }
 
     #[On('conversationSelected')] // Update the event name to conversationSelected
@@ -34,21 +31,55 @@ class Chat extends Component
     {
         $this->selectedConversationId = $conversationId;
         $this->messages = []; // Clear current messages
+
         $this->loadMessages(); // Load new messages
         $this->setRecipient();
         Log::info('Conversation selected: ' . $conversationId);
+
+        $this->dispatch('hideLoadingState');
     }
 
-    // Load the chat messages for the selected conversation
-    public function loadMessages()
+    public function loadMessages($limit = 10)
     {
         if (!$this->selectedConversationId) return;
 
-        $this->messages = ProfileChat::where('conversation_id', $this->selectedConversationId) // Ensure this field exists in ProfileChat
-            ->orderBy('created_at')
+        // Load the latest messages for the selected conversation
+        $this->messages = ProfileChat::where('conversation_id', $this->selectedConversationId)
+            ->orderBy('created_at', 'desc') // Get the latest messages first
+            ->take($limit)
             ->get()
             ->toArray();
+
+        // Reverse the array to display from oldest to newest in the chat
+        $this->messages = array_reverse($this->messages);
     }
+
+
+    #[On('loadMoreMessages')]
+    public function loadMoreMessages()
+    {
+        if (!$this->selectedConversationId) return;
+
+        // Load older messages in ascending order
+        $olderMessages = ProfileChat::where('conversation_id', $this->selectedConversationId)
+            ->orderBy('created_at', 'asc') // Order by created_at in ascending order
+            ->skip(count($this->messages)) // Skip already loaded messages
+            ->take(10) // Load 10 more messages
+            ->get()
+            ->toArray();
+
+        // Check for duplicates before merging
+        $existingMessageIds = collect($this->messages)->pluck('id')->toArray(); // Assuming each message has a unique ID
+        $filteredOlderMessages = array_filter($olderMessages, function ($message) use ($existingMessageIds) {
+            return !in_array($message['id'], $existingMessageIds); // Only include new messages
+        });
+
+        // Prepend the filtered older messages to the current messages
+        $this->messages = array_merge($this->messages, $filteredOlderMessages);
+    }
+
+
+
 
     // Set the recipient based on the selected conversation
     protected function setRecipient()
@@ -84,7 +115,7 @@ class Chat extends Component
             'message' => $validatedData['newMessage'],
         ]);
 
-        // Optionally, update the conversation's last message timestamp
+        // update the conversation's last message timestamp
         Conversation::where('conversation_id', $this->selectedConversationId) // Update last_time_message for the selected conversation
             ->update(['last_time_message' => now()]);
 

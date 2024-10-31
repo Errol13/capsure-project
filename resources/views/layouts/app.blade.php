@@ -130,7 +130,7 @@
                         <!-- Common navbar items for both freelancers and clients -->
 
                         <li class="nav-item me-md-0" id="nav-item-mobile">
-                            <a class="nav-link" href="/chat">
+                            <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>

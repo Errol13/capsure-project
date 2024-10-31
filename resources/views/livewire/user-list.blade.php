@@ -1,41 +1,63 @@
-<div wire:poll class=" w-100">
+<div class="w-100">
     <input
         type="text"
         wire:model.debounce.300ms="search"
         placeholder="Search chats..."
         class="form-control mb-3 mt-3" />
 
-    @if($chatUsers->isNotEmpty())
-    <div class="list-group">
+    @if($conversations->isNotEmpty())
+    <ul class="list-group">
         <h5 class="p-3">Chats</h5>
-        @foreach($chatUsers as $chat)
-        <button
-            wire:click="selectConversation({{ $chat['id'] }})"
-            class="list-group-item list-group-item-action @if(session('selectedConversationId') == $chat['id']) active @endif">
+        @foreach($conversations as $conversation)
+        <li
+            wire:key="conversation-{{ $conversation['conversation_id'] }}"
+            wire:click="selectConversation({{ $conversation['conversation_id'] }})"
+            class="list-group-item list-group-item-action @if($selectedConversationId == $conversation['conversation_id']) active @endif">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="{{ $chat['user']->profile_image_url }}" alt="{{ $chat['user']->first_name }} {{ $chat['user']->last_name }}"
+                    <img src="{{ $conversation['recipient']->profile_image_url }}" alt="{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}"
                         class="user-image me-2" />
-                    <span>{{ $chat['user']->first_name }} {{ $chat['user']->last_name }}</span>
+                    
+                        <!--contains the latest message --> 
+                        <div class="d-flex flex-column justify-content-start">
+                        <span>{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}</span>
+                        <div style="max-width: 200px; overflow: hidden;" class="text-truncate">
+                <small>
+                    {{$conversation->messages->first()->senderUser->first_name}}: {{$conversation->messages->first()->message}}
+                </small>
+            </div>
+                        </div>
+                    
                 </div>
-                @if($chat['lastMessage'])
-                <small class="text-muted">{{ \Carbon\Carbon::parse($chat['lastMessage']->created_at)->format('H:i') }}</small>
+                @if($conversation->last_time_message)
+                <small class="text-muted">{{ \Carbon\Carbon::parse($conversation->messages->first()->created_at)->format('H:i') }}</small>
                 @endif
             </div>
-
-        </button>
+        </li>
         @endforeach
-    </div>
+    </ul>
     @else
     <p>No messages.</p>
     @endif
 
     <style>
-        .list-group-item.active{
-            background-color: #ffcccb;
-            border: none;
+        .list-group-item.active {
+            background-color: #E6F7FF;
+            border: #B0D3E8 solid 1px ;
             color: black;
         }
-
     </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            window.addEventListener('update-url', event => {
+                const url = event.detail;
+                if (url) {
+                    history.pushState(null, '', url);
+                } else {
+                    console.error("Received undefined URL");
+                }
+            });
+        });
+    </script>
 </div>

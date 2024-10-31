@@ -1,28 +1,39 @@
 <div>
-    @if(session('selectedConversationId'))
+    @if($selectedConversationId)
     <div class="chat-container mt-2">
+
         <!-- Display Chat Messages -->
         @if($messages)
         <div class="chat-messages"
             x-data
             x-init="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-            @message-received.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-            @user-selected.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })">
-
+            @message.sent.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
+            @conversationSelected.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
+             >
+            
             @foreach($messages as $message)
             <div class="{{ $message['sender'] === auth()->id() ? 'message-sent' : 'message-received' }}">
                 <p>{{ $message['message'] }}</p>
                 <small class="text-muted">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i') }}</small>
             </div>
             @endforeach
+
         </div>
         @endif
+
+        <div class="text-center d-none" id="loadingState">
+            <div class="spinner-border" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <p>Loading chat...</p>
+        </div>
 
         <!-- Send Message Form -->
         <form wire:submit.prevent="sendMessage" class="send-message-form">
             <input type="text" wire:model="newMessage" placeholder="Type your message..." />
             <button type="submit">Send</button>
         </form>
+
     </div>
     @else
     <div class="text-center d-flex justify-content-center align-items-center mt-5">
@@ -34,6 +45,34 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+
+            const chatBox = document.querySelector('.chat-messages');
+            chatBox.addEventListener('scroll', function() {
+                if (chatBox.scrollTop === 0) {
+                    Livewire.dispatch('loadMoreMessages');
+                }
+            });
+
+            //listen for loading state
+            document.addEventListener('showLoadingState', function() {
+                const loadingState = document.querySelector('#loadingState');
+                const messageList = document.querySelector('.chat-messages');
+
+                console.log('Triggered');
+                messageList.classList.add('d-none');
+                loadingState.classList.remove('d-none');
+                
+            });
+
+            document.addEventListener('hideLoadingState', function() {
+                const loadingState = document.querySelector('#loadingState');
+                const messageList = document.querySelector('.chat-messages');
+
+                console.log('Triggered');
+                loadingState.classList.add('d-none');
+                messageList.classList.remove('d-none');
+            });
+
             console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
 
             // Dynamically subscribe to the Echo channel for real-time updates
@@ -81,9 +120,10 @@
             border-radius: 10px;
         }
 
-        .chat-messages .message-sent, .message-received{
+        .chat-messages .message-sent,
+        .message-received {
             display: block;
-            clear:both;
+            clear: both;
             word-wrap: break-word;
             padding: 8px 12px;
         }

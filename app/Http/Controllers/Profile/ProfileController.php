@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Events\ConversationSelected;
 use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
@@ -203,10 +204,24 @@ class ProfileController extends Controller
     }
   }
 
-  public function showChat()
+  public function showChat($conversationId = null)
   {
-    return view('chat_ui');
+
+    if (is_null($conversationId)) {
+      // Set a default conversation ID which is the latest
+      $defaultConversation = Conversation::where(function ($query) {
+        $query->where('sender_id', auth()->id())
+          ->orWhere('recipient_id', auth()->id());
+      })
+        ->orderByDesc('last_time_message') // Order by the latest message time
+        ->first(); // Get the latest conversation
+
+      return view('chat_ui', ['conversationId' => $defaultConversation->conversation_id]);
+    }
+
+    return view('chat_ui', ['conversationId' => $conversationId]);
   }
+
 
 
   // Redirect to chat page
@@ -231,6 +246,8 @@ class ProfileController extends Controller
     if ($conversation) {
       // If conversation exists, use its ID
       $conversationId = $conversation->conversation_id;
+      // Redirect to the chat page
+      return redirect()->route('show-chat', ['conversationId' => $conversationId]);
     } else {
       // Create a new conversation if it doesn't exist
       $conversation = Conversation::create([
@@ -239,12 +256,8 @@ class ProfileController extends Controller
         'last_time_message' => now(), // Optionally set this to current time
       ]);
       $conversationId = $conversation->conversation_id;
+      // Redirect to the chat page
+      return redirect()->route('show-chat', ['conversationId' => $conversationId]);
     }
-
-    // Store the selected conversation ID in the session
-    session(['selectedConversationId' => $conversationId]);
-
-    // Redirect to the chat page
-    return redirect()->route('show-chat');
   }
 }

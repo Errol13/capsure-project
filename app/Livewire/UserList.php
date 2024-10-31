@@ -10,56 +10,61 @@ use Livewire\Component;
 
 class UserList extends Component
 {
-    public $chatUsers = []; // List of users you have chatted with
     public $selectedConversationId; // The ID of the selected conversation
+    public $conversations = []; // list of convos
     public $search = ''; // Property for search input
 
-    public function mount()
+    public function mount($conversationId = null)
     {
+        if ($conversationId) {
+            $this->selectedConversationId = $conversationId; //make the convo selected based on id in the url
+        }
+
+        Log::info('RETAINED:' . $this->selectedConversationId);
+
         // Load the users you have chatted with or other potential users
-        $this->loadChatUsers();
+        $this->loadConversations();
     }
 
     // Load chat users based on the search term and existing conversations
-    public function loadChatUsers()
+    public function loadConversations()
     {
-        // Fetch conversations where the authenticated user is involved
-        $conversations = Conversation::where('sender_id', Auth::id())
-            ->orWhere('recipient_id', Auth::id())
-            ->with(['sender', 'recipient']) // Eager load user relationships
-            ->get();
-
-        // Prepare the chat users based on the conversations
-        $this->chatUsers = $conversations->map(function ($conversation) {
-            // Determine the other user in the conversation
-            $user = $conversation->sender_id == Auth::id() ? $conversation->recipient : $conversation->sender;
-
-            return [
-                'id' => $conversation->conversation_id, // Use the correct primary key
-                'user' => $user, // This will be a User model instance
-                'lastMessage' => $conversation->messages()->latest()->first(),
-            ];
+        $this->conversations = Conversation::where('sender_id', Auth::id())
+        ->orWhere('recipient_id', Auth::id())
+        ->with(['sender', 'recipient', 'messages' => function ($query) {
+            $query->latest(); // Eager load all messages, ordered by latest
+        }])
+        ->get()
+        ->sortByDesc(function ($conversation) {
+            // Return the timestamp of the latest message, if it exists
+            return $conversation->messages->isNotEmpty() ? $conversation->messages->first()->created_at : null;
         });
     }
+
 
     // Method to handle conversation selection
     public function selectConversation($conversationId)
     {
         $this->selectedConversationId = $conversationId;
 
-        // Store the selected conversation ID in the session for use by the Chat component
-        session(['selectedConversationId' => $conversationId]);
+        //Log::info('ID selected'. $conversationId);
+
+        $url = url("/chat/{$conversationId}");
+        $this->dispatch('update-url', $url);
+
+        Log::info('ID selected' . $url);
+        $this->loadConversations();
+        //show the loading state
+        $this->dispatch('showLoadingState');
 
         // Refresh the Chat component
         $this->dispatch('conversationSelected', $conversationId);
-
-        Log::info('Conversation selected: ' . $conversationId);
     }
 
     // Update the chat users when the search term changes
     public function updatedSearch()
     {
-        $this->loadChatUsers();
+        $this->loadConversations();
     }
 
     public function render()
