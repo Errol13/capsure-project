@@ -54,6 +54,9 @@
     background-color: #91216C;
     border-color: #91216C;
 }
+.page-item .page-link{
+   color: #91216C;
+}
 .icon-img {
     width: 24px;
     height: 24px;
@@ -213,10 +216,22 @@ input[type="tel"] {
     text-align: center;
     margin-left: auto;
     margin-right: auto; 
-    height: 100%; 
+    height: 60%; 
     text-decoration: none;
 }
 
+.btn-round {
+    white-space: nowrap;
+    padding: 10px 20px;
+    border-radius: 30px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; 
+    height: 60%; 
+    text-decoration: none;
+}
 
 .otp-inputs input.otp-box {
     width: 40px; 
@@ -433,6 +448,7 @@ select#year {
     background-position: center;
     text-align: center;
     border-radius: 20px;
+    height: 80px;
 }
 
 .input-group {
@@ -831,9 +847,7 @@ thead {
     color: white; /* Optional: Change the text color to ensure readability */
 }
 
-thead th:nth-child(1),
-thead th:nth-child(2),
-thead th:nth-child(3),
+
 thead th:nth-child(4),
 thead th:nth-child(5),
 thead th:nth-child(6),  
@@ -842,16 +856,22 @@ thead th:nth-child(7){
     border: none;
     padding-right: 60px;
 }
-tbody td:nth-child(1){
-    padding-right: 0px;
-    padding-left: 20px;
+thead th:nth-child(1),
+thead th:nth-child(2),
+thead th:nth-child(3){
+    text-align: center; 
+    border: none;
 }
 
+tbody td:nth-child(1),
 tbody td:nth-child(2),
-tbody td:nth-child(3),
+tbody td:nth-child(3){
+    text-align: center;
+    border: none;
+}
+
 tbody td:nth-child(4),
 tbody td:nth-child(5){
-    text-align: center;
     padding-top: 35px;
     padding-right: 60px;
 }

@@ -7,9 +7,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
-                @if($paymentProofs->isEmpty())
-                <p class="text-muted">No receipts uploaded for this transaction.</p>
-                @else
                 @foreach($paymentProofs as $index => $proof)
                 <div class="mb-4">
                     <span class="text-muted">Date uploaded: {{ $proof->created_at->format('M j Y, h:i A') }}</span>
@@ -20,7 +17,6 @@
                     </a>
                 </div>
                 @endforeach
-                @endif
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
