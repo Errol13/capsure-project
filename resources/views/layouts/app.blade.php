@@ -30,6 +30,7 @@
 
 
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+    <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script> <!--Full viewing -->
     <link rel="stylesheet" href="{{ asset('css/capsure.css') }}">
@@ -134,11 +135,19 @@
                                 </a>
                             </li>
 
+<<<<<<< HEAD
                             <li class="nav-item me-md-0">
                                 <a class="nav-link" href="{{ url('/client-bookmark') }}">
                                     <i class="fas fa-bookmark"></i>
                                 </a>
                             </li>
+=======
+                        <li class="nav-item me-md-0" id="nav-item-mobile">
+                            <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                        </li>
+>>>>>>> 32d7f47fad1bb00251c07a56c2d8169838ea5426
 
 
                             <!--for livewire or dynamic notifications -->

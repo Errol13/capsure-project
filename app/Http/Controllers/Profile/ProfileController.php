@@ -3,8 +3,10 @@
 
 namespace App\Http\Controllers\Profile;
 
+use App\Events\ConversationSelected;
 use App\Models\User;
 use App\Http\Controllers\Controller;
+use App\Models\Conversation;
 use App\Models\Hiring\Event;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
@@ -161,7 +163,6 @@ class ProfileController extends Controller
       'durationInHours' => $durationInHours,
       'completedHiredCounts' => $completedHiredCounts,
     ]);
-
   }
 
   public function viewClientProfile($id)
@@ -200,6 +201,63 @@ class ProfileController extends Controller
         'components.Profile.view_client_profile',
         compact('user', 'fullName', 'eventsWithReviews', 'socialMediaLinks', 'hiringSuccessRate')
       );
+    }
+  }
+
+  public function showChat($conversationId = null)
+  {
+
+    if (is_null($conversationId)) {
+      // Set a default conversation ID which is the latest
+      $defaultConversation = Conversation::where(function ($query) {
+        $query->where('sender_id', auth()->id())
+          ->orWhere('recipient_id', auth()->id());
+      })
+        ->orderByDesc('last_time_message') // Order by the latest message time
+        ->first(); // Get the latest conversation
+
+      return view('chat_ui', ['conversationId' => $defaultConversation->conversation_id]);
+    }
+
+    return view('chat_ui', ['conversationId' => $conversationId]);
+  }
+
+
+
+  // Redirect to chat page
+  public function redirectToChat(Request $request)
+  {
+    // Validate and get the recipient ID
+    $validated = $request->validate([
+      'recipientId' => 'required|integer|exists:users,id', // Ensure the ID exists
+    ]);
+
+    Log::info('CHAT:', $validated);
+
+    // Check for existing conversation with the recipient
+    $conversation = Conversation::where(function ($query) use ($validated) {
+      $query->where('sender_id', Auth::id())
+        ->where('recipient_id', $validated['recipientId']);
+    })->orWhere(function ($query) use ($validated) {
+      $query->where('recipient_id', Auth::id())
+        ->where('sender_id', $validated['recipientId']);
+    })->first();
+
+    if ($conversation) {
+      // If conversation exists, use its ID
+      $conversationId = $conversation->conversation_id;
+      // Redirect to the chat page
+      return redirect()->route('show-chat', ['conversationId' => $conversationId]);
+    } else {
+      // Create a new conversation if it doesn't exist
+      $conversation = Conversation::create([
+        'sender_id' => Auth::id(),
+        'recipient_id' => $validated['recipientId'],
+        'last_time_message' => now(), // Optionally set this to current time
+      ]);
+      $conversationId = $conversation->conversation_id;
+      // Redirect to the chat page
+      return redirect()->route('show-chat', ['conversationId' => $conversationId]);
     }
   }
 }

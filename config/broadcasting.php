@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'default' => env('BROADCAST_CONNECTION', 'null'),
+    'default' => env('BROADCAST_DRIVER', 'pusher'),
 
     /*
     |--------------------------------------------------------------------------
@@ -48,16 +48,16 @@ return [
 
         'pusher' => [
             'driver' => 'pusher',
-            'key' => env('VITE_PUSHER_APP_KEY'), 
-            'secret' => env('VITE_PUSHER_APP_SECRET'), 
-            'app_id' => env('VITE_PUSHER_APP_ID'),
+            'key' => env('PUSHER_APP_KEY'), 
+            'secret' => env('PUSHER_APP_SECRET'), 
+            'app_id' => env('PUSHER_APP_ID'),
             'options' => [
-                'cluster' => env('VITE_PUSHER_APP_CLUSTER'), 
-                'host' => env('VITE_PUSHER_HOST') ?: 'api-' . env('VITE_PUSHER_APP_CLUSTER', 'mt1') . '.pusher.com',
-                'port' => env('VITE_PUSHER_PORT', 443),
-                'scheme' => env('VITE_PUSHER_SCHEME', 'https'),
+                'cluster' => env('PUSHER_APP_CLUSTER'), 
+                'host' => env('PUSHER_HOST') ?: 'api-' . env('PUSHER_APP_CLUSTER', 'mt1') . '.pusher.com',
+                'port' => env('PUSHER_PORT', 443),
+                'scheme' => env('PUSHER_SCHEME', 'https'),
                 'encrypted' => true,
-                'useTLS' => env('VITE_PUSHER_SCHEME', 'https') === 'https',
+                'useTLS' => env('PUSHER_SCHEME', 'https') === 'https',
             ],
             'client_options' => [
                 // Guzzle client options: https://docs.guzzlephp.org/en/stable/request-options.html

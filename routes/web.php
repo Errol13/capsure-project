@@ -112,6 +112,10 @@ Route::patch('event/close/{id}', [App\Http\Controllers\Hiring\EventsController::
 Route::get('client-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showClientTransact'])->name('client-transaction');
 Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showFreelancerTransact'])->name('freelancer-transaction');
 
+#Chat
+
+Route::get('/chat/{conversationId?}', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
+Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');

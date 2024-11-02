@@ -85,7 +85,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function canAccessPanel(Panel $panel): bool
     {
-        // Your logic for access control
+        // only admin can access
         return str_ends_with($this->email, 'admin@gmail.com') && $this->hasVerifiedEmail();
     }
 
@@ -119,6 +119,14 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return $this->hasMany(Chat::class, 'recipient');
     }
 
+  
+
+    // Get all conversations where the user is involved
+    public function conversations()
+    {
+        return $this->hasMany(Conversation::class, 'sender_id')->orWhere('recipient_id', $this->id);
+    }
+
     public function otp()
     {
         return $this->hasOne(Otp::class, 'user_id');
@@ -142,15 +150,13 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function getProfileImageUrlAttribute()
     {
-        
-        $filePath = 'storage/' . $this->profile_image;
-        
-        if ($this->profile_image && Storage::disk('public')->exists($this->profile_image)) {
-            return asset(str_replace(' ', '%20', $filePath)); 
-        }
-    
-        return asset('assets/daisy.svg'); 
-    }
-    
 
+        $filePath = 'storage/' . $this->profile_image;
+
+        if ($this->profile_image && Storage::disk('public')->exists($this->profile_image)) {
+            return asset(str_replace(' ', '%20', $filePath));
+        }
+
+        return asset('assets/daisy.svg');
+    }
 }
