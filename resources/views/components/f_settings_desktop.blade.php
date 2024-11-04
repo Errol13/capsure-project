@@ -40,6 +40,11 @@
                         <i class="fas fa-check-circle me-3" style="color: #8FE2ED;"></i>
                         Verified
                     </button>
+                    @elseif($user->isVerified == false && $user->verification)
+                    <button class="w-100 rounded-3 btn btn-secondary fs-5 d-flex align-items-center justify-content-center" disabled>
+                        <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
+                        Pending
+                    </button>
                     @else
                     <a class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center" href="{{ route('validphone') }}">
                         <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
@@ -371,7 +376,7 @@
 
         <!--content of the portfolio -->
         <div class="mt-2">
-        @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => true])
+            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => true])
         </div>
 
     </div>

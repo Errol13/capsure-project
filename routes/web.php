@@ -138,3 +138,4 @@ Route::post('/transaction/review/write/{id}', [App\Http\Controllers\Transaction\
 #Validation
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
 Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');
+Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');

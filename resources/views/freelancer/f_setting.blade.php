@@ -19,7 +19,7 @@
                     <div class="col-12 profile-container d-flex align-items-center justify-content-center">
                         <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
-                </div> 
+                </div>
 
                 <!-- Change Profile Pic -->
                 <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
@@ -52,6 +52,8 @@
                         <div class="ms-2 me-4">
                             @if ($user->isVerified == true)
                             <button class="px-3 rounded-3 btn-verified fs-6 open-sans-reg fw-bold">Verified</button>
+                            @elseif($user->isVerified == false && $user->verification)
+                            <button class="px-3 rounded-3 btn btn-secondary fs-6 open-sans-reg fw-bold">Pending</button>
                             @else
                             <a class="rounded-3 btn-verify fs-6 open-sans-reg" href="{{ route('validphone') }}">Verify Account</a>
                             @endif
@@ -253,18 +255,9 @@
                         <!--Accordion for Terms of Service -->
                         @include('components.f_terms_service', ['freelancer' => $user->freelancer])
 
-                        <!-- Add New Service Button -->
-                        <div class="text-end mt-3 d-flex align-items-center">
-                            <p class="mb-0 me-2 poppins-medium">Services</p>
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addServiceModal">
-                                <i class="fas fa-solid fa-circle-plus"></i>
-                            </button>
-                        </div>
+                        <!-- Services -->
+                        <livewire:profile.service-manager :services="$user->freelancer->services" />
 
-
-                        @foreach ($user->freelancer->services as $service)
-                        @include('components.f_update_services', ['service' => $service])
-                        @endforeach
 
                         <!--Awards-->
                         <div class="text-end mt-3 d-flex align-items-center">
@@ -346,7 +339,7 @@
         </section>
 
         <!-- Modal for adding new services-->
-        @include('modals.addService_modal', ['freelancer_id'=> $user->id])
+        @include('modals.addService_modal', ['freelancer_id'=> $user->id, 'jobTitles' => $jobTitles])
 
         <!--skills modal -->
         @include('modals.skills_modal', ['freelancer' => $user->freelancer])

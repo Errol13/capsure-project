@@ -35,6 +35,25 @@
                     </div>
                 </form>
 
+                @if($user->isVerified)
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="w-100">
+                        <a class="w-100 rounded-3 btn-verified fs-5 d-flex align-items-center justify-content-center" href="#" disabled>
+                            <i class="fas fa-check-circle me-3" style="color: #8FE2ED;"></i>
+                            Verified
+                        </a>
+                    </div>
+                </div>
+                @elseif($user->isVerified == false && $user->verification)
+                <div class="col-md-12 d-flex justify-content-center">
+                    <div class="w-100">
+                        <a class="w-100 rounded-3 btn btn-secondary fs-5 d-flex align-items-center justify-content-center" href="#" disabled>
+                            <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
+                            Pending
+                        </a>
+                    </div>
+                </div>
+                @else
                 <div class="col-md-12 d-flex justify-content-center">
                     <div class="w-100">
                         <a class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center" href="{{ route('validphone') }}">
@@ -43,6 +62,7 @@
                         </a>
                     </div>
                 </div>
+                @endif
 
                 <div class="col-md-12 d-flex align-items-center justify-content-center mt-4">
                     <div class="w-100">

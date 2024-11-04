@@ -33,7 +33,7 @@
 
                 </div>
                 @if($conversation->last_time_message && $conversation->messages->isNotEmpty())
-                <small class="text-muted">{{ \Carbon\Carbon::parse($conversation->messages->first()->created_at)->format('H:i') }}</small>
+                <small class="text-muted">{{ \Carbon\Carbon::parse($conversation->messages->first()->created_at)->format('h:i A') }}</small>
                 @endif
             </div>
         </li>

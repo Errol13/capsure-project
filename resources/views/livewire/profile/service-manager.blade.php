@@ -11,7 +11,7 @@
         <div class="col">
             <input type="text" class="form-control fs-smaller fs-md"
                 wire:model.defer="serviceData.{{ $service->id }}.title"
-                @if($editingServiceId !=$service->id) readonly @endif>
+                readonly disabled>
         </div>
         <div class="col">
             <input type="text" class="form-control fs-smaller fs-md"
@@ -27,22 +27,33 @@
             </select>
         </div>
         <div class="col-auto">
-            @if ($editingServiceId == $service->id)
-            <button type="button" class="btn btn-primary"
-                wire:click="saveService">Save</button>
-            <button type="button" class="btn btn-secondary"
-                wire:click="resetFields">Cancel</button>
-            @else
-            <button type="button" class="btn edit-btn"
-                wire:click="editService({{ $service->id }})">
-                <i class="fas fa-pen fs-6"></i>
-            </button>
-            @endif
 
-            <button type="button" class="btn availability-toggle"
-                wire:click="toggleAvailability({{ $service->id }})">
-                <i class="fas fa-toggle-{{ $serviceData[$service->id]['isAvailable'] ? 'on text-success' : 'off text-danger' }} fs-6"></i>
-            </button>
+            <div class="d-flex justify-content-between align-items-center">
+                @if ($editingServiceId == $service->id)
+                <button type="button" wire:click="saveService" class="d-block d-md-none  btn-save bg-transparent border-0 p-0">
+                    <i class="fs-5 fas fa-check p-2 text-primary me-2"></i> </button>
+                <button type="button" class="d-block d-md-none bg-transparent border-0 p-0"
+                    wire:click="resetFields"><i class="fs-5 bi bi-x-circle text-danger"></i></button>
+
+                <!--for desktop -->
+                <button type="button" wire:click="saveService" class="d-none d-md-block btn btn-primary me-2">
+                    Save</button>
+                <button type="button" class="d-none d-md-block btn btn-secondary"
+                    wire:click="resetFields">Cancel</button>
+
+                @else
+                <button type="button" class="btn edit-btn"
+                    wire:click="editService({{ $service->id }})">
+                    <i class="fas fa-pen fs-6"></i>
+                </button>
+                @endif
+
+                <button type="button" class="btn availability-toggle"
+                    wire:click="toggleAvailability({{ $service->id }})">
+                    <i class="fas fa-toggle-{{ $serviceData[$service->id]['isAvailable'] ? 'on text-success' : 'off text-danger' }} fs-6"></i>
+                </button>
+            </div>
+
         </div>
     </div>
     @endforeach

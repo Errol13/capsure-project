@@ -37,7 +37,41 @@ class SettingsController extends Controller
                 }
             ]);
 
-            return view('freelancer.f_setting', compact('user'));
+            //Define default job titles for each category
+            $defaultJobTitles = [
+                'Arts' => ['Painter', 'Sculptor', 'Illustrator'],
+                'Entertainment' => ['Actor', 'Musician', 'Dancer', 'Choreographer', 'Comedian', 'Clown Artist'],
+                'Event Planner' => ['Wedding Coordinator', 'Corporate Event Planner'],
+                'Food Service' => ['Chef', 'Food Caterer'],
+                'Handicrafts' => ['Craft Maker', 'Jewelry Designer', 'Beader'],
+                'Online Services' => ['Virtual Assistant', 'SEO Specialist', 'Tutor'],
+                'Photography' => ['Photographer', 'Photo Editor'],
+                'Styling' => ['Fashion Stylist', 'Makeup Artist'],
+                'Videography' => ['Event Videographer', 'Corporate Videographer', 'Videographer'],
+                'Voice Talent' => ['Narrator', 'Singer', 'Host', 'Voice Actor'],
+                'Package' => ['Wedding Package', 'Birthday Package'],
+            ];
+
+            //Fetch existing job titles from the database
+            $existingJobTitles = Service::select('job_category', 'job_title')
+                ->groupBy('job_category', 'job_title')
+                ->get()
+                ->groupBy('job_category')
+                ->toArray();
+
+            // Merge default and existing job titles (no duplicates)
+            $jobTitles = [];
+            foreach ($defaultJobTitles as $category => $titles) {
+                // Existing titles for this category
+                $existingTitles = isset($existingJobTitles[$category])
+                    ? array_column($existingJobTitles[$category], 'job_title')
+                    : [];
+
+                // Merge default and existing titles, remove duplicates
+                $jobTitles[$category] = array_unique(array_merge($titles, $existingTitles));
+            }
+
+            return view('freelancer.f_setting', compact('user', 'jobTitles'));
         }
     }
 
@@ -86,13 +120,11 @@ class SettingsController extends Controller
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'job_title' => 'required|string',
             'job_fee' => 'required|numeric',
             'fee_type' => 'required|string',
             'job_category' => 'required|string',
             'availability' => 'required|string|in:available,not_available',
         ]);
-
 
 
         // Find the service by ID
@@ -102,7 +134,6 @@ class SettingsController extends Controller
         $isAvailable = strtolower($request->availability) === 'available';
 
         // Update the service attributes
-        $service->job_title = $validatedData['job_title'];
         $service->job_fee = $validatedData['job_fee'];
         $service->fee_type = $validatedData['fee_type'];
         $service->job_category = $validatedData['job_category'];
@@ -124,7 +155,7 @@ class SettingsController extends Controller
             'terms_and_conditions' => 'required|string|max:500',
         ]);
 
-        Log::info('Edited terms and conditions: '. $validatedData['terms_and_conditions']);
+        Log::info('Edited terms and conditions: ' . $validatedData['terms_and_conditions']);
 
         //find the freelancer 
         $freelancer = Freelancer::findOrfail($id);

@@ -44,7 +44,6 @@ class ServiceManager extends Component
             if ($service) {
                 // Update service attributes
                 $service->update([
-                    'job_title' => $this->serviceData[$this->editingServiceId]['title'],
                     'job_fee' => $this->serviceData[$this->editingServiceId]['fee'],
                     'fee_type' => $this->serviceData[$this->editingServiceId]['fee_type'],
                     'isAvailable' => $this->serviceData[$this->editingServiceId]['isAvailable'],
