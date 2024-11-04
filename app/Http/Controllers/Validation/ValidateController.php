@@ -13,5 +13,5 @@ class ValidateController extends Controller
 
     public function showValidID(){
         return view('validation.validID');
-        }
+        } 
 }

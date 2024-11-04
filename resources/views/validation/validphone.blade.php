@@ -20,14 +20,14 @@
 
     <div class="vbox mb-4">
         <div class="form-section">
-            <label for="phone-number">Enter your Mobile Phone number:</label>
+            <label for="phone-number">Your Mobile Phone number:</label>
             <p class="note">Note: Mobile number must be a valid number from the Philippines.</p>
             <div class="input-group">
                 <span class="prefix">+63</span>
-                <input type="tel" id="phone-number" placeholder="Please enter your phone number"
+                <input type="tel" id="phone-number" placeholder="Enter your mobile number"
                     maxlength="10" pattern="[0-9]*" inputmode="numeric"
-                    oninput="this.value = this.value.replace(/[^0-9]/g, '');">
-                <button class="send-otp">Send OTP</button>
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '');" >
+                <a href="#" class="btn-seemore px-3 py-2 rounded" id="send-otp-btn">Send OTP</a>
             </div>
         </div>
     </div>
@@ -95,4 +95,5 @@
         }
     }
 </style>
+
 @endsection
