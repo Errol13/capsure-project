@@ -215,6 +215,11 @@ class ProfileController extends Controller
       })
         ->orderByDesc('last_time_message') // Order by the latest message time
         ->first(); // Get the latest conversation
+      
+        //if empty or no convo at first
+        if(is_null($defaultConversation)){
+          return view('chat_ui', ['conversationId' => $defaultConversation]);
+        }
 
       return view('chat_ui', ['conversationId' => $defaultConversation->conversation_id]);
     }

@@ -17,19 +17,22 @@
                 <div class="d-flex align-items-center">
                     <img src="{{ $conversation['recipient']->profile_image_url }}" alt="{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}"
                         class="user-image me-2" />
-                    
-                        <!--contains the latest message --> 
-                        <div class="d-flex flex-column justify-content-start">
+
+                    <!--contains the latest message -->
+                    <div class="d-flex flex-column justify-content-start">
                         <span>{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}</span>
                         <div style="max-width: 200px; overflow: hidden;" class="text-truncate">
-                <small>
-                    {{$conversation->messages->first()->senderUser->first_name}}: {{$conversation->messages->first()->message}}
-                </small>
-            </div>
+
+                        @if($conversation->messages->isNotEmpty())
+                            <small>
+                                {{$conversation->messages->first()->senderUser->first_name}}: {{$conversation->messages->first()->message}}
+                            </small>
+                            @endif
                         </div>
-                    
+                    </div>
+
                 </div>
-                @if($conversation->last_time_message)
+                @if($conversation->last_time_message && $conversation->messages->isNotEmpty())
                 <small class="text-muted">{{ \Carbon\Carbon::parse($conversation->messages->first()->created_at)->format('H:i') }}</small>
                 @endif
             </div>
@@ -37,13 +40,13 @@
         @endforeach
     </ul>
     @else
-    <p>No messages.</p>
+    <p class="text-center">No messages.</p>
     @endif
 
     <style>
         .list-group-item.active {
             background-color: #E6F7FF;
-            border: #B0D3E8 solid 1px ;
+            border: #B0D3E8 solid 1px;
             color: black;
         }
     </style>

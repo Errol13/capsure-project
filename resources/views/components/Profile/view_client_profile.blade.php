@@ -124,7 +124,11 @@
 
                     <!-- Buttons -->
                     <div class="d-flex justify-content-start align-items-start my-2 mt-md-3">
-                        <a href="#" class="rounded-1 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</a>
+                        <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
+                            @csrf
+                            <input type="hidden" name="recipientId" value="{{ $user->id }}">
+                            <button type="submit" class="rounded-1 border-0 btn-chat me-3 me-md-4 px-3 py-1 px-md-5 poppins-light fs-sm">Chat</button>
+                        </form>
                         <button type="button" class="rounded btn-report me-2 px-3 px-md-5 py-1 py-md-1 poppins-light fs-sm" data-bs-toggle="modal" data-bs-target="#reportClientModal">Report Profile</button>
                     </div>
 

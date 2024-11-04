@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Models\Conversation; // Import the Conversation model
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class UserList extends Component
@@ -39,6 +40,13 @@ class UserList extends Component
             // Return the timestamp of the latest message, if it exists
             return $conversation->messages->isNotEmpty() ? $conversation->messages->first()->created_at : null;
         });
+    }
+
+    //listen to any sending message events and refresh the list
+    #[On('refreshUserList')]
+    public function refreshTheUserList(){
+
+        $this->loadConversations();
     }
 
 
