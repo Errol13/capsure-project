@@ -33,26 +33,31 @@
                 <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="card" style="border-radius: 20px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                         <div class="card-body">
-                            <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge me-2 mb-3 text-uppercase">{{ $event->status }}</span>
-                            <h5 class="card-title poppins-medium">{{ $event->title }}</h5>
-                            <p class="card-text">Budget: ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</p>
-                            <hr>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h4 class="card-title poppins-medium mb-0"  style="line-height: 0.5;">{{ $event->title }}</h4>
+                                <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge text-uppercase">
+                                    {{ $event->status }}
+                                </span>
+                            </div>
 
-                           <!-- Event Stats Section -->
-<div class="event-stats">
-    <div class="stat">
-        <span class="label">Pending application:</span>
-        <span class="value">{{ $event->jobApplicationsCount }}</span>
-    </div>
-    <div class="stat">
-        <span class="label">Hiring request:</span>
-        <span class="value">{{ $event->hiringRequestsCount }}</span>
-    </div>
-    <div class="stat">
-        <span class="label">Hired:</span>
-        <span class="value">{{ $event->hiredCount }}</span>
-    </div>
-</div>
+                            <span class="fs-6"><strong>Budget:</strong> ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</span>
+                            <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+
+                            <!-- Event Stats Section -->
+                            <div class="event-stats">
+                                <div class="stat">
+                                    <span class="label">Pending application:</span>
+                                    <span class="value">{{ $event->jobApplicationsCount }}</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="label">Hiring request:</span>
+                                    <span class="value">{{ $event->hiringRequestsCount }}</span>
+                                </div>
+                                <div class="stat">
+                                    <span class="label">Hired:</span>
+                                    <span class="value">{{ $event->hiredCount }}</span>
+                                </div>
+                            </div>
 
 
                             <div class="d-flex justify-content-end mt-3">
@@ -78,23 +83,24 @@
 </div>
 <style>
     .event-stats {
-    display: flex;
-    flex-direction: column;
-    max-width: 100%; /* Adjust as needed */
-}
+        display: flex;
+        flex-direction: column;
+        max-width: 100%;
+        /* Adjust as needed */
+    }
 
-.stat {
-    display: flex;
-    justify-content: space-between;
-    padding: 0.5rem;
-}
+    .stat {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem;
+    }
 
-.label {
-    font-weight: bold;
-}
+    .label {
+        font-weight: bold;
+    }
 
-.value {
-    text-align: right;
-}
-    </style>
+    .value {
+        text-align: right;
+    }
+</style>
 @endsection

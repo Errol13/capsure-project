@@ -37,7 +37,7 @@
                     <!-- Card for Each Event Group -->
                     <div class="col">
                         <div class="card rounded-4 h-100" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header d-flex align-items-center rounded-top-4" style="background-color: #FCF2F9;">
                                 <div class="row align-items-center w-100">
                                     <!-- Title and Date Column -->
                                     <div class="col">
@@ -193,7 +193,7 @@
                     <!-- Card for Each Event Group -->
                     <div class="col">
                         <div class="card rounded-4 h-100" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                            <div class="card-header d-flex align-items-center">
+                            <div class="card-header d-flex align-items-center rounded-top-4"  style="background-color: #FCF2F9;">
                                 <div class="row align-items-center w-100">
                                     <!-- Title and Date Column -->
                                     <div class="col">
@@ -343,7 +343,7 @@
                 <!-- Card for Each Event Group -->
                 <div class="col">
                     <div class="card rounded-4 h-100" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                        <div class="card-header d-flex align-items-center">
+                        <div class="card-header d-flex align-items-center round-top-4"  style="background-color: #FCF2F9;">
                             <div class="row align-items-center w-100">
                                 <!-- Title and Date Column -->
                                 <div class="col">

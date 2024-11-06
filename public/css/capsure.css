@@ -142,11 +142,7 @@
 .form-section {
     margin-bottom: 20px;
 }
-.input-group {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+
 .prefix {
     padding: 10px;
     background-color: #e9ecef;
@@ -162,7 +158,7 @@ input[type="tel"] {
 }
 .send-otp {
     padding: 10px 20px;
-    background-color: #8b206a;
+    background-color: #91216C;
     color: white;
     border: none;
     border-radius: 5px;
@@ -200,13 +196,13 @@ input[type="tel"] {
 }
 
 .otp-input:focus {
-    border-color: #8b206a; 
+    border-color: #91216C; 
     outline: none;
 }
 
 .confirm {
     padding: 10px 20px;
-    background-color: #8b206a;
+    background-color: #91216C;
     color: white;
     border: none;
     border-radius: 30px;
@@ -216,20 +212,22 @@ input[type="tel"] {
     text-align: center;
     margin-left: auto;
     margin-right: auto; 
-    height: 60%; 
+    height: 50%; 
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .btn-round {
     white-space: nowrap;
     padding: 10px 20px;
     border-radius: 30px;
+    border: none;
     display: block;
     width: 100%;
     text-align: center;
     margin-left: auto;
     margin-right: auto; 
-    height: 60%; 
+    height: 50%; 
     text-decoration: none;
 }
 
@@ -657,19 +655,6 @@ select#year {
 
 /* My Jobs Page */
 
-.nav-link.tabs-bg{
-    background-color: white;
-    color: #000; 
-}
-
-.nav-link.active.tabs-bg {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    color: #91216C;
-}
-
-.nav-link:hover.tabs-bg {
-    color: black;
-}
 
 
 .letter-spacing {
@@ -679,13 +664,6 @@ select#year {
 .pending-color{
     color: #ACA9A9;
 }
-
-
-
-
-
-
-
 
 /* Box styles <----------------------------------------------- */
 .box {
@@ -942,7 +920,8 @@ tbody td:nth-child(5){
     width: 100%;
     height: 5px;
     background-color: #91216C; /* Customize the color of the line */
-    border-radius: 100px; /* Make the line rounded if desired */
+    border-radius: 10px; /* Make the line rounded if desired */
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 

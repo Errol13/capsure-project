@@ -128,72 +128,62 @@
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
-                        <div class="d-flex">
-                            <li class="nav-item me-md-0" id="nav-item-mobile">
-                                <a class="nav-link" href="#">
-                                    <i class="fas fa-envelope"></i>
-                                </a>
-                            </li>
-
-<<<<<<< HEAD
-                            <li class="nav-item me-md-0">
-                                <a class="nav-link" href="{{ url('/client-bookmark') }}">
-                                    <i class="fas fa-bookmark"></i>
-                                </a>
-                            </li>
-=======
+                        <li class="nav-item me-md-0">
+                            <a class="nav-link" href="{{ url('/client-bookmark') }}">
+                                <i class="fas fa-bookmark"></i>
+                            </a>
+                        </li>
                         <li class="nav-item me-md-0" id="nav-item-mobile">
                             <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
->>>>>>> 32d7f47fad1bb00251c07a56c2d8169838ea5426
 
 
-                            <!--for livewire or dynamic notifications -->
-                            <livewire:notificationsbell />
+                        <!--for livewire or dynamic notifications -->
+                        <livewire:notificationsbell />
 
 
 
 
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user"></i>
-                                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <i class="fas fa-user"></i>
+                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if(Auth::user()->user_type == 'client')
+                                <a class="dropdown-item" href="/client-profile">Profile</a>
+                                <a class="dropdown-item" href="/client-settings">Settings</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    @if(Auth::user()->user_type == 'client')
-                                    <a class="dropdown-item" href="/client-profile">Profile</a>
-                                    <a class="dropdown-item" href="/client-settings">Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    @elseif (Auth::user()->user_type == 'freelancer')
-                                    <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                    <a class="dropdown-item" href="/freelancer-settings">Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    @endif
+                                @elseif (Auth::user()->user_type == 'freelancer')
+                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                <a class="dropdown-item" href="/freelancer-settings">Settings</a>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                @endif
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                            @endauth
-                        </div>
-                    </ul>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
+                        @endauth
                 </div>
+                </ul>
             </div>
-        </nav>
+    </div>
+    </nav>
 
-        <main class="mx-1 pb-4 mb-2">
-            @yield('content')
+    <main class="mx-1 pb-4 mb-2">
+        @yield('content')
 
-        </main>
+    </main>
     </div>
 
     <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-3 navbar navbar-expand-md navbar-light bg-white shadow-sm">
@@ -239,13 +229,13 @@
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('my-jobs') }}" style="font-size:x-small;">
                         <img src="{{asset('assets/event-icon.svg')}}" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
-                        <div>My Jobs</div>
+                        <div>Jobs</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('freelancer-transaction') }}" style="font-size:x-small;">
                         <img src="{{asset('assets/transaction.svg')}}" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
-                        <div>My Transaction</div>
+                        <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">

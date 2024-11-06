@@ -17,25 +17,25 @@
                 @if($user->client && $user->client->events)
                 @foreach($user->client->events as $event)
                 <div class="col-12 col-md-6 col-lg-4 mb-4">
-                    <div class="card shadow-sm bg-light">
+                    <div class="card shadow-sm rounded-4" style="background-color: white;">
                         <div class="card-body">
 
                             <div class="d-flex justify-content-between ">
-                                <h5 class="card-title poppins-medium">{{$event->title}}</h5>
+                                <h4 class="card-title poppins-medium">{{$event->title}}</h4>
                                 <!-- Calculate and display the time since creation -->
                                 @php
                                 $createdAt = \Carbon\Carbon::parse($event->created_at);
                                 $timeSince = $createdAt->diffForHumans();
                                 @endphp
-                                <p class="card-text text-muted">{{ $timeSince }}</p>
+                                <p class="card-text note">{{ $timeSince }}</p>
                             </div>
                             <div class="row rw-height-eventdesc mb-2">
                             <p class="card-text content-color">{!! nl2br(e($event->description)) !!}</p>
                             </div>
                            
-                            <div class="d-flex flex-wrap rw-height-eventservices">
+                            <div class="d-flex flex-wrap">
                                 @foreach($event->event_jobs ?? [] as $event_job)
-                                <span class="badge bg-secondary me-2 mb-2">{{$event_job->service_needed}}</span>
+                                <span class="badge fs-6 me-2 mb-2" style="background-color: #8FE2ED; color:#323232;">{{$event_job->service_needed}}</span>
                                 @endforeach
                             </div>
 
@@ -52,13 +52,13 @@
                                     <span class="fw-bold">{{ number_format($user->client->avg_rating, 1) }}</span>
                                     <span class="text-muted small ms-1">({{ $user->client->reviews()->where('reviewee_role', 'client')->count() }})</span>
                                     @else
-                                    <span class="text-muted me-1 fs-6">No ratings yet</span>
+                                    <span class="note me-1">No ratings yet</span>
                                     @endif
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mt-3">
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="text-center btn-seemore rounded-3 me-2 flex-grow-1 poppins-light fs-6 py-1">See More</a>
-                                <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class=" rounded-3 btn-seeprof me-2 px-2 poppins-light fs-6 py-1">See Profile</a>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm me-2">See Details</a>
+                                <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class="btn-round" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
                             </div>
                         </div>
                     </div>
