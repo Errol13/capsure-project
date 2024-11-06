@@ -35,7 +35,6 @@ class Notificationsbell extends Component
 
     public function render()
     {
-        Log::info('Notifications rendered.');
         return view('livewire.notificationsbell', [
             'notifications' => $this->notifications,
         ]);

@@ -13,7 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Actions\DeleteAction;
-
+use Filament\Tables\Filters\SelectFilter;
 
 class UserResource extends Resource
 {
@@ -25,7 +25,7 @@ class UserResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')-> required(),
+                Forms\Components\TextInput::make('name')->required(),
                 Forms\Components\TextInput::make('email')->email()->required(),
             ]);
     }
@@ -33,26 +33,43 @@ class UserResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->query(User::query()->where('user_type', '!=', 'admin')) //exclude the admin account
             ->columns([
-                Tables\Columns\TextColumn::make('user id'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('type'),
-                Tables\Columns\TextColumn::make('date created'),
-                Tables\Columns\TextColumn::make('verification'),
+                Tables\Columns\TextColumn::make('id')->label('User ID'), // Display user ID
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Name') // Display full name
+                    ->getStateUsing(fn($record) => $record->first_name . ' ' . $record->last_name),
+                Tables\Columns\TextColumn::make('email')->label('Email'),
+                Tables\Columns\TextColumn::make('user_type')->label('')
+                    ->getStateUsing(fn($record) => ucfirst($record->user_type)),
+                Tables\Columns\TextColumn::make('created_at')->label('Date Created')->date(),
+                Tables\Columns\TextColumn::make('isVerified')
+                    ->label('Verification')
+                    ->getStateUsing(fn($record) => $record->is_verified ? 'Verified' : 'Not Verified')
+                    ->color(fn($record) => $record->is_verified ? 'success' : 'danger')
+                    ->extraAttributes(fn($record) => [
+                        'class' => $record->is_verified
+                            ? 'inline-block px-3 py-1 text-white rounded-full font-regular'
+                            : 'inline-block px-3 py-1 text-white rounded-full font-regular',
+                    ]),
             ])
             ->filters([
-                //
+                SelectFilter::make('user_type')
+                    ->label('User Type') // Label for the filter
+                    ->options([
+                        'freelancer' => 'Freelancer',
+                        'client' => 'Client',
+                    ])
+                    ->default(null), // Default to show all types
             ])
             ->actions([
-                Tables\Actions\DeleteAction::make(),
+                //
             ])
             ->bulkActions([
-                Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
-                ]),
+                //
             ]);
     }
+
 
     public static function getRelations(): array
     {

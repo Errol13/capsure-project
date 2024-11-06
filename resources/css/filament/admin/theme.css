@@ -1,0 +1,22 @@
+@import '/vendor/filament/filament/resources/css/theme.css';
+
+@config 'tailwind.config.js';
+
+/* Apply background color and text color for light mode */
+.fi-ta-header-cell {
+    @apply bg-[#E1C1D7]; /* Light mode background */
+    @apply text-black; /* Light mode text */
+}
+
+
+.dark .fi-ta-header-cell-label  {
+    @apply text-black !important; /* Dark mode text color */
+}
+
+@media (prefers-color-scheme: dark) {
+    .fi-ta-header-cell-label {
+        @apply text-black; /* Dark mode text color */
+    }
+}
+
+
