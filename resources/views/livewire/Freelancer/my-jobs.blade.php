@@ -11,8 +11,8 @@
                     class="nav-link {{ $activeTab === 'application' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#application"
                     aria-controls="application" aria-selected="true">
-                    APPLICATION <span class="badge text-black rounded-4"
-                        style="background-color: #8FE2ED;">{{$appliedJobsCount}}</span>
+                    APPLICATION 
+                    <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$appliedJobsCount}}</span>
                 </a>
             </li>
             <li class="nav-item col text-center mb-2 mb-md-0">
@@ -20,8 +20,8 @@
                     class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#hiring-request"
                     aria-controls="hiring-request" aria-selected="false">
-                    HIRE REQUEST <span class="badge text-black rounded-4"
-                        style="background-color: #8FE2ED;">{{$hiringRequestsCount}}</span>
+                    HIRE REQUEST 
+                    <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$hiringRequestsCount}}</span>
                 </a>
             </li>
             <li class="nav-item col text-center">
@@ -29,8 +29,8 @@
                     class="nav-link {{ $activeTab === 'recommendation' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#recommendation"
                     aria-controls="recommendation" aria-selected="false">
-                    RECOMMENDATION <span class="badge text-black rounded-4"
-                        style="background-color: #8FE2ED;">{{$recommendationsCount}}</span>
+                    RECOMMENDATION 
+                    <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$recommendationsCount}}</span>
                 </a>
             </li>
         </ul>
