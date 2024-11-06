@@ -18,76 +18,134 @@
 
     <h2 class="mb-4" style="text-align: center;">Verify your Government ID</h2>
 
-    <div class="xbox mb-4">
-        <div class="form-section">
-            <label for="government-id">Choose Government ID type:</label>
-            <ul>
-                <li class="note">ID must include your name, picture, and signature</li>
-                <li class="note">Student ID is not allowed.</li>
-            </ul>
-            <div style="position: relative; display: flex; align-items: center;">
-                <select class="form-control" style="padding-right: 30px; flex: 1;">
-                    <option>Select ID type</option>
-                    <option>Passport</option>
-                    <option>Driver's License</option>
-                    <option>National ID</option>
-                </select>
-                <i class="fas fa-angle-down" style="position: absolute; right: 10px; pointer-events: none;"></i>
-            </div>
-        </div>
-    </div>
-
-    <!-- Upload Section for ID and Selfie -->
-    <div class="xbox">
-        <label for="govrnment-id">Take a photo of your valid Government ID</label>
-        <p class="note">IDs should be taken using a mobile phone camera. Scanned, digital copies, or photocopied IDs will be disapproved.</p>
-
-        <div class="form-row mb-4 d-flex flex-wrap" style="gap: 10px;"> <!-- Small space between columns -->
-           
-            <!-- ID Photo Upload -->
-            <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                <div class="upload-section" style="padding: 20px; height: 100%;">
-                    <p class="text-center">ID PHOTO ONLY</p>
-                    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                        <img src="{{ asset('assets/validID.png') }}" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
-                    </div>
-                    <ul class="note">
-                        <i class="fas fa-check me-2" style="color: lightgreen;"></i> Clear photo and details
-                    </ul>
-                    <label for="selfiePhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
-                        <i class="fas fa-upload me-2"></i>Upload your ID Photo here
-                    </label>
-                    <input type="file" id="idPhoto" accept="image/*">
-                </div>
-            </div>
-
-            <!-- Selfie with ID Upload -->
-            <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                <div class="upload-section" style="padding: 20px; height: 100%;">
-                    <p class="text-center">SELFIE WITH ID PHOTO</p>
-                    <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                        <img src="{{ asset('assets/selfieID.png') }}" style="height: 180px; width: 100%; max-width: 230px;" alt="Selfie ID">
-                    </div>
-                    <ul class="note">
-                        <i class="fas fa-check me-2" style="color: lightgreen;"></i>Clear photo and ID details</br>
-                        <i class="fas fa-check me-2" style="color: lightgreen;"></i>Person in the selfie should be the same person in the ID</br>
-                        <i class="fas fa-check me-2" style="color: lightgreen;"></i>Holding the same uploaded government ID</br>
-                    </ul>
-                    <label for="selfiePhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
-                        <i class="fas fa-upload me-2"></i>Upload your Selfie with ID here
-                    </label>
-                    <input type="file" id="selfiePhoto" accept="image/*">
+    <form id="id-form-validation" method="POST" action="{{ url('/validate-id/store') }}" enctype="multipart/form-data" >
+        @csrf
+        @method('POST')
+        <div class="xbox mb-4">
+            <div class="form-section">
+                <label for="government-id">Choose Government ID type:</label>
+                <ul>
+                    <li class="note">ID must include your name, picture, and signature</li>
+                    <li class="note">Student ID is not allowed.</li>
+                    <li class="note">All fields are required.</li>
+                </ul>
+                <div style="position: relative; display: flex; align-items: center;">
+                    <select name="id_type" class="form-control" style="padding-right: 30px; flex: 1;" required>
+                        <option disabled selected>Select ID type</option>
+                        <option>Passport</option>
+                        <option>Driver's License</option>
+                        <option>National ID</option>
+                    </select>
+                    <i class="fas fa-angle-down" style="position: absolute; right: 10px; pointer-events: none;"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Confirm Verification Button -->
-        <div class="text-center">
-            <a href="#" class="confirm" style="white-space: nowrap; max-width: 200px;">Submit</a>
-            <p class="note mt-2">Your application will be verified within 2-3 days.</p>
+        <!-- Upload Section for ID and Selfie -->
+        <div class="xbox">
+            <label for="govrnment-id">Take a photo of your valid Government ID</label>
+            <p class="note">IDs should be taken using a mobile phone camera. Scanned, digital copies, or photocopied IDs will be disapproved.</p>
+
+            <div class="form-row mb-4 d-flex flex-wrap" style="gap: 10px;"> <!-- Small space between columns -->
+
+                <!-- ID Photo Upload -->
+                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                    <div class="upload-section" style="padding: 20px; height: 100%;">
+                        <p class="text-center">ID PHOTO ONLY</p>
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                            <img src="{{ asset('assets/validID.png') }}" id="id-photo" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
+                        </div>
+                        <ul class="note">
+                            <i class="fas fa-check me-2" style="color: lightgreen;"></i> Clear photo and details
+                        </ul>
+                        <label for="idPhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
+                            <i class="fas fa-upload me-2"></i>Upload your ID Photo here
+                        </label>
+                        <input type="file" name="id_card_image" id="idPhoto" accept="image/*" style="display: none;" required>
+                    </div>
+                </div>
+
+                <!-- Selfie with ID Upload -->
+                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
+                    <div class="upload-section" style="padding: 20px; height: 100%;">
+                        <p class="text-center">SELFIE WITH ID PHOTO</p>
+                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                            <img src="{{ asset('assets/selfieID.png') }}" id="selfie-with-id" style="height: 180px; width: 100%; max-width: 230px;" alt="Selfie ID">
+                        </div>
+                        <ul class="note">
+                            <i class="fas fa-check me-2" style="color: lightgreen;"></i> Clear photo and ID details</br>
+                            <i class="fas fa-check me-2" style="color: lightgreen;"></i> Person in the selfie should be the same person in the ID</br>
+                            <i class="fas fa-check me-2" style="color: lightgreen;"></i> Holding the same uploaded government ID</br>
+                        </ul>
+                        <label for="selfiePhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
+                            <i class="fas fa-upload me-2"></i>Upload your Selfie with ID here
+                        </label>
+                        <input type="file" name="pic_with_id" id="selfiePhoto" accept="image/*" style="display: none;" required>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Confirm Verification Button -->
+            <div class="text-center">
+                <button type="submit" id="submit-button-id" class="btn btn-secondary" style="white-space: nowrap; max-width: 200px;" disabled>Submit</button>
+                <p class="note mt-2">Your application will be verified within 2-3 days.</p>
+            </div>
+
         </div>
-    </div>
+    </form>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        function previewImage(input, imgElementId) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById(imgElementId).src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        document.getElementById('idPhoto').addEventListener('change', function() {
+            previewImage(this, 'id-photo');
+        });
+
+        document.getElementById('selfiePhoto').addEventListener('change', function() {
+            previewImage(this, 'selfie-with-id');
+        });
+
+        function checkFields() {
+            const idType = document.querySelector('select[name="id_type"]');
+            const idPhoto = document.getElementById('idPhoto');
+            const selfiePhoto = document.getElementById('selfiePhoto');
+            const submitButton = document.getElementById('submit-button-id');
+
+            const allFieldsFilled = idType.value && idPhoto.files.length > 0 && selfiePhoto.files.length > 0;
+
+            if (allFieldsFilled) {
+                submitButton.disabled = false;
+                submitButton.classList.remove('btn-secondary', 'btn');
+                submitButton.classList.add('confirm');
+            } else {
+                submitButton.disabled = true;
+                submitButton.classList.add('btn-secondary', 'btn');
+                submitButton.classList.remove('confirm');
+            }
+        }
+
+        document.querySelector('select[name="id_type"]').addEventListener('change', checkFields);
+        document.getElementById('idPhoto').addEventListener('change', checkFields);
+        document.getElementById('selfiePhoto').addEventListener('change', checkFields);
+        checkFields();
+
+        document.getElementById('id-form-validation').addEventListener('submit', function(e) {
+            console.log('Form submitted');
+        });
+    });
+</script>
+
 
 <style>
     @media (max-width: 768px) {
@@ -99,7 +157,6 @@
             width: 100%;
         }
 
-        
         .upload-section {
             margin-bottom: 20px;
         }

@@ -21,7 +21,4 @@ class Verification extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function otp(){
-        return $this->hasMany(Verification::class, 'verification_id');
-    }
 }

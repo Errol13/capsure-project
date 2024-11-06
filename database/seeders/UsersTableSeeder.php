@@ -24,8 +24,8 @@ class UsersTableSeeder extends Seeder
             $email = strtolower($firstName) . $i . "@example.com";
             $birthdate = Carbon::now()->subYears(rand(20, 40))->format('Y-m-d'); // Random age between 20 and 40
             $age = Carbon::parse($birthdate)->age;
-            $isNumberVerified = rand(0, 1) === 1;
-            $isVerified = rand(0, 1) === 1;
+            $isNumberVerified = false;
+            $isVerified = false;
 
             // Create user record without manually setting the ID
             $users[] = [

@@ -8,13 +8,14 @@
             x-data
             x-init="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
             @message.sent.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-            @conversationSelected.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-             >
-            
+            @conversationSelected.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })">
+
             @foreach($messages as $message)
             <div class="{{ $message['sender'] === auth()->id() ? 'message-sent' : 'message-received' }}">
                 <p>{{ $message['message'] }}</p>
-                <small class="text-muted">{{ \Carbon\Carbon::parse($message['created_at'])->format('H:i') }}</small>
+                <small class="text-muted">
+                    {{ \Carbon\Carbon::parse($message['created_at'])->timezone('Asia/Manila')->format('h:i A') }}
+                </small>
             </div>
             @endforeach
 
@@ -61,7 +62,7 @@
                 console.log('Triggered');
                 messageList.classList.add('d-none');
                 loadingState.classList.remove('d-none');
-                
+
             });
 
             document.addEventListener('hideLoadingState', function() {

@@ -17,7 +17,6 @@ return new class extends Migration
             $table->char('otp_code', 6);
             $table->timestamp('expires_at');
             $table->boolean('isUsed')->default(false);
-            $table->foreignId('verification_id')->constrained('verifications', 'user_id' )->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
 

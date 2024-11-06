@@ -125,7 +125,8 @@ class Chat extends Component
         // Trigger a frontend event to notify others
         broadcast(new MessageSent($message))->toOthers();
 
-        Log::info('Message sent: ' . $message->message);
+        //trigger or refresh the user-list
+        $this->dispatch('refreshUserList');
 
         // Reload messages
         $this->loadMessages();

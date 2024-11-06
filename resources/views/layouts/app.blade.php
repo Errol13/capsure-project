@@ -128,6 +128,7 @@
                         @endif
 
                         <!-- Common navbar items for both freelancers and clients -->
+<<<<<<< HEAD
                         <li class="nav-item me-md-0">
                             <a class="nav-link" href="{{ url('/client-bookmark') }}">
                                 <i class="fas fa-bookmark"></i>
@@ -138,7 +139,23 @@
                                 <i class="fas fa-envelope"></i>
                             </a>
                         </li>
+=======
+                        <div class="d-flex">
 
+                            @if (Auth::user()->user_type == 'client')
+                            <li class="nav-item me-md-0">
+                                <a class="nav-link" href="{{ url('/client-bookmark') }}">
+                                    <i class="fas fa-bookmark"></i>
+                                </a>
+                            </li>
+                            @endif
+>>>>>>> f9613dd8f19617215d6fcc43cf8888aa37217285
+
+                            <li class="nav-item me-md-0" id="nav-item-mobile">
+                                <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
+                                    <i class="fas fa-envelope"></i>
+                                </a>
+                            </li>
 
                         <!--for livewire or dynamic notifications -->
                         <livewire:notificationsbell />
