@@ -118,7 +118,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     {
         return $this->hasMany(Chat::class, 'recipient');
     }
-  
+
 
     // Get all conversations where the user is involved
     public function conversations()
@@ -158,4 +158,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
         return asset('assets/daisy.svg');
     }
+
+
 }

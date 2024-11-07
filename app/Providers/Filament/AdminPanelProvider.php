@@ -34,8 +34,8 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->resources([
                 \App\Filament\Resources\UserResource::class,
+                \App\Filament\Resources\Profile\VerificationResource::class,
                 \App\Filament\Resources\ReportResource::class,
-                \App\Filament\Resources\ValidationResource::class,
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\\Filament\\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\\Filament\\Pages')

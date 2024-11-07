@@ -11,6 +11,7 @@ class Verification extends Model
     use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'id_type',
         'id_card_image',
         'pic_with_id',
