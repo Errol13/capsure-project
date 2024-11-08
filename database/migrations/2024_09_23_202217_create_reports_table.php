@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reported_user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->text('reason');
+            $table->json('reason');
             $table->text('details');
-            $table->text('proof_image');
+            $table->json('proof_image')->nullable();
             $table->boolean('isArchived')->default(false);
             $table->foreignId('reporter_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();

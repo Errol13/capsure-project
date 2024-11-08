@@ -113,9 +113,11 @@ Route::get('client-transaction', [App\Http\Controllers\Transaction\TransactionCo
 Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showFreelancerTransact'])->name('freelancer-transaction');
 
 #Chat
-
 Route::get('/chat/{conversationId?}', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
 Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
+
+#Report 
+Route::post('/report', [App\Http\Controllers\Profile\ProfileController::class, 'reportStore'])->name('report.store')->middleware('auth');
 
 #My Jobs Page
 Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');
@@ -126,7 +128,6 @@ Route::patch('/hire/negotiate', [App\Http\Controllers\Hiring\Hiring_requestContr
 Route::patch('/hire/offer/cancel/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'cancelOffer'])->name('offer.cancel');
 Route::patch('/hire/offer/decline/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'declineOffer'])->name('offer.decline');
 Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'acceptOffer'])->name('offer.accept');
-
 
 #payment proof
 Route::post('/transaction/paymentproof/upload/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'uploadPaymentProof'])->name('payment.upload');
