@@ -1,4 +1,4 @@
-<div class="ps-0 ms-0 container mt-4">
+<div class="ps-0 ms-0 justify-content-center align-items-center m-2">
     @if ($portfolios->isEmpty())
     <p class="fs-6 text-center open-sans-reg text-muted mt-5">No portfolios yet. Create one.</p>
     @else

@@ -1,8 +1,13 @@
-<div class="container mt-2">
+<div class="mt-2">
+    <div class="text-end d-flex align-items-center mt-4">
+        <h5 class=" mb-0 me-3 poppins-medium setting-color">Awards & Certificates</h5>
+        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addAwardsModal">
+            <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i>
+        </button>
+    </div>
     @if($freelancer->certificates->isEmpty())
     <p>Add awards to showcase your achievements.</p>
     @else
-    <h2 class="h6 mb-3">Awards</h2>
     <div>
         @foreach ($freelancer->certificates as $certificate)
         <div class="d-flex justify-content-between align-items-center mb-2">

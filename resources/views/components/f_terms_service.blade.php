@@ -1,13 +1,10 @@
-
- <div class="text-end mt-3 d-flex align-items-center">
+<div class="text-end mt-3 d-flex align-items-center">
      <p class="mb-0 me-2 poppins-medium">Terms of Service</p>
      <!-- Edit Icon -->
      <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsModal">
          <i class="ms-0 me-4 fs-6 text-start fas fa-edit"></i>
      </button>
  </div>
-
-
 
  <div class="container mt-2">
      <div class="accordion" id="termsAccordion">
