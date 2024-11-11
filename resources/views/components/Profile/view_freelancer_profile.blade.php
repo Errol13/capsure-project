@@ -170,7 +170,7 @@
                 'events'=> $events])
 
                 <!-- Report Modal -->
-                @include('modals.f_report')
+                @include('modals.f_report', ['reportee' => $user])
 
                 <!--Team -->
                 <div class=""></div>

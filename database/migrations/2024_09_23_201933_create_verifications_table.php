@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('verifications', function (Blueprint $table) {
-            $table->foreignId('user_id')->primary()->constrained('users')->onDelete('cascade');
+            $table->id(); 
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->string('id_type');
             $table->text('id_card_image');
             $table->text('pic_with_id');

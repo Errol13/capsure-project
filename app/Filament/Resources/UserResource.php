@@ -38,8 +38,9 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('id')->label('User ID'), // Display user ID
                 Tables\Columns\TextColumn::make('name')
                     ->label('Name') // Display full name
-                    ->getStateUsing(fn($record) => $record->first_name . ' ' . $record->last_name),
-                Tables\Columns\TextColumn::make('email')->label('Email'),
+                    ->getStateUsing(fn($record) => $record->first_name . ' ' . $record->last_name)
+                    ->searchable(['first_name', 'last_name']),
+                Tables\Columns\TextColumn::make('email')->label('Email')->searchable(),
                 Tables\Columns\TextColumn::make('user_type')->label('')
                     ->getStateUsing(fn($record) => ucfirst($record->user_type)),
                 Tables\Columns\TextColumn::make('created_at')->label('Date Created')->date(),
@@ -62,6 +63,7 @@ class UserResource extends Resource
                     ])
                     ->default(null), // Default to show all types
             ])
+            ->searchPlaceholder('Search (Name, Email)')
             ->actions([
                 //
             ])

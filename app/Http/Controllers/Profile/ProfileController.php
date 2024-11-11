@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\Hiring\Event;
+use App\Models\Profile\Report;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -215,11 +216,11 @@ class ProfileController extends Controller
       })
         ->orderByDesc('last_time_message') // Order by the latest message time
         ->first(); // Get the latest conversation
-      
-        //if empty or no convo at first
-        if(is_null($defaultConversation)){
-          return view('chat_ui', ['conversationId' => $defaultConversation]);
-        }
+
+      //if empty or no convo at first
+      if (is_null($defaultConversation)) {
+        return view('chat_ui', ['conversationId' => $defaultConversation]);
+      }
 
       return view('chat_ui', ['conversationId' => $defaultConversation->conversation_id]);
     }
@@ -234,7 +235,7 @@ class ProfileController extends Controller
   {
     // Validate and get the recipient ID
     $validated = $request->validate([
-      'recipientId' => 'required|integer|exists:users,id', // Ensure the ID exists
+      'recipientId' => 'required|integer|exists:users,id',
     ]);
 
     Log::info('CHAT:', $validated);
@@ -258,11 +259,50 @@ class ProfileController extends Controller
       $conversation = Conversation::create([
         'sender_id' => Auth::id(),
         'recipient_id' => $validated['recipientId'],
-        'last_time_message' => now(), // Optionally set this to current time
+        'last_time_message' => now(),
       ]);
       $conversationId = $conversation->conversation_id;
       // Redirect to the chat page
       return redirect()->route('show-chat', ['conversationId' => $conversationId]);
     }
+  }
+
+  //store the report to the db
+  public function reportStore(Request $request)
+  {
+    $validated = $request->validate([
+      'reason' => 'required|array|min:1',
+      'reason.*' => 'string',
+      'details' => 'required|string',
+      'proof_image' => 'nullable|array', 
+      'proof_image.*' => 'file|mimes:jpg,png,jpeg', 
+      'reported_user_id' => 'required|exists:users,id',
+      'reporter_id' => 'required|exists:users,id',
+    ]);
+
+    // Process the proof images if provided
+    $proofImagePaths = [];
+    $proofImageOriginalNames = [];
+
+    if ($request->hasFile('proof_image')) {
+      foreach ($request->file('proof_image') as $file) {
+        // Get the original file name
+        $proofImageOriginalNames[] = $file->getClientOriginalName() . '_' . $validated['reporter_id'];
+
+        // Store the file and get the storage path
+        $proofImagePaths[] = $file->store('reports/proofs', 'public');
+      }
+    }
+    // Create the report
+    $report = new Report();
+    $report->reported_user_id = $validated['reported_user_id'];
+    $report->reporter_id = $validated['reporter_id'];
+    $report->reason = json_encode($validated['reason']);
+    $report->details = $validated['details'];
+    $report->proof_image = json_encode($proofImagePaths); // Store the file paths as JSON
+    $report->isArchived = false;
+    $report->save();
+
+    return response()->json(['success' => true]); //shows true to show the alert success 
   }
 }
