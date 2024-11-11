@@ -9,6 +9,7 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
@@ -31,9 +32,9 @@ class ReportResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('user id'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('No. of reports'),
+                TextColumn::make('user_id'),
+                TextColumn::make('name'),
+                TextColumn::make('No. of reports'),
             ])
             ->filters([
                 //

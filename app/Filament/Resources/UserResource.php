@@ -46,10 +46,10 @@ class UserResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')->label('Date Created')->date(),
                 Tables\Columns\TextColumn::make('isVerified')
                     ->label('Verification')
-                    ->getStateUsing(fn($record) => $record->is_verified ? 'Verified' : 'Not Verified')
-                    ->color(fn($record) => $record->is_verified ? 'success' : 'danger')
+                    ->getStateUsing(fn($record) => $record->isVerified ? 'Verified' : 'Not Verified')
+                    ->color(fn($record) => $record->isVerified ? 'success' : 'danger')
                     ->extraAttributes(fn($record) => [
-                        'class' => $record->is_verified
+                        'class' => $record->isVerified
                             ? 'inline-block px-3 py-1 text-white rounded-full font-regular'
                             : 'inline-block px-3 py-1 text-white rounded-full font-regular',
                     ]),

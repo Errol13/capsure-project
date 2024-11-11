@@ -35,5 +35,20 @@
 
         </div>
 
+        <div class="mt-4 flex space-x-4">
+            <!-- Verify Button -->
+            <form action="{{ route('filament.resources.verifications.verify', $record->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-success text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-opacity-50">Verify</button>
+            </form>
+
+            <!-- Resend Verification Button -->
+            <form action="{{ route('filament.resources.verifications.resend', $record->id) }}" method="POST">
+                @csrf
+                <button type="submit" class="btn btn-secondary text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">Resend Verification Notice</button>
+            </form>
+        </div>
+
+
     </div>
 </x-filament-panels::page>
