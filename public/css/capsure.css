@@ -774,20 +774,17 @@ select#year {
 }
 
 .btn-report {
-    color: rgb(245, 133, 133);
+    color: crimson;
     margin: 0;
     background-color: white;
     text-decoration: none;
-    border: 1px solid rgb(245, 133, 133);
+    border: 1px solid crimson;
 }
 
 .fs-sm-cont {
     font-size: 0.55rem;
 }
 
-.terms-container {
-    background-color: #f1ecec;
-}
 
 .socmed-container {
     width: 30px;
@@ -962,14 +959,18 @@ select:disabled {
     background-color: #E1C1D7;
     color: #91216C;
     text-decoration: none;
-    border: 1px solid #ACA9A9;
+    border-radius: 20px;
+    width: 100px;
+    border: none;
 }
 
 .btn-cancel{
-    background-color: white;
-    color: #ACA9A9;
+    background-color: none;
+    color: rgb(139, 137, 137);
     text-decoration: none;
-    border: 1px solid #ACA9A9;
+    border-radius: 20px;
+    width: 100px;
+    border: none;
 }
 
 .btn-verified{

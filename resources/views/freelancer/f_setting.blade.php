@@ -1,137 +1,120 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="container py-4 my-2">
+    <p class="fs-sm-name fs-md-name poppins-medium mb-0 ms-1 mb-3">Settings</p>
 
-<div class="container">
-
-    <div class="row">
-        <!--Setting -->
-        <section id="mobileinfosetting">
-            <div class="mt-4">
-                <div class="row">
-                    <div class="col-12 d-flex justify-content-between align-items-center">
-                        <p class="fs-sm-name fs-md-name poppins-medium mb-0 poppins-light">SETTING</p>
-                    </div>
-                </div>
-
-                <!-- Basic Info -->
-                <div class="row my-4 ">
-                    <div class="col-12 profile-container d-flex align-items-center justify-content-center">
-                        <img id="profilePicPreview" src="{{ $user->profile_image_url }}" alt="Profile Picture" class="rounded-circle img-fluid">
-                    </div>
+    <div class="row justify-content-between">
+        <div class="col-md-3 col-lg-3">
+            <!--Profile Pic and Personal Information -->
+            <div class="row my-2">
+                <div class="profile-container d-flex justify-content-center align-items-center">
+                    <img id="profilePicPreview" src="{{$user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
                 </div>
 
                 <!-- Change Profile Pic -->
                 <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
                     @csrf
-                    <div class="d-flex align-items-center justify-content-center my-3">
-                        <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
-                        <span class="ms-2">
-                            <a href="#" class="p-0" onclick="showUploadOptions(); return false;">
+                    <div class="d-flex justify-content-center align-items-center mb-4 mt-2">
+                        <span class="poppins-regular me-2 note">Change profile</span>
+                        <span class="ms-1">
+                            <a href="#" onclick="showUploadOptions(); return false;">
                                 <i class="fas fa-solid fa-arrow-up-from-bracket"></i>
                             </a>
                         </span>
                     </div>
-                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
 
-                    <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">
-                        <button type="submit" class="btn-verify rounded px-3 me-2">Submit</button>
-                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-                    </div>
+                    <!-- File Input for Profile Picture -->
+                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="submitProfilePicForm(event)" />
+
+                    <!-- Preview Section (optional) -->
+                    <img id="profilePicPreview" style="display: none; width: 100px; height: 100px; border-radius: 50%;" />
                 </form>
 
-                <div class="row text-center mb-1 mt-4">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="d-flex align-items-center ">
-                            @if ($user->isVerified == true)
-                            <i class="fs-5 fas fa-check-circle" style="color: #8FE2ED;"></i>
-                            @else
-                            <i class="fs-5 fas fa-check-circle" style="color: #BEBEBE;"></i>
-                            @endif
-                        </div>
-                        <div class="ms-2 me-4">
-                            @if ($user->isVerified == true)
-                            <button class="px-3 rounded-3 btn-verified fs-6 open-sans-reg fw-bold">Verified</button>
-                            @elseif($user->isVerified == false && $user->verification)
-                            <button class="px-3 rounded-3 btn btn-secondary fs-6 open-sans-reg fw-bold">Pending</button>
-                            @else
-                            <a class="rounded-3 btn-verify fs-6 open-sans-reg" href="{{ route('validphone') }}">Verify Account</a>
-                            @endif
-                        </div>
-                        <div class="d-flex align-items-center ms-2 ">
-                            <i class=" ms-4 fs-5 fas fa-user" style="color: #BEBEBE;"></i>
-                        </div>
-                        <div class="ms-2 me-2 ">
-                            <a href="#" class="mb-0 text-start">
-                                @if ($user->user_type === 'client')
-                                <button class=" px-3 rounded-3 btn-save fs-6">Be a Freelancer</button></a>
-                            @else
-                            <button class=" px-3 rounded-3 btn-save fs-6">Be a Client</button></a>
-                            @endif
-                        </div>
-                    </div>
+                <!--Verify Buttons -->
+                <div class="col-md-12 d-flex justify-content-center">
+                    @if ($user->isVerified)
+                    <button class="btn-round fs-5 poppins-regular h-100 w-75 text-black" disabled>
+                        <i class="fas fa-check-circle me-2" style="color: #8FE2ED;"></i>
+                        Verified
+                    </button>
+                    @elseif($user->isVerified == false && $user->verification)
+                    <button class="btn-round pending-color fs-5 h-100 w-75 poppins-regular" disabled>
+                        <i class="fas fa-check-circle me-2" style="color: #BEBEBE;"></i>
+                        Pending
+                    </button>
+                    @else
+                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validphone') }}">
+                        Verify Account
+                    </a>
+                    @endif
                 </div>
 
-                <div class="row my-0 text-center mb-1 mt-2">
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="d-flex align-items-center">
-                            <i class="fs-5 fas fa-users" style="color: #BEBEBE;"></i>
-                        </div>
-                        <div class="ms-2 me-4">
-                            <a href="#" class="mb-0  text-start txt-purple">
-                                <button class="rounded-3 btn-save fs-6"
-                                    @if($user->freelancer->isin_A_Team)
-                                    data-toggle="modal" data-target="#createTeamModalMobile"
-                                    @else
-                                    data-toggle="modal" data-target="#joinTeamModalMobile"
-                                    @endif
-                                    >Join/Create Team</button></a>
-                            @include('modals.createTeam', ['view' => 'Mobile'])
-                            @include('modals.joinTeam', ['view' => 'Mobile'])
-                        </div>
-                        <div class="d-flex align-items-center ms-2">
-                            <i class="fs-5 fas fa-trash " style="color: #BEBEBE;"></i>
-                        </div>
-                        <div class="ms-2 me-2">
-                            <a href="#" class="mb-0  text-start text-danger">
-                                <button class="rounded-3 btn-cancel text-danger fs-6">Delete Account</button></a>
-                        </div>
+
+                <div class="col-md-12 align-items-center justify-content-center">
+                    <!-- Switch role -->
+                    <div class="mt-4">
+                        @if ($user->user_type === 'client')
+                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                            <i class="fas fa-user me-2"></i>
+                            Switch to Freelancer
+                        </button>
+                        @else
+                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                            <i class="fas fa-user me-2"></i>
+                            Switch to Client
+                        </button>
+                        @endif
+                    </div>
+
+                    <!-- Other Buttons -->
+                    <div class="mt-3">
+                        <button class="btn-round h-75 w-75" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#createTeamModalDesktop">
+                            <i class="fas fa-users me-2"></i>
+                            Create Team
+                        </button>
+                        @include('modals.createTeam', ['view' => 'Desktop'])
+
+                        <button class="btn-round h-100 w-75 mt-3" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#joinTeamModalDesktop">
+                            <i class="fas fa-users me-2"></i>
+                            Join a Team
+                        </button>
+                        @include('modals.joinTeam', ['view' => 'Desktop'])
                     </div>
                 </div>
+            </div>
+        </div>
 
-                <!-- Settings Tab -->
-                <ul class="nav nav-tabs mt-4 justify-content-center" id="myTab" role="tablist">
-                    <li class="nav-item border" role="presentation">
-                        <a class="nav-link active" id="basic-info-tab" data-bs-toggle="tab" href="#basic-info" role="tab" aria-controls="basic-info" aria-selected="true">Basic Info</a>
-                    </li>
-                    <li class="nav-item border" role="presentation">
-                        <a class="nav-link" id="services-tab" data-bs-toggle="tab" href="#services" role="tab" aria-controls="services" aria-selected="false">Services</a>
-                    </li>
-                    <li class="nav-item border" role="presentation">
-                        <a class="nav-link" id="contacts-tab" data-bs-toggle="tab" href="#contacts" role="tab" aria-controls="contacts" aria-selected="false">Contacts</a>
-                    </li>
+        <div class="col-md-8 col-lg-8 poppins-regular">
+            <div class="row my-3">
+                <!-- Basic Info -->
+                <form action="/freelancer/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
+                    @csrf
+                    @method('PATCH')
 
-                    <li class="nav-item border" role="presentation">
-                        <a class="nav-link" id="portfolio-tab" data-bs-toggle="tab" href="#portfolio" role="tab" aria-controls="portfolio" aria-selected="false">Portfolio</a>
-                    </li>
-                </ul>
-
-                <!-- Tabs Content -->
-                <div class="tab-content" id="myTabContent">
-                    <!-- Basic Info Tab -->
-                    <div class="tab-pane fade show active" id="basic-info" role="tabpanel" aria-labelledby="basic-info-tab">
-                        <form action="/freelancer/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
-                            @csrf
-                            @method('PATCH')
-
-                            <!-- Edit Button -->
-                            <div class="text-end" id="edit-button" onclick="enableEditMode()">
-                                <i class="fas fa-solid fa-pen-to-square mb-2 me-2 mt-2"></i><span>Edit</span>
+                    <!-- Edit Button -->
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <h5 class="mb-0 me-3 poppins-medium setting-color">Basic Information</h5>
+                            <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
+                                <i class="fas fa-solid fa-pen my-2 me-2"></i>
                             </div>
+                        </div>
+                        <!-- Save and Cancel Buttons -->
+                        <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
+                            <button type="submit" class="fs-6 btn-save">Save</button>
+                            <button type="button" class="fs-6 btn-cancel" onclick="cancelEditBasicInfo()">Cancel</button>
+                        </div>
+                    </div>
 
-                            <div class="form-group">
+                    <div class="form-group">
+
+                        <div class="row">
+
+                            <!--first column name to bday -->
+                            <div class="col-6">
                                 <!-- First Name -->
-                                <label for="first_name" class="form-label">{{ __('First Name') }}</label>
+                                <label for="first_name" class="form-label mb-0">{{ __('First Name') }}</label>
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
                                     name="first_name" value="{{ $user->first_name }}" required autocomplete="first_name" autofocus disabled>
                                 @error('first_name')
@@ -141,7 +124,7 @@
                                 @enderror
 
                                 <!-- Last Name -->
-                                <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
+                                <label for="last_name" class="form-label mb-0 mt-2">{{ __('Last Name') }}</label>
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
                                     name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled>
                                 @error('last_name')
@@ -150,18 +133,8 @@
                                 </span>
                                 @enderror
 
-                                <!-- Email -->
-                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ $user->email }}" required autocomplete="email" disabled>
-                                @error('email')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                                @enderror
-
                                 <!-- Birthdate -->
-                                <label for="birthdate" class="form-label">{{ __('Birthdate') }}</label>
+                                <label for="birthdate" class="form-label mb-0 mt-2">{{ __('Birthdate') }}</label>
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
                                     name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled>
                                 @error('birthdate')
@@ -170,8 +143,23 @@
                                 </span>
                                 @enderror
 
+                                <!-- Email -->
+                                <label for="email" class="form-label mb-0 mt-2">{{ __('Email Address') }}</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ $user->email }}" required autocomplete="email" disabled>
+                                @error('email')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
+
+                            </div>
+
+                            <!--second column name to bday -->
+                            <div class="col-6">
+
                                 <!-- Street -->
-                                <label for="street" class="form-label">{{ __('Street') }}</label>
+                                <label for="street" class="form-label mb-0">{{ __('Street') }}</label>
                                 <input id="street" type="text" class="form-control @error('street') is-invalid @enderror"
                                     name="street" value="{{ old('street', $user->street) }}" required autocomplete="street" disabled>
                                 @error('street')
@@ -181,7 +169,7 @@
                                 @enderror
 
                                 <!-- Barangay -->
-                                <label for="barangay" class="form-label">{{ __('Barangay') }}</label>
+                                <label for="barangay" class="form-label mb-0 mt-2">{{ __('Barangay') }}</label>
                                 <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror"
                                     name="barangay" value="{{ old('barangay', $user->barangay) }}" required autocomplete="barangay" disabled>
                                 @error('barangay')
@@ -191,7 +179,7 @@
                                 @enderror
 
                                 <!-- City -->
-                                <label for="city" class="form-label">{{ __('City') }}</label>
+                                <label for="city" class="form-label mb-0 mt-2">{{ __('City') }}</label>
                                 <input id="city" type="text" class="form-control @error('city') is-invalid @enderror"
                                     name="city" value="{{ old('city', $user->city) }}" required autocomplete="city" disabled>
                                 @error('city')
@@ -201,7 +189,7 @@
                                 @enderror
 
                                 <!-- Contact Number -->
-                                <label for="contact_number" class="form-label">{{ __('Contact Number') }}</label>
+                                <label for="contact_number" class="form-label mb-0 mt-2">{{ __('Contact Number') }}</label>
                                 <input id="contact_number" type="text" class="form-control @error('contact_number') is-invalid @enderror"
                                     name="contact_number" value="{{ old('contact_number', $user->contact_number) }}" required autocomplete="contact_number" disabled>
                                 @error('contact_number')
@@ -209,9 +197,30 @@
                                     <strong>{{ $message }}</strong>
                                 </span>
                                 @enderror
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8 col-lg-6">
+                                <!-- Password Information -->
+                                <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
+                                    <h5 class=" mb-0 me-3 poppins-medium setting-color">Password Information</h5>
+                                    <div class="text-start" id="edit-button-dt" onclick=" enableEditModeDesktop()">
+                                        <i class="fas fa-solid fa-pen my-2 me-2"></i>
+                                    </div>
+                                </div>
 
                                 <!-- Password -->
-                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <label for="password_current" class="form-label mb-0 mt-2">{{ __('Current Password') }}</label>
+                                <div class="input-group m-0 p-0">
+                                    <input id="password_current" type="password" placeholder="Enter Current Password" class="form-control @error('password_cuurent') is-invalid @enderror"
+                                        name="password_current" autocomplete="new-password" disabled>
+                                    <button type="button" class="btn border" onclick="togglePasswordVisibility('password_current')" disabled>
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <label for="password" class="form-label mb-0 mt-2">{{ __('Password') }}</label>
                                 <div class="input-group m-0 p-0">
                                     <input id="password" type="password" placeholder="Enter New Password" class="form-control @error('password') is-invalid @enderror"
                                         name="password" autocomplete="new-password" disabled>
@@ -226,8 +235,8 @@
                                 @enderror
 
                                 <!-- Confirm Password -->
-                                <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
-                                <div class="input-group m-0 p-0 mb-4">
+                                <label for="password_confirmation" class="form-label mb-0 mt-2">{{ __('Confirm Password') }}</label>
+                                <div class="input-group m-0 p-0 mb-0">
                                     <input id="password_confirmation" placeholder="Confirm New Password" type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                         name="password_confirmation" autocomplete="new-password" disabled>
                                     <button type="button" class="btn border" onclick="togglePasswordVisibility('password_confirmation')" disabled>
@@ -240,153 +249,153 @@
                                 </span>
                                 @enderror
                             </div>
-
-                            <!-- Save and Cancel Buttons -->
-                            <div class="form-group text-center" id="form-buttons" style="display: none;">
-                                <button type="submit" class="btn btn-primary">Save</button>
-                                <button type="button" class="btn btn-secondary" onclick="cancelEdit()">Cancel</button>
-                            </div>
-                        </form>
-                    </div>
-
-                    <!-- Services Tab -->
-                    <div class="tab-pane fade" id="services" role="tabpanel" aria-labelledby="services-tab">
-
-                        <!--Accordion for Terms of Service -->
-                        @include('components.f_terms_service', ['freelancer' => $user->freelancer])
-
-                        <!-- Services -->
-                        <livewire:profile.service-manager :services="$user->freelancer->services" />
-
-
-                        <!--Awards-->
-                        <div class="text-end mt-3 d-flex align-items-center">
-                            <p class="mb-0 me-2 poppins-medium">Awards</p>
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addAwardsModal">
-                                <i class="fas fa-solid fa-circle-plus"></i>
-                            </button>
                         </div>
-                        @include('components.f_awards', ['freelancer' => $user->freelancer])
-
-                        <!-- Skills Section for adding, editing and deleting -->
-                        <div class="text-end mt-3 d-flex align-items-center">
-                            <p class="mb-0 me-2 poppins-medium">Skills</p>
-                            <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">
-                                <i class="fas fa-solid fa-circle-plus"></i> <!-- Plus icon for adding skills -->
-                            </button>
-                        </div>
-                        @include('components.f_skills', ['freelancer' => $user->freelancer])
                     </div>
-
-                    <!-- Contacts Tab -->
-                    <div class="tab-pane fade" id="contacts" role="tabpanel" aria-labelledby="contacts-tab">
-                        @include('components.social_media', ['socmed' => $user->socmed])
-                    </div>
-
-                    <!-- Portfolio Tab -->
-                    <div class="tab-pane fade" id="portfolio" role="tabpanel" aria-labelledby="portfolio-tab">
-                        <!-- Modal Trigger -->
-                        @php
-                        $portfolioLimit = 3; // Maximum number of portfolios allowed
-                        $portfolioCount = $user->freelancer->portfolios->count();
-                        @endphp
-
-                        @if ($portfolioCount < $portfolioLimit)
-                            <button type="button" class="btn-seeprof rounded mt-3" data-bs-toggle="modal" data-bs-target="#albumModal">
-                            Create Album
-                            </button>
-                            @else
-                            <div class="d-flex justify-content-start align-items-center">
-                                <button class="btn-seeprof mt-3" disabled>
-                                    Create Album
-                                </button>
-                                <span class="ms-2 text-danger mt-2"><small>You've reached the limit ({{ $portfolioLimit }})</small></span>
-                            </div>
-                            @endif
-
-                            <div class="mt-4">
-                                @if ($user->freelancer->portfolios->isEmpty())
-                                <div></div>
-                                @else
-                                <div class="d-flex justify-content-end align-items-center mb-3">
-                                    <!-- Upload Button -->
-                                    <button type="button" class="btn-verify rounded me-2" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                                        <i class="fas fa-upload"></i> Upload
-                                    </button>
-                                    <!-- Delete Button -->
-                                    <button type="button" class="btn-cancel rounded" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                                        <i class="fa-solid fa-images"></i> Edit
-                                    </button>
-
-                                    <!-- Batch Delete Button -->
-                                    <button id="batchDeleteButtonMobile" class="ms-2 btn-report rounded"><i class=" me-2 fas fa-trash"></i>Delete Selected</button>
-
-                                </div>
-                                @endif
-
-
-
-                                @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => false])
-                            </div>
-                    </div>
-
-                </div>
-        </section>
-
-        <section id="desktopview">
-            <!--Settinga -->
-            @include('components.f_settings_desktop')
-        </section>
-
-        <!-- Modal for adding new services-->
-        @include('modals.addService_modal', ['freelancer_id'=> $user->id, 'jobTitles' => $jobTitles])
-
-        <!--skills modal -->
-        @include('modals.skills_modal', ['freelancer' => $user->freelancer])
-
-        <!--awards -->
-        @include('modals.awards_modal', ['freelancer' => $user->freelancer])
-
-        <!--adding portfolio-->
-        <livewire:addportfolio :freelancer_id="$user->id" />
-
-        <!--updating portfolio -->
-        <livewire:updateportfolio :portfolios="$user->freelancer->portfolios" />
-
-        <!--deleting portfolio -->
-        @include('modals.delete_album', ['portfolios' => $user->freelancer->portfolios])
-
-
-
+                </form>
+            </div>
+        </div>
     </div>
-    <div class="mt-5"></div>
+
+    <div class="row justify-content-between">
+        <div class="col-md-3 col-lg-3">
+            <!--Social Media -->
+            @include('components.social_media', ['socmed' => $user->socmed])
+
+            <!--Awards-->
+            @include('components.f_awards', ['freelancer' => $user->freelancer])
+        </div>
+
+        <div class="col-md-8 col-lg-8 poppins-regular">
+            <!-- Services -->
+            <livewire:profile.service-manager :services="$user->freelancer->services" />
+
+            <!--Skills -->
+            <div class="row">
+                <!-- Skills Section for adding, editing and deleting -->
+                <div class="text-end mt-3 d-flex align-items-center">
+                    <p class="mb-0 me-2 poppins-medium setting-color fs-5">Skills</p>
+                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">
+                        <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i> <!-- Plus icon for adding skills -->
+                    </button>
+                </div>
+                @include('components.f_skills', ['freelancer' => $user->freelancer])
+            </div>
+
+            <!-- Terms of Service -->
+            <div class="row">
+                <div class=" mt-3 align-items-center">
+                    <div class="d-flex align-items-center">
+                        <p class="mb-0 me-2 poppins-medium setting-color fs-5">Terms of Service</p>
+                        <!-- Edit Icon -->
+                        <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsDesktopModal">
+                            <i class="ms-0 me-4 fs-6 text-start fas fa-pen fa-solid"></i>
+                        </button>
+                    </div>
+                    <div class="container terms-container px-1 py-1 rounded" style="background-color:#E1C1D7;">
+                        <p class="text-start fs-6 mt-2 ms-1 ">
+                            {{$user->freelancer->terms_and_conditions}}
+                        </p>
+                    </div>
+                </div>
+
+                @include('modals.f_terms_desktop', ['freelancer' => $user->freelancer])
+            </div>
+        </div>
+    </div>
+
+    <!--Portfolio -->
+    <hr>
+
+    <div class="row mt-2 p-2 d-flex justify-content-center align-items-center">
+        @php
+        $portfolioLimit = 3; // Maximum number of portfolios allowed
+        $portfolioCount = $user->freelancer->portfolios->count();
+        @endphp
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <h3 class="poppins-medium my-3">Portfolio</h3>
+            <div class="d-flex justify-content-end align-items-center">
+                @if ($portfolioCount < $portfolioLimit)
+                    <button type="button" class="btn-verify rounded p-1 px-2 my-2" style="white-space: nowrap;" data-bs-toggle="modal" data-bs-target="#albumModal">
+                    <i class="fas fa-plus me-2"></i>Create Album
+                    </button>
+                    @else
+                    <span class="dropdown-item text-danger">You've reached the limit ({{ $portfolioLimit }})</span>
+                    @endif
+
+                    @if (!$user->freelancer->portfolios->isEmpty())
+                    <div class="d-flex align-items-center">
+                        <a id="batchDeleteButtonDesktop" class="text-danger mx-3" style="white-space: nowrap;text-decoration:none; cursor: pointer;">
+                            <i class="fas fa-trash me-2"></i>Delete
+                        </a>
+                        <button class="btn p-0" id="mobileActionButton" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fas fa-ellipsis-h fs-3"></i>
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileActionButton">
+                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#uploadModal">
+                                <i class="fas fa-upload me-2"></i> Upload Photo
+                            </button>
+
+                            <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                                <i class="fas fa-trash me-2"></i> Delete Album
+                            </button>
+                        </div>
+                    </div>@endif
+            </div>
+
+        </div>
+        <!--content of the portfolio -->
+        <div class="mt-2 rounded-2" style="background-color: white;">
+            @include('components.f_portfolios', ['portfolios' => $user->freelancer->portfolios, 'desktopView' => true])
+        </div>
+    </div>
+
+    <!-- Modal for adding new services-->
+    @include('modals.addService_modal', ['freelancer_id'=> $user->id, 'jobTitles' => $jobTitles])
+
+    <!--skills modal -->
+    @include('modals.skills_modal', ['freelancer' => $user->freelancer])
+
+    <!--awards -->
+    @include('modals.awards_modal', ['freelancer' => $user->freelancer])
+
+    <!--adding portfolio-->
+    <livewire:addportfolio :freelancer_id="$user->id" />
+
+    <!--updating portfolio -->
+    <livewire:updateportfolio :portfolios="$user->freelancer->portfolios" />
+
+    <!--deleting portfolio -->
+    @include('modals.delete_album', ['portfolios' => $user->freelancer->portfolios])
 </div>
 
 <script>
-    function enableEditMode() {
-        // Enable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.removeAttribute('disabled');
+    function enableEditModeDesktop() {
+        // Enable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = false;
         });
 
         // Show Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'block';
+        document.getElementById('form-buttons-dt').style.display = 'block';
 
-        // Hide Edit button
-        document.getElementById('edit-button').style.display = 'none';
+        // Optionally hide the edit button to prevent further clicks
+        document.getElementById('edit-button-dt').style.display = 'none';
     }
 
-    function cancelEdit() {
-        // Disable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.setAttribute('disabled', 'true');
+    function cancelEditBasicInfo() {
+        // Disable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = true;
         });
 
         // Hide Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'none';
+        document.getElementById('form-buttons-dt').style.display = 'none';
 
-        // Show Edit button
-        document.getElementById('edit-button').style.display = 'block';
+        // Show the edit button again
+        document.getElementById('edit-button-dt').style.display = 'block';
     }
 
     function togglePasswordVisibility(fieldId) {
@@ -429,6 +438,36 @@
         document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const showLimitMessageButton = document.getElementById('showLimitMessageButton');
+        const limitMessage = document.getElementById('limitMessage');
+
+        if (showLimitMessageButton) {
+            showLimitMessageButton.addEventListener('click', function() {
+                limitMessage.classList.toggle('d-none');
+            });
+        }
+    });
+
+    // Function to show the file input dialog
+    function showUploadOptions() {
+        document.getElementById('profilePicUpload').click();
+    }
+
+    // Function to preview and submit the form automatically upon selecting a file
+    function submitProfilePicForm(event) {
+        // Optional: Show a preview of the selected image before upload
+        const file = event.target.files[0];
+        if (file) {
+            const preview = document.getElementById('profilePicPreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+
+        // Submit the form automatically after image selection
+        document.getElementById('profilePicForm').submit();
     }
 </script>
 

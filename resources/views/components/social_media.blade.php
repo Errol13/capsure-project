@@ -1,5 +1,5 @@
-<div class="container mt-4">
-    <h2 class="h4 mb-4 poppins-medium setting-color fs-5">Social Media Accounts</h2>
+<div class="mt-1">
+    <h5 class="mb-2 poppins-medium setting-color">Social Media Accounts</h5>
 
     @foreach ($socmed as $socialMedia)
 
