@@ -89,7 +89,7 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return str_ends_with($this->email, 'admin@gmail.com') && $this->hasVerifiedEmail();
     }
 
-    
+
     //fullname
     public function fullName()
     {
@@ -151,6 +151,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     public function suspension()
     {
         return $this->hasOne(Suspension::class, 'user_id');
+    }
+
+    public function isSuspended()
+    {
+        return $this->suspension && $this->suspension->isSuspended && $this->suspension->end_date->isFuture();
     }
 
 

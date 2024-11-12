@@ -70,7 +70,8 @@ class VerificationResource extends Resource
                 TextColumn::make('userFullNameAndEmail')
                     ->label('User')
                     ->getStateUsing(fn($record) => $record->user->first_name . ' ' . $record->user->last_name)
-                    ->description(fn($record): string => $record->user->email),
+                    ->description(fn($record): string => $record->user->email)
+                    ->searchable(['user.first_name', 'user.last_name']),
                 TextColumn::make('id_type')
                     ->label('ID Type')
                     ->searchable(),

@@ -38,7 +38,7 @@ class VerificationStatus extends Notification
     {
         return (new MailMessage)
             ->subject('Verification Status')
-            ->line("{$this->message}.")
+            ->line("{$this->message}")
             ->action('View Status', $this->getUrlBasedOnUserType($notifiable))
             ->line('Thank you for using our application!');
     }
@@ -62,7 +62,7 @@ class VerificationStatus extends Notification
     public function toArray(object $notifiable): array
     {
         return [
-            'message' => "{$this->message}.",
+            'message' => "{$this->message}",
             'url' => $this->getUrlBasedOnUserType($notifiable),
         ];
     }
