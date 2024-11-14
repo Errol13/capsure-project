@@ -8,6 +8,11 @@
     @apply text-black; /* Light mode text */
 }
 
+th {
+    @apply bg-[#E1C1D7]; /* Light mode background */
+    @apply text-black; /* Light mode text */
+}
+
 
 .dark .fi-ta-header-cell-label  {
     @apply text-black !important; /* Dark mode text color */

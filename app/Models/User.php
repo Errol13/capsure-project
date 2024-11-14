@@ -72,11 +72,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             'password' => 'hashed',
         ];
     }
+
     public function getFilamentName(): string
     {
         return "{$this->first_name} {$this->last_name}";
     }
-
 
     public function canAccessFilament(): bool
     {
@@ -87,6 +87,13 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
     {
         // only admin can access
         return str_ends_with($this->email, 'admin@gmail.com') && $this->hasVerifiedEmail();
+    }
+
+
+    //fullname
+    public function fullName()
+    {
+        return "{$this->first_name} {$this->last_name}";
     }
 
     public function client()
@@ -146,6 +153,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return $this->hasOne(Suspension::class, 'user_id');
     }
 
+    public function isSuspended()
+    {
+        return $this->suspension && $this->suspension->isSuspended && $this->suspension->end_date->isFuture();
+    }
+
 
     public function getProfileImageUrlAttribute()
     {
@@ -158,6 +170,4 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
         return asset('assets/daisy.svg');
     }
-
-
 }

@@ -1,9 +1,6 @@
 <x-filament-panels::page>
 
-    <link href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" rel="stylesheet">
-
-    <!-- Add Fancybox JS -->
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+    
 
     <h1 class="text-2xl font-semibold">Verification Details</h1>
 
@@ -34,6 +31,8 @@
             </div>
 
         </div>
+
+       
 
     </div>
 </x-filament-panels::page>

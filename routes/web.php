@@ -1,5 +1,6 @@
 <?php
 
+use App\Filament\Resources\Profile\VerificationResource;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\HomeController;
@@ -11,6 +12,7 @@ use App\Http\Livewire\CreateEventForm;
 use App\Livewire\ClientHome;
 use App\Livewire\MyJobs;
 use App\Livewire\ShowServices;
+use App\Models\Profile\Verification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -140,3 +142,14 @@ Route::post('/transaction/review/write/{id}', [App\Http\Controllers\Transaction\
 Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
 Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');
 Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
+
+#Admin
+Route::post('/verifications/{verification}/verify', function (Verification $verification) {
+    VerificationResource::verifyRequest($verification);
+    return redirect()->back()->with('message', 'Verification successful.');
+})->name('filament.resources.verifications.verify');
+
+Route::post('/verifications/{verification}/resend', function (Verification $verification) {
+    VerificationResource::resendVerificationNotice($verification);
+    return redirect()->back()->with('message', 'Verification notice resent.');
+})->name('filament.resources.verifications.resend');
