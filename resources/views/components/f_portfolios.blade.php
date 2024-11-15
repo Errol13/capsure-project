@@ -36,39 +36,40 @@
             aria-labelledby="{{ $desktopView ? 'tabDesktop-' : 'tab-' }}{{ $portfolio->portfolio_id }}">
 
             @if ($portfolio->path)
-            <div class="d-flex flex-wrap">
-                @foreach (json_decode($portfolio->path) as $filePath)
-                @php
-                $relativePath = str_replace('public/', '', $filePath);
-                $fileName = basename($relativePath);
-                $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                @endphp
+            <div class="d-flex flex-wrap gap-3">
+    @foreach (json_decode($portfolio->path) as $filePath)
+        @php
+            $relativePath = str_replace('public/', '', $filePath);
+            $fileName = basename($relativePath);
+            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+        @endphp
 
-                @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
-                <div class="position-relative">
-                    @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
+        @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
+            <div class="position-relative" style="width: calc(33.33% - 1rem); max-width: 300px;">
+                @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-profile-portfolio rounded">
+                        <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-profile-portfolio rounded w-100">
                     </a>
-                    @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
+                @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
                     <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-profile-portfolio rounded"></video>
+                        <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-profile-portfolio rounded w-100"></video>
                     </a>
-                    @else
-                    <p>Unsupported file type: {{ $fileExtension }}</p>
-                    @endif
-
-                    <!-- Delete Checkbox -->
-                    <div class="form-check position-absolute top-0 end-0 m-2">
-                        <input type="checkbox" class="form-check-input delete-checkbox rounded border border-primary-subtle" id="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}" data-file-path="{{ $relativePath }}" data-portfolio-id="{{ $portfolio->portfolio_id }}">
-                        <label class="form-check-label" for="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}"> </label>
-                    </div>
-                </div>
                 @else
-                <p>File path mismatch: {{ $relativePath }}</p>
+                    <p>Unsupported file type: {{ $fileExtension }}</p>
                 @endif
-                @endforeach
+
+                <!-- Delete Checkbox -->
+                <div class="form-check position-absolute top-0 end-0 m-2">
+                    <input type="checkbox" class="form-check-input delete-checkbox rounded border border-primary-subtle" id="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}" data-file-path="{{ $relativePath }}" data-portfolio-id="{{ $portfolio->portfolio_id }}">
+                    <label class="form-check-label" for="delete-checkbox-{{ $portfolio->portfolio_id }}-{{ $fileName }}"> </label>
+                </div>
             </div>
+        @else
+            <p>File path mismatch: {{ $relativePath }}</p>
+        @endif
+    @endforeach
+</div>
+
             @else
             <p>No media found for this album.</p>
             @endif

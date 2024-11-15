@@ -314,19 +314,19 @@
 
         <div class="d-flex justify-content-between align-items-center">
 
-            <h3 class="poppins-medium my-3">Portfolio</h3>
+            <h4 class="poppins-medium my-3">Portfolio</h4>
             <div class="d-flex justify-content-end align-items-center">
                 @if ($portfolioCount < $portfolioLimit)
                     <button type="button" class="btn-verify rounded p-1 px-2 my-2" style="white-space: nowrap;" data-bs-toggle="modal" data-bs-target="#albumModal">
                     <i class="fas fa-plus me-2"></i>Create Album
                     </button>
                     @else
-                    <span class="dropdown-item text-danger">You've reached the limit ({{ $portfolioLimit }})</span>
+                    <span class="note dropdown-item" style="color: #BEBEBE;">You've reached the limit ({{ $portfolioLimit }})</span>
                     @endif
 
                     @if (!$user->freelancer->portfolios->isEmpty())
                     <div class="d-flex align-items-center">
-                        <a id="batchDeleteButtonDesktop" class="text-danger mx-3" style="white-space: nowrap;text-decoration:none; cursor: pointer;">
+                        <a id="batchDeleteButtonDesktop" class="btn-report rounded p-1 px-2 my-2 ms-2 me-3" style="white-space: nowrap;text-decoration:none; cursor: pointer;">
                             <i class="fas fa-trash me-2"></i>Delete
                         </a>
                         <button class="btn p-0" id="mobileActionButton" data-bs-toggle="dropdown" aria-expanded="false">
