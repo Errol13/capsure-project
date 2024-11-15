@@ -60,7 +60,7 @@ class VerificationResource extends Resource
             ->query(
                 Verification::query()->whereHas('user', function ($query) {
                     $query->where('isVerified', false);
-                })
+                })->join('users', 'verifications.user_id', '=', 'users.id')->select('verifications.*')
             )
             ->columns([
                 TextColumn::make('user_id')
@@ -71,7 +71,7 @@ class VerificationResource extends Resource
                     ->label('User')
                     ->getStateUsing(fn($record) => $record->user->first_name . ' ' . $record->user->last_name)
                     ->description(fn($record): string => $record->user->email)
-                    ->searchable(['user.first_name', 'user.last_name']),
+                    ->searchable(['users.first_name', 'users.last_name']),
                 TextColumn::make('id_type')
                     ->label('ID Type')
                     ->searchable(),
@@ -157,7 +157,6 @@ class VerificationResource extends Resource
         // Notify the user about successful verification
         $user->notify(new VerificationStatus('Your account has been successfully verified.'));
 
-        Log::info('HAS BEEN VERIFIED!');
     }
 
     public static function resendVerificationNotice(Verification $record)

@@ -274,8 +274,8 @@ class ProfileController extends Controller
       'reason' => 'required|array|min:1',
       'reason.*' => 'string',
       'details' => 'required|string',
-      'proof_image' => 'nullable|array', 
-      'proof_image.*' => 'file|mimes:jpg,png,jpeg', 
+      'proof_image' => 'nullable|array',
+      'proof_image.*' => 'file|mimes:jpg,png,jpeg',
       'reported_user_id' => 'required|exists:users,id',
       'reporter_id' => 'required|exists:users,id',
     ]);
@@ -286,13 +286,19 @@ class ProfileController extends Controller
 
     if ($request->hasFile('proof_image')) {
       foreach ($request->file('proof_image') as $file) {
-        // Get the original file name
-        $proofImageOriginalNames[] = $file->getClientOriginalName() . '_' . $validated['reporter_id'];
+        // Construct the desired file name
+        $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME); // Get the file name without extension
+        $extension = $file->getClientOriginalExtension(); // Get the file extension
+        $newFileName = $originalName . '_' . $validated['reporter_id'] . '.' . $extension;
 
-        // Store the file and get the storage path
-        $proofImagePaths[] = $file->store('reports/proofs', 'public');
+        // Store the file with the new name
+        $proofImagePaths[] = $file->storeAs('reports/proofs', $newFileName, 'public');
+
+        // Optionally, keep a record of the original names (if needed)
+        $proofImageOriginalNames[] = $newFileName;
       }
     }
+
     // Create the report
     $report = new Report();
     $report->reported_user_id = $validated['reported_user_id'];

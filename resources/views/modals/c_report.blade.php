@@ -58,7 +58,9 @@
                     </div>
                     <input type="hidden" name="reported_user_id" value="{{ $reportee->id }}">
                     <input type="hidden" name="reporter_id" value="{{ auth()->user()->id }}">
+
                     <div class="modal-footer">
+                        <span id="loading-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         <button type="submit" id="report-button" class="btn btn-secondary" disabled>Submit</button>
                     </div>
                 </div>
@@ -154,6 +156,12 @@
 
             const formData = new FormData(this);
 
+            // Show loading spinner and disable the submit button during submission
+            const reportButton = document.getElementById('report-button');
+            const spinner = document.getElementById('loading-spinner');
+            reportButton.disabled = true; // Disable the button
+            spinner.classList.remove('d-none'); // Show the spinner
+
             fetch('/report', {
                     method: 'POST',
                     body: formData
@@ -162,12 +170,19 @@
                 .then(data => {
                     // Check if the submission was successful
                     if (data.success) {
-                        alert('Report Submitted');
+                        // Reset the form
                         document.getElementById('report-id').reset();
-                        $('#reportProfileModal').modal('hide');
                         checkTheFields();
-                        // Reload the page
-                        location.reload(); 
+
+                        // Get the modal element
+                        var myModal = new bootstrap.Modal(document.getElementById('reportProfileModal'));
+
+                        // Close the modal
+                        myModal.hide();
+
+                        // Show the success alert
+                        alert('Report Submitted');
+                        location.reload();
                     } else {
                         alert('There was an issue with your submission. Please try again.');
                     }

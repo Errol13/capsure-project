@@ -10,6 +10,7 @@ use App\Models\Profile\Service;
 use App\Models\Profile\SocialMediaAccount;
 use App\Models\Profile\Suspension;
 use App\Models\Profile\Verification;
+use Carbon\Carbon;
 use Filament\Panel;
 use Filament\Models\Contracts\FilamentUser;
 use Filament\Models\Contracts\HasName;
@@ -155,7 +156,11 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
 
     public function isSuspended()
     {
-        return $this->suspension && $this->suspension->isSuspended && $this->suspension->end_date->isFuture();
+        if ($this->suspension && $this->suspension->isSuspended) { 
+            return true;
+        }
+    
+        return false;
     }
 
 
