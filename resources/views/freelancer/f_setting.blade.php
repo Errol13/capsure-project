@@ -5,7 +5,7 @@
     <p class="fs-sm-name fs-md-name poppins-medium mb-0 ms-1 mb-3">Settings</p>
 
     <div class="row justify-content-between">
-        <div class="col-md-3 col-lg-3">
+        <div class="col-md-4 col-lg-3">
             <!--Profile Pic and Personal Information -->
             <div class="row my-2">
                 <div class="profile-container d-flex justify-content-center align-items-center">
@@ -26,11 +26,7 @@
 
                     <!-- File Input for Profile Picture -->
                     <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="submitProfilePicForm(event)" />
-
-                    <!-- Preview Section (optional) -->
-                    <img id="profilePicPreview" style="display: none; width: 100px; height: 100px; border-radius: 50%;" />
                 </form>
-
                 <!--Verify Buttons -->
                 <div class="col-md-12 d-flex justify-content-center">
                     @if ($user->isVerified)
@@ -60,7 +56,7 @@
                             Switch to Freelancer
                         </button>
                         @else
-                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                        <button class="btn-round h-100 w-75 mt-4" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
                             Switch to Client
                         </button>
@@ -68,14 +64,14 @@
                     </div>
 
                     <!-- Other Buttons -->
-                    <div class="mt-3">
+                    <div class="mt-2">
                         <button class="btn-round h-75 w-75" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#createTeamModalDesktop">
                             <i class="fas fa-users me-2"></i>
                             Create Team
                         </button>
                         @include('modals.createTeam', ['view' => 'Desktop'])
 
-                        <button class="btn-round h-100 w-75 mt-3" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#joinTeamModalDesktop">
+                        <button class="btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#joinTeamModalDesktop">
                             <i class="fas fa-users me-2"></i>
                             Join a Team
                         </button>
@@ -202,7 +198,7 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-8 col-lg-6">
+                            <div class="col-8 col-lg-6 my-3">
                                 <!-- Password Information -->
                                 <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
                                     <h5 class=" mb-0 me-3 poppins-medium setting-color">Password Information</h5>
@@ -212,7 +208,7 @@
                                 </div>
 
                                 <!-- Password -->
-                                <label for="password_current" class="form-label mb-0 mt-2">{{ __('Current Password') }}</label>
+                                <label for="password_current" class="form-label mb-0">{{ __('Current Password') }}</label>
                                 <div class="input-group m-0 p-0">
                                     <input id="password_current" type="password" placeholder="Enter Current Password" class="form-control @error('password_cuurent') is-invalid @enderror"
                                         name="password_current" autocomplete="new-password" disabled>
@@ -273,7 +269,7 @@
             <div class="row">
                 <!-- Skills Section for adding, editing and deleting -->
                 <div class="text-end mt-3 d-flex align-items-center">
-                    <p class="mb-0 me-2 poppins-medium setting-color fs-5">Skills</p>
+                    <h5 class="mb-0 me-2 poppins-medium setting-color">Skills</h5>
                     <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addSkillsModal">
                         <i class="fas fa-solid fa-circle-plus add-setting-clr fs-5"></i> <!-- Plus icon for adding skills -->
                     </button>
@@ -285,7 +281,7 @@
             <div class="row">
                 <div class=" mt-3 align-items-center">
                     <div class="d-flex align-items-center">
-                        <p class="mb-0 me-2 poppins-medium setting-color fs-5">Terms of Service</p>
+                        <h5 class="mb-0 me-2 poppins-medium setting-color">Terms of Service</h5>
                         <!-- Edit Icon -->
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsDesktopModal">
                             <i class="ms-0 me-4 fs-6 text-start fas fa-pen fa-solid"></i>

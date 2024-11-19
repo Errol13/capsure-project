@@ -364,7 +364,6 @@
                         <div class="card-body">
                             @foreach($eventGroup['transactions'] as $transaction)
                             <div class="d-flex align-items-start mb-3">
-
                                 <div class="flex-grow-1 d-lg-flex">
                                     <!-- Freelancer Information Section -->
                                     <div class="d-flex me-2 align-items-center w-100">

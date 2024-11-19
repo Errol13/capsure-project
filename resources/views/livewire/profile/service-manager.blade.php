@@ -1,4 +1,4 @@
-<div>
+<div class="my-2">
     <div class="text-end mt-1 d-flex align-items-center">
         <h5 class="mb-0 me-2 poppins-medium setting-color">Services</h5>
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addServiceModal">

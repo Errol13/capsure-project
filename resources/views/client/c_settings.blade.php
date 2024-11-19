@@ -1,15 +1,11 @@
 @extends ('layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row mt-2">
-        <div class="col-12 d-flex justify-content-between align-items-center">
-            <p class="fs-sm-name fs-md-name poppins-medium mb-0 poppins-light ms-4">SETTING</p>
-        </div>
-    </div>
-    <div class="row">
-        <!--First Column -->
-        <div class="col-md-3 col-lg-3">
+<div class="container py-4 my-2">
+    <p class="fs-sm-name fs-md-name poppins-medium mb-0 ms-1 mb-3">Settings</p>
+
+    <div class="row justify-content-between">
+        <div class="col-md-4 col-lg-3">
             <!--Profile Pic and Personal Information -->
             <div class="row my-2">
                 <div class="profile-container d-flex justify-content-center align-items-center">
@@ -19,85 +15,75 @@
                 <!-- Change Profile Pic -->
                 <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
                     @csrf
-                    <div class="d-flex align-items-center justify-content-center my-3">
-                        <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
-                        <span class="ms-2">
-                            <a href="#" class="p-0" onclick="showUploadOptions(); return false;">
+                    <div class="d-flex justify-content-center align-items-center mb-4 mt-2">
+                        <span class="poppins-regular me-2 note">Change profile</span>
+                        <span class="ms-1">
+                            <a href="#" onclick="showUploadOptions(); return false;">
                                 <i class="fas fa-solid fa-arrow-up-from-bracket"></i>
                             </a>
                         </span>
                     </div>
-                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
 
-                    <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">
-                        <button type="submit" class="btn-verify rounded px-3 me-2">Submit</button>
-                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
-                    </div>
+                    <!-- File Input for Profile Picture -->
+                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="submitProfilePicForm(event)" />
                 </form>
+                <!--Verify Buttons -->
+                <div class="col-md-12 d-flex justify-content-center">
+                    @if ($user->isVerified)
+                    <button class="btn-round fs-5 poppins-regular h-100 w-75 text-black" disabled>
+                        <i class="fas fa-check-circle me-2" style="color: #8FE2ED;"></i>
+                        Verified
+                    </button>
+                    @elseif($user->isVerified == false && $user->verification)
+                    <button class="btn-round pending-color fs-5 h-100 w-75 poppins-regular" disabled>
+                        <i class="fas fa-check-circle me-2" style="color: #BEBEBE;"></i>
+                        Pending
+                    </button>
+                    @else
+                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validphone') }}">
+                        Verify Account
+                    </a>
+                    @endif
+                </div>
 
-                @if($user->isVerified)
-                <div class="col-md-12 d-flex justify-content-center">
-                    <div class="w-100">
-                        <a class="w-100 rounded-3 btn-verified fs-5 d-flex align-items-center justify-content-center" href="#" disabled>
-                            <i class="fas fa-check-circle me-3" style="color: #8FE2ED;"></i>
-                            Verified
-                        </a>
-                    </div>
-                </div>
-                @elseif($user->isVerified == false && $user->verification)
-                <div class="col-md-12 d-flex justify-content-center">
-                    <div class="w-100">
-                        <a class="w-100 rounded-3 btn btn-secondary fs-5 d-flex align-items-center justify-content-center" href="#" disabled>
-                            <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
-                            Pending
-                        </a>
-                    </div>
-                </div>
-                @else
-                <div class="col-md-12 d-flex justify-content-center">
-                    <div class="w-100">
-                        <a class="w-100 rounded-3 btn-verify fs-5 d-flex align-items-center justify-content-center" href="{{ route('validphone') }}">
-                            <i class="fas fa-check-circle me-3" style="color: #BEBEBE;"></i>
-                            Verify Account
-                        </a>
-                    </div>
-                </div>
-                @endif
-
-                <div class="col-md-12 d-flex align-items-center justify-content-center mt-4">
-                    <div class="w-100">
-                        <a class="w-100 rounded-3 btn-save fs-5 d-flex align-items-center justify-content-center" href="{{ route('freelancer-freelancer') }}">
-                            <i class="fas fa-user me-3" style="color: gray;"></i>
+                <div class="col-md-12 align-items-center justify-content-center">
+                    <!-- Switch role -->
+                    <div class="mt-4">
+                        @if ($user->user_type === 'client')
+                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                            <i class="fas fa-user me-2"></i>
                             Be a Freelancer
-                        </a>
-                    </div>
-                </div>
-
-                <div class="col-md-12 d-flex align-items-center justify-content-center mt-4">
-                    <div class="w-100">
-                        <button class="w-100 rounded-3 btn-cancel text-danger fs-5 d-flex align-items-center justify-content-evenly">
-                            <i class="fas fa-trash" style="color: #F38E8E;"></i>
-                            Delete Account
                         </button>
+                        @else
+                        <button class="btn-round h-100 w-75 mt-4" style="background-color: #E1C1D7; color:#91216C">
+                            <i class="fas fa-user me-2"></i>
+                            Be a Client
+                        </button>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Second Column -->
-        <div class="col-md-8 offset-md-1">
+        <div class="col-md-8 col-lg-8 poppins-regular">
             <div class="row my-3">
                 <!-- Basic Info -->
-                <form action="/client/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
+                <form action="/freelancer/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
                     @csrf
                     @method('PATCH')
 
                     <!-- Edit Button -->
-
-                    <div class="d-flex justify-content-start align-items-center mb-2">
-                        <span class="h6 mb-0 me-3 poppins-medium setting-color fs-5">Basic Information</span>
-                        <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
-                            <i class="fas fa-solid fa-pen mb-2 me-2 mt-2"></i>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <h5 class="mb-0 me-3 poppins-medium setting-color">Basic Information</h5>
+                            <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
+                                <i class="fas fa-solid fa-pen my-2 me-2"></i>
+                            </div>
+                        </div>
+                        <!-- Save and Cancel Buttons -->
+                        <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
+                            <button type="submit" class="fs-6 btn-save">Save</button>
+                            <button type="button" class="fs-6 btn-cancel" onclick="cancelEditBasicInfo()">Cancel</button>
                         </div>
                     </div>
 
@@ -108,7 +94,7 @@
                             <!--first column name to bday -->
                             <div class="col-6">
                                 <!-- First Name -->
-                                <label for="first_name" class="form-label">{{ __('First Name') }}</label>
+                                <label for="first_name" class="form-label mb-0">{{ __('First Name') }}</label>
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
                                     name="first_name" value="{{ $user->first_name }}" required autocomplete="first_name" autofocus disabled>
                                 @error('first_name')
@@ -118,7 +104,7 @@
                                 @enderror
 
                                 <!-- Last Name -->
-                                <label for="last_name" class="form-label">{{ __('Last Name') }}</label>
+                                <label for="last_name" class="form-label mb-0 mt-2">{{ __('Last Name') }}</label>
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
                                     name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled>
                                 @error('last_name')
@@ -128,7 +114,7 @@
                                 @enderror
 
                                 <!-- Birthdate -->
-                                <label for="birthdate" class="form-label">{{ __('Birthdate') }}</label>
+                                <label for="birthdate" class="form-label mb-0 mt-2">{{ __('Birthdate') }}</label>
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
                                     name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled>
                                 @error('birthdate')
@@ -138,7 +124,7 @@
                                 @enderror
 
                                 <!-- Email -->
-                                <label for="email" class="form-label">{{ __('Email Address') }}</label>
+                                <label for="email" class="form-label mb-0 mt-2">{{ __('Email Address') }}</label>
                                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ $user->email }}" required autocomplete="email" disabled>
                                 @error('email')
@@ -153,7 +139,7 @@
                             <div class="col-6">
 
                                 <!-- Street -->
-                                <label for="street" class="form-label">{{ __('Street') }}</label>
+                                <label for="street" class="form-label mb-0">{{ __('Street') }}</label>
                                 <input id="street" type="text" class="form-control @error('street') is-invalid @enderror"
                                     name="street" value="{{ old('street', $user->street) }}" required autocomplete="street" disabled>
                                 @error('street')
@@ -163,7 +149,7 @@
                                 @enderror
 
                                 <!-- Barangay -->
-                                <label for="barangay" class="form-label">{{ __('Barangay') }}</label>
+                                <label for="barangay" class="form-label mb-0 mt-2">{{ __('Barangay') }}</label>
                                 <input id="barangay" type="text" class="form-control @error('barangay') is-invalid @enderror"
                                     name="barangay" value="{{ old('barangay', $user->barangay) }}" required autocomplete="barangay" disabled>
                                 @error('barangay')
@@ -173,7 +159,7 @@
                                 @enderror
 
                                 <!-- City -->
-                                <label for="city" class="form-label">{{ __('City') }}</label>
+                                <label for="city" class="form-label mb-0 mt-2">{{ __('City') }}</label>
                                 <input id="city" type="text" class="form-control @error('city') is-invalid @enderror"
                                     name="city" value="{{ old('city', $user->city) }}" required autocomplete="city" disabled>
                                 @error('city')
@@ -183,7 +169,7 @@
                                 @enderror
 
                                 <!-- Contact Number -->
-                                <label for="contact_number" class="form-label">{{ __('Contact Number') }}</label>
+                                <label for="contact_number" class="form-label mb-0 mt-2">{{ __('Contact Number') }}</label>
                                 <input id="contact_number" type="text" class="form-control @error('contact_number') is-invalid @enderror"
                                     name="contact_number" value="{{ old('contact_number', $user->contact_number) }}" required autocomplete="contact_number" disabled>
                                 @error('contact_number')
@@ -196,58 +182,64 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-8 col-lg-6 my-3">
                                 <!-- Password Information -->
                                 <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
-                                    <span class="h6 mb-0 me-3 poppins-medium setting-color fs-5">Password Information</span>
+                                    <h5 class=" mb-0 me-3 poppins-medium setting-color">Password Information</h5>
                                     <div class="text-start" id="edit-button-dt" onclick=" enableEditModeDesktop()">
-                                        <i class="fas fa-solid fa-pen mb-2 me-2 mt-2"></i>
+                                        <i class="fas fa-solid fa-pen my-2 me-2"></i>
                                     </div>
                                 </div>
 
                                 <!-- Password -->
-                                <label for="password" class="form-label">{{ __('Password') }}</label>
+                                <label for="password_current" class="form-label mb-0">{{ __('Current Password') }}</label>
                                 <div class="input-group m-0 p-0">
-                                    <input id="password" type="password" placeholder="Enter New Password" class="form-control"
+                                    <input id="password_current" type="password" placeholder="Enter Current Password" class="form-control @error('password_cuurent') is-invalid @enderror"
+                                        name="password_current" autocomplete="new-password" disabled>
+                                    <button type="button" class="btn border" onclick="togglePasswordVisibility('password_current')" disabled>
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </div>
+                                <label for="password" class="form-label mb-0 mt-2">{{ __('Password') }}</label>
+                                <div class="input-group m-0 p-0">
+                                    <input id="password" type="password" placeholder="Enter New Password" class="form-control @error('password') is-invalid @enderror"
                                         name="password" autocomplete="new-password" disabled>
                                     <button type="button" class="btn border" onclick="togglePasswordVisibility('password')" disabled>
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
+                                @error('password')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
 
                                 <!-- Confirm Password -->
-                                <label for="password_confirmation" class="form-label">{{ __('Confirm Password') }}</label>
+                                <label for="password_confirmation" class="form-label mb-0 mt-2">{{ __('Confirm Password') }}</label>
                                 <div class="input-group m-0 p-0 mb-0">
-                                    <input id="password_confirmation" placeholder="Confirm New Password" type="password" class="form-control"
+                                    <input id="password_confirmation" placeholder="Confirm New Password" type="password" class="form-control @error('password_confirmation') is-invalid @enderror"
                                         name="password_confirmation" autocomplete="new-password" disabled>
                                     <button type="button" class="btn border" onclick="togglePasswordVisibility('password_confirmation')" disabled>
                                         <i class="fas fa-eye"></i>
                                     </button>
                                 </div>
+                                @error('password_confirmation')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                                @enderror
                             </div>
                         </div>
                     </div>
-
-                    <!-- Save and Cancel Buttons -->
-                    <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
-                        <button type="submit" class="fs-5 btn-save px-2">Save</button>
-                        <button type="button" class="fs-5 btn-cancel px-2" onclick="cancelEditBasicInfo()">Cancel</button>
-                    </div>
                 </form>
-
-                <div class="col-md-8 col-sm-12 d-flex justify-content-start align-items-start ms-0 ps-0">
+            </div>
+            <div class="row my-3">
+                <div class="col-md-4 col-lg-6">
                     <!--Social Media -->
-                    @include('components.social_media', ['socmed' => $socmed])
+                    @include('components.social_media', ['socmed' => $user->socmed])
                 </div>
             </div>
-
         </div>
-    </div>
-
-    <!-- Save and Cancel Buttons -->
-    <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
-        <button type="submit" class="fs-5 btn-save px-2">Save</button>
-        <button type="button" class="fs-5 btn-cancel px-2" onclick="cancelEditBasicInfo()">Cancel</button>
     </div>
 </div>
 
@@ -318,6 +310,24 @@
         document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
+    }
+    // Function to show the file input dialog
+    function showUploadOptions() {
+        document.getElementById('profilePicUpload').click();
+    }
+
+    // Function to preview and submit the form automatically upon selecting a file
+    function submitProfilePicForm(event) {
+        // Optional: Show a preview of the selected image before upload
+        const file = event.target.files[0];
+        if (file) {
+            const preview = document.getElementById('profilePicPreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+
+        // Submit the form automatically after image selection
+        document.getElementById('profilePicForm').submit();
     }
 </script>
 @endsection

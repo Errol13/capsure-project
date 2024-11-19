@@ -1,4 +1,4 @@
-<div class="mt-2">
+<div class="my-2">
     <div class="text-end d-flex align-items-center mt-4">
         <h5 class=" mb-0 me-3 poppins-medium setting-color">Awards & Certificates</h5>
         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#addAwardsModal">

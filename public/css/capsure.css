@@ -729,7 +729,7 @@ select#year {
 }
 
 .fs-sm-name {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     /* Font size for small screens */
 }
 
@@ -791,10 +791,6 @@ select#year {
     height: 30px;
     overflow: hidden;
     object-fit: contain;
-}
-
-.txt-review {
-    color: #91216C;
 }
 
 .rvw-container {
@@ -1125,7 +1121,7 @@ select:disabled {
 
     /*ProfilePage */
     .fs-md {
-        font-size: 1rem;
+        font-size: 1.0rem;
     }
 
     .fs-md-name {

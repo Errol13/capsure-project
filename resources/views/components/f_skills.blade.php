@@ -5,7 +5,7 @@
     @else
     <div class="accordion" id="skillsAccordion">
         <!-- Accordion Item for Skills -->
-        <div class="accordion-item">
+        <div class="accordion-item" style="background-color: white;">
             <h2 class="accordion-header" id="headingSkills">
                 <div class="d-flex justify-content-between align-items-center">
                     <span class="h6 mb-0"></span>
