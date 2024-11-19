@@ -14,9 +14,15 @@ class Suspension extends Model
         'user_id',
         'isSuspended',
         'total_successful_hiring',
-        'start_date',
-        'end_date',
+        'start_at',
+        'end_at',
     ];
+
+    protected $casts = [
+        'start_at' => 'datetime',
+        'end_at' => 'datetime',
+    ];
+    
 
     protected $primaryKey = 'suspension_id';
 

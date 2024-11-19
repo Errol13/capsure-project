@@ -144,12 +144,3 @@ Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class
 Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
 
 #Admin
-Route::post('/verifications/{verification}/verify', function (Verification $verification) {
-    VerificationResource::verifyRequest($verification);
-    return redirect()->back()->with('message', 'Verification successful.');
-})->name('filament.resources.verifications.verify');
-
-Route::post('/verifications/{verification}/resend', function (Verification $verification) {
-    VerificationResource::resendVerificationNotice($verification);
-    return redirect()->back()->with('message', 'Verification notice resent.');
-})->name('filament.resources.verifications.resend');

@@ -1,7 +1,6 @@
 <!-- Fancybox CSS -->
 <link href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" rel="stylesheet">
 
-
 <div class="space-y-6">
     <!-- User Profile Section -->
     <div class="flex items-center space-x-4">
