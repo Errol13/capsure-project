@@ -10,7 +10,5 @@ Artisan::command('inspire', function () {
 })->purpose('Display an inspiring quote')->hourly();
 
 // Schedule commands
-
-
 Schedule::command('app:update-transaction-status')->everyMinute();
 

@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\Hiring\Event;
 use App\Models\Profile\Report;
+use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -310,5 +311,20 @@ class ProfileController extends Controller
     $report->save();
 
     return response()->json(['success' => true]); //shows true to show the alert success 
+  }
+
+  //viewAllReviews
+  public function showAllReviews(){
+    $user = auth()->user();
+    $reviews = collect();
+
+    if($user->user_type === 'freelancer'){
+      $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->get();
+    }
+    else if($user->user_type === 'client'){
+      $reviews = $user->client->reviews()->where('reviewee_role', 'client')->get();
+    }
+
+    return view('components.Profile.viewAllReviews', compact('reviews'));
   }
 }

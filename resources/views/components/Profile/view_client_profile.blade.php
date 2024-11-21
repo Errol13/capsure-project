@@ -203,7 +203,7 @@
                     @endif
                 </div>
                 @if($totalReviews > 0)
-                <a class="fs-sm fs-md poppins-light txt-review" href="#">See All Reviews</a>
+                <a class="fs-sm fs-md poppins-light txt-review" href="{{route('allReviews.show')}}">See All Reviews</a>
                 @endif
             </div>
 

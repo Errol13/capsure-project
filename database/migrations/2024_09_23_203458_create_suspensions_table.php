@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id('suspension_id');
             $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->boolean('isSuspended')->default(false);
-            $table->timestamp('start_at')->nullable(); // Includes date and time
-            $table->timestamp('end_at')->nullable();   // Includes date and time
+            $table->timestamp('start_at')->nullable(); 
+            $table->timestamp('end_at')->nullable();   
+            $table->json('suspended_reason')->nullable();
             $table->timestamps(); 
         });        
     }

@@ -45,6 +45,7 @@ class ArchiveReportJob implements ShouldQueue
             $suspension->isSuspended = false;
             $suspension->start_at= null;
             $suspension->end_at = null;
+            $suspension->suspended_reason = null;
             $suspension->save();
         }
     }

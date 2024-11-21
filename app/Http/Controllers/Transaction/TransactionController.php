@@ -33,6 +33,11 @@ class TransactionController extends Controller
         };
 
         $ongoingEvents = $events->filter(function ($event) use ($today) {
+
+            if ($event->transactions->isEmpty()) {
+                return false; // Exclude events with no transactions
+            }
+
             // Check if the event is currently ongoing
             $isOngoing = $event->start_date <= $today && $event->end_date >= $today;
 
@@ -61,9 +66,11 @@ class TransactionController extends Controller
         $ongoingEvents = $sortEventsByDate($ongoingEvents);
 
 
-
         // Filter for upcoming events (start_date is in the future)
         $upcomingEvents = $events->filter(function ($event) use ($today) {
+            if ($event->transactions->isEmpty()) {
+                return false; // Exclude events with no transactions
+            }
             return $event->start_date > $today;
         })->map(function ($event) use ($timezone) {
             $event = $this->formatEventDates($event, $timezone);
@@ -74,6 +81,10 @@ class TransactionController extends Controller
 
         // Filter for previous events (end_date is in the past, and none of the transactions have status 'On-going', and client has made reviews)
         $previousEvents = $events->filter(function ($event) use ($today) {
+            if ($event->transactions->isEmpty()) {
+                return false; // Exclude events with no transactions
+            }
+
             $hasOngoingTransaction = $event->transactions->contains(function ($transaction) {
                 return $transaction->transaction_status === 'Ongoing';
             });
@@ -92,6 +103,7 @@ class TransactionController extends Controller
         });
         $previousEvents = $sortEventsByDate($previousEvents);
 
+        
         // Get transactions for each event category
         $transactionsByEvent = [
             'ongoing' => $ongoingEvents->map(function ($event) {
@@ -113,6 +125,14 @@ class TransactionController extends Controller
                 ];
             }),
         ];
+
+        // dd($ongoingEvents->map(function ($event) {
+        //     return [
+        //         'event' => $event,
+        //         'transactions' => $event->transactions
+        //     ];
+        // }));
+        
 
         // Log for debugging 
         //Log::info('Ongoing: ', $transactionsByEvent['ongoing']->toArray());
@@ -167,7 +187,7 @@ class TransactionController extends Controller
             //check if the freelancer made a review
             $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists();
 
-            // Include transactions with "On-going" status or that are ongoing by date
+            // Include transactions with "On-going" status or that is ongoing by date
             return ($transaction->transaction_status === 'Ongoing' && $madeaReview !== true) || $today->between($startDate, $endDate);
         })->sortBy(function ($transaction) {
             // Sort by the event's start_date
@@ -176,7 +196,7 @@ class TransactionController extends Controller
 
         // Filter for upcoming transactions (start_date is in the future)
         $upcomingTransactions = $transactions->filter(function ($transaction) use ($today) {
-            return Carbon::parse($transaction->event->start_date)->greaterThan($today);
+            return Carbon::parse($transaction->event->start_date)->greaterThan($today) && $transaction->status === 'Pending';
         });
 
         // Filter for previous transactions (end_date is in the past)
@@ -185,10 +205,8 @@ class TransactionController extends Controller
             $madeaReview = $transaction->reviews()->where('reviewee_role', 'client')->exists();
             
             return Carbon::parse($transaction->event->end_date)->lessThan($today)
-                && $transaction->transaction_status !== 'Ongoing' || $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
+                && $transaction->transaction_status !== 'Ongoing' && $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
         });
-
-
 
         return view(
             'freelancer.f_myTransaction',
