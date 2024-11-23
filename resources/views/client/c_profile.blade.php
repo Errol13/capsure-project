@@ -57,10 +57,10 @@
                         $totalReviews = $user->client->reviews()->where('reviewee_role', 'client')->count();
                         @endphp
 
-                        <h6 class="mb-0 me-4">Rating:</h6>
                         @if($user->client->avg_rating == 0)
                         <span class="fs-6 open-sans-reg light-color-prof fst-italic text-muted">No ratings yet</span>
                         @else
+                        <h6 class="mb-0 me-4">Rating:</h6>
                         <!-- Star Rating Container -->
                         <div class="star-rating">
                             <div class="row">

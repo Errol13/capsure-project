@@ -13,6 +13,7 @@ class HiringRequestSent extends Notification
 
     protected $clientName;
     protected $eventTitle;
+   
 
     /**
      * Create a new notification instance.

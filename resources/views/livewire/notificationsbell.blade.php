@@ -12,12 +12,12 @@
                     <span class="fw-bold">Notifications</span>
                     <a href="#" class="text-decoration-none" wire:click.prevent="markAllAsRead">Mark all as Read</a>
                 </div>
-            </li>
+            </li> 
             <li>
                 <hr class="dropdown-divider">
             </li>
 
-            @forelse($notifications->take(4) as $notification) <!-- Show only the latest 4 notifications -->
+            @forelse($notifications as $notification) <!-- Show only the latest 4 notifications -->
                 <li>
                     <a class="dropdown-item" href="{{ $notification->data['url'] }}">
                         <strong class="text-wrap">{{ $notification->data['message'] }}</strong>
@@ -34,7 +34,7 @@
                 <hr class="dropdown-divider">
             </li>
             <li>
-                <a class="dropdown-item text-center" href="#">See All</a>
+                <a class="dropdown-item text-center" href="{{route('allNotifications.show')}}">See All</a>
             </li>
         </ul>
     </li>

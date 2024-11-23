@@ -591,6 +591,7 @@ select#year {
 
 .btn-seeprof {
     border-radius: 25px; 
+    font-weight: 600; 
     border-color: #91216C; 
     color: #91216C;
     margin: 0;

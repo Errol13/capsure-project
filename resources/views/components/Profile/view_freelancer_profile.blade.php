@@ -138,9 +138,11 @@
                             <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
                                 @csrf
                                 <input type="hidden" name="recipientId" value="{{ $user->id }}">
-                                <i class="fas fa-comment text-purple fs-6 me-4 rounded-end-1 px-3 py-2 me-3 me-md-4" style="background-color: white;cursor: pointer;"></i>
+                                <button type="submit" class="btn border-0 m-0 p-0">
+                                    <i class="fas fa-comment text-purple fs-6 me-4 rounded-end-1 border border-1 px-3 py-2 me-3 me-md-4" style="background-color: white;cursor: pointer;"></i>
+                                </button>
                             </form>
-                                <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportProfileModal"
+                            <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportProfileModal"
                                 style="color: crimson; cursor: pointer;"></i>
                         </div>
                         <!-- Hire Modal -->
@@ -154,7 +156,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" style="background-color: white;">
         <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC;">
             <!--Awards and Certifications -->
@@ -237,7 +239,6 @@
         </div>
     </div>
 
-<<<<<<< HEAD
     <div class="row d-block d-lg-flex justify-content-center pe-3">
         <div class="col col-lg-4 mb-3 pe-0">
             <!--Client Review -->
@@ -252,141 +253,13 @@
                         @if($user->freelancer->reviews->isNotEmpty())
                         @if($totalReviews > 1)
                         <p class="mb-0 fs-smaller">({{$totalReviews}} reviews)</p>
-=======
-    <!--Client Review -->
-    <section id="client-reviews">
-        <div class="d-flex justify-content-between align-items-center">
-            <div class="d-flex align-items-center">
-                <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Client Reviews</h2>
-                @if($user->freelancer->reviews->isNotEmpty())
-                <p class="mb-0 fs-smaller">({{$user->freelancer->reviews->count()}} reviews)</p>
-                @endif
-            </div>
-            @if($user->freelancer->reviews->isNotEmpty())
-            <a class="fs-sm fs-md poppins-light txt-review" href="{{route('allReviews.show')}}">See All Reviews</a>
-            @endif
-        </div>
-
-        @if($user->freelancer->reviews->isEmpty())
-        <p class="fs-6 text-center text-muted">No Reviews</p>
-        @else
-
-        <p class="text-center fs-smaller fs-md mt-2">Recent Projects</p>
-
-        <!-- Reviews -->
-        @foreach($reviews as $review)
-
-        @php
-        $start_date_formatted = \Carbon\Carbon::parse($review->transaction->event->start_date)->format('M j, Y');
-        $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
-        @endphp
-        <div class="container">
-            <div class="row d-flex align-items-center justify-content-between">
-                <!-- Review Item  -->
-                <div class="col-sm-12 col-md-5 mb-4 rounded rvw-container ">
-                    <div class="d-flex align-items-center justify-content-between m-1 mb-0">
-                        <div>
-                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>
-                        </div>
-                        <a class="fs-sm fs-md poppins-light txt-review"
-                            href="{{route('client-viewpost', ['id' => $review->transaction->event->event_id] )}}">See Post</a>
-                    </div>
-                    <p class="fs-sm poppins-light mt-0">{{$start_date_formatted}} - {{$end_date_formatted}}</p>
-                    <div class="d-flex">
-                        <div class="text-center me-3">
-                            <!-- Profile Picture -->
-                            <img src="{{ asset($review->client->user->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
-                        </div>
-                        <div>
-                            <!-- Review Content -->
-                            <h5 class="font-weight-bold">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </h5>
-                            <div class=" star-rating mb-2">
-                                @for ($i = 1; $i <= 5; $i++)
-                                    @if ($i <=floor($review->rating))
-                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
-                                    @elseif ($i == ceil($review->rating) && $review->rating - floor($review->rating) > 0)
-                                    <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
-                                    @else
-                                    <i class="far fa-star"></i> <!-- Empty star -->
-                                    @endif
-
-                                    @endfor
-                                    <span class="ms-1">{{ number_format($review->rating, 1) }}</span>
-                            </div>
-                            <p>{{$review->content}}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-1"></div>
-
-            </div>
-        </div>
-        @endforeach
-        @endif
-    </section>
-
-    <!--Portfolio -->
-    <section id="portfolio-freelancer">
-        <div class="row">
-            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">PORTFOLIO</h2>
-
-            <div class="container mt-2 mb-4">
-
-                @if ($user->freelancer->portfolios->isEmpty())
-                <p class="text-muted">No portfolios found.</p>
-
-                @else
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" id="portfolioTabs" role="tablist">
-                    @foreach ($user->freelancer->portfolios as $index => $portfolio)
-                    <li class="nav-item" role="presentation">
-                        <a class="nav-link {{ $index == 0 ? 'active' : '' }}" id="tab-{{ $portfolio->portfolio_id }}" data-bs-toggle="tab" href="#portfolio-{{ $portfolio->portfolio_id }}" role="tab" aria-controls="portfolio-{{ $portfolio->portfolio_id }}" aria-selected="{{ $index == 0 ? 'true' : 'false' }}">
-                            {{ $portfolio->album_name }}
-                        </a>
-                    </li>
-                    @endforeach
-                </ul>
-
-                <!-- Tab content -->
-                <div class="tab-content mt-3" id="portfolioTabsContent">
-                    @foreach ($user->freelancer->portfolios as $index => $portfolio)
-                    <div class="tab-pane fade {{ $index == 0 ? 'show active' : '' }}" id="portfolio-{{ $portfolio->portfolio_id }}" role="tabpanel" aria-labelledby="tab-{{ $portfolio->portfolio_id }}">
-                        @if ($portfolio->path)
-                        <div class="d-flex flex-wrap">
-                            @foreach (json_decode($portfolio->path) as $filePath)
-                            @php
-                            $relativePath = str_replace('public/', '', $filePath);
-                            $fileName = basename($relativePath);
-                            $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
-                            @endphp
-                            @if (Str::startsWith($relativePath, 'portfolios/' . $portfolio->portfolio_id . '/'))
-                            <div class="position-relative">
-                                @if (in_array($fileExtension, ['jpg', 'jpeg', 'png', 'gif']))
-                                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                                    <img src="{{ asset('storage/' . $relativePath) }}" alt="Portfolio Image" class="img-profile-portfolio">
-                                </a>
-                                @elseif (in_array($fileExtension, ['mp4', 'mov', 'avi']))
-                                <a href="{{ asset('storage/' . $relativePath) }}" data-fancybox="gallery" data-caption="{{ $portfolio->album_name }}">
-                                    <video src="{{ asset('storage/' . $relativePath) }}" controls class="img-profile-portfolio"></video>
-                                </a>
-                                @else
-                                <p>Unsupported file type: {{ $fileExtension }}</p>
-                                @endif
-                            </div>
-                            @else
-                            <p>File path mismatch: {{ $relativePath }}</p>
-                            @endif
-                            @endforeach
-                        </div>
->>>>>>> a07668e966fa08d9234af330b21745dc6b697b64
                         @else
                         <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
                         @endif
                         @endif
                     </div>
                     @if($totalReviews > 0)
-                    <a class="poppins-light text-purple" href="#" style="font-size:small;">See All Reviews</a>
+                    <a class="poppins-light text-purple" href="{{route('allReviews.show')}}" style="font-size:small;">See All Reviews</a>
                     @endif
                 </div>
 

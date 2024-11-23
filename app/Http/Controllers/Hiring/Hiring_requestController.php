@@ -22,14 +22,14 @@ class Hiring_requestController extends Controller
     // Hire freelancer
     public function hireFreelancer(Request $request)
     {
-        Log::info('Request Data:', $request->all());
+        // Log::info('Request Data:', $request->all());
 
         // Clean and convert client_pricing and freelancer_pricing
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
 
-        Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
-        Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
+        // Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
+        // Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
         // Convert cleaned values to float
         $cleanedData = [
@@ -46,7 +46,7 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => 'required|numeric|min:0',
         ]);
 
-        Log::info('Validated Data:', $validated);
+        // Log::info('Validated Data:', $validated);
 
         $eventJob = EventJob::find($validated['job_id']);
         $event = $eventJob->event;
@@ -54,7 +54,7 @@ class Hiring_requestController extends Controller
         $jobStartTime = $event->start_date;
         $jobEndTime = $event->end_date;
 
-        Log::info('Validated Data:', $event->toArray());
+        // Log::info('Validated Data:', $event->toArray());
 
         // Prevent duplication of hiring request
         $hiringRequestExists = Hiring_request::where('freelancer_id', $validated['freelancer_id'])
@@ -80,7 +80,6 @@ class Hiring_requestController extends Controller
             return response()->json(['error' => 'No available slots for this job.'], 400);
         }
 
-
         $hasTransactions = Transaction::where('freelancer_id', $validated['freelancer_id'])->exists();
 
         if ($hasTransactions) {
@@ -103,8 +102,6 @@ class Hiring_requestController extends Controller
             }
         }
 
-
-
         Hiring_request::create([
             'freelancer_id' => $validated['freelancer_id'],
             'job_id' => $validated['job_id'],
@@ -119,22 +116,24 @@ class Hiring_requestController extends Controller
         // Update job application status
         $acceptedJobApplication = Job_application::where('job_id', $eventJob->job_id)
             ->where('freelancer_id', $validated['freelancer_id'])
-            ->firstOrFail();
+            ->first();
 
         //if there is a job application update the status
         if ($acceptedJobApplication) {
             $acceptedJobApplication->update(['status' => 'Accepted']);
         }
 
+        Log::info("QWERT");
+        
         // Retrieve client and event details
         $client = User::find($validated['client_id']);
         $eventTitle = $eventJob->event->title;
 
+        // Log::info("QWERTAR");
+
         // Notify the freelancer
         $freelancer = User::find($validated['freelancer_id']);
         $freelancer->notify(new HiringRequestSent($client->first_name, $eventTitle));
-
-        Log::info('Redirecting to Viewpost of Client with ID: ' . $event->event_id);
 
         if ($request->ajax()) {
             // Return JSON response for async requests
@@ -148,7 +147,7 @@ class Hiring_requestController extends Controller
     //edit the offer, negotiation
     public function negotiatePrice(Request $request)
     {
-        Log::info('Request Data:', $request->all());
+        // Log::info('Request Data:', $request->all());
 
         // Clean and convert client_pricing and freelancer_pricing
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
@@ -164,7 +163,7 @@ class Hiring_requestController extends Controller
             'client_pricing' => 'required|numeric|min:0',
         ]);
 
-        Log::info('Validated Data:', $validated);
+        // Log::info('Validated Data:', $validated);
 
         //get the hiring request
         $hiringRequest = Hiring_request::find($validated['hiring_request_id']);
@@ -188,9 +187,7 @@ class Hiring_requestController extends Controller
         if ($jobApplication) {
             $jobApplication->status = 'Pending';
             $jobApplication->save();
-            Log::info('Retrieved Job App:', $jobApplication->toArray());
-        } else {
-            Log::warning('Job Application is null.');
+            // Log::info('Retrieved Job App:', $jobApplication->toArray());
         }
 
         //delete the record

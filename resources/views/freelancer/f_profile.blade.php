@@ -53,10 +53,11 @@
                         $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
                         @endphp
 
-                        <h6 class="fw-bold me-3 mb-0">Rating:</h6>
+                        
                         @if($user->freelancer->avg_rating == 0)
-                        <h6 class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</h6>
+                        <span class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</span>
                         @else
+                        <h6 class="fw-bold me-3 mb-0">Rating:</h6>
                         <!-- Star Rating Container -->
                         <div class="star-rating ms-2">
                             <div class="row">
@@ -230,7 +231,7 @@
                         @endif
                     </div>
                     @if($totalReviews > 0)
-                    <a class="poppins-light text-purple" href="#" style="font-size:small;">See All Reviews</a>
+                    <a class="poppins-light text-purple" href="{{route('allReviews.show')}}" style="font-size:small;">See All Reviews</a>
                     @endif
                 </div>
 

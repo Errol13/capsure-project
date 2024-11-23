@@ -43,7 +43,7 @@
                 <div class="row my-3">
                     <!-- Full Name and Verification Status -->
                     <div class="col-12 col-md-12 mt-2">
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex justify-content-between align-items-center">
                             <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
                                 {{ $fullName }}
                             </h5>
@@ -53,7 +53,23 @@
                                 Verified
                             </span>
                             @endif
+
+                            <!--Chat and Report-->
+                            <div class="d-flex justify-content-start align-items-center me-2 mt-lg-0">
+                                <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
+                                    @csrf
+                                    <input type="hidden" name="recipientId" value="{{ $user->id }}">
+                                   <button type="submit"  class="btn border-0 m-0 p-0"> 
+                                    <i class="fas fa-comment text-purple fs-5 me-4 rounded-end-1 px-3 py-2 me-3 me-md-4" style="background-color: #FCF2F9;cursor: pointer;"></i></button>
+                                </form>
+                                <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportProfileModal"
+                                    style="color: crimson; cursor: pointer;"></i>
+                            </div>
+
+                            <!-- Report Modal -->
+                            @include('modals.c_report', ['reportee' => $user])
                         </div>
+
                     </div>
                     <span class="note">{{$user->age}} years old</span>
 
@@ -62,10 +78,11 @@
                         $totalReviews = $user->client->reviews()->where('reviewee_role', 'client')->count();
                         @endphp
 
-                        <h6 class="mb-0 me-4">Rating:</h6>
+
                         @if($user->client->avg_rating == 0)
                         <span class="fs-6 open-sans-reg light-color-prof fst-italic text-muted">No ratings yet</span>
                         @else
+                        <h6 class="mb-0 me-3">Rating:</h6>
                         <!-- Star Rating Container -->
                         <div class="star-rating">
                             <div class="row">
@@ -136,7 +153,7 @@
                             <h1 class=" fs-md-3 me-2 mb-0 fw-bold" style="color: #91216C;">{{$user->client->events->count()}}</h1>
                         </div>
                         <h5 class=" fs-md-4 mb-0 poppins-medium light-color-prof me-3 text-center" style="white-space: nowrap;">Events posted</h5>
-                        <a href="#" class="fs-sm poppins-medium justify-content-center text-center text-purple" style="white-space: nowrap;text-decoration:none;">
+                        <a href="{{route('allPosts.show', ['id' => $user->client->user_id] )}}" class="fs-sm poppins-medium justify-content-center text-center text-purple" style="white-space: nowrap;text-decoration:none;">
                             See Posts
                         </a>
                     </div>
