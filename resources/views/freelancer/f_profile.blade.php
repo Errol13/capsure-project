@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container py-2 my-3">
-    <div class="d-flex justify-content-center">
-        <div class="container row rounded-4 " style="background-color: #FCF2F9; box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);">
+    <div class="container rounded-4" style="background-color: #FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+        <div class="row d-flex justify-content-center">
             <div class="col-5 col-md-4 col-lg-4">
                 <!--Profile Pic and Personal Information -->
                 <div class="row my-3">
@@ -11,9 +11,8 @@
                         <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
                     </div>
                 </div>
-
                 <!-- Social Media Accounts -->
-                <div class="row my-2 text-center">
+                <div class="row mb-2 text-center">
                     <div class="col-12 d-flex align-items-center justify-content-center">
                         <div class="d-flex align-items-center">
                             <a href="{{ $socialMediaLinks['Facebook'] ?? '#' }}" target="_blank">
@@ -33,22 +32,19 @@
                     </div>
                 </div>
             </div>
-
-            <div class="col-7 col-md-8 col-lg-8 ps-4 poppins-regular">
+            <div class="col-7 col-md-8 col-lg-8 ps-4">
                 <div class="row my-3">
                     <!-- Full Name and Verification Status -->
-                    <div class="col-12 col-md-12 mt-2">
-                        <div class="d-flex align-items-center">
-                            <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
-                                {{ $fullName }}
-                            </h5>
-                            @if($user->isVerified)
-                            <span class="d-flex align-items-center note">
-                                <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
-                                Verified
-                            </span>
-                            @endif
-                        </div>
+                    <div class="mt-2 d-flex align-items-center">
+                        <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
+                            {{ $fullName }}
+                        </h5>
+                        @if($user->isVerified)
+                        <span class="d-flex align-items-center note">
+                            <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
+                            Verified
+                        </span>
+                        @endif
                     </div>
                     <span class="note">{{$user->age}} years old</span>
 
@@ -57,15 +53,15 @@
                         $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
                         @endphp
 
-                        <h6 class="mb-0 me-4">Rating:</h6>
+                        <h6 class="fw-bold me-3 mb-0">Rating:</h6>
                         @if($user->freelancer->avg_rating == 0)
-                        <span class="fs-6 open-sans-reg light-color-prof fst-italic text-muted">No ratings yet</span>
+                        <h6 class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</h6>
                         @else
                         <!-- Star Rating Container -->
-                        <div class="star-rating">
+                        <div class="star-rating ms-2">
                             <div class="row">
                                 <div class="col-auto p-0 me-1">
-                                    <span class="mb-0 fs-sm fs-md">{{ number_format($user->freelancer->avg_rating, 1) }}</span>
+                                    <span class=" fs-sm fs-md">{{ number_format($user->freelancer->avg_rating, 1) }}</span>
                                 </div>
                                 <div class="col-auto p-0">
                                     <div class="d-flex align-items-center mt-1">
@@ -91,63 +87,55 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
+                    </div>
+
+                    @if(empty($user->freelancer->skills))
+                    <div></div>
+                    @else
+                    <div class="mb-2">
+                        @foreach ($user->freelancer->skills as $index => $skill)
+                        <span class="text-start badge badge-custom rounded-pill me-1"
+                            style="background-color: #91216C;">
+                            {{ $skill }}
+                        </span>
+                        @endforeach
                     </div>
                     @endif
 
-                    <div class="row my-1">
-                        @if(empty($user->freelancer->skills))
-                        <div></div>
-                        @else
-                        <div class="col col-lg-6">
-                            @foreach ($user->freelancer->skills as $index => $skill)
-                            <span class="text-start badge badge-custom rounded-pill me-1"
-                                style="background-color: #91216C;">
-                                {{ $skill }}
-                            </span>
-                            @endforeach
+                    <!--Address and Contacts -->
+                    <div class="row my-2 text-start">
+                        <div class="col-12 d-flex align-items-center justify-content-start">
+                            <i class="fas fa-location-dot text-purple"></i>
+                            <small class="text-start ms-2" style="line-height: 1;">
+                                <span>{{$user->street}}</span>
+                                <span>{{$user->barangay}}</span>
+                                <span>{{$user->city}}</span>
+                            </small>
                         </div>
-
+                        <div class="col-12 d-flex align-items-center justify-content-start my-2">
+                            <i class="fas fa-sharp fa-thin fa-envelope text-purple"></i>
+                            <small class="text-start ms-2">{{$user->email}}</small>
+                        </div>
+                        <div class="col-12 d-flex align-items-center justify-content-start">
+                            <i class=" fas fa-solid fa-phone text-purple"></i>
+                            <small class="text-start ms-2">{{$user->contact_number}}</small>
+                        </div>
                     </div>
-                    @endif
+
+                    <p class="mt-3 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
                 </div>
-
-                <!--Address and Contacts -->
-                <div class="row my-2 text-start">
-                    <div class="col-12 d-flex align-items-center justify-content-start">
-                        <i class="fas fa-location-dot text-purple"></i>
-                        <small class="text-start ms-2" style="line-height: 1;">
-                            <span>{{$user->street}}</span>
-                            <span>{{$user->barangay}}</span>
-                            <span>{{$user->city}}</span>
-                        </small>
-                    </div>
-                    <div class="col-12 d-flex align-items-center justify-content-start my-2">
-                        <i class="fas fa-sharp fa-thin fa-envelope text-purple"></i>
-                        <small class="text-start ms-2">{{$user->email}}</small>
-                    </div>
-                    <div class="col-12 d-flex align-items-center justify-content-start">
-                        <i class=" fas fa-solid fa-phone text-purple"></i>
-                        <small class="text-start ms-2">{{$user->contact_number}}</small>
-                    </div>
-                </div>
-
-                <p class="mt-3 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
             </div>
         </div>
     </div>
-
-    <div class="d-flex justify-content-center my-3 rounded-4" style="background-color: white;">
-        <div class="row">
+  <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" style="background-color: white;">
             <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC;">
                 <!--Awards and Certifications -->
-                <h6 class="my-3 poppins-medium text-center">Awards & Certifications</h6>
-
+                <h5 class="my-3 fs-sm poppins-medium text-center">Awards & Certifications</h5>
                 <div class="row text-center">
                     @if($user->freelancer->certificates->isEmpty())
                     <div class="col-12 d-flex align-items-center justify-content-center">
-                        <div class="ms-2 ms-md-3">
-                            <p class="mb-0 fs-sm-cont fs-md text-start text-muted">No Awards</p>
-                        </div>
+                        <h6 class="fst-italic text-muted">No Awards</h6>
                     </div>
                     @else
                     @foreach($user->freelancer->certificates as $certificate)
@@ -170,11 +158,10 @@
                     @endif
                 </div>
             </div>
-
-            <div class="col-7 col-md-8 col-lg-8 ps-3 poppins-regular">
+            <div class="col-7 col-md-8 col-lg-8 ps-3">
+                <h3 class=" poppins-medium mt-3">Services</h3>
                 <div class="container row">
                     <!--Services -->
-                    <h5 class=" poppins-medium mt-3">Services</h5>
 
                     <!--Team -->
                     <div class="my-3">
@@ -182,17 +169,17 @@
                     </div>
 
                     @foreach ($user->freelancer->services as $service)
-                    <div class="row mt-1 mb-2 justify-content-center">
-                        <div class=" d-md-flex d-lg-flex align-items-center justify-content-center rounded py-2" style="background-color:#FCF2F9; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                            <div class="col-auto">
+                    <div class="row mb-2 justify-content-center poppins-regular">
+                        <div class=" d-md-flex d-lg-flex align-items-center justify-content-center rounded py-2" style="background-color:#FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                            <div class="col-auto fs-sm">
                                 <span>{{$service->job_title}}</span>
                             </div>
-                            <hr class="col m-0 p-0 d-lg-flex d-none">
-                            <div class="col-auto d-flex ">
+                            <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
+                            <div class="col-auto d-flex fs-sm">
                                 <span>₱{{$service->job_fee}}</span>
                                 <span>{{$service->fee_type}}</span>
                             </div>
-                            <hr class="col m-0 p-0 d-lg-flex d-none">
+                            <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
                             <div class="col-end">
                                 @if ($service->isAvailable === true)
                                 <span class="badge text-success fs-smaller fs-md">Available</span>
@@ -206,7 +193,7 @@
                 </div>
                 <div class="row">
                     <!--Terms of Service-->
-                    <h5 class="mt-3 poppins-medium">Terms of Service</h5>
+                    <h3 class="mt-3 poppins-medium">Terms of Service</h3>
                     <div>
                         @if($user->freelancer->terms_and_conditions != null)
                         <p class="text-start mt-2 me-2">
@@ -222,14 +209,12 @@
                 </div>
             </div>
         </div>
-    </div>
 
     <div class="row d-block d-lg-flex justify-content-center pe-3">
-        <!--Client Review -->
-        <div class="col col-lg-4 my-3">
+        <div class="col col-lg-4 mb-3 pe-0">
+            <!--Client Review -->
             <section id="client-reviews ">
-                <div class="d-flex justify-content-between align-items-center mt-3 ">
-
+                <div class="d-flex justify-content-between align-items-center mx-2">
                     <!--count the reviews for freelancer -->
                     @php
                     $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
@@ -250,7 +235,7 @@
                 </div>
 
                 @if($user->freelancer->reviews->isEmpty())
-                <h6 class="text-center text-muted">No Reviews</h6>
+                <h6 class="text-center fst-italic text-muted">No Reviews</h6>
                 @else
                 <p class="text-center my-2">Recent Projects</p>
 
@@ -261,7 +246,7 @@
                 $start_date_formatted = \Carbon\Carbon::parse($review->transaction->event->start_date)->format('M j, Y');
                 $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
                 @endphp
-                <div class="container card rounded-4" style="background-color: white;box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                     <div class="row d-flex align-items-center justify-content-center">
                         <!-- Review Item  -->
                         <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#FCF2F9;">
@@ -312,16 +297,15 @@
                 @endif
             </section>
         </div>
-        <div class="col col-lg-8 ps-4 poppins-regular">
+        <div class="col col-lg-8 ps-4 mb-4">
             <!--Portfolio -->
             <section id="portfolio-freelancer">
                 <div class="row rounded-4" style="background-color: white;">
                     <h3 class="text-start poppins-medium me-2 mt-3">Portfolio</h3>
 
                     <div class="container mt-2 mb-4">
-
                         @if ($user->freelancer->portfolios->isEmpty())
-                        <p class="text-muted">No portfolios found.</p>
+                        <h6 class="fst-italic text-muted">No portfolios found.</h6>
 
                         @else
                         <!-- Nav tabs -->
@@ -381,7 +365,6 @@
                             "speed", // Speed button
                             "pip", // Picture in Picture button
                             "close", // Close button
-
                         ],
                         protect: true // Disable right-click
                     });
@@ -390,5 +373,4 @@
         </div>
     </div>
 </div>
-
 @endsection

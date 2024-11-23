@@ -57,8 +57,8 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mt-3">
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm me-2">See Details</a>
-                                <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class="btn-round" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm me-2">View Details</a>
+                                <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class="btn-round btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
                             </div>
                         </div>
                     </div>

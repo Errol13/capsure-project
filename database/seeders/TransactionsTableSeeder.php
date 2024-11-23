@@ -32,7 +32,7 @@ class TransactionsTableSeeder extends Seeder
                 'hiring_request_id' => 2,
                 'payment_amount' => 800.00,
                 'payment_status' => 'Unpaid',
-                'transaction_status' => 'Pending',
+                'transaction_status' => 'Ongoing',
             ],
 
             [

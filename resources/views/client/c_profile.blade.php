@@ -2,8 +2,8 @@
 
 @section('content')
 <div class="container py-2 my-3">
-    <div class="d-flex justify-content-center">
-        <div class="container row rounded-4 " style="background-color: #FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+    <div class="container rounded-4" style="background-color: #FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+        <div class="row d-flex justify-content-center">
             <div class="col-5 col-md-4 col-lg-4">
                 <!--Profile Pic and Personal Information -->
                 <div class="row my-3">
@@ -34,7 +34,7 @@
                 </div>
             </div>
 
-            <div class="col-7 col-md-8 col-lg-8 ps-4 poppins-regular">
+            <div class="col-7 col-md-8 col-lg-8 ps-4">
                 <div class="row my-3">
                     <!-- Full Name and Verification Status -->
                     <div class="col-12 col-md-12 mt-2">
@@ -91,8 +91,9 @@
                                 </div>
                             </div>
                         </div>
+                        @endif
                     </div>
-                    @endif
+
                 </div>
 
                 <!--Address and Contacts -->
@@ -191,7 +192,7 @@
                 <p class="text-center fs-5 text-muted">No reviews</p>
                 @else
                 <!-- Reviews -->
-                @foreach($eventsWithReviews->take(2) as $eventsWithReview)
+                @foreach($eventsWithReviews as $eventsWithReview)
 
                 @php
                 $start_date_formatted = \Carbon\Carbon::parse($eventsWithReview->start_date)->format('M j, Y');
@@ -243,7 +244,7 @@
                                     <p class="mb-1" style="line-height: 1.2;">"{{$review->content}}"</p>
                                 </div>
                             </div>
-                        </div>           
+                        </div>
                         @endforeach
                         @endif
                         @endforeach
