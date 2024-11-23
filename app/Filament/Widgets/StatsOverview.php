@@ -10,6 +10,7 @@ class StatsOverview extends BaseWidget
 {
     protected static ?string $pollingInterval = '10s';
     
+    protected static ?int $sort = 2;
     protected function getStats(): array
     {
         // Get count of verified freelancers
@@ -30,8 +31,8 @@ class StatsOverview extends BaseWidget
         $totalClients = User::where('user_type', 'client')
             ->count();
 
-        // Get total count of users 
-        $totalUsers = User::count();
+        // Get total count of users excluding the admin
+        $totalUsers = User::where('user_type', '!=', 'admin')->count();
 
         return [
             Stat::make('Verified Freelancers', "{$verifiedFreelancers}/{$totalFreelancers}")

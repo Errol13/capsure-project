@@ -16,6 +16,7 @@ class Suspension extends Model
         'total_successful_hiring',
         'start_at',
         'end_at',
+        'suspended_reason',
     ];
 
     protected $casts = [

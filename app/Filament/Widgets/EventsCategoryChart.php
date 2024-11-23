@@ -32,11 +32,7 @@ class EventsCategoryChart extends ChartWidget
         $categoryCountsArray = $categoryCounts->toArray();
         $categoriesArray = $categories->toArray();
     
-        // Log data before passing to chart
-        Log::info('Categories Array:', $categoriesArray);
-        Log::info('Category Counts Array:', $categoryCountsArray);
     
-        // Prepare chart data
         return [
             'datasets' => [
                 [

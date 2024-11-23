@@ -118,7 +118,7 @@ class ReportResource extends Resource
                     ->modalHeading(fn($record) => $record->reportedUser->isSuspended() ? 'Lift Suspension' : 'Suspend User')
                     ->form(function ($record) {
                         $user = $record->reportedUser;
-                    
+
                         // Common fields (name and ID)
                         $form = [
                             Grid::make(2) // Defines a 2-column grid
@@ -131,7 +131,7 @@ class ReportResource extends Resource
                                         ->content($user->id),
                                 ]),
                         ];
-                    
+
                         // Add the suspension duration field if the user is not already suspended
                         if (!$user->isSuspended()) {
                             $form[] = Select::make('duration')
@@ -146,9 +146,9 @@ class ReportResource extends Resource
                                 ])
                                 ->required();
                         }
-                    
+
                         return $form;
-                    })                    
+                    })
                     ->action(function ($record, $data) {
                         Log::debug('Suspend action triggered for report ID: ' . $record->id);
                         Log::debug('Data type: ' . gettype($data)); // Log the data type
@@ -158,18 +158,14 @@ class ReportResource extends Resource
                             $data = ['duration' => $data];  // Wrap it in an array
                         }
 
-                        if (isset($data['duration'])) {
-                            // Determine if we're suspending or lifting the suspension
-                            if ($record->reportedUser->isSuspended()) {
-                                // Call the lift suspension method
-                                self::liftSuspension($record);
-                            } else {
-                                // Apply suspension with specified duration
-                                self::suspendUser($record, $data); // Pass the array
-                            }
-                        } else {
-                            Log::error('Duration is missing or invalid');
+                        if ($record->reportedUser->isSuspended()) {
+                            // Call the lift suspension method
+                            self::liftSuspension($record);
                         }
+                        else if (isset($data['duration'])) {
+                            // Apply suspension with specified duration
+                            self::suspendUser($record, $data); // Pass the array
+                        } 
                     })
                     ->color(fn($record) => $record->reportedUser->isSuspended() ? 'danger' : 'warning')
                     ->requiresConfirmation()
@@ -178,8 +174,8 @@ class ReportResource extends Resource
                             ? 'Are you sure you want to lift the suspension? The user will regain access immediately.'
                             : 'Please select a suspension duration. The user will be suspended for the specified time.'
                     )
-                    ->modalSubmitActionLabel( fn($record) => $record->reportedUser->isSuspended()
-                    ? 'Confirm': 'Suspend')
+                    ->modalSubmitActionLabel(fn($record) => $record->reportedUser->isSuspended()
+                        ? 'Confirm' : 'Suspend')
                     ->visible(fn($record) => !$record->isArchived),
 
                 Action::make('archive')
@@ -221,6 +217,9 @@ class ReportResource extends Resource
         $suspension->isSuspended = true;
         $suspension->start_at = Carbon::now();
         $suspension->end_at = Carbon::now()->addMinutes($duration);
+        $suspension->suspended_reason = $record->reason;
+
+       
         // dd('end date sus:', $suspension->end_date->format('Y-m-d H:i:s')); 
         // dd('isSuspended:', $suspension->isSuspended); 
         $suspension->save();
@@ -238,8 +237,10 @@ class ReportResource extends Resource
             $suspension->isSuspended = false;
             $suspension->start_at = null;
             $suspension->end_at = null;
+            $suspension->suspended_reason = null;
             $suspension->save();
 
+            //dd($record->id);
             // Archive the report upon lifting suspension if not already archived
             if (!$record->isArchived) {
                 self::archiveReport($record);

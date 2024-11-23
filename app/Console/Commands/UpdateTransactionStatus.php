@@ -41,6 +41,7 @@ class UpdateTransactionStatus extends Command
         foreach ($pendingTransactions as $transaction) {
             $event = $transaction->event; // Fetch related event
 
+            //if the event start today begins, then it became Ongoing
             if ($event && $event->start_date <= $today) {
                 $transaction->transaction_status = 'Ongoing';
                 $transaction->save();

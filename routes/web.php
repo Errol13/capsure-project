@@ -9,6 +9,7 @@ use App\Http\Controllers\Profile\SettingsController;
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\AddPortfolio;
 use App\Http\Livewire\CreateEventForm;
+use App\Http\Middleware\CheckSuspendedUser;
 use App\Livewire\ClientHome;
 use App\Livewire\MyJobs;
 use App\Livewire\ShowServices;
@@ -36,111 +37,121 @@ Route::post('/register/freelancer', [RegisterController::class, 'registerFreelan
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->name('choose');
 
-#Homepages
-Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('client-homepage');
-
-Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])
-    ->middleware(['auth', 'verified'])
-    ->name('freelancer-homepage');
 
 
+#suspended middleware
+Route::middleware([CheckSuspendedUser::class])->group(function () {
 
-#Profile
-Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
-Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
-Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
-Route::get('/team-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showTeamProfile'])->name('team-profile');
-Route::get('/view/freelancer-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewFreelancerProfile'])->name('view-freelancer-profile');
-Route::get('/view/client-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewClientProfile'])->name('view-client-profile');
-Route::get('/profile/getselectedevents/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'findSelectedEvent'])->name('find-event-from-profile');
+    #Homepages
+    Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('client-homepage');
 
-#profie-pic
-Route::post('/profilepic/update', [App\Http\Controllers\Profile\ProfileController::class, 'updateProfilePic'])->name('profilepic.update');
+    Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])
+        ->middleware(['auth', 'verified'])
+        ->name('freelancer-homepage');
+
+    #Profile
+    Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
+    Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
+    Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
+    Route::get('/team-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showTeamProfile'])->name('team-profile');
+    Route::get('/view/freelancer-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewFreelancerProfile'])->name('view-freelancer-profile');
+    Route::get('/view/client-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewClientProfile'])->name('view-client-profile');
+    Route::get('/profile/getselectedevents/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'findSelectedEvent'])->name('find-event-from-profile');
+
+    #profie-pic
+    Route::post('/profilepic/update', [App\Http\Controllers\Profile\ProfileController::class, 'updateProfilePic'])->name('profilepic.update');
+
+    
+    #viewAllReviews
+    Route::get('/see/allreviews', [App\Http\Controllers\Profile\ProfileController::class, 'showAllReviews'])->name('allReviews.show');
+
+    #bookmark
+    Route::post('/favorites/add/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'addFavorite'])->name('favorites.add');
+    Route::delete('/favorites/remove/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'removeFavorite'])->name('favorites.remove');
+    Route::post('/client-bookmark/save/{id}', [App\Http\Controllers\Profile\BookmarkController::class, 'bookmarkFreelancer'])->name('bookmark.save');
 
 
-#bookmark
-Route::post('/favorites/add/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'addFavorite'])->name('favorites.add');
-Route::delete('/favorites/remove/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'removeFavorite'])->name('favorites.remove');
-Route::post('/client-bookmark/save/{id}', [App\Http\Controllers\Profile\BookmarkController::class, 'bookmarkFreelancer'])->name('bookmark.save');
+    #settings(freelancer)
+    Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
+    Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateFreelancer'])->name('freelancer.update');
+    Route::patch('/freelancer/services/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateServices'])->name('service.update');
+    Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceController::class, 'addService'])->name('service.add');
+    Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
+    Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
 
 
-#settings(freelancer)
-Route::get('/freelancer-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showFreelancerSettings'])->name('freelancer-settings');
-Route::patch('/freelancer/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateFreelancer'])->name('freelancer.update');
-Route::patch('/freelancer/services/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateServices'])->name('service.update');
-Route::post('/freelancer/services/add/{id}', [App\Http\Controllers\ServiceController::class, 'addService'])->name('service.add');
-Route::delete('/freelancer/services/delete/{service}', [App\Http\Controllers\ServiceController::class, 'deleteService'])->name('service.delete');
-Route::patch('/freelancer/terms/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateTerms'])->name('terms.update');
+    Route::get('/client-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showClientSettings'])->name('client-settings');
+    Route::get('/freelancer-freelancer', [App\Http\Controllers\Profile\SettingsController::class, 'showBeFreelancer'])->name('freelancer-freelancer');
 
+    #settings(client)
+    Route::patch('/client/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateClientInfo'])->name('client.update');
 
-Route::get('/client-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showClientSettings'])->name('client-settings');
-Route::get('/freelancer-freelancer', [App\Http\Controllers\Profile\SettingsController::class, 'showBeFreelancer'])->name('freelancer-freelancer');
+    #socmed
+    Route::get('/social-media', [App\Http\Controllers\Profile\SocMedController::class, 'showSocMed'])->name('social-media');
+    Route::patch('/social-media/{platform}/update', [App\Http\Controllers\Profile\SocMedController::class, 'updateSocMed'])->name('social-media.update');
 
-#settings(client)
-Route::patch('/client/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateClientInfo'])->name('client.update');
+    #skills
+    Route::post('/skills', [SettingsController::class, 'store'])->name('skills.store');
+    Route::patch('/skills', [SettingsController::class, 'update'])->name('skills.update');
+    Route::delete('/skills/delete', [SettingsController::class, 'destroy'])->name('skills.destroy');
 
-#socmed
-Route::get('/social-media', [App\Http\Controllers\Profile\SocMedController::class, 'showSocMed'])->name('social-media');
-Route::patch('/social-media/{platform}/update', [App\Http\Controllers\Profile\SocMedController::class, 'updateSocMed'])->name('social-media.update');
+    #certificates
+    Route::post('/certificates', [App\Http\Controllers\Profile\CertificateController::class, 'store'])->name('certificates.store');
+    Route::patch('/certificates/update', [App\Http\Controllers\Profile\CertificateController::class, 'update'])->name('certificates.update');
+    Route::delete('/certificates/delete', [App\Http\Controllers\Profile\CertificateController::class, 'destroy'])->name('certificates.destroy');
 
-#skills
-Route::post('/skills', [SettingsController::class, 'store'])->name('skills.store');
-Route::patch('/skills', [SettingsController::class, 'update'])->name('skills.update');
-Route::delete('/skills/delete', [SettingsController::class, 'destroy'])->name('skills.destroy');
+    #portfolio 
+    Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
+    Route::post('/delete/portfolio/files', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteFiles'])->name('files.delete');
+    Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteAlbum'])->name('delete-album');
 
-#certificates
-Route::post('/certificates', [App\Http\Controllers\Profile\CertificateController::class, 'store'])->name('certificates.store');
-Route::patch('/certificates/update', [App\Http\Controllers\Profile\CertificateController::class, 'update'])->name('certificates.update');
-Route::delete('/certificates/delete', [App\Http\Controllers\Profile\CertificateController::class, 'destroy'])->name('certificates.destroy');
+    #My Events Page Client
+    Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
+    Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
+    Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
 
-#portfolio 
-Route::post('/freelancer/portfolio/add/{id}', [App\Http\Controllers\Profile\PortfolioController::class, 'addPortfolio'])->name('portfolio.add');
-Route::post('/delete/portfolio/files', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteFiles'])->name('files.delete');
-Route::delete('/delete-album', [App\Http\Controllers\Profile\PortfolioController::class, 'deleteAlbum'])->name('delete-album');
+    #Job Application
+    Route::post('apply-job', [App\Http\Controllers\Hiring\Job_applicationController::class, 'applyJob'])->name('job.apply');
+    Route::patch('apply-job/reject/{id}', [App\Http\Controllers\Hiring\Job_applicationController::class, 'rejectApplicant'])->name('jobApplication.update');
+    Route::patch('event/close/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'closeEventPost'])->name('eventpost.close');
 
-#My Events Page Client
-Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
-Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
-Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
+    #Transaction
+    Route::get('client-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showClientTransact'])->name('client-transaction');
+    Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showFreelancerTransact'])->name('freelancer-transaction');
 
-#Job Application
-Route::post('apply-job', [App\Http\Controllers\Hiring\Job_applicationController::class, 'applyJob'])->name('job.apply');
-Route::patch('apply-job/reject/{id}', [App\Http\Controllers\Hiring\Job_applicationController::class, 'rejectApplicant'])->name('jobApplication.update');
-Route::patch('event/close/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'closeEventPost'])->name('eventpost.close');
+    #Chat
+    Route::get('/chat/{conversationId?}', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
+    Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
 
-#Transaction
-Route::get('client-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showClientTransact'])->name('client-transaction');
-Route::get('freelancer-transaction', [App\Http\Controllers\Transaction\TransactionController::class, 'showFreelancerTransact'])->name('freelancer-transaction');
+    #Report 
+    Route::post('/report', [App\Http\Controllers\Profile\ProfileController::class, 'reportStore'])->name('report.store')->middleware('auth');
 
-#Chat
-Route::get('/chat/{conversationId?}', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
-Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
+    #My Jobs Page
+    Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');
 
-#Report 
-Route::post('/report', [App\Http\Controllers\Profile\ProfileController::class, 'reportStore'])->name('report.store')->middleware('auth');
+    #hiring requests
+    Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'hireFreelancer'])->name('freelancer.hire');
+    Route::patch('/hire/negotiate', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'negotiatePrice'])->name('freelancer.negotiate');
+    Route::patch('/hire/offer/cancel/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'cancelOffer'])->name('offer.cancel');
+    Route::patch('/hire/offer/decline/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'declineOffer'])->name('offer.decline');
+    Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'acceptOffer'])->name('offer.accept');
 
-#My Jobs Page
-Route::get('/my-jobs', [FreelancerController::class, 'myJobs'])->name('my-jobs');
+    #payment proof
+    Route::post('/transaction/paymentproof/upload/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'uploadPaymentProof'])->name('payment.upload');
+    Route::patch('/transaction/paymentproof/confirm/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'confirmPayment'])->name('payment.confirm');
 
-#hiring requests
-Route::post('/hire/applicant', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'hireFreelancer'])->name('freelancer.hire');
-Route::patch('/hire/negotiate', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'negotiatePrice'])->name('freelancer.negotiate');
-Route::patch('/hire/offer/cancel/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'cancelOffer'])->name('offer.cancel');
-Route::patch('/hire/offer/decline/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'declineOffer'])->name('offer.decline');
-Route::post('/hire/offer/accept/{id}', [App\Http\Controllers\Hiring\Hiring_requestController::class, 'acceptOffer'])->name('offer.accept');
+    #review 
+    Route::post('/transaction/review/write/{id}', [App\Http\Controllers\Transaction\ReviewController::class, 'writeReview'])->name('submit.review');
 
-#payment proof
-Route::post('/transaction/paymentproof/upload/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'uploadPaymentProof'])->name('payment.upload');
-Route::patch('/transaction/paymentproof/confirm/{id}', [App\Http\Controllers\Transaction\PaymentProofController::class, 'confirmPayment'])->name('payment.confirm');
+    #Validation
+    Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
+    Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');
+    Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
+});
 
-#review 
-Route::post('/transaction/review/write/{id}', [App\Http\Controllers\Transaction\ReviewController::class, 'writeReview'])->name('submit.review');
-
-#Validation
-Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
-Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');
-Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
-
-#Admin
+#Suspension
+Route::get('/suspended', function () {
+    return view('suspended_notice'); // A view that informs the user they are suspended
+})->name('suspended');

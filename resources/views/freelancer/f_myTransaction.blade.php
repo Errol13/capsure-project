@@ -22,17 +22,17 @@
         <div class="tab-pane show active" id="ongoing">
             @if($ongoing->isNotEmpty())
 
+            @foreach($ongoing as $transaction)
             <!-- Responsive Card Layout for Ongoing Transactions -->
-            <div class="row g-4 my-2 pb-4 d-block">
+            <div class="row g-4 my-2 pb-4 ">
                 <!-- Loop through the on-going events -->
-                @foreach($ongoing as $transaction)
                 @php
                 $event = $transaction->event;
                 $today = \Carbon\Carbon::now('Asia/Manila');
                 $unsettledPayment = $transaction->payment_status !== 'Fully Paid';
                 $noReview = !$transaction->reviews()->where('reviewee_role', 'client')->exists();
                 $isDue = $event->end_date < $today && $transaction->transaction_status === 'Ongoing';
-                    @endphp
+                @endphp
 
                     <!-- Card for Each Event Group -->
                     <div class="col">
@@ -191,15 +191,16 @@
                                 @endif
 
 
-                                @endforeach
+                               
                             </div>
                         </div>
                     </div>
             </div>
+            @endforeach
+
             @else
             <p>No on-going transactions.</p>
             @endif
-
 
         </div>
 
@@ -355,6 +356,7 @@
                     </div>
                 </div>
             </div>
+
             @else
             <p>No upcoming transactions.</p>
             @endif
@@ -509,10 +511,11 @@
             <p>No previous transactions.</p>
             @endif
 
-
         </div>
         @include('modals.f_review')
-    </div>
+    </div> 
 </div>
+
+
 
 @endsection

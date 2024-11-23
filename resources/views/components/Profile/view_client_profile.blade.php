@@ -191,6 +191,13 @@
                     <a class="poppins-light text-purple" style="font-size:small;" href="#">See All Reviews</a>
                     @endif
                 </div>
+<<<<<<< HEAD
+=======
+                @if($totalReviews > 0)
+                <a class="fs-sm fs-md poppins-light txt-review" href="{{route('allReviews.show')}}">See All Reviews</a>
+                @endif
+            </div>
+>>>>>>> a07668e966fa08d9234af330b21745dc6b697b64
 
 
                 @if($totalReviews === 0)
