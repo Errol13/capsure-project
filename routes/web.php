@@ -63,9 +63,11 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     #profie-pic
     Route::post('/profilepic/update', [App\Http\Controllers\Profile\ProfileController::class, 'updateProfilePic'])->name('profilepic.update');
 
-    
     #viewAllReviews
     Route::get('/see/allreviews', [App\Http\Controllers\Profile\ProfileController::class, 'showAllReviews'])->name('allReviews.show');
+
+    #seeAllPosts
+    Route::get('/see/client/allposts/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'showAllPosts'])->name('allPosts.show');
 
     #bookmark
     Route::post('/favorites/add/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'addFavorite'])->name('favorites.add');

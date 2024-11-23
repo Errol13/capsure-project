@@ -141,7 +141,7 @@
                                     <div class="col-12 d-flex justify-content-center align-items-center">
                                         <h1 class=" fs-md-3 me-3" style="color: #91216C;">{{$user->client->events->count()}}</h1>
                                         <h5 class=" fs-md-4 poppins-medium light-color-prof me-3" style="white-space: nowrap;">Events posted</h5>
-                                        <a href="#" class="fs-sm poppins-medium text-decoration-underline text-muted d-none d-md-inline" style="white-space: nowrap;">
+                                        <a href="{{route('allPosts.show', ['id' => $user->client->user_id] )}}" class="fs-sm poppins-medium text-decoration-underline text-muted d-none d-md-inline" style="white-space: nowrap;">
                                             <small class="text-purple align-items-center justify-content-end">See Posts</small>
                                         </a>
                                     </div>

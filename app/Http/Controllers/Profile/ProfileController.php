@@ -8,6 +8,9 @@ use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Models\Conversation;
 use App\Models\Hiring\Event;
+use App\Models\Hiring\EventJob;
+use App\Models\Hiring\Hiring_request;
+use App\Models\hiring\Job_application;
 use App\Models\Profile\Report;
 use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
@@ -314,17 +317,73 @@ class ProfileController extends Controller
   }
 
   //viewAllReviews
-  public function showAllReviews(){
+  public function showAllReviews()
+  {
     $user = auth()->user();
     $reviews = collect();
 
-    if($user->user_type === 'freelancer'){
+    if ($user->user_type === 'freelancer') {
       $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->get();
-    }
-    else if($user->user_type === 'client'){
+    } else if ($user->user_type === 'client') {
       $reviews = $user->client->reviews()->where('reviewee_role', 'client')->get();
     }
 
     return view('components.Profile.viewAllReviews', compact('reviews'));
+  }
+
+  //showAllPosts
+  public function showAllPosts($id, Request $request)
+  {
+
+    $user = User::find($id);
+    $fullName = $user->fullName();
+
+    // Get the status filter from the request, default to 'All' if not provided
+    $status = $request->input('status', 'All');
+
+    // Get events for the authenticated user
+    $eventsQuery = Event::where('client_id', $user->id)
+      ->whereHas('event_jobs')
+      ->orderBy('created_at'); //displays from oldest to latest
+
+    // Apply filtering by status if it's not 'All'
+    if ($status != 'All') {
+      $eventsQuery->where('status', $status);
+    }
+
+    $events = $eventsQuery->get();
+
+    // Get counts for each event 
+    $eventsWithCounts = $events->map(function ($event) {
+      // Initialize counters
+      $hiredCount = 0;
+      $jobApplicationsCount = 0;
+      $hiringRequestsCount = 0;
+
+      // Get all jobs associated with this event
+      $jobs = EventJob::where('event_id', $event->event_id)->get();
+
+      foreach ($jobs as $job) {
+        // Fetch job applications
+        $applications = Job_application::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->get();
+        $jobApplicationsCount += $applications->count();
+
+        // Getting hired freelancers count for each job
+        $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();
+        $hiredCount += $jobApplicantsHired->count();
+
+        // Get hiring requests count for the event's jobs
+        $hiringRequestsCount += Hiring_request::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->count();
+      }
+
+      // Add counts to the event object
+      $event->hiredCount = $hiredCount;
+      $event->jobApplicationsCount = $jobApplicationsCount;
+      $event->hiringRequestsCount = $hiringRequestsCount;
+
+      return $event;
+    });
+
+    return view('components.Profile.see_all_posts', compact('events', 'status', 'fullName'));
   }
 }

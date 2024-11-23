@@ -4,13 +4,8 @@
 <div class="container">
     <div class="stepper mb-4">
         <div class="line"></div>
-        <div class="step done">
-            <div class="circle"><i class="fas fa-check"></i></div>
-            <p class="pt-3">VERIFY MOBILE NUMBER</p>
-        </div>
-        <div class="line"></div>
         <div class="step active">
-            <div class="circle">2</div>
+            <div class="circle">1</div>
             <p class="pt-3">VERIFY ID</p>
         </div>
         <div class="line"></div>

@@ -40,7 +40,7 @@
                         Pending
                     </button>
                     @else
-                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validphone') }}">
+                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validID') }}">
                         Verify Account
                     </a>
                     @endif
