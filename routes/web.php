@@ -69,6 +69,12 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     #seeAllPosts
     Route::get('/see/client/allposts/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'showAllPosts'])->name('allPosts.show');
 
+    #seeAllNotifs
+    Route::get('/notifications/all', [App\Http\Controllers\Profile\BookmarkController::class, 'showAllNotifications'])->name('allNotifications.show');
+
+    #mark as all read in see all
+    Route::post('/notifications/markAsRead', [App\Http\Controllers\Profile\BookmarkController::class, 'markAllasRead'])->name('notifications.markAllAsRead');
+
     #bookmark
     Route::post('/favorites/add/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'addFavorite'])->name('favorites.add');
     Route::delete('/favorites/remove/{freelancer}', [App\Http\Controllers\Profile\BookmarkController::class, 'removeFavorite'])->name('favorites.remove');

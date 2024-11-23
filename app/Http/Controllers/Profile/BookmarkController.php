@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Profile;
 use App\Http\Controllers\Controller;
 use App\Models\Client;
 use App\Models\Freelancer;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BookmarkController extends Controller
 {
@@ -40,6 +42,21 @@ class BookmarkController extends Controller
         $client->removeFavorite($freelancerId);
 
         return redirect()->back()->with('success', 'Successfully removed a favorite.');
+    }
+
+    //I'll put here the show All notifs
+    public function showAllNotifications(){
+
+        //get the notifications
+        $user = auth()->user();
+        $notifications = $user->notifications()->paginate(10);
+        return view('components.Profile.all_notifications', compact('notifications'));
+    }
+
+    //mark all as read
+    public function markAllasRead(){
+        Auth::user()->unreadNotifications->markAsRead();
+        return redirect()->back()->with('success', 'Mark as read successfully!');
     }
 
     
