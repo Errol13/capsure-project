@@ -122,14 +122,10 @@ class Hiring_requestController extends Controller
         if ($acceptedJobApplication) {
             $acceptedJobApplication->update(['status' => 'Accepted']);
         }
-
-        Log::info("QWERT");
         
         // Retrieve client and event details
         $client = User::find($validated['client_id']);
         $eventTitle = $eventJob->event->title;
-
-        // Log::info("QWERTAR");
 
         // Notify the freelancer
         $freelancer = User::find($validated['freelancer_id']);
