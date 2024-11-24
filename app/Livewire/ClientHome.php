@@ -158,10 +158,10 @@ class ClientHome extends Component
         } else {
             $users = $this->fetchFilteredUsers();
 
-            // If no results, handle that case
+            // If no results
             if ($users->isEmpty()) {
-                // You can set a flag or just return empty results
-                $users = collect(); // or an empty array
+                // return empty results
+                $users = collect(); 
             }
         }
 

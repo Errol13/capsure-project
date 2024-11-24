@@ -37,13 +37,7 @@ class HomeController extends Controller
                     ->paginate(9);
                 return view('client.c_home', compact('users'));
             } elseif ($user->user_type == 'freelancer') {
-                // Load freelancer-specific content
-                $users = User::where('user_type', 'client')
-                    ->whereHas('client.events')
-                    ->with(['client.events', 'events.event_jobs'])
-                    ->orderBy('id')
-                    ->paginate(9);
-                return view('freelancer.f_home', compact('users'));
+                return view('freelancer.f_home');
             } elseif ($user->user_type == 'admin') {
                 // Load admin-specific content
                 return redirect()->route('filament.admin.pages.dashboard');
