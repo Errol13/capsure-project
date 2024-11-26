@@ -106,7 +106,7 @@ class HomeController extends Controller
 
         //get the auth user
         $user = auth()->user();
-        $validated = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'job_category' => 'required|string',
             'job_title' => 'required|string',
             'custom_job_title' => 'nullable|string|max:255',
@@ -115,11 +115,13 @@ class HomeController extends Controller
         ]);
 
         //if fails
-        if ($validated->fails()) {
+        if ($validator->fails()) {
             return redirect()->back()
-                ->withErrors($validated)
+                ->withErrors($validator)
                 ->withInput();
         }
+
+        $validated = $validator->validated();
 
         //now create a freelancer data
         Freelancer::create([
@@ -127,7 +129,7 @@ class HomeController extends Controller
         ]);
 
         // Determine job title
-        $jobTitle = !empty($data['custom_job_title']) ? $validated['custom_job_title'] : $validated['job_title'];
+        $jobTitle = !empty($validated['custom_job_title']) ? $validated['custom_job_title'] : $validated['job_title'];
 
         //create and store service
         Service::create([

@@ -60,6 +60,7 @@
                             Switch to Freelancer
                         </a>
                         @endif
+                        
                     </div>
                 </div>
             </div>
