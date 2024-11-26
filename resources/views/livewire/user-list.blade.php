@@ -15,18 +15,33 @@
             class="list-group-item list-group-item-action @if($selectedConversationId == $conversation['conversation_id']) active @endif">
             <div class="d-flex justify-content-between align-items-center">
                 <div class="d-flex align-items-center">
-                    <img src="{{ $conversation['recipient']->profile_image_url }}" alt="{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}"
+                    <!--show the other user-->
+                    @php
+                    // Determine who is the other participant (not the authenticated user)
+                    $otherUser = ($conversation['recipient']->id === auth()->user()->id)
+                    ? $conversation['sender']
+                    : $conversation['recipient'];
+                    @endphp
+                
+                    <img src="{{ $otherUser->profile_image_url }}" alt="{{ $otherUser->fullName() }}"
                         class="user-image me-2" />
 
                     <!--contains the latest message -->
                     <div class="d-flex flex-column justify-content-start">
-                        <span>{{ $conversation['recipient']->first_name }} {{ $conversation['recipient']->last_name }}</span>
+                        <span>{{ $otherUser->fullName() }}</span>
                         <div style="max-width: 200px; overflow: hidden;" class="text-truncate">
 
-                        @if($conversation->messages->isNotEmpty())
+                            @if($conversation->messages->isNotEmpty())
+
+                            @if(auth()->user()->id === $conversation->messages->first()->senderUser->id)
+                            <small>
+                                You: {{$conversation->messages->first()->message}}
+                            </small>
+                            @else
                             <small>
                                 {{$conversation->messages->first()->senderUser->first_name}}: {{$conversation->messages->first()->message}}
                             </small>
+                            @endif
                             @endif
                         </div>
                     </div>

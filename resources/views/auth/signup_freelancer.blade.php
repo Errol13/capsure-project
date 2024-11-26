@@ -113,6 +113,7 @@
                                 </div>
                             </div>
 
+
                             <div class="row mb-1">
                                 <!-- Job Category -->
                                 <div class="col-sm-4 col-md-4">
@@ -148,8 +149,8 @@
                                 <!-- Job Fee -->
                                 <div class="col-6 col-md-2">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
-                                    <input id="job_fee" type="number" step="0.01" class="mx-1 form-control @error('job_fee') is-invalid @enderror" name="job_fee" value="{{ old('job_fee') }}" required autocomplete="job_fee">
-
+                                    <input id="job_fee" type="number" step="0.01" placeholder="Minimum of 20 pesos" class="mx-1 form-control @error('job_fee') is-invalid @enderror" 
+                                    name="job_fee" value="{{ old('job_fee') }}" min="20"  required autocomplete="job_fee">
                                     @error('job_fee')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

@@ -178,9 +178,12 @@
                         // Close the modal
                         myModal.hide();
 
-                        // Show the success alert
-                        alert('Report Submitted');
-                        location.reload();
+                         // Show the success alert
+                         setTimeout(function() {
+                            // Show the success alert
+                            alert('Report Submitted');
+                            location.reload();
+                        }, 300);
                     } else {
                         alert('There was an issue with your submission. Please try again.');
                     }

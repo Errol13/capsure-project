@@ -218,16 +218,16 @@ input[type="tel"] {
 }
 
 .btn-round {
-    white-space: nowrap;
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: none;
-    display: block;
-    width: 100%;
-    text-align: center;
-    margin-left: auto;
-    margin-right: auto; 
-    height: 50%; 
+    white-space: nowrap !important;
+    padding: 10px 20px !important;
+    border-radius: 30px !important;
+    border: none !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto!important; 
+    height: 50% !important; 
     text-decoration: none;
 }
 

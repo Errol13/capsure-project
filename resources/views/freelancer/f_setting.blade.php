@@ -50,16 +50,16 @@
                 <div class="col-md-12 align-items-center justify-content-center">
                     <!-- Switch role -->
                     <div class="mt-4">
-                        @if ($user->user_type === 'client')
-                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                        @if ($user->user_type === 'freelancer' && $user->client === null)
+                        <a href="{{route('freelancer-to-client')}}" class="btn btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
-                            Switch to Freelancer
-                        </button>
-                        @else
-                        <button class="btn-round h-100 w-75 mt-4" style="background-color: #E1C1D7; color:#91216C">
+                            Be a Client
+                        </a>
+                        @elseif($user->user_type === 'freelancer' && $user->client)
+                        <a href="{{route('client-to-freelancer')}}"class="btn btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
                             Switch to Client
-                        </button>
+                        </a>
                         @endif
                     </div>
 

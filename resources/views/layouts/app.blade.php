@@ -46,7 +46,7 @@
 <body>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav  class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -156,6 +156,9 @@
                                 @if(Auth::user()->user_type == 'client')
                                 <a class="dropdown-item" href="/client-profile">Profile</a>
                                 <a class="dropdown-item" href="/client-settings">Settings</a>
+                                @if(Auth::user()->freelancer)
+                                <a class="dropdown-item" href="/client/tofreelancer">Switch to Freelancer</a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
@@ -163,6 +166,9 @@
                                 @elseif (Auth::user()->user_type == 'freelancer')
                                 <a class="dropdown-item" href="/freelancer-profile">Profile</a>
                                 <a class="dropdown-item" href="/freelancer-settings">Settings</a>
+                                @if(Auth::user()->client)
+                                <a class="dropdown-item" href="/freelancer/toclient">Switch to Client</a>
+                                @endif
                                 <a class="dropdown-item" href="{{ route('logout') }}"
                                     onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     {{ __('Logout') }}
