@@ -50,18 +50,21 @@
                 <div class="col-md-12 align-items-center justify-content-center">
                     <!-- Switch role -->
                     <div class="mt-4">
-                        @if ($user->user_type === 'client')
-                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                        @if ($user->user_type === 'freelancer' && $user->client === null)
+                        <button class="btn btn-round h-100 w-75 confirm-be-client" style="background-color: #E1C1D7; color:#91216C"
+                            data-bs-toggle="modal"
+                            data-bs-target="#confirmBeAClientModal">
                             <i class="fas fa-user me-2"></i>
-                            Switch to Freelancer
+                            Be a Client
                         </button>
-                        @else
-                        <button class="btn-round h-100 w-75 mt-4" style="background-color: #E1C1D7; color:#91216C">
+                        @elseif($user->user_type === 'freelancer' && $user->client)
+                        <a href="{{route('client-to-freelancer')}}" class="btn btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
                             Switch to Client
-                        </button>
+                        </a>
                         @endif
                     </div>
+                    @include('modals.confirm_be_client')
 
                     <!-- Other Buttons -->
                     <div class="mt-2">

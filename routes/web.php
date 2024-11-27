@@ -51,6 +51,19 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
         ->middleware(['auth', 'verified'])
         ->name('freelancer-homepage');
 
+    #become client and freelancer, also switches between
+    Route::get('/freelancer/toclient', [App\Http\Controllers\HomeController::class, 'freelancerToClient'])
+        ->middleware(['auth', 'verified'])
+        ->name('freelancer-to-client');
+
+    Route::get('/client/tofreelancer', [App\Http\Controllers\HomeController::class, 'clientToFreelancer'])
+        ->middleware(['auth', 'verified'])
+        ->name('client-to-freelancer');
+
+    Route::post('/become/freelancer/form', [App\Http\Controllers\HomeController::class, 'becomeFreelancer'])
+        ->middleware(['auth', 'verified'])
+        ->name('be-freelancer-form');
+
     #Profile
     Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
     Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
@@ -91,7 +104,7 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
 
 
     Route::get('/client-settings', [App\Http\Controllers\Profile\SettingsController::class, 'showClientSettings'])->name('client-settings');
-    Route::get('/freelancer-freelancer', [App\Http\Controllers\Profile\SettingsController::class, 'showBeFreelancer'])->name('freelancer-freelancer');
+    Route::get('/become/freelancer', [App\Http\Controllers\Profile\SettingsController::class, 'showBeFreelancer'])->name('be-freelancer');
 
     #settings(client)
     Route::patch('/client/profile/update/{id}', [App\Http\Controllers\Profile\SettingsController::class, 'updateClientInfo'])->name('client.update');

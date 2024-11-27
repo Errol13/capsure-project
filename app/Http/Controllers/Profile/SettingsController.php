@@ -299,6 +299,40 @@ class SettingsController extends Controller
 
     public function showBeFreelancer()
     {
-        return view('freelancer.beFreelancer');
+        //Define default job titles for each category
+        $defaultJobTitles = [
+            'Arts' => ['Painter', 'Sculptor', 'Illustrator'],
+            'Entertainment' => ['Actor', 'Musician', 'Dancer', 'Choreographer', 'Comedian', 'Clown Artist'],
+            'Event Planner' => ['Wedding Coordinator', 'Corporate Event Planner'],
+            'Food Service' => ['Chef', 'Food Caterer'],
+            'Handicrafts' => ['Craft Maker', 'Jewelry Designer', 'Beader'],
+            'Online Services' => ['Virtual Assistant', 'SEO Specialist', 'Tutor'],
+            'Photography' => ['Photographer', 'Photo Editor'],
+            'Styling' => ['Fashion Stylist', 'Makeup Artist'],
+            'Videography' => ['Event Videographer', 'Corporate Videographer', 'Videographer'],
+            'Voice Talent' => ['Narrator', 'Singer', 'Host', 'Voice Actor'],
+            'Package' => ['Wedding Package', 'Birthday Package'],
+        ];
+
+        //Fetch existing job titles from the database
+        $existingJobTitles = Service::select('job_category', 'job_title')
+            ->groupBy('job_category', 'job_title')
+            ->get()
+            ->groupBy('job_category')
+            ->toArray();
+
+        // Merge default and existing job titles (no duplicates)
+        $jobTitles = [];
+        foreach ($defaultJobTitles as $category => $titles) {
+            // Existing titles for this category
+            $existingTitles = isset($existingJobTitles[$category])
+                ? array_column($existingJobTitles[$category], 'job_title')
+                : [];
+
+            // Merge default and existing titles, remove duplicates
+            $jobTitles[$category] = array_unique(array_merge($titles, $existingTitles));
+        }
+
+        return view('freelancer.beFreelancer', compact('jobTitles'));
     }
 }

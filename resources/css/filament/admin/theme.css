@@ -20,8 +20,9 @@ th {
 
 @media (prefers-color-scheme: dark) {
     .fi-ta-header-cell-label {
-        @apply text-black; /* Dark mode text color */
+        color: black !important; /* Use plain CSS with !important for media queries */
     }
 }
+
 
 

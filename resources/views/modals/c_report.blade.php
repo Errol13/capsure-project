@@ -171,19 +171,22 @@
                 .then(data => {
                     // Check if the submission was successful
                     if (data.success) {
+
+                        spinner.classList.add('d-none'); // hide the spinner
+
                         // Reset the form
                         document.getElementById('report-id').reset();
                         checkTheFields();
 
-                        // Get the modal element
-                        var myModal = new bootstrap.Modal(document.getElementById('reportProfileModal'));
-
-                        // Close the modal
-                        myModal.hide();
+                        // Close the modal using jQuery
+                        $('#reportClientModal').modal('hide');
 
                         // Show the success alert
-                        alert('Report Submitted');
-                        location.reload();
+                        setTimeout(function() {
+                            // Show the success alert
+                            alert('Report Submitted');
+                            location.reload();
+                        }, 300);
                     } else {
                         alert('There was an issue with your submission. Please try again.');
                     }

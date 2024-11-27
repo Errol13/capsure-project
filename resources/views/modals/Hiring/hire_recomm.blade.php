@@ -232,7 +232,7 @@
                 confirmButton.classList.remove('btn-seemore');
                 confirmButton.classList.add('btn-cancel');
             }
-            console.log('Hire button is ' + (isEnabled ? 'enabled' : 'disabled'));
+            // console.log('Hire button is ' + (isEnabled ? 'enabled' : 'disabled'));
         }
 
         //check the button state when modal is opened

@@ -46,7 +46,7 @@
 <body>
 
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav  class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -147,27 +147,33 @@
                             <!--for livewire or dynamic notifications -->
                             <livewire:notificationsbell />
 
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    <i class="fas fa-user"></i>
-                                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <i class="fas fa-user"></i>
+                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                @if(Auth::user()->user_type == 'client')
+                                <a class="dropdown-item" href="/client-profile">Profile</a>
+                                <a class="dropdown-item" href="/client-settings">Settings</a>
+                                @if(Auth::user()->freelancer)
+                                <a class="dropdown-item" href="/client/tofreelancer">Switch to Freelancer</a>
+                                @endif
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    @if(Auth::user()->user_type == 'client')
-                                    <a class="dropdown-item" href="/client-profile">Profile</a>
-                                    <a class="dropdown-item" href="/client-settings">Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    @elseif (Auth::user()->user_type == 'freelancer')
-                                    <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                    <a class="dropdown-item" href="/freelancer-settings">Settings</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-                                    @endif
+                                @elseif (Auth::user()->user_type == 'freelancer')
+                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                <a class="dropdown-item" href="/freelancer-settings">Settings</a>
+                                @if(Auth::user()->client)
+                                <a class="dropdown-item" href="/freelancer/toclient">Switch to Client</a>
+                                @endif
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                @endif
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf

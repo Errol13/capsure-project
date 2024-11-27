@@ -25,9 +25,20 @@
             <!-- Display Freelancer Cover Image -->
             @if($portfolio)
             @php
-            $paths = json_decode($portfolio->path, true);
-            $firstImage = $paths[0];
-            $relativePath = str_replace('public/', '', $firstImage);
+            $paths = json_decode($portfolio->path, true); // Decode the JSON data
+            $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp']; // Allowed image extensions
+            $firstImage = null;
+
+            // Loop through the paths to find the first image
+            if (is_array($paths)) {
+            foreach ($paths as $path) {
+            $extension = strtolower(pathinfo($path, PATHINFO_EXTENSION)); // Get the file extension
+            if (in_array($extension, $imageExtensions)) {
+            $firstImage = $path; // Set the first valid image
+            break; // Exit the loop once found
+            }
+            }
+            }
             @endphp
             <img src="{{ asset('storage/' . $relativePath) }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
             @else

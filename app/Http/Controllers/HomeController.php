@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Client;
 use App\Models\Freelancer;
+use App\Models\Profile\Service;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class HomeController extends Controller
 {
@@ -54,5 +57,94 @@ class HomeController extends Controller
         }
     }
 
-  
+    public function freelancerToClient()
+    {
+        $user = auth()->user();
+
+        //check if there is an existing client data
+        if ($user->client) {
+            //then switch the user_type to client
+            $user->user_type = 'client';
+            $user->save();
+
+            return redirect()->route('client-homepage'); //redirect to homepage of client
+        } else {
+            //create a new client data
+            $client = new Client([
+                'user_id' => $user->id,
+            ]);
+
+            //save the data
+            $client->save();
+
+            //now, we will change the user_type to client
+            $user->user_type = 'client';
+            $user->save();
+
+            return redirect()->route('client-homepage'); //redirect to homepage of client
+        }
+    }
+
+    public function clientToFreelancer()
+    {
+        $user = auth()->user();
+
+        //check if there is an existing freelancer data
+        if ($user->freelancer !== null) {
+            //then switch the user_type to freelancer
+            $user->user_type = 'freelancer';
+            $user->save();
+
+            return redirect()->route('freelancer-homepage'); //redirect to homepage of freelancer
+        } else {
+            return redirect()->route('be-freelancer'); //redirect to a form
+        }
+    }
+
+    public function becomeFreelancer(Request $request)
+    {
+
+        //get the auth user
+        $user = auth()->user();
+        $validator = Validator::make($request->all(), [
+            'job_category' => 'required|string',
+            'job_title' => 'required|string',
+            'custom_job_title' => 'nullable|string|max:255',
+            'job_fee' => 'required|numeric|min:20',
+            'fee_type' => 'required|string|in:/hour,/project',
+        ]);
+
+        //if fails
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        //now create a freelancer data
+        Freelancer::create([
+            'user_id' => $user->id,
+        ]);
+
+        // Determine job title
+        $jobTitle = !empty($validated['custom_job_title']) ? $validated['custom_job_title'] : $validated['job_title'];
+
+        //create and store service
+        Service::create([
+            'freelancer_id' => $user->id,
+            'job_category' => $validated['job_category'],
+            'job_title' => $jobTitle, // Use custom job title if provided
+            'fee_type' => $validated['fee_type'],
+            'job_fee' => $validated['job_fee'],
+        ]);
+
+        //change the user type
+        $user->user_type = 'freelancer';
+        $user->save();
+
+        return redirect()->route('freelancer-homepage'); //redirect to a freelancer homepage
+
+    }
 }

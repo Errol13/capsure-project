@@ -137,7 +137,10 @@ class Chat extends Component
     public function onMessageReceived()
     {
         $this->loadMessages();
-        Log::info('Message received!');
+        // Log::info('Message received!');
+
+        //updates the user-list
+        $this->dispatch('refreshUserList');
     }
 
     public function render()

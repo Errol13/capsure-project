@@ -123,7 +123,7 @@ class RegisterController extends Controller
             'job_category' => 'required|string',
             'job_title' => 'required|string',
             'custom_job_title' => 'nullable|string|max:255',
-            'job_fee' => 'required|numeric|min:0',
+            'job_fee' => 'required|numeric|min:20',
             'fee_type' => 'required|string|in:/hour,/project',
             'birth_month' => 'required|integer|between:1,12',
             'birth_day' => 'required|integer|between:1,31',
