@@ -50,18 +50,18 @@
             <div class="container">
                 @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                    <img src="{{ asset('assets/capsure_logo.svg') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
                 </a>
                 @endguest
 
                 @auth
                 @if (Auth::user()->user_type == 'client')
                 <a class="navbar-brand" href="{{ url('/client-homepage') }}">
-                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                    <img src="{{ asset('assets/capsure_logo.svg') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
                 </a>
                 @elseif (Auth::user()->user_type == 'freelancer')
                 <a class="navbar-brand" href="{{ url('/freelancer-homepage') }}">
-                    <img src="{{ asset('assets/capsure_logo.png') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
+                    <img src="{{ asset('assets/capsure_logo.svg') }}" alt="Logo" class="img-fluid" style="height: 40px; width: auto;">
                 </a>
                 @endif
                 @endauth
@@ -144,62 +144,62 @@
                                 </a>
                             </li>
 
-                        <!--for livewire or dynamic notifications -->
-                        <livewire:notificationsbell />
+                            <!--for livewire or dynamic notifications -->
+                            <livewire:notificationsbell />
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="fas fa-user"></i>
-                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @if(Auth::user()->user_type == 'client')
-                                <a class="dropdown-item" href="/client-profile">Profile</a>
-                                <a class="dropdown-item" href="/client-settings">Settings</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user"></i>
+                                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                                 </a>
-                                @elseif (Auth::user()->user_type == 'freelancer')
-                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                <a class="dropdown-item" href="/freelancer-settings">Settings</a>
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                @endif
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->user_type == 'client')
+                                    <a class="dropdown-item" href="/client-profile">Profile</a>
+                                    <a class="dropdown-item" href="/client-settings">Settings</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    @elseif (Auth::user()->user_type == 'freelancer')
+                                    <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                    <a class="dropdown-item" href="/freelancer-settings">Settings</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    @endif
 
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
-                                </form>
-                            </div>
-                        </li>
-                        @endauth
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            </li>
+                            @endauth
+                        </div>
+                    </ul>
                 </div>
-                </ul>
             </div>
+        </nav>
+
+        <main class="mx-1 pb-4 mb-2">
+            @yield('content')
+
+        </main>
     </div>
-    </nav>
 
-    <main class="mx-1 pb-4 mb-2">
-        @yield('content')
-
-    </main>
-    </div>
-
-    <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-3 navbar navbar-expand-md navbar-light bg-white shadow-sm">
+    <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-2 navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container justify-content-center">
             <div class="row w-100">
                 <div class="col text-center">
                     @auth
                     @if (Auth::user()->user_type == 'client')
                     <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/home-icon.svg')}}" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <i class="fas fa-home text-purple fs-6"></i>
                         <div>Services</div>
                     </a>
                     @elseif (Auth::user()->user_type == 'freelancer')
                     <a class="nav-link" href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/home-icon.svg')}}" alt="Services" class="services" style="width: 20px; height: 20px;">
+                        <i class="fas fa-home text-purple fs-6"></i>
                         <div>Job Postings</div>
                     </a>
                     @endif
@@ -210,38 +210,38 @@
                 @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route ('client-events') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/event-icon.svg')}}" alt="My-event" class="my-event" style="width: 20px; height: 20px;  white-space:nowrap;">
+                    <i class="fas fa-calendar-days text-purple fs-6"></i>                        
                         <div>Event Post</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ url('/client-transaction') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/transaction.svg')}}" alt="My-transaction" class="transaction" style="width: 20px; height: 20px; white-space:nowrap;">
+                    <i class="fas fa-handshake text-purple fs-6"></i>                        
                         <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="{{asset('assets/chat.svg')}}" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                    <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}" style="font-size:x-small;">
+                    <i class="fas fa-comment text-purple fs-6"></i>                        
                         <div>Messages</div>
                     </a>
                 </div>
                 @elseif (Auth::user()->user_type == 'freelancer')
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('my-jobs') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/event-icon.svg')}}" alt="My-event" class="my-event" style="width: 20px; height: 20px;">
+                        <i class="fas fa-briefcase text-purple fs-6"></i>
                         <div>Jobs</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('freelancer-transaction') }}" style="font-size:x-small;">
-                        <img src="{{asset('assets/transaction.svg')}}" alt="My-transaction" class="transaction" style="width: 20px; height: 20px;">
-                        <div>Transaction</div>
+                    <i class="fas fa-handshake text-purple fs-6"></i>                        
+                    <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="#" style="font-size:x-small;">
-                        <img src="{{asset('assets/chat.svg')}}" alt="Chat" class="chat" style="width: 20px; height: 20px;">
+                        <i class="fas fa-comment text-purple fs-6"></i>
                         <div>Messages</div>
                     </a>
                 </div>

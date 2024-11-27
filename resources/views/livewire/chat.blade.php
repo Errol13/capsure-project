@@ -1,24 +1,42 @@
 <div>
+    <!-- Chat Header -->
+    <div>
+        <h5 class="text-center my-2">User name</h5>
+    </div>
+    <hr class="mb-3 px-0">
     @if($selectedConversationId)
-    <div class="chat-container mt-2">
+    <div class="chat-wrapper">
 
         <!-- Display Chat Messages -->
-        @if($messages)
-        <div class="chat-messages"
-            x-data
-            x-init="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-            @message.sent.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })"
-            @conversationSelected.window="$nextTick(() => { $el.scrollTop = $el.scrollHeight; })">
-
+        @if($messages && count($messages) > 0)
+        <div class="chat-messages position-relative" x-data="chatMessages()" x-init="scrollToBottom()" @message.sent.window="scrollToBottom()" @conversationSelected.window="scrollToBottom()">
             @foreach($messages as $message)
-            <div class="{{ $message['sender'] === auth()->id() ? 'message-sent' : 'message-received' }}">
-                <p>{{ $message['message'] }}</p>
-                <small class="text-muted">
-                    {{ \Carbon\Carbon::parse($message['created_at'])->timezone('Asia/Manila')->format('h:i A') }}
-                </small>
+            <div class="message-wrapper {{ $message['sender'] === auth()->id() ? 'message-sent' : 'message-received' }}">
+                <div class="message-content d-flex align-items-start">
+                    <div class="message-text-wrapper 
+                        {{ $message['sender'] === auth()->id() ? 'ml-auto' : '' }}"
+                        style="max-width: 70%; width: auto;">
+                        <div class="message-bubble 
+                            {{ $message['sender'] === auth()->id() ? 'bg-sender' : 'bg-receiver' }} py-2 px-3">
+                            <p class="message-text mb-1">
+                                {{ $message['message'] }}
+                            </p>
+                            <small class="message-timestamp text-muted 
+                                  {{ $message['sender'] === auth()->id() ? 'text-white-50' : '' }}"
+                                style="font-size: 0.7rem; display: block; text-align: right;">
+                                {{ \Carbon\Carbon::parse($message['created_at'])
+                            ->timezone('Asia/Manila')
+                            ->format('h:i A') }}
+                            </small>
+                        </div>
+                    </div>
+                </div>
             </div>
             @endforeach
-
+        </div>
+        @else
+        <div class="text-center text-muted p-4">
+            No messages in this conversation. Start chatting!
         </div>
         @endif
 
@@ -30,11 +48,10 @@
         </div>
 
         <!-- Send Message Form -->
-        <form wire:submit.prevent="sendMessage" class="send-message-form">
+        <form wire:submit.prevent="sendMessage" class="send-message-form align-items-center">
             <input type="text" wire:model="newMessage" placeholder="Type your message..." />
-            <button type="submit">Send</button>
+            <i class="fas fa-solid fa-paper-plane fs-3 text-purple me-3" type="button"></i>
         </form>
-
     </div>
     @else
     <div class="text-center d-flex justify-content-center align-items-center mt-5">
@@ -43,6 +60,7 @@
         </div>
     </div>
     @endif
+
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -87,72 +105,68 @@
     </script>
 
     <style>
-        .chat-container {
-            position: relative;
-            display: block;
-            width: 100%;
-            height: 100%;
-            background-color: #f9f9f9;
-        }
-
         .chat-messages {
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
             margin-bottom: 20px;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
             background-color: #fff;
         }
 
-        .chat-messages .message-sent {
-            text-align: right;
-            background-color: #e0f7fa;
-            margin: 5px 0;
-            border-radius: 10px;
-        }
-
-        .chat-messages .message-received {
-            text-align: left;
-            background-color: #ffcccb;
-            color: black;
-            margin: 5px 0;
-            border: #ffcccb solid 1px;
-            border-radius: 10px;
-        }
-
-        .chat-messages .message-sent,
-        .message-received {
-            display: block;
-            clear: both;
-            word-wrap: break-word;
-            padding: 8px 12px;
+        .chat-wrapper {
+            display: flex;
+            flex-direction: column;
         }
 
         .send-message-form {
             display: flex;
-            margin-top: auto;
+            padding: 10px;
+            background-color: whitesmoke;
+            border-radius: 20px;
         }
 
         .send-message-form input[type="text"] {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            margin-right: 10px;
-        }
-
-        .send-message-form button {
-            padding: 10px;
+            padding: 5px;
             border: none;
-            background-color: #007bff;
-            color: white;
-            border-radius: 4px;
-            cursor: pointer;
+            border-radius: 15px;
+            margin-right: 20px;
+            margin-left: 3px;
         }
 
-        .send-message-form button:hover {
-            background-color: #0056b3;
+        .message-bubble {
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            white-space: normal;
+            max-width: 100%;
+        }
+
+        .message-text {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: block;
+        }
+
+        .message-wrapper {
+            margin-bottom: 10px;
+        }
+
+        .message-sent .message-content {
+            justify-content: flex-end;
+        }
+
+        .message-received .message-content {
+            justify-content: flex-start;
+        }
+
+        .bg-sender {
+            background-color: #91216C;
+            color: white;
+            border-radius: 25px 25px 0 25px;
+        }
+
+        .bg-receiver{
+            border-radius: 0 25px 25px 25px;
+            background-color: aliceblue;
         }
     </style>
 </div>

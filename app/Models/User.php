@@ -173,6 +173,6 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
             return asset(str_replace(' ', '%20', $filePath));
         }
 
-        return asset('assets/daisy.svg');
+        return asset('assets/default.svg');
     }
 }

@@ -48,7 +48,6 @@
 }
 
 
-
 /*Buttons and Horizontal Lines Styles <----------------------------------------------------- */
 .page-item.active .page-link{
     background-color: #91216C;
@@ -272,7 +271,6 @@ input[type="tel"] {
     margin: 0 10px;
 }
 
-
 .btn-link {
     color: white;
     border: none;
@@ -342,7 +340,6 @@ html {
     height: 100%;
     margin: 0;
 }
-
 
 
 /*Sign Up Page <------------------------------------------------------------------------------------------------------*/

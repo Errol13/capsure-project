@@ -56,7 +56,8 @@
                             <small class="form-text text-muted">Upload (.jpg or .png format)</small>
                         </div>
                     </div>
-                    <input type="hidden" name="reported_user_id" value="{{ $reportee->id }}">
+                    <input type="hidden" name="reported_user_id" 
+                    
                     <input type="hidden" name="reporter_id" value="{{ auth()->user()->id }}">
 
                     <div class="modal-footer">

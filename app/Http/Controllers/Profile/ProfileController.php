@@ -271,6 +271,11 @@ class ProfileController extends Controller
     }
   }
 
+  public function showTeamProfile(){
+
+    return view('freelancer.Team_profile');
+  }
+
   //store the report to the db
   public function reportStore(Request $request)
   {

@@ -30,17 +30,17 @@
                 <!--Verify Buttons -->
                 <div class="col-md-12 d-flex justify-content-center">
                     @if ($user->isVerified)
-                    <button class="btn-round fs-5 poppins-regular h-100 w-75 text-black" disabled>
+                    <button class="btn-round poppins-regular h-100 w-75 text-black" disabled>
                         <i class="fas fa-check-circle me-2" style="color: #8FE2ED;"></i>
                         Verified
                     </button>
                     @elseif($user->isVerified == false && $user->verification)
-                    <button class="btn-round pending-color fs-5 h-100 w-75 poppins-regular" disabled>
+                    <button class="btn-round pending-color h-100 w-75 poppins-regular" disabled>
                         <i class="fas fa-check-circle me-2" style="color: #BEBEBE;"></i>
                         Pending
                     </button>
                     @else
-                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validID') }}">
+                    <a class="btn-round h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validID') }}">
                         Verify Account
                     </a>
                     @endif
@@ -50,10 +50,10 @@
                     <!-- Switch role -->
                     <div class="mt-4">
                         @if ($user->user_type === 'client')
-                        <button class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                        <a href="{{route('freelancer-freelancer')}}"class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
                             Be a Freelancer
-                        </button>
+                        </a>
                         @else
                         <button class="btn-round h-100 w-75 mt-4" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
