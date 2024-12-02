@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Profile\Service;
+use App\Models\Profile\Team;
 use Livewire\Component;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class CreateEventForm extends Component
             'Styling' => ['Fashion Stylist', 'Makeup Artist'],
             'Videography' => ['Event Videographer', 'Corporate Videographer', 'Videographer'],
             'Voice Talent' => ['Narrator', 'Singer', 'Host', 'Voice Actor'],
-            'Package' => ['Wedding Package', 'Birthday Package'],
+            'Package' => ['Food Package', 'Birthday Package'],
         ];
 
         // Fetch existing job titles from the database
@@ -50,6 +51,12 @@ class CreateEventForm extends Component
             ->groupBy('job_category', 'job_title')
             ->get()
             ->groupBy('job_category')
+            ->toArray();
+
+        // Fetch existing package services from the Team model
+        $teamServices = Team::select('package_service')
+            ->distinct() // Avoid duplicates in the query result
+            ->pluck('package_service')
             ->toArray();
 
         // Merge default and existing job titles (no duplicates)
@@ -62,6 +69,17 @@ class CreateEventForm extends Component
             // Merge default and existing titles, remove duplicates
             $this->jobTitles[$category] = array_unique(array_merge($titles, $existingTitles));
         }
+
+        // Merge team services under the 'Package' category
+        if (!isset($this->jobTitles['Package'])) {
+            $this->jobTitles['Package'] = []; // Ensure the 'Package' category exists
+        }
+
+        // Add team services to the 'Package' category and remove duplicates
+        $this->jobTitles['Package'] = array_unique(array_merge(
+            $this->jobTitles['Package'],
+            $teamServices
+        ));
     }
 
     public function updatedSelectedCategory($category)
@@ -82,14 +100,19 @@ class CreateEventForm extends Component
         if (array_key_exists($selectedCategory, $this->jobTitles)) {
             $this->jobs[$index]['available_services'] = $this->jobTitles[$selectedCategory];
             // Reset the service_needed when the category changes
-            $this->jobs[$index]['service_needed'] = ''; 
-            $this->jobs[$index]['custom_service_needed'] = null; 
+            $this->jobs[$index]['service_needed'] = '';
+            $this->jobs[$index]['custom_service_needed'] = null;
         } else {
             $this->jobs[$index]['available_services'] = [];
-            $this->jobs[$index]['service_needed'] = ''; 
-            $this->jobs[$index]['custom_service_needed'] = null; 
+            $this->jobs[$index]['service_needed'] = '';
+            $this->jobs[$index]['custom_service_needed'] = null;
         }
-    } 
+
+        // Reset number_of_people to 1 if category is "package"
+        if ($selectedCategory === 'Package') {
+            $this->jobs[$index]['number_of_people'] = 1;
+        }
+    }
 
 
     public function checkOthersSelection($index)

@@ -9,11 +9,13 @@ use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
 use App\Models\Profile\Service;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class EventsController extends Controller
@@ -33,7 +35,7 @@ class EventsController extends Controller
 
         // Get events for the authenticated user
         $eventsQuery = Event::where('client_id', $user->id)
-            ->whereHas('event_jobs') 
+            ->whereHas('event_jobs')
             ->orderBy('created_at'); //displays from oldest to latest
 
         // Apply filtering by status if it's not 'All'
@@ -55,7 +57,8 @@ class EventsController extends Controller
 
             foreach ($jobs as $job) {
                 // Fetch job applications
-                $applications = Job_application::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->get();
+                $applications = Job_application::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')
+                ->where('status', '!=', 'Rejected')->get();
                 $jobApplicationsCount += $applications->count();
 
                 // Getting hired freelancers count for each job
@@ -63,7 +66,8 @@ class EventsController extends Controller
                 $hiredCount += $jobApplicantsHired->count();
 
                 // Get hiring requests count for the event's jobs
-                $hiringRequestsCount += Hiring_request::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')->count();
+                $hiringRequestsCount += Hiring_request::where('job_id', $job->job_id)->where('status', '!=', 'Accepted')
+                ->where('status', '!=', 'Rejected')->count();
             }
 
             // Add counts to the event object
@@ -97,28 +101,50 @@ class EventsController extends Controller
         $durationInHours = $start->diffInHours($end);
 
         // Get all jobs associated with this event
-        $jobs = EventJob::where('event_id', $id)->get();
+        $jobs = EventJob::where('event_id', $id)->get(); //eventjob
 
         // Initialize collections to hold data
         $jobApplications = collect();
         $applicants = collect();
         $recommendations = collect();
         $completedHiredCounts = collect();
+        $teamRecommendations = collect();
+        $teamApplicants = collect(); // for team applicants
+
 
         foreach ($jobs as $job) {
+
             // Fetch the EventJob model for the specific job_id
             $eventJob = EventJob::findOrFail($job->job_id);
             $serviceNeeded = $eventJob->service_needed;
 
-
             // Fetch job applications
             $applications = Job_application::where('job_id', $job->job_id)->get();
             $jobApplications = $jobApplications->merge($applications);
- 
+
+            // Fetch teams who applied for the job
+            // $teamApplicantsData = $job->teamApplicants()->withPivot('status')->get();
+
+            // dd($applications);
+            // DB::enableQueryLog();
+            $teamApplicantsData = $job->teamApplicants();
+            // dd(DB::getQueryLog());
+
+            foreach ($teamApplicantsData as $team) {
+                $teamData = $team->toArray(); // Convert all fields of the team model into an array
+
+                $teamData['job_id'] = $job->job_id; // Include the job ID
+                $teamData['status'] = $team->status; // Job application status
+
+                // Add the enriched team data to the collection
+                $teamApplicants->push($teamData);
+            }
+
+            // Remove duplicates by `team_code`
+            $teamApplicants = $teamApplicants->unique('team_code');
 
             // Fetch freelancers who applied for the job
             $jobApplicants = $job->applicants()->with('services')->get();
-
 
             // Iterate over the applicants to include job details
             foreach ($jobApplicants as $applicant) {
@@ -147,29 +173,33 @@ class EventsController extends Controller
                     'job_id' => $job->job_id,
                     'status' => $status
                 ]);
-                
             }
 
-            //display the contents for debugging
-            Log::info('Applicants Data: ', $applicants ? $applicants->toArray() : []);
+
+            // //display the contents for debugging
+            // Log::info('Applicants Data: ', $applicants ? $applicants->toArray() : []);
 
             // Sort applicants by status: 'Pending' first, 'Rejected' last
             $sortedApplicants = $applicants->sortBy(function ($applicant) {
-                switch($applicant['status']) {
+                switch ($applicant['status']) {
                     case 'Pending':
                         return 0; // pending should be first shown
-                    case 'Accepted': 
+                    case 'Accepted':
                         return 1; // followed by accepted
-                    case 'Rejected': 
+                    case 'Rejected':
                         return 2; //last those who are rejected
                 }
             });
+
 
             // Fetch recommendations
             $jobRecommendations = Freelancer::whereHas('services', function ($query) use ($job) {
                 $query->where('job_title', $job->service_needed)
                     ->where('job_category', $job->job_category);
             })
+                ->whereDoesntHave('appliedJobs', function ($query) use ($job) {
+                    $query->where('id', $job->job_id); // Exclude those who applied 
+                })
                 ->with(['user', 'services']) // Eager load the user and services relationships
                 ->orderBy('avg_rating', 'desc') // Sort by avg_rating in descending order
                 ->orderBy('user_id', 'asc') // Sort by id in ascending order
@@ -178,12 +208,25 @@ class EventsController extends Controller
 
             $recommendations = $recommendations->merge($jobRecommendations)->unique('user_id'); // Merge recommendations
 
+
+            // Fetch team recommendations based on package_service
+            $teamRecommendationsForJob = Team::where('package_service', $job->service_needed)
+                ->whereDoesntHave('jobApplications', function ($query) use ($job) {
+                    $query->where('id', $job->job_id);
+                })
+                ->with('memberships')
+                ->orderBy('avg_rating', 'desc') // Sort by team rating
+                ->get();
+
+            // Merge team recommendations into the main collection
+            $teamRecommendations = $teamRecommendations->merge($teamRecommendationsForJob);
+
             // Getting hired freelancers count for each job
             $jobApplicantsHired = Transaction::where('job_id', $job->job_id)->get();
             $hiredCount = $jobApplicantsHired->count();
 
             //delete the remaining pending hiring requests and job applications if full
-            if($eventJob->number_of_people === $hiredCount){
+            if ($eventJob->number_of_people === $hiredCount) {
 
                 //fdelete the pending hiring requests
                 $eventJob->hiringRequests()->where('status', 'Pending')->delete();
@@ -221,6 +264,41 @@ class EventsController extends Controller
             }
         });
 
+        // Get team hiring requests
+        $teamHiringRequests = Hiring_request::whereIn('job_id', $jobs->pluck('job_id'))
+            ->whereNotNull('team_code')
+            ->get();
+
+        // Get invited teams based on team_code
+        $invitedTeams = Team::with('memberships')
+            ->whereIn('team_code', $teamHiringRequests->pluck('team_code'))
+            ->get();
+
+        // Attach relevant details from the team table to each team
+        $invitedTeams->each(function ($team) use ($teamHiringRequests) {
+            $hiringRequest = $teamHiringRequests->firstWhere('team_code', $team->team_code);
+            if ($hiringRequest) {
+                $team->hiringRequestData = $hiringRequest;
+
+                // Retrieve only the fillable attributes
+                $teamDetails = $team->only([
+                    'team_code',
+                    'team_name',
+                    'team_profilepic',
+                    'team_leader',
+                    'team_description',
+                    'terms_of_services',
+                    'number_of_projects',
+                    'package_service',
+                    'package_price',
+                    'avg_rating'
+                ]);
+
+                // Attach the details for frontend use
+                $team->details = $teamDetails;
+            }
+        });
+
 
         $tabs = [
             'application' => 'Applications',
@@ -230,8 +308,8 @@ class EventsController extends Controller
 
         $badgeCounts = [
             'application' => $jobApplications->count(),
-            'hiring-requests' => $invitedFreelancers->count(),
-            'recommendation' => $recommendations->count()
+            'hiring-requests' => $invitedFreelancers->count() + $invitedTeams->count(),
+            'recommendation' => $recommendations->count() + $teamRecommendations->count()
         ];
 
 
@@ -257,8 +335,8 @@ class EventsController extends Controller
         if ($successfulEvents > 0) {
             $hiringSuccessRate = ($successfulEvents / $clientTotalPosts) * 100;
         }
-        Log::info('Successfull Events:'. $successfulEvents);
-        Log::info('Hiring SUccess:'. $hiringSuccessRate);
+        // Log::info('Successfull Events:' . $successfulEvents);
+        // Log::info('Hiring SUccess:' . $hiringSuccessRate);
 
 
         if ($user->user_type === 'client') {
@@ -272,7 +350,10 @@ class EventsController extends Controller
                 'completedHiredCounts' => $completedHiredCounts,
                 'tabs' => $tabs,
                 'badgeCounts' => $badgeCounts,
-                'durationInHours' => $durationInHours
+                'durationInHours' => $durationInHours,
+                'teamRecommendations' => $teamRecommendations,
+                'teamApplicants' => $teamApplicants,
+                'teamHiringRequests' => $invitedTeams
             ]);
         } elseif ($user->user_type === 'freelancer') {
             return view('components.F_Hiring.event_post', [

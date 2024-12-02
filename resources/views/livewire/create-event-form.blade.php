@@ -74,11 +74,11 @@
                                 <label for="payment_method">Payment Method:</label>
                             </div>
                             <div class="col-4">
-                                <input type="number" id="budget_min" class="form-control" wire:model="budget_min" placeholder="Min ₱">
+                                <input type="number" id="budget_min" class="form-control" wire:model="budget_min" min="20" placeholder="Min ₱">
                                 @error('budget_min') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">
-                                <input type="number" id="budget_max" class="form-control" wire:model="budget_max" placeholder="Max ₱">
+                                <input type="number" id="budget_max" class="form-control" wire:model="budget_max" min="20" placeholder="Max ₱">
                                 @error('budget_max') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">
@@ -100,7 +100,7 @@
                         </div>
 
                         <div class="table-responsive">
-                            <table class="table table-borderless">
+                            <table class="table table-borderless create-event-table  ">
                                 <thead>
                                     <tr class="text-center">
                                         <th scope="col col-sm-auto">Job Category</th>
@@ -130,7 +130,7 @@
                                             <!-- Dropdown for selecting services -->
                                             <select class="form-select transition" wire:model="jobs.{{ $index }}.service_needed" wire:change="checkOthersSelection({{ $index }})">
                                                 <option value="" disabled>Select Service</option>
-                                                @foreach ($jobs[$index]['available_services'] as $service) 
+                                                @foreach ($jobs[$index]['available_services'] as $service)
                                                 <option value="{{ $service }}">{{ $service }}</option>
                                                 @endforeach
                                                 <option value="Others">Others</option>
@@ -143,10 +143,12 @@
                                             @error("jobs.$index.custom_service_needed") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
 
-
-
                                         <td class="align-middle my-1 py-1">
-                                            <input type="number" class="form-control" style="background-color:white;" wire:model="jobs.{{ $index }}.number_of_people" placeholder="0" min="0">
+                                            <input type="number" class="form-control"
+                                                style="background-color:white;" wire:model="jobs.{{ $index }}.number_of_people" placeholder="1" min="1"
+                                                @if(isset($jobs[$index]['job_category']) && $jobs[$index]['job_category']==='Package' )
+                                                disabled
+                                                @endif>
                                             @error("jobs.$index.number_of_people") <span class="text-danger">{{ $message }}</span> @enderror
                                         </td>
                                         <td class="align-middle my-1 py-1">
@@ -157,11 +159,10 @@
                                 </tbody>
                             </table>
                         </div>
-                        
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
-                    <small class="open-sans-reg my-2 fw-bold text-purple">All fields are required.</small>
+                    <small class="open-sans-reg my-2 text-danger">All fields are required.</small>
                     <div class="d-flex justify-content-end my-4 pb-4">
                         <div class="flex-grow-1"></div>
                         <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
@@ -170,19 +171,18 @@
                     </div>
                 </form>
 
-                
+
             </div>
         </div>
     </div>
 
     <script>
         document.addEventListener('livewire:load', function() {
-            console.log('Livewire loaded'); // Check if this is logged
 
             const dataEl = document.getElementById('editor-data');
             if (dataEl) {
                 const services = JSON.parse(dataEl.dataset.services);
-                console.log('Services:', services); // Verify if this is logged
+                // console.log('Services:', services); // Verify if this is logged
 
                 if (services && services.length > 0) {
                     $('input[data-autocomplete]').autocomplete({
@@ -190,10 +190,10 @@
                         minLength: 2
                     });
                 } else {
-                    console.warn('No services data available for autocomplete.');
+                    // console.warn('No services data available for autocomplete.');
                 }
             } else {
-                console.warn('No data element found.');
+                // console.warn('No data element found.');
             }
         });
 

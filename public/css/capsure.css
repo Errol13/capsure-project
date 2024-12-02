@@ -8,31 +8,37 @@
     font-weight: 400;
     font-style: normal;
 }
+
 .poppins-light {
     font-family: "Poppins", sans-serif;
     font-weight: 300;
     font-style: normal;
 }
+
 .poppins-thin {
     font-family: "Poppins", sans-serif;
     font-weight: 100;
     font-style: normal;
 }
+
 .poppins-medium {
     font-family: "Poppins", sans-serif;
     font-weight: 500;
     font-style: normal;
 }
+
 .sedan-regular-italic {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: italic;
 }
+
 .sedan-regular {
     font-family: "Sedan", serif;
     font-weight: 400;
     font-style: normal;
 }
+
 .open-sans-reg {
     font-family: "Open Sans", sans-serif;
     font-optical-sizing: auto;
@@ -41,6 +47,7 @@
     font-variation-settings:
         "wdth" 100;
 }
+
 .wrapper {
     min-height: 100%;
     display: flex;
@@ -49,31 +56,37 @@
 
 
 /*Buttons and Horizontal Lines Styles <----------------------------------------------------- */
-.page-item.active .page-link{
+.page-item.active .page-link {
     background-color: #91216C;
     border-color: #91216C;
 }
-.page-item .page-link{
-   color: #91216C;
+
+.page-item .page-link {
+    color: #91216C;
 }
+
 .icon-img {
     width: 24px;
     height: 24px;
 }
+
 .navbar-nav .nav-link span {
     font-size: 0.75rem;
 }
+
 .btn-purple {
     background-color: #91216C;
     color: white;
     text-decoration: none;
 }
+
 .navbar-nav .nav-item {
     display: flex;
     align-items: center;
     margin-left: 10px;
     margin-right: 20px;
 }
+
 .btn-outline {
     color: gray;
     background-color: white;
@@ -83,18 +96,21 @@
     height: 35px;
     width: 80px;
 }
+
 .stepper {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: 20px 0;
 }
+
 .step {
     display: flex;
     align-items: center;
-    flex-direction: row; 
+    flex-direction: row;
     text-align: left;
 }
+
 .circle {
     width: 30px;
     height: 30px;
@@ -106,38 +122,44 @@
     color: #000;
     font-weight: bold;
 }
+
 .vbox {
     width: 100%;
-    max-width: 600px; 
+    max-width: 600px;
     padding: 30px;
-    margin: 0 auto; 
-    border: 1px solid #ccc; 
-    background-color: white; 
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-color: white;
 }
+
 .xbox {
     width: 100%;
-    max-width: 750px; 
+    max-width: 750px;
     padding: 30px;
-    margin: 0 auto; 
-    border: 1px solid #ccc; 
-    background-color: white; 
+    margin: 0 auto;
+    border: 1px solid #ccc;
+    background-color: white;
 }
+
 .upload-section {
     border: 2px dashed #d9d9d9;
     border-radius: 10px;
     padding: 20px;
     min-height: 150px;
 }
+
 .upload-section .icon {
     text-align: center;
     font-size: 50px;
     color: #6c757d;
     margin-bottom: 5px;
 }
+
 .upload-section input {
     text-align: center;
     display: none;
 }
+
 .form-section {
     margin-bottom: 20px;
 }
@@ -148,6 +170,7 @@
     border: 1px solid #ccc;
     border-radius: 5px 0 0 5px;
 }
+
 input[type="tel"] {
     flex: 1;
     padding: 10px;
@@ -155,6 +178,7 @@ input[type="tel"] {
     border-left: none;
     border-radius: 0 5px 5px 0;
 }
+
 .send-otp {
     padding: 10px 20px;
     background-color: #91216C;
@@ -165,24 +189,28 @@ input[type="tel"] {
     cursor: pointer;
     text-decoration: none;
 }
+
 .note {
     font-size: 12px;
     color: #666;
 }
+
 .otp-inputs {
     display: flex;
-    margin: 10px 0; 
+    margin: 10px 0;
     gap: 10px;
 }
+
 .otp-inputs input,
 .btn.confirm {
     height: 40px;
 }
+
 .otp-wrapper {
     display: flex;
     align-items: center;
     margin: 10px 0;
-    gap: 5px; 
+    gap: 5px;
 }
 
 .otp-input {
@@ -195,7 +223,7 @@ input[type="tel"] {
 }
 
 .otp-input:focus {
-    border-color: #91216C; 
+    border-color: #91216C;
     outline: none;
 }
 
@@ -210,8 +238,8 @@ input[type="tel"] {
     width: 100%;
     text-align: center;
     margin-left: auto;
-    margin-right: auto; 
-    height: 50%; 
+    margin-right: auto;
+    height: 50%;
     text-decoration: none;
     white-space: nowrap;
 }
@@ -225,13 +253,29 @@ input[type="tel"] {
     width: 100% !important;
     text-align: center !important;
     margin-left: auto !important;
-    margin-right: auto!important; 
-    height: 50% !important; 
+    margin-right: auto !important;
+    height: 50% !important;
     text-decoration: none;
 }
 
+.btn-round {
+    white-space: nowrap !important;
+    padding: 10px 20px !important;
+    border-radius: 30px !important;
+    border: none !important;
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    height: 50% !important;
+    text-decoration: none;
+}
+
+
+
 .otp-inputs input.otp-box {
-    width: 40px; 
+    width: 40px;
     height: 100%;
     margin-right: 5px;
     text-align: center;
@@ -239,16 +283,17 @@ input[type="tel"] {
 }
 
 .otp-inputs input {
-    width: 35px; 
-    height: 35px; 
-    font-size: 14px; 
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
     text-align: center;
     border: 1px solid #ccc;
     border-radius: 5px;
     transition: border-color 0.3s ease;
 }
+
 .step.active .circle {
-    background-color: #91216C; 
+    background-color: #91216C;
     color: white;
 }
 
@@ -258,10 +303,10 @@ input[type="tel"] {
 }
 
 .step p {
-    margin-left: 10px; 
+    margin-left: 10px;
     font-size: 14px;
     color: #666;
-    
+
 }
 
 .line {
@@ -330,6 +375,7 @@ input[type="tel"] {
     color: #91216C;
     text-decoration: none;
 }
+
 .txt-purple {
     color: #91216C;
 }
@@ -363,9 +409,11 @@ html {
     justify-content: center;
     position: fixed;
 }
+
 .txt-smaller {
     font-size: 12px;
 }
+
 select#day,
 select#month,
 select#year {
@@ -383,34 +431,41 @@ select#year {
     min-height: 250px;
     padding: 20px 0;
 }
+
 .service-categories {
     display: grid;
     grid-template-columns: fr;
     padding: 20px;
     height: 33%;
 }
+
 .hero .input-group {
     max-width: 100%;
 }
+
 .hero .form-control {
     height: 40px;
 }
+
 .hero .btn {
     height: 40px;
     border: none;
     background-color: white;
 }
+
 .custom-mob-card {
     box-shadow: 0px 1px 0px rgba(75, 74, 74, 0.5);
     border: none;
     flex: 0 0 calc(20% - 1rem);
 }
+
 .custom-card {
     flex: 0 0 calc(20% - 1rem);
     margin-bottom: 1rem;
     margin: 0;
     box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
 }
+
 .freelancer-card {
     background-color: white;
     border-radius: 20px;
@@ -426,6 +481,7 @@ select#year {
     justify-content: space-between;
     align-items: center;
 }
+
 .freelancer-card img {
     width: 80px;
     height: 80px;
@@ -553,43 +609,53 @@ select#year {
     text-decoration: none;
 }
 
-.btn-seemore:hover{
+.btn-seemore:enabled {
+    background-color: #91216C; /* Same as enabled state */
+    color: white;
+    opacity: 0.6; /* Optional: make it slightly faded to indicate it's disabled */
+    cursor: not-allowed; /* Show the "not-allowed" cursor */
+    border: 1px solid #91216C;
+}
+
+.btn-seemore:hover {
     background-color: #ad3d88 !important;
     color: white !important;
-    border: 1px #ad3d88 solid !important ;
+    border: 1px #ad3d88 solid !important;
 }
+
+
 
 .rw-height-eventdesc {
-    display: -webkit-box; 
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    height: 60px; 
-    line-height: 20px; 
-    max-height: 60px; 
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 60px;
+    line-height: 20px;
+    max-height: 60px;
 }
 
-.rw-height-eventservices{
-    display: -webkit-box; 
-    -webkit-line-clamp: 3; 
-    -webkit-box-orient: vertical; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    height: 20px; 
-    line-height: 10px; 
-    max-height: 20px; 
+.rw-height-eventservices {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 20px;
+    line-height: 10px;
+    max-height: 20px;
 }
 
 
-.content-color{
+.content-color {
     color: #666666;
 }
 
 .btn-seeprof {
-    border-radius: 25px; 
-    font-weight: 600; 
-    border-color: #91216C; 
+    border-radius: 25px;
+    font-weight: 600;
+    border-color: #91216C;
     color: #91216C;
     margin: 0;
     background-color: white;
@@ -598,7 +664,7 @@ select#year {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.btn-seeprof:hover{
+.btn-seeprof:hover {
     background-color: #ad3d88 !important;
     color: white !important;
 }
@@ -630,24 +696,29 @@ select#year {
 
 /*Freelancer ViewPost */
 .fixed-tabs {
-    position: -webkit-sticky; 
+    position: -webkit-sticky;
     position: sticky;
-    top: 0; /* Distance from the top of the viewport */
-    z-index: 1000; /* Ensure it stays above other content */
-    background-color: #FCF2F9; /* Same as your tab background */
-    border-bottom: 1px solid #b8b4b4; /* Optional: adds a border at the bottom */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: adds a shadow for better visibility */
-  }
+    top: 0;
+    /* Distance from the top of the viewport */
+    z-index: 1000;
+    /* Ensure it stays above other content */
+    background-color: #FCF2F9;
+    /* Same as your tab background */
+    border-bottom: 1px solid #b8b4b4;
+    /* Optional: adds a border at the bottom */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    /* Optional: adds a shadow for better visibility */
+}
 
 
-  .rw-height-service {
-    display: -webkit-box; 
-    -webkit-box-orient: horizontal; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    height: 40px; 
-    line-height: 20px; 
-    max-height: 40px; 
+.rw-height-service {
+    display: -webkit-box;
+    -webkit-box-orient: horizontal;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 40px;
+    line-height: 20px;
+    max-height: 40px;
 }
 
 /* My Jobs Page */
@@ -655,10 +726,10 @@ select#year {
 
 
 .letter-spacing {
-    letter-spacing: 1px; 
+    letter-spacing: 1px;
 }
 
-.pending-color{
+.pending-color {
     color: #ACA9A9;
 }
 
@@ -799,6 +870,40 @@ select#year {
     display: none !important;
 }
 
+ /*Client viewpost */
+
+ .recomm-fixed-box {
+    width: 100%; /* Or a specific width if necessary */
+    min-height: 250px; /* Set a minimum height to ensure consistency */
+    overflow: hidden; /* Prevent content from overflowing */
+    box-sizing: border-box; /* Include padding and borders in total box height */
+}
+
+.or-line {
+    position: relative;
+    display: inline-block;
+    padding: 0 20px;
+  }
+
+  .or-line::before,
+  .or-line::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 45%;
+    border-top: 1px solid #7a7878; /* Horizontal line */
+  }
+
+  .or-line::before {
+    left: 0;
+    transform: translateY(-50%);
+  }
+
+  .or-line::after {
+    right: 0;
+    transform: translateY(-50%);
+  }
+
 
 /* Create Event Page <-------------------------------------------------------------------------*/
 .custom-bg-page {
@@ -808,40 +913,56 @@ select#year {
 }
 
 .open-sans-reg h3 {
-    font-size: px; /* Default font size */
+    font-size: px;
+    /* Default font size */
 }
+
 thead {
-    background-color: #4CAF50; /* Change this to your desired color */
-    color: white; /* Optional: Change the text color to ensure readability */
+    background-color: #4CAF50;
+    /* Change this to your desired color */
+    color: white;
+    /* Optional: Change the text color to ensure readability */
 }
+
 
 
 thead th:nth-child(4),
 thead th:nth-child(5),
-thead th:nth-child(6),  
-thead th:nth-child(7){
-    background-color: #E1C1D7; /* First column background */
+thead th:nth-child(6),
+thead th:nth-child(7) {
+    background-color: #E1C1D7;
+    /* First column background */
     border: none;
     padding-right: 60px;
 }
+
 thead th:nth-child(1),
 thead th:nth-child(2),
-thead th:nth-child(3){
-    text-align: center; 
+thead th:nth-child(3) {
+    text-align: center;
     border: none;
 }
 
 tbody td:nth-child(1),
 tbody td:nth-child(2),
-tbody td:nth-child(3){
+tbody td:nth-child(3) {
     text-align: center;
     border: none;
 }
 
 tbody td:nth-child(4),
-tbody td:nth-child(5){
+tbody td:nth-child(5) {
     padding-top: 35px;
     padding-right: 60px;
+}
+
+
+.create-event-table thead th:nth-child(1),
+.create-event-table thead th:nth-child(2),
+.create-event-table thead th:nth-child(3) {
+    text-align: center;
+    border: none;
+    background-color: #E1C1D7;
 }
 
 .dropdown-menu {
@@ -864,11 +985,13 @@ tbody td:nth-child(5){
 }
 
 
-.offer-table th:nth-child(1), .offer-table th:nth-child(2),
-.offer-table td:nth-child(1), .offer-table td:nth-child(2) {
-    text-align: center; 
+.offer-table th:nth-child(1),
+.offer-table th:nth-child(2),
+.offer-table td:nth-child(1),
+.offer-table td:nth-child(2) {
+    text-align: center;
     vertical-align: middle;
-    padding: 12px; 
+    padding: 12px;
 }
 
 .offer-table {
@@ -890,16 +1013,18 @@ tbody td:nth-child(5){
 /* Bell color when hovered or focused */
 .nav-link:hover .fa-bell,
 .nav-link:focus .fa-bell {
-    color: #91216C; /* Change to your desired color */
+    color: #91216C;
+    /* Change to your desired color */
 }
 
 .nav-item.dropdown.show .nav-link .fa-bell {
-    color: #91216C; 
+    color: #91216C;
 }
 
 .nav-link.active {
     position: relative;
-    color: black; /* Ensure the active tab's text is black */
+    color: black;
+    /* Ensure the active tab's text is black */
 }
 
 .nav-link.active::after {
@@ -909,46 +1034,52 @@ tbody td:nth-child(5){
     left: 0;
     width: 100%;
     height: 5px;
-    background-color: #91216C; /* Customize the color of the line */
-    border-radius: 10px; /* Make the line rounded if desired */
+    background-color: #91216C;
+    /* Customize the color of the line */
+    border-radius: 10px;
+    /* Make the line rounded if desired */
     box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 
 .nav-link h5 {
-    font-size: 20px; /* Adjust the font size for smaller screens */
+    font-size: 20px;
+    /* Adjust the font size for smaller screens */
 }
 
 .nav-tabs .nav-link {
-    border: none; /* Remove borders from non-active tabs */
+    border: none;
+    /* Remove borders from non-active tabs */
 }
 
 .nav-tabs .nav-link:hover {
-    border-bottom: 2px solid #999; /* Optional: Add an underline on hover */
+    border-bottom: 2px solid #999;
+    /* Optional: Add an underline on hover */
 }
 
 /* Setting Page */
 
-input:disabled, 
-textarea:disabled, 
+input:disabled,
+textarea:disabled,
 select:disabled {
-    background-color: rgb(255, 255, 255) !important; /* Example: Light gray color */
+    background-color: rgb(255, 255, 255) !important;
+    /* Example: Light gray color */
 }
 
-.setting-color{
+.setting-color {
     color: #464646;
 }
 
-.add-setting-clr{
+.add-setting-clr {
     color: #CBCACA;
 }
 
-.setting-socmed-img{
-    max-width: 40px; 
+.setting-socmed-img {
+    max-width: 40px;
     max-height: 40px;
 }
 
-.btn-save{
+.btn-save {
     background-color: #E1C1D7;
     color: #91216C;
     text-decoration: none;
@@ -957,7 +1088,7 @@ select:disabled {
     border: none;
 }
 
-.btn-cancel{
+.btn-cancel {
     background-color: none;
     color: rgb(139, 137, 137);
     text-decoration: none;
@@ -966,14 +1097,14 @@ select:disabled {
     border: none;
 }
 
-.btn-verified{
+.btn-verified {
     background-color: white;
     color: black;
     text-decoration: none;
     border: 1px solid #ACA9A9;
 }
 
-.btn-verify{
+.btn-verify {
     background-color: #8FE2ED;
     color: black;
     text-decoration: none;
@@ -981,25 +1112,29 @@ select:disabled {
 }
 
 .accordion-body {
-    word-wrap: break-word; /* Ensures long words or text wrap to the next line */
-    overflow-wrap: break-word; /* Breaks long words to avoid overflow */
-    
+    word-wrap: break-word;
+    /* Ensures long words or text wrap to the next line */
+    overflow-wrap: break-word;
+    /* Breaks long words to avoid overflow */
+
 }
 
 
 
 
 .event-title {
-    font-size: 1.50rem; /* Font size of h5 */
+    font-size: 1.50rem;
+    /* Font size of h5 */
 }
 
 /* Transactions */
 .due-container {
-    display: inline-block; 
+    display: inline-block;
 }
 
 .due-container:hover {
-    cursor: pointer; /* Changes cursor to pointer on hover */
+    cursor: pointer;
+    /* Changes cursor to pointer on hover */
 }
 
 
@@ -1016,7 +1151,7 @@ select:disabled {
 @media (min-width: 1200px) {
 
     /* Styles for desktops */
-  
+
 }
 
 
@@ -1029,7 +1164,7 @@ select:disabled {
 
 /* Responsive styles for Tablets (≥ 768px) screens <----------------------------*/
 @media (width >=768px) {
-    
+
 
     /*sign up <-------------------------------*/
     .bg-signup {
@@ -1136,6 +1271,7 @@ select:disabled {
     }
 
    
+
     /* Client homepage <-------------------------------------------------------*/
     .search-container {
         display: flex;
@@ -1206,25 +1342,25 @@ select:disabled {
 
     /* Setting */
 
-    #mobileinfosetting{
+    #mobileinfosetting {
         display: none;
     }
 
-    .img-thumbnail{
-        max-width: 200px; 
-        max-height: 150px; 
+    .img-thumbnail {
+        max-width: 200px;
+        max-height: 150px;
         width: 150px;
         height: 100px;
-        object-fit: cover; 
+        object-fit: cover;
         margin: 5px;
     }
 
-    .img-profile-portfolio{
-        max-width: 500px; 
-        max-height: 450px; 
+    .img-profile-portfolio {
+        max-width: 500px;
+        max-height: 450px;
         width: 250px;
         height: 200px;
-        object-fit: cover; 
+        object-fit: cover;
         margin: 5px;
     }
 
@@ -1260,29 +1396,29 @@ select:disabled {
         display: none;
     }
 
-    #desktopview{
+    #desktopview {
         display: none;
     }
 
-    .img-thumbnail{
-        max-width: 150px; 
-        max-height: 125px; 
-        object-fit: cover; 
+    .img-thumbnail {
+        max-width: 150px;
+        max-height: 125px;
+        object-fit: cover;
         margin: 5px;
     }
 
-    .img-profile-portfolio{
-        max-width: 200px; 
-        max-height: 150px; 
+    .img-profile-portfolio {
+        max-width: 200px;
+        max-height: 150px;
         width: 100px;
         height: 100px;
-        object-fit: cover; 
+        object-fit: cover;
         margin: 5px;
     }
 
-    .profile-container img{
-       width: 130px;
-       height: 130px;
+    .profile-container img {
+        width: 130px;
+        height: 130px;
     }
 
     .space {

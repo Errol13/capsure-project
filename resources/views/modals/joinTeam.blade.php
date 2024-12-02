@@ -8,13 +8,34 @@
             </div>
             <div class="modal-body">
                 <p class="mb-4">Ask the page creator for the team code, then enter it here.</p>
-                <div class="d-flex">
-                    <input type="text" class="form-control" id="teamCodeInput{{$view}}" placeholder="Input the code" style="height: 50px; width: 325px; border: 1px solid black;">
-                    <button type="button" class="btn ms-2" style="background-color: #91216C; color:white; height: 50px;">
-                        Join Team
-                    </button>
+                <!-- Display error message -->
+                @error('team_code')
+                <div class="alert alert-danger">
+                    {{ $message }}
                 </div>
+                @enderror
+                <form action="{{route('team-join')}}" method="POST">
+                    @csrf
+                    <div class="d-flex">
+
+                        <input type="text" minlength="6" maxlength="6"
+                            pattern="[A-Za-z0-9]{6,}" name="team_code"
+                            class="form-control" id="teamCodeInput{{$view}}" placeholder="Input the 6-length code"
+                            style="height: 50px; width: 325px; border: 1px solid black;" required>
+                        <button type="submit" class="btn ms-2" style="background-color: #91216C; color:white; height: 50px;">
+                            Join Team
+                        </button>
+
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+@if ($errors->has('team_code'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        $('#joinTeamModal{{$view}}').modal('show');
+    });
+</script>
+@endif

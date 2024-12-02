@@ -79,7 +79,7 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
-                        <button type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
+                        <button type="submit" class="btn me-2" id="hire-from-app-{{$applicantId}}" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Hire</button>
                         <button id="cancelJobApplication-{{$applicantId}}" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
@@ -122,14 +122,18 @@
 
     document.addEventListener('DOMContentLoaded', function() {
 
-        document.getElementById('cancelJobApplication-<?php echo $applicantId; ?>').addEventListener('click', function ()){
-            document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>').reset();
-        }
+        // Cancel button event listener
+        document.getElementById('cancelJobApplication-<?php echo $applicantId; ?>').addEventListener('click', function() {
+            document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>').reset(); // Reset the form
+        });
         const form = document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>');
-
+        
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
+            //disable the hire button
+            const hireButton = document.getElementById('hire-from-app-<?php echo $applicantId; ?>');
+            hireButton.disabled = true;
             const formData = new FormData(form); // Create a FormData object from the form
 
             fetch('/hire/applicant', {

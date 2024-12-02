@@ -16,10 +16,11 @@ return new class extends Migration
 
             // Foreign key columns
             $table->foreignId('client_id')->constrained('clients', 'user_id')->onDelete('cascade');
-            $table->foreignId('freelancer_id')->constrained('freelancers', 'user_id')->onDelete('cascade');
+            $table->foreignId('freelancer_id')->nullable()->constrained('freelancers', 'user_id')->onDelete('cascade');
             $table->foreignId('job_id')->constrained('event_jobs', 'job_id')->onDelete('cascade');
             $table->foreignId('hiring_request_id')->constrained('hiring_requests', 'hiring_request_id')->onDelete('cascade');
-
+            $table->char('team_code', 6)->nullable(); 
+            $table->foreign('team_code')->references('team_code')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             // Payment amount column
             $table->decimal('payment_amount', 10, 2);
 

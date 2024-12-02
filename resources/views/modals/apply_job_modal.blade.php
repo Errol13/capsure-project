@@ -1,5 +1,5 @@
 <!-- Apply Job Modal -->
-<div class="modal fade" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel" aria-hidden="true">
+<div class="modal fade" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -51,13 +51,13 @@
 </div>
 
 <!-- Response Modal -->
-<div id="responseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel" aria-hidden="true">
+<div id="responseModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="responseModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="responseModalLabel">Application Status</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span>&times;</span>
                 </button>
             </div>
             <div class="modal-body" id="modalMessage">

@@ -68,16 +68,33 @@
 
                     <!-- Other Buttons -->
                     <div class="mt-2">
+                        @if($user->freelancer->team)
+                        <a href="{{route('team-profile')}}" class=" btn btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C">
+                            <i class="fas fa-users me-2"></i>
+                            My Team
+                        </a>
+                        @else
                         <button class="btn-round h-75 w-75" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#createTeamModalDesktop">
                             <i class="fas fa-users me-2"></i>
                             Create Team
                         </button>
+                        @endif
                         @include('modals.createTeam', ['view' => 'Desktop'])
 
-                        <button class="btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C" data-toggle="modal" data-target="#joinTeamModalDesktop">
+
+                        <!--if you are in a team then disable this-->
+                        @if($user->freelancer->team)
+                        <button class="btn-round h-100 w-75 mt-2" style="background-color: lightgray; color:black;" disabled>
                             <i class="fas fa-users me-2"></i>
                             Join a Team
                         </button>
+                        @else
+                        <button class="btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C" data-bs-toggle="modal" data-bs-target="#joinTeamModalDesktop">
+                            <i class="fas fa-users me-2"></i>
+                            Join a Team
+                        </button>
+                        @endif
+
                         @include('modals.joinTeam', ['view' => 'Desktop'])
                     </div>
                 </div>

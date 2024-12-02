@@ -11,7 +11,7 @@
                     class="nav-link {{ $activeTab === 'application' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#application"
                     aria-controls="application" aria-selected="true">
-                    APPLICATION 
+                    APPLICATION
                     <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$appliedJobsCount}}</span>
                 </a>
             </li>
@@ -20,7 +20,7 @@
                     class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#hiring-request"
                     aria-controls="hiring-request" aria-selected="false">
-                    HIRE REQUEST 
+                    HIRE REQUEST
                     <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$hiringRequestsCount}}</span>
                 </a>
             </li>
@@ -29,7 +29,7 @@
                     class="nav-link {{ $activeTab === 'recommendation' ? 'active' : 'inactive' }} rounded-top-4 px-4 letter-spacing d-flex justify-content-between align-items-center"
                     style="background-color: white;" data-bs-toggle="tab" href="#recommendation"
                     aria-controls="recommendation" aria-selected="false">
-                    RECOMMENDATION 
+                    RECOMMENDATION
                     <span class="badge text-black" style="background-color:aliceblue; border-radius:0px;">{{$recommendationsCount}}</span>
                 </a>
             </li>
@@ -67,23 +67,25 @@
                                     {{ $job->event->city }}</span><br>
                                 <strong class="note">Budget:</strong><br>
                                 <span> ₱{{ $job->event->budget_min }} - ₱{{ $job->event->budget_max }}</span>
-                            </div>
+                                <!-- Divider Line -->
+                                <hr class="my-1" style="margin-bottom: 0; border: 1px solid #ddd;">
 
-                            <!-- Divider Line -->
-                            <hr class="my-1" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                <div class="mt-auto p-3 mb-2">
+                                    <div class="{{ $job->pivot->status == 'Pending' ? 'pending-color' : ($job->pivot->status == 'Accepted' ? 'text-success' : 'text-danger') }} btn-round mb-2 fw-bold"
+                                        style="background-color:aliceblue; border-radius:0px;">
+                                        {{ $job->pivot->status }}
+                                    </div>
+                                    <a href="{{ route('client-viewpost', ['id' => $job->event->event_id]) }}"
+                                        class="confirm mb-2">View Post</a>
+                                    @if($job->pivot->status == 'Pending')
+                                    <a href="#" class="btn-round text-danger" style="border: 1px solid red;"
+                                        wire:click="openModal({{ $job->job_id }})">Cancel</a>
+                                    @endif
 
-                            <div class="mt-auto p-3 mb-2">
-                                <div class="{{ $job->pivot->status == 'Pending' ? 'pending-color' : ($job->pivot->status == 'Accepted' ? 'text-success' : 'text-danger') }} btn-round mb-2 fw-bold"
-                                    style="background-color:aliceblue; border-radius:0px;">
-                                    {{ $job->pivot->status }}
                                 </div>
-                                <a href="{{ route('client-viewpost', ['id' => $job->event->event_id]) }}"
-                                    class="confirm">View Post</a>
-                                @if($job->pivot->status == 'Pending')
-                                <a href="#" class="btn-round text-danger" style="border: 1px solid red;"
-                                    wire:click="openModal({{ $job->job_id }})">Cancel</a>
-                                @endif
                             </div>
+
+
                         </div>
                     </div>
 
@@ -244,9 +246,10 @@
                                 <small class="note me-2">Service/s required:</small>
                                 <div class="my-1">
                                     @foreach($event->event_jobs as $job)
-                                    <span class="badge fs-6"
+                                    <span class="badge fs-6 mb-1"
                                         style="background-color: #8FE2ED; color:#323232;">{{$job->service_needed}}</span>
-                                </div> @endforeach
+                                    @endforeach
+                                </div>
                             </div>
 
                             <div class="card-body flex-grow-1">
@@ -272,6 +275,7 @@
             </div>
         </div>
     </div>
+
 
     <style>
         .nav-link.inactive {
@@ -301,4 +305,5 @@
             });
         });
     </script>
+
 </div>
