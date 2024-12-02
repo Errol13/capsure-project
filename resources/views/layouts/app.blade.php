@@ -138,6 +138,14 @@
                             </li>
                             @endif
 
+                            @if(Auth::user()->user_type == 'freelancer' && Auth::user()->freelancer->team)
+                            <li class="nav-item me-md-0" id="nav-item-mobile">
+                                <a class="nav-link" href="{{ route('team-profile') }}">
+                                    <i class="fas fa-users" style="color: gray;"></i>
+                                </a>
+                            </li>
+                            @endif
+
                             <li class="nav-item me-md-0" id="nav-item-mobile">
                                 <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
                                     <i class="fas fa-envelope"></i>

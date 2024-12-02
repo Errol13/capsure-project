@@ -17,6 +17,8 @@ return new class extends Migration
             $table->foreignId('client_id')->nullable()->constrained('clients', 'user_id')->onUpdate('cascade')->onDelete('set null'); // Foreign key to clients table
             $table->foreignId('freelancer_id')->nullable()->constrained('freelancers', 'user_id')->onUpdate('cascade')->onDelete('set null'); // Foreign key to freelancers table
             $table->foreignId('transaction_id')->nullable()->constrained('transactions', 'transaction_id')->onUpdate('cascade')->onDelete('set null');
+            $table->char('team_code', 6)->nullable(); 
+            $table->foreign('team_code')->references('team_code')->on('teams')->onDelete('cascade')->onUpdate('cascade');
             $table->decimal('rating', 2, 1); // Rating from 1 to 5 stars
             $table->text('content'); // Content of the review
             $table->date('review_date'); // Date of the review

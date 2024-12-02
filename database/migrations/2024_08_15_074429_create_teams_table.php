@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id('team_id');
             $table->char('team_code', 6)->unique();
             $table->string('team_name', 100);
+            $table->text('team_profilepic');
+            $table->foreignId('team_leader')->constrained('users')->onUpdate('cascade')->onDelete('cascade')->nullable();
+            $table->string('team_description', 255);
+            $table->string('terms_of_services', 255)->default("The team agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. 
+            The team will deliver the services with reasonable skill, care, and diligence.");
+            $table->integer('number_of_projects')->default(0);
             $table->string('package_service', 255);
             $table->decimal('package_price', 10, 2);
             $table->decimal('avg_rating', 3, 2)->default(0);

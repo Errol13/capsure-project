@@ -4,6 +4,7 @@ namespace App\Models\Hiring;
 
 use App\Models\Freelancer;
 use App\Models\hiring\Job_application;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -34,6 +35,14 @@ class EventJob extends Model
             ->withPivot('status')
             ->withTimestamps()
             ->with('user');
+    }
+
+    public function teamApplicants()
+    {
+        return Job_application::where('job_applications.job_id', $this->job_id)
+            ->join('teams', 'job_applications.team_code', '=', 'teams.team_code')
+            ->select('teams.*', 'job_applications.status', 'job_applications.created_at', 'job_applications.updated_at')
+            ->get();
     }
 
     public function jobApplications()

@@ -22,12 +22,13 @@ class Hiring_requestController extends Controller
     // Hire freelancer
     public function hireFreelancer(Request $request)
     {
-        // Log::info('Request Data:', $request->all());
-
+        // Log::info('Request Data LO:', $request->all());
+        
         // Clean and convert client_pricing and freelancer_pricing
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
 
+        
         // Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
         // Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
@@ -37,6 +38,7 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => (float) $freelancerPricing,
         ];
 
+       
         // Validate the request data with cleaned values
         $validated = $request->merge($cleanedData)->validate([
             'freelancer_id' => 'required|exists:freelancers,user_id',
@@ -46,7 +48,8 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => 'required|numeric|min:0',
         ]);
 
-        // Log::info('Validated Data:', $validated);
+        Log::info('Validated Data LO:', $validated);
+        
 
         $eventJob = EventJob::find($validated['job_id']);
         $event = $eventJob->event;
@@ -54,6 +57,7 @@ class Hiring_requestController extends Controller
         $jobStartTime = $event->start_date;
         $jobEndTime = $event->end_date;
 
+     
         // Log::info('Validated Data:', $event->toArray());
 
         // Prevent duplication of hiring request
@@ -122,7 +126,7 @@ class Hiring_requestController extends Controller
         if ($acceptedJobApplication) {
             $acceptedJobApplication->update(['status' => 'Accepted']);
         }
-        
+
         // Retrieve client and event details
         $client = User::find($validated['client_id']);
         $eventTitle = $eventJob->event->title;

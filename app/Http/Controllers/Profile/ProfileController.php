@@ -242,7 +242,7 @@ class ProfileController extends Controller
       'recipientId' => 'required|integer|exists:users,id',
     ]);
 
-    Log::info('CHAT:', $validated);
+    // Log::info('CHAT:', $validated);
 
     // Check for existing conversation with the recipient
     $conversation = Conversation::where(function ($query) use ($validated) {
@@ -269,11 +269,6 @@ class ProfileController extends Controller
       // Redirect to the chat page
       return redirect()->route('show-chat', ['conversationId' => $conversationId]);
     }
-  }
-
-  public function showTeamProfile(){
-
-    return view('freelancer.Team_profile');
   }
 
   //store the report to the db

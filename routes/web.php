@@ -6,6 +6,7 @@ use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
+use App\Http\Controllers\Team\TeamController;
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\AddPortfolio;
 use App\Http\Livewire\CreateEventForm;
@@ -68,7 +69,6 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     Route::get('/freelancer-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showFreelancersProfile'])->name('freelancer-profile');
     Route::get('/client-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showClientsProfile'])->name('client-profile');
     Route::get('/client-bookmark', [App\Http\Controllers\Profile\BookmarkController::class, 'showBookMark'])->name('client-bookmark');
-    Route::get('/team-profile', [App\Http\Controllers\Profile\ProfileController::class, 'showTeamProfile'])->name('team-profile');
     Route::get('/view/freelancer-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewFreelancerProfile'])->name('view-freelancer-profile');
     Route::get('/view/client-profile/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'viewClientProfile'])->name('view-client-profile');
     Route::get('/profile/getselectedevents/{id}', [App\Http\Controllers\Profile\ProfileController::class, 'findSelectedEvent'])->name('find-event-from-profile');
@@ -170,6 +170,16 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     Route::get('validphone', [App\Http\Controllers\Validation\ValidateController::class, 'showValidPhone'])->name('validphone');
     Route::get('validID', [App\Http\Controllers\Validation\ValidateController::class, 'showValidID'])->name('validID');
     Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
+
+    #Team Routes
+    Route::post('/create-team',[TeamController::class, 'createTeam'])->name('team-create');
+    Route::get('/team-profile', [TeamController::class, 'showTeamProfile'])->name('team-profile');
+    Route::get('/team-profile/view/{id}', [TeamController::class, 'viewTeamProfile'])->name('team-profile-view');
+    Route::post('/team/join', [TeamController::class, 'joinTeam'])->name('team-join');
+    Route::post('/team/apply', [TeamController::class, 'applyAsATeam'])->name('team-apply');
+    Route::post('/team/cancel-job-application', [TeamController::class, 'cancelTeamApplication'])->name('team-apply-cancel');
+    Route::post('/team/send/hiring-request', [TeamController::class, 'teamHiringRequest'])->name('team-hire-send');
+
 });
 
 #Suspension

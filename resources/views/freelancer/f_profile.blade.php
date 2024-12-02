@@ -166,7 +166,13 @@
 
                     <!--Team -->
                     <div class="my-3">
-                        Team Name
+                        @if($user->freelancer->team)
+                        <div class="d-flex justify-content-start align-items-start">
+                            <p>Team:</p>
+                            <img src="{{asset('storage/'. $user->freelancer->team->team_profilepic)}}" alt="Team picture" class="ms-2 rounded-circle" style="max-width: 40px; max-height: 40px; object-fit: cover;">
+                            <a href="{{route('team-profile-view', ['id' => $user->freelancer->team->team_id])}}" class="ms-2 text-decoration-none">{{$user->freelancer->team->team_name}}</a>
+                        </div>
+                        @endif
                     </div>
 
                     @foreach ($user->freelancer->services as $service)

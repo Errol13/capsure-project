@@ -7,6 +7,7 @@ use App\Models\Freelancer;
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Review;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -22,6 +23,7 @@ class Transaction extends Model
         'client_id',
         'freelancer_id',
         'job_id',
+        'team_code',
         'payment_amount',
         'payment_status',
         'transaction_status',
@@ -39,6 +41,11 @@ class Transaction extends Model
     public function freelancer()
     {
         return $this->belongsTo(Freelancer::class, 'freelancer_id', 'user_id');
+    }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_code');
     }
 
     public function eventjobs()
@@ -63,11 +70,13 @@ class Transaction extends Model
         return $this->belongsTo(Hiring_request::class, 'hiring_request_id');
     }
 
-    public function payment_proofs(){
+    public function payment_proofs()
+    {
         return $this->hasMany(PaymentProof::class, 'transaction_id');
     }
 
-    public function reviews(){
+    public function reviews()
+    {
         return $this->hasMany(Review::class, 'transaction_id');
     }
 }

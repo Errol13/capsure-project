@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Hiring\EventJob;
 use App\Models\hiring\Job_application;
 use App\Models\Transaction\Transaction;
+use App\Models\User;
 use App\Notifications\ApplicationReceived;
 use App\Notifications\ApplicationRejected;
 use Carbon\Carbon;
@@ -53,8 +54,12 @@ class Job_applicationController extends Controller
                 $start_date = Carbon::parse($transactionEvent->start_date)->format('M j, Y h:i A'); // Month Year
                 $end_date = Carbon::parse($transactionEvent->end_date)->format('M j, Y h:i A'); // Full end date with time
 
-                return response()->json(['conflict' => 'Applying to this event results in schedule conflicts.', 
-                'event' => $transactionEvent->title, 'start_date' => $start_date, 'end_date' => $end_date, ], 400);
+                return response()->json([
+                    'conflict' => 'Applying to this event results in schedule conflicts.',
+                    'event' => $transactionEvent->title,
+                    'start_date' => $start_date,
+                    'end_date' => $end_date,
+                ], 400);
             }
         }
 
@@ -93,24 +98,33 @@ class Job_applicationController extends Controller
     {
         $freelancerId = $request->query('freelancer_id');
 
-        // Find the specific job application
         $jobApplication = Job_application::where('job_id', $job_id)
-            ->where('freelancer_id', $freelancerId)
+            ->where(function ($query) use ($freelancerId) {
+                if (is_numeric($freelancerId)) {
+                    $query->where('freelancer_id', $freelancerId);
+                } else {
+                    $query->where('team_code', $freelancerId);
+                }
+            })
             ->first();
+
 
         if ($jobApplication) {
             $jobApplication->status = 'Rejected';
             $jobApplication->save();
 
             // Notify the freelancer about the rejection
-            $freelancer = $jobApplication->freelancer->user; //get the freelancer
-            $freelancer->notify(new ApplicationRejected($jobApplication->eventJob));
-
-
+            if(is_numeric($freelancerId)){
+                $freelancer = $jobApplication->freelancer->user; //get the freelancer
+                $freelancer->notify(new ApplicationRejected($jobApplication->eventJob));
+            } else {
+                $teamLeader = User::where('id', $jobApplication->team->team_leader)->first();
+                $teamLeader->notify(new ApplicationRejected($jobApplication->eventJob));
+            }
+           
             return redirect()->back()->with('success', 'Application rejected successfully.');
         } else {
             return redirect()->back()->with('error', 'Job application not found.');
         }
     }
-
 }

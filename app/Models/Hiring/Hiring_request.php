@@ -4,6 +4,7 @@ namespace App\Models\Hiring;
 
 use App\Models\Freelancer;
 use App\Models\Profile\Service;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Hiring_request extends Model
         'freelancer_id',
         'job_id',
         'client_id',
+        'team_code',
         'client_pricing',
         'dealer_user_type',
         'freelancer_pricing',
@@ -33,6 +35,12 @@ class Hiring_request extends Model
     {
         return $this->belongsTo(EventJob::class, 'job_id');
     }
+
+    public function team()
+    {
+        return $this->belongsTo(Team::class, 'team_code');
+    }
+
 
     // Relationship to JobApplication through EventJob
     public function getJobApplication()
