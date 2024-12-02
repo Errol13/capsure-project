@@ -39,7 +39,7 @@
 
                         <div class="d-flex flex-wrap">
                             @foreach($event->event_jobs ?? [] as $event_job)
-                            <span class="badge fs-6 me-2 mb-2" style="background-color: #8FE2ED; color:#323232;">{{$event_job->service_needed}}</span>
+                            <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">{{$event_job->service_needed}}</span>
                             @endforeach
                         </div>
 
@@ -62,7 +62,7 @@
                         </div>
                         <div class="d-flex align-items-center mt-3">
                             <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm me-2">View Details</a>
-                            <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class="btn-round btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
+                            <a href=" {{route('view-client-profile', ['id' => $event->client_id] ) }}" class="btn-seeprof ">See Profile</a>
                         </div>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sedan:ital@0;1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rammetto+One&display=swap');
 
 .poppins-regular {
     font-family: "Poppins", sans-serif;
@@ -412,12 +413,8 @@ select#year {
     box-shadow: 0px 1px 2px rgba(75, 74, 74, 0.5);
 }
 .freelancer-card {
-    background-color: white;
-    border-radius: 20px;
     padding: 10px;
     text-align: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin: 10px;
     margin-bottom: 20px;
     object-fit: cover;
     width: 100%;
@@ -427,10 +424,8 @@ select#year {
     align-items: center;
 }
 .freelancer-card img {
-    width: 80px;
-    height: 80px;
     border-radius: 50%;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 
@@ -515,7 +510,7 @@ select#year {
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
-    background-color: #464646;
+    background-color: #CBCACA;
     border-radius: 50%;
 }
 
@@ -587,22 +582,26 @@ select#year {
 }
 
 .btn-seeprof {
-    border-radius: 25px; 
-    font-weight: 600; 
+    border-radius: 30px; 
     border-color: #91216C; 
     color: #91216C;
-    margin: 0;
-    background-color: white;
     text-decoration: none;
     border: 1px solid #91216C;
     transition: background-color 0.3s ease, color 0.3s ease;
+    white-space: nowrap; 
+    padding: 10px 10px;
+    display: block;
+    width: 100%;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto; 
+    height: 50%; 
 }
 
 .btn-seeprof:hover{
     background-color: #ad3d88 !important;
     color: white !important;
 }
-
 
 .service {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
