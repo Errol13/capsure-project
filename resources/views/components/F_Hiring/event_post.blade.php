@@ -158,6 +158,7 @@
                     <button type="button" class="fs-4 rounded-pill border-0 btn-verify px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
                         APPLY AS A TEAM
                     </button>
+                    @include('modals.Hiring.team_apply', ['eventJobs' => $eventJobs, 'team' => $freelancer->team, 'completedHiredCounts'=> $completedHiredCounts] )
                     @endif
                     @else
                     <button type="button" class="fs-4 rounded-pill border-0 btn btn-secondary px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal" disabled>
@@ -167,7 +168,7 @@
 
                 </div>
                 @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
-                @include('modals.Hiring.team_apply', ['eventJobs' => $eventJobs, 'team' => $freelancer->team, 'completedHiredCounts'=> $completedHiredCounts] )
+                
 
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
