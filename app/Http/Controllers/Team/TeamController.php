@@ -106,6 +106,16 @@ class TeamController extends Controller
                     return $jobApplication;
                 });
 
+           
+            //for the hiring requests
+            $hiringRequests = $team->hiringRequests()
+                ->with(['eventjob.event'])
+                ->get();
+
+            foreach ($hiringRequests as $eachEvent) {
+                $eachEvent->eventjob->event->start_date_formatted = Carbon::parse($eachEvent->eventjob->event->start_date)->format('M j, Y h:i A');
+                $eachEvent->eventjob->event->end_date_formatted = Carbon::parse($eachEvent->eventjob->event->end_date)->format('M j, Y h:i A');
+            }
 
             //the count badge of application
             $appliedJobsCount = $appliedJobs->count();
@@ -123,9 +133,11 @@ class TeamController extends Controller
             }
             $allMembersVerified = $team->areAllMembersVerified();
 
+
             //get the members
             $teamMembers = $team->freelancers;
             $membersCount = $teamMembers->count();
+            $hiringRequestsCount = $hiringRequests->count();
             $eventsCount = $eventRecommendations->count();
             return view('freelancer.Team_profile', compact(
                 'team',
@@ -135,7 +147,9 @@ class TeamController extends Controller
                 'eventRecommendations',
                 'eventsCount',
                 'appliedJobs',
-                'appliedJobsCount'
+                'appliedJobsCount',
+                'hiringRequests',
+                'hiringRequestsCount'
             ));
         } else {
             return redirect()->back()->with('error', 'There is no team found!');
@@ -344,7 +358,7 @@ class TeamController extends Controller
             return  response()->json(['error' => 'You already hired this freelancer.'], 400);
         }
 
-        dd('TRIGERED');
+        // dd('TRIGERED');
         //count the hired for this job, if full return error if not then proceed
         $completedHiredCounts = Transaction::where('job_id', $validated['job_id'])->count();
 

@@ -8,6 +8,7 @@ use App\Models\Freelancer;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Notifications\AcceptedOffer;
@@ -23,12 +24,12 @@ class Hiring_requestController extends Controller
     public function hireFreelancer(Request $request)
     {
         // Log::info('Request Data LO:', $request->all());
-        
+
         // Clean and convert client_pricing and freelancer_pricing
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
 
-        
+
         // Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
         // Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
@@ -38,7 +39,7 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => (float) $freelancerPricing,
         ];
 
-       
+
         // Validate the request data with cleaned values
         $validated = $request->merge($cleanedData)->validate([
             'freelancer_id' => 'required|exists:freelancers,user_id',
@@ -48,8 +49,8 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => 'required|numeric|min:0',
         ]);
 
-        Log::info('Validated Data LO:', $validated);
-        
+        // Log::info('Validated Data LO:', $validated);
+
 
         $eventJob = EventJob::find($validated['job_id']);
         $event = $eventJob->event;
@@ -57,7 +58,7 @@ class Hiring_requestController extends Controller
         $jobStartTime = $event->start_date;
         $jobEndTime = $event->end_date;
 
-     
+
         // Log::info('Validated Data:', $event->toArray());
 
         // Prevent duplication of hiring request
@@ -190,6 +191,7 @@ class Hiring_requestController extends Controller
             // Log::info('Retrieved Job App:', $jobApplication->toArray());
         }
 
+
         //delete the record
         $hiringRequest->delete();
 
@@ -243,31 +245,63 @@ class Hiring_requestController extends Controller
                 $paymentAmount = $hiringRequest->freelancer_pricing;
             }
 
-            Transaction::create([
-                'client_id' => $hiringRequest->client_id,
-                'freelancer_id' => $hiringRequest->freelancer_id,
-                'job_id' => $hiringRequest->job_id,
-                'hiring_request_id' => $hiringRequest->hiring_request_id,
-                'payment_amount' => $paymentAmount,
-                'payment_status' => 'Unpaid',
-                'transaction_status' => 'Pending'
-            ]);
+            //for freelancer solo
+            if ($hiringRequest->freelancer_id) {
+                Transaction::create([
+                    'client_id' => $hiringRequest->client_id,
+                    'freelancer_id' => $hiringRequest->freelancer_id,
+                    'job_id' => $hiringRequest->job_id,
+                    'hiring_request_id' => $hiringRequest->hiring_request_id,
+                    'payment_amount' => $paymentAmount,
+                    'payment_status' => 'Unpaid',
+                    'transaction_status' => 'Pending'
+                ]);
 
-            /** @var User */
-            $user = Auth::user();
+                /** @var User */
+                $user = Auth::user();
 
-            // Check if the user is a freelancer or client
-            if ($user->user_type === 'client') {
-                $freelancer = User::where('id', $hiringRequest->freelancer_id)->first();
-                if ($freelancer) {
-                    Log::info('Notifying freelancer: ' . $freelancer->email);
-                    $freelancer->notify(new AcceptedOffer($hiringRequest, $user));
+                // Check if the user is a freelancer or client
+                if ($user->user_type === 'client') {
+                    $freelancer = User::where('id', $hiringRequest->freelancer_id)->first();
+                    if ($freelancer) {
+                        Log::info('Notifying freelancer: ' . $freelancer->email);
+                        $freelancer->notify(new AcceptedOffer($hiringRequest, $user));
+                    }
+                } elseif ($user->user_type === 'freelancer') {
+                    $client = User::where('id', $hiringRequest->client_id)->first();
+                    if ($client) {
+                        Log::info('Notifying client: ' . $client->email);
+                        $client->notify(new AcceptedOffer($hiringRequest, $user));
+                    }
                 }
-            } elseif ($user->user_type === 'freelancer') {
-                $client = User::where('id', $hiringRequest->client_id)->first();
-                if ($client) {
-                    Log::info('Notifying client: ' . $client->email);
-                    $client->notify(new AcceptedOffer($hiringRequest, $user));
+            } elseif ($hiringRequest->team_code) {
+                Transaction::create([
+                    'client_id' => $hiringRequest->client_id,
+                    'team_code' => $hiringRequest->team_code,
+                    'job_id' => $hiringRequest->job_id,
+                    'hiring_request_id' => $hiringRequest->hiring_request_id,
+                    'payment_amount' => $paymentAmount,
+                    'payment_status' => 'Unpaid',
+                    'transaction_status' => 'Pending'
+                ]);
+
+                /** @var User */
+                $user = Auth::user();
+
+                // Check if the user is a freelancer or client
+                if ($user->user_type === 'client') {
+                    $team = Team::where('team_code', $hiringRequest->team_code)->first();
+                    $teamLeader = User::find($team->team_leader);
+                    if ($teamLeader) {
+                        // Log::info('Notifying freelancer: ' . $teamLeader->email);
+                        $teamLeader->notify(new AcceptedOffer($hiringRequest, $user));
+                    }
+                } elseif ($user->user_type === 'freelancer') {
+                    $client = User::where('id', $hiringRequest->client_id)->first();
+                    if ($client) {
+                        // Log::info('Notifying client: ' . $client->email);
+                        $client->notify(new AcceptedOffer($hiringRequest, $user));
+                    }
                 }
             }
 

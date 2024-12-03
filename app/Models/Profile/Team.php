@@ -47,12 +47,12 @@ class Team extends Model
     
     public function hiringRequests()
     {
-        return $this->hasMany(Hiring_request::class, 'team_code');
+        return $this->hasMany(Hiring_request::class, 'team_code', 'team_code');
     }
 
     public function transactions()
     {
-        return $this->hasMany(Transaction::class, 'team_code');
+        return $this->hasMany(Transaction::class, 'team_code', 'team_code');
     }
 
     public function areAllMembersVerified(): bool
