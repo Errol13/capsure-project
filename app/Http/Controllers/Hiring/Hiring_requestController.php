@@ -48,7 +48,7 @@ class Hiring_requestController extends Controller
             'freelancer_pricing' => 'required|numeric|min:0',
         ]);
 
-        Log::info('Validated Data LO:', $validated);
+        // Log::info('Validated Data LO:', $validated);
         
 
         $eventJob = EventJob::find($validated['job_id']);
@@ -189,6 +189,7 @@ class Hiring_requestController extends Controller
             $jobApplication->save();
             // Log::info('Retrieved Job App:', $jobApplication->toArray());
         }
+        
 
         //delete the record
         $hiringRequest->delete();

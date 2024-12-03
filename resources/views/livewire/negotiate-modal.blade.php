@@ -10,16 +10,46 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">Service: {{$service->job_title}}</p>
-                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">Fee: {{$service->job_fee}}</p>
-                <p class="text-start mb-2 mt-0 text-muted poppins-regular" style="font-size: smaller;">Fee Type: {{$service->fee_type}}</p>
+                @if(is_object($service) && $service->job_fee)
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Service: {{$service->job_title}}
+                </p>
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee: {{$service->job_fee}}
+                </p>
+                <p class="text-start mb-2 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee Type: {{$service->fee_type}}
+                </p>
+                @elseif(is_array($service))
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Service: {{ $service['package_service'] ?? 'N/A' }}
+                </p>
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee: {{ $service['package_price'] ?? 'N/A' }}
+                </p>
+                <p class="text-start mb-2 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee Type: /project
+                </p>
+                @else
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Service: {{$service->package_service ?? 'N/A'}}
+                </p>
+                <p class="text-start mb-1 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee: {{$service->package_price ?? 'N/A'}}
+                </p>
+                <p class="text-start mb-2 mt-0 text-muted poppins-regular" style="font-size: smaller;">
+                    Fee Type: /project
+                </p>
+                @endif
 
                 <div class="d-flex table-responsive mt-1 mb-1 text-center">
                     <table class="table table-bordered offer-table" style="table-layout: fixed; width: 100%;">
                         <thead>
                             <tr>
-                                @if(auth()->user()->user_type == 'client')
+                                @if(auth()->user()->user_type == 'client' && is_object($service))
                                 <th style="width: 50%;">Freelancer's Offer</th>
+                                @elseif(auth()->user()->user_type == 'client' && is_array($service))
+                                <th style="width: 50%;">Team's Offer</th>
                                 @elseif(auth()->user()->user_type == 'freelancer')
                                 <th style="width: 50%;">Client's Offer</th>
                                 @endif
@@ -86,12 +116,12 @@
 
             const warningMessage = document.getElementById('warningMessage<?php echo $hiringRequestId; ?>');
 
-            if(isLower) {
+            if (isLower) {
                 warningMessage.style.display = 'block'; // Show warning
-                
+
             } else {
                 warningMessage.style.display = 'none'; // Hide warning
-                
+
             }
         });
 

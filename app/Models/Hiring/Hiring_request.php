@@ -45,9 +45,24 @@ class Hiring_request extends Model
     // Relationship to JobApplication through EventJob
     public function getJobApplication()
     {
+        if ($this->freelancer_id) {
+            // for solo freelancer
+            return $this->eventjob
+                ->jobApplications()
+                ->where('freelancer_id', $this->freelancer_id)
+                ->first();
+        } elseif ($this->team_id) {
+            // If it's for a team, get the job application for the team
+            return $this->eventjob
+                ->jobApplications()
+                ->where('team_id', $this->team_id)
+                ->first();
+        }
 
-        return $this->eventjob->jobApplications()->where('freelancer_id', $this->freelancer_id)->first();
+        // Return null if neither freelancer_id nor team_id is set
+        return null;
     }
+
 
     public function getServiceId()
     {

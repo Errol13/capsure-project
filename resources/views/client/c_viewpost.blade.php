@@ -400,13 +400,17 @@
 
                                         <!--if accepted this will be gone-->
                                         @if($team->hiringRequestData->status != 'Accepted')
-                                        <button class="btn me-2 mb-2 mb-sm-0 negotiate-btn" data-bs-toggle="modal" data-bs-target="#"
+                                        <button class="btn me-2 mb-2 mb-sm-0 negotiate-btn" data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$team->hiringRequestData->hiring_request_id}}"
                                             style="flex: 1; width: 100%; white-space:nowrap; color:white; background-color:#91216C; border:none; border-radius: 20px">Negotiate</button>
                                         @endif
 
+                                        <!-- Negotiate Modal-->
+                                        @livewire('negotiate-modal', ['hiringRequestId' => $team->hiringRequestData->hiring_request_id,
+                                        'service' => $team->details])
+
                                         @if($team->hiringRequestData->dealer_user_type == 'client' && $team->hiringRequestData->status != 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" disabled style="flex: 2; width: 100%; color:black; background-color:#CBCACA; border:none; border-radius: 20px">Pending</button>
-                                        @elseif($team->hiringRequestData->dealer_user_type == 'team' && $team->hiringRequestData->status != 'Accepted')
+                                        @elseif($team->hiringRequestData->dealer_user_type == 'freelancer' && $team->hiringRequestData->status != 'Accepted')
                                         <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px"
                                             data-bs-toggle="modal" data-bs-target="#modal-{{ $team->hiringRequestData->hiring_request_id }}"
                                             data-action="accept" data-hiringid="{{ $team->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Accept Offer</button>
@@ -437,7 +441,7 @@
                                     :actionUrl="''"
                                     method="PATCH" />
 
-                                    <!--this is for negotiation-->
+
 
                             </div>
                             @endforeach

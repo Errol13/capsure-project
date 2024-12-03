@@ -11,7 +11,7 @@
                 <h1 class="text-center text-lg-start py-lg-3"
                     style="font-family: Rammetto One, sans-serif; font-weight: 400; font-style: normal;">Capture <span style="color:black;">the <br> Moments</span> Surely</h1>
                 <p class="poppins-regular pb-3 text-center text-lg-start">Sign up now and find the perfect freelancer to bring your event to life. With Capsure, every moment is a masterpiece waiting to be captured.</p>
-                <div class="d-flex d-lg-block justify-content-center"><button class="btn mb-3">Get Started</button></div>
+                <div class="d-flex d-lg-block justify-content-center"><a href="/choose" class="btn mb-3">Get Started</a></div>
             </div>
             <div class="col d-flex justify-content-center my-4 my-lg-0">
                 <!-- Bootstrap Carousel -->
@@ -101,7 +101,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="#" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -278,7 +278,7 @@
                         <div class="card-body">
 
                             <div class="d-flex justify-content-between ">
-                                <h4 class="card-title poppins-medium">{{$event->title}}</h4>
+                                <h4 class="card-title poppins-medium text-truncate">{{$event->title}}</h4>
                                 <!-- Calculate and display the time since creation -->
                                 @php
                                 $createdAt = \Carbon\Carbon::parse($event->created_at);
@@ -287,7 +287,7 @@
                                 <p class="card-text note">{{ $timeSince }}</p>
                             </div>
                             <div class="row rw-height-eventdesc mb-2">
-                                <p class="card-text content-color">{!! nl2br(e($event->description)) !!}</p>
+                                <p class="card-text content-color text-truncate">{!! nl2br(e($event->description)) !!}</p>
                             </div>
 
                             <div class="d-flex flex-wrap">

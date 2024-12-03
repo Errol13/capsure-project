@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Hiring\Hiring_request;
+use App\Models\Profile\Team;
 use App\Models\User;
 use App\Notifications\NewOffer;
 use Livewire\Component;
@@ -18,6 +19,7 @@ class NegotiateModal extends Component
     public $freelancerPricing;
     public $dealerUserType;
     public $isLower = false;
+    public $isTeam = false; // for team
 
     public function mount($hiringRequestId, $service)
     {
@@ -26,6 +28,11 @@ class NegotiateModal extends Component
         $this->hiringRequestData = Hiring_request::find($hiringRequestId);
         $this->clientPricing = $this->hiringRequestData->client_pricing;
         $this->freelancerPricing = $this->hiringRequestData->freelancer_pricing;
+
+        //for team
+        if ($this->hiringRequestData->team_code !== null) {
+            $this->isTeam = true;
+        }
 
         // Determine the dealer user type
         $this->dealerUserType = $this->getDealerUserType();
@@ -41,7 +48,7 @@ class NegotiateModal extends Component
     {
         // Clean the input and check if the offer is lower
         $this->freelancerPricing = preg_replace('/[^0-9.]/', '', $freelancerPricing);
-        
+
         if ($this->freelancerPricing < $this->clientPricing) {
             $this->isLower = true;
         } else {
@@ -59,12 +66,22 @@ class NegotiateModal extends Component
 
         //find the one who will be notified, by default empty
         $dealee = null;
+        $team = null;
         // Update pricing based on dealer user type
-        if ($this->dealerUserType === 'client') {
+        if ($this->dealerUserType === 'client' && $this->isTeam === false) {
             $this->hiringRequestData->client_pricing = $this->clientPricing;
             $this->hiringRequestData->dealer_user_type = 'client';
             $dealee = User::find($this->hiringRequestData->freelancer_id);
-        } elseif ($this->dealerUserType === 'freelancer') {
+        } elseif ($this->dealerUserType === 'client' && $this->isTeam) { //client negotiating with team leader
+            $this->hiringRequestData->client_pricing = $this->clientPricing;
+            $this->hiringRequestData->dealer_user_type = 'client';
+            $team = Team::where('team_code', $this->hiringRequestData->team_code)->first();
+            $dealee = User::find($team->team_leader);
+        } elseif ($this->dealerUserType === 'freelancer' && $this->isTeam !== true) {
+            $this->hiringRequestData->freelancer_pricing = $this->freelancerPricing;
+            $this->hiringRequestData->dealer_user_type = 'freelancer';
+            $dealee = User::find($this->hiringRequestData->client_id);
+        } elseif ($this->dealerUserType === 'freelancer' && $this->isTeam) {
             $this->hiringRequestData->freelancer_pricing = $this->freelancerPricing;
             $this->hiringRequestData->dealer_user_type = 'freelancer';
             $dealee = User::find($this->hiringRequestData->client_id);
@@ -73,9 +90,16 @@ class NegotiateModal extends Component
         $this->hiringRequestData->save();
 
         //determine the name of the one who made the deal
-        $dealer =  auth()->user();
-        $dealerName = "{$dealer->first_name} {$dealer->last_name}";
-
+        $dealerName = null;
+        if ($this->dealerUserType === 'client') {
+            $dealer =  auth()->user();
+            $dealerName = "{$dealer->first_name} {$dealer->last_name}";
+        } elseif ($this->dealerUserType === 'freelancer' && $this->isTeam) {
+            $dealerName = "{$team->team_name}";
+        } elseif ($this->dealerUserType === 'freelancer' && $this->isTeam !== true) {
+            $dealer =  auth()->user();
+            $dealerName = "{$dealer->first_name} {$dealer->last_name}";
+        }
 
         $dealee->notify(new NewOffer(
             $dealerName,
