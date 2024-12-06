@@ -40,7 +40,7 @@
                         Pending
                     </button>
                     @else
-                    <a class="btn-round fs-5 h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validID') }}">
+                    <a class="btn-round h-100 w-75 poppins-regular text-black" style="background-color:#8FE2ED;" href="{{ route('validID') }}">
                         Verify Account
                     </a>
                     @endif
@@ -51,7 +51,7 @@
                     <!-- Switch role -->
                     <div class="mt-4">
                         @if ($user->user_type === 'freelancer' && $user->client === null)
-                        <button class="btn btn-round h-100 w-75 confirm-be-client" style="background-color: #E1C1D7; color:#91216C"
+                        <button class="btn-round h-75 w-75 confirm-be-client" style="background-color: #E1C1D7; color:#91216C"
                             data-bs-toggle="modal"
                             data-bs-target="#confirmBeAClientModal">
                             <i class="fas fa-user me-2"></i>
@@ -69,7 +69,7 @@
                     <!-- Other Buttons -->
                     <div class="mt-2">
                         @if($user->freelancer->team)
-                        <a href="{{route('team-profile')}}" class=" btn btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C">
+                        <a href="{{route('team-profile')}}" class=" btn-round h-100 w-75 mt-2" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-users me-2"></i>
                             My Team
                         </a>

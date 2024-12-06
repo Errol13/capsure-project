@@ -27,8 +27,6 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-
-
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -46,7 +44,7 @@
 <body>
 
     <div id="app">
-        <nav  class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
                 @guest
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -66,7 +64,7 @@
                 @endif
                 @endauth
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                <button class="navbar-toggler" style="border: none;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -101,6 +99,7 @@
                         @endif
 
                         @endguest
+
                         @Auth
                         @if (Auth::user()->user_type == 'client')
                         <!-- Client-specific navbar items -->
@@ -139,49 +138,49 @@
                             @endif
 
                             @if(Auth::user()->user_type == 'freelancer' && Auth::user()->freelancer->team)
-                            <li class="nav-item me-md-0" id="nav-item-mobile">
+                            <li class="nav-item me-md-0">
                                 <a class="nav-link" href="{{ route('team-profile') }}">
                                     <i class="fas fa-users" style="color: gray;"></i>
                                 </a>
                             </li>
                             @endif
 
-                            <li class="nav-item me-md-0" id="nav-item-mobile">
+                            <li class="nav-item me-md-0">
                                 <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
-                                    <i class="fas fa-envelope"></i>
+                                    <i class="fas fa-comment"></i>
                                 </a>
                             </li>
 
                             <!--for livewire or dynamic notifications -->
                             <livewire:notificationsbell />
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <i class="fas fa-user"></i>
-                                <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                @if(Auth::user()->user_type == 'client')
-                                <a class="dropdown-item" href="/client-profile">Profile</a>
-                                <a class="dropdown-item" href="/client-settings">Settings</a>
-                                @if(Auth::user()->freelancer)
-                                <a class="dropdown-item" href="/client/tofreelancer">Switch to Freelancer</a>
-                                @endif
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <i class="fas fa-user"></i>
+                                    <span class="d-none d-md-inline">{{ Auth::user()->name }}</span>
                                 </a>
-                                @elseif (Auth::user()->user_type == 'freelancer')
-                                <a class="dropdown-item" href="/freelancer-profile">Profile</a>
-                                <a class="dropdown-item" href="/freelancer-settings">Settings</a>
-                                @if(Auth::user()->client)
-                                <a class="dropdown-item" href="/freelancer/toclient">Switch to Client</a>
-                                @endif
-                                <a class="dropdown-item" href="{{ route('logout') }}"
-                                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    {{ __('Logout') }}
-                                </a>
-                                @endif
+                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                    @if(Auth::user()->user_type == 'client')
+                                    <a class="dropdown-item" href="/client-profile">Profile</a>
+                                    <a class="dropdown-item" href="/client-settings">Settings</a>
+                                    @if(Auth::user()->freelancer)
+                                    <a class="dropdown-item" href="/client/tofreelancer">Switch to Freelancer</a>
+                                    @endif
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    @elseif (Auth::user()->user_type == 'freelancer')
+                                    <a class="dropdown-item" href="/freelancer-profile">Profile</a>
+                                    <a class="dropdown-item" href="/freelancer-settings">Settings</a>
+                                    @if(Auth::user()->client)
+                                    <a class="dropdown-item" href="/freelancer/toclient">Switch to Client</a>
+                                    @endif
+                                    <a class="dropdown-item" href="{{ route('logout') }}"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    @endif
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                         @csrf
@@ -192,7 +191,6 @@
                         </div>
                     </ul>
                 </div>
-            </div>
         </nav>
 
         <main class="mx-1 pb-4 mb-2">
@@ -224,20 +222,26 @@
                 @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route ('client-events') }}" style="font-size:x-small;">
-                    <i class="fas fa-calendar-days text-purple fs-6"></i>                        
+                        <i class="fas fa-calendar-days text-purple fs-6"></i>
                         <div>Event Post</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ url('/client-transaction') }}" style="font-size:x-small;">
-                    <i class="fas fa-handshake text-purple fs-6"></i>                        
+                        <i class="fas fa-handshake text-purple fs-6"></i>
                         <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}" style="font-size:x-small;">
-                    <i class="fas fa-comment text-purple fs-6"></i>                        
+                        <i class="fas fa-comment text-purple fs-6"></i>
                         <div>Messages</div>
+                    </a>
+                </div>
+                <div class="col text-center">
+                    <a class="nav-link" href="#" style="font-size:x-small;">
+                        <i class="fas fa-bell text-purple fs-6"></i>
+                        <div>Notification</div>
                     </a>
                 </div>
                 @elseif (Auth::user()->user_type == 'freelancer')
@@ -249,14 +253,15 @@
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{ route('freelancer-transaction') }}" style="font-size:x-small;">
-                    <i class="fas fa-handshake text-purple fs-6"></i>                        
-                    <div>Transaction</div>
+                        <i class="fas fa-handshake text-purple fs-6"></i>
+                        <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
-                        <i class="fas fa-comment text-purple fs-6"></i>
-                        <div>Messages</div>
+                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
+                        <i class="fas fa-bell txt-purple fs-6"></i>
+                        <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
+                        <div>Notification</div>
                     </a>
                 </div>
                 @endif

@@ -246,34 +246,18 @@ input[type="tel"] {
 }
 
 .btn-round {
-    white-space: nowrap !important;
-    padding: 10px 20px !important;
-    border-radius: 30px !important;
-    border: none !important;
-    display: block !important;
-    width: 100% !important;
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    height: 50% !important;
+    white-space: nowrap; 
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    display: block;
+    width: 100% ;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50% ;
     text-decoration: none;
 }
-
-.btn-round {
-    white-space: nowrap !important;
-    padding: 10px 20px !important;
-    border-radius: 30px !important;
-    border: none !important;
-    display: block !important;
-    width: 100% !important;
-    text-align: center !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
-    height: 50% !important;
-    text-decoration: none;
-}
-
-
 
 .otp-inputs input.otp-box {
     width: 40px;
@@ -602,14 +586,6 @@ select#year {
     color: white;
     margin: 0;
     text-decoration: none;
-}
-
-.btn-seemore:enabled {
-    background-color: #91216C; /* Same as enabled state */
-    color: white;
-    opacity: 0.6; /* Optional: make it slightly faded to indicate it's disabled */
-    cursor: not-allowed; /* Show the "not-allowed" cursor */
-    border: 1px solid #91216C;
 }
 
 .btn-seemore:hover {
@@ -1003,7 +979,7 @@ tbody td:nth-child(5) {
 
 /* Default bell color */
 .nav-link .fa-bell,
-.nav-link .fa-envelope,
+.nav-link .fa-comment,
 .nav-link .fa-bookmark {
     color: darkgray;
     transition: color 0.3s ease;
@@ -1011,7 +987,8 @@ tbody td:nth-child(5) {
 
 /* Bell color when hovered or focused */
 .nav-link:hover .fa-bell,
-.nav-link:focus .fa-bell {
+.nav-link:focus .fa-bell
+ {
     color: #91216C;
     /* Change to your desired color */
 }
