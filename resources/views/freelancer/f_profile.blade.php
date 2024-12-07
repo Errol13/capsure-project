@@ -53,7 +53,7 @@
                         $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
                         @endphp
 
-                        
+
                         @if($user->freelancer->avg_rating == 0)
                         <span class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</span>
                         @else
@@ -129,93 +129,95 @@
             </div>
         </div>
     </div>
-  <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" style="background-color: white;">
-            <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC;">
-                <!--Awards and Certifications -->
-                <h5 class="my-3 fs-sm poppins-medium text-center">Awards & Certifications</h5>
-                <div class="row text-center">
-                    @if($user->freelancer->certificates->isEmpty())
-                    <div class="col-12 d-flex align-items-center justify-content-center">
-                        <h6 class="fst-italic text-muted">No Awards</h6>
-                    </div>
-                    @else
-                    @foreach($user->freelancer->certificates as $certificate)
-                    <div class="col-12 d-flex align-items-center justify-content-center p-2">
-                        <div class="d-lg-flex d-none align-items-center">
-                            <a data-fancybox="certificate-gallery" data-caption="{{ $certificate->title }}" href="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}">
-                                <img src="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}" alt="{{ $certificate->title }}" class="me-2 " style="width: 35px; height: 35px;">
-                            </a>
-                        </div>
-                        <div style="line-height: 1;">
-                            <div>
-                                <span class="mb-0 fs-smaller fs-md text-start" style="white-space:nowrap;">{{ $certificate->title }}</span>
-                            </div>
-                            <div>
-                                <span class="justify-content-start note">{{ $certificate->date }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    @endif
+    <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" style="background-color: white;">
+        <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC;">
+            <!--Awards and Certifications -->
+            <h5 class="my-3 fs-sm poppins-medium text-center">Awards & Certifications</h5>
+            <div class="row text-center">
+                @if($user->freelancer->certificates->isEmpty())
+                <div class="col-12 d-flex align-items-center justify-content-center">
+                    <h6 class="fst-italic text-muted">No Awards</h6>
                 </div>
-            </div>
-            <div class="col-7 col-md-8 col-lg-8 ps-3">
-                <h3 class=" poppins-medium mt-3">Services</h3>
-                <div class="container row">
-                    <!--Services -->
-
-                    <!--Team -->
-                    <div class="my-3">
-                        @if($user->freelancer->team)
-                        <div class="d-flex justify-content-start align-items-start">
-                            <p>Team:</p>
-                            <img src="{{asset('storage/'. $user->freelancer->team->team_profilepic)}}" alt="Team picture" class="ms-2 rounded-circle" style="max-width: 40px; max-height: 40px; object-fit: cover;">
-                            <a href="{{route('team-profile-view', ['id' => $user->freelancer->team->team_id])}}" class="ms-2 text-decoration-none">{{$user->freelancer->team->team_name}}</a>
-                        </div>
-                        @endif
+                @else
+                @foreach($user->freelancer->certificates as $certificate)
+                <div class="col-12 d-flex align-items-center justify-content-center p-2">
+                    <div class="d-lg-flex d-none align-items-center">
+                        <a data-fancybox="certificate-gallery" data-caption="{{ $certificate->title }}" href="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}">
+                            <img src="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}" alt="{{ $certificate->title }}" class="me-2 " style="width: 35px; height: 35px;">
+                        </a>
                     </div>
-
-                    @foreach ($user->freelancer->services as $service)
-                    <div class="row mb-2 justify-content-center poppins-regular">
-                        <div class=" d-md-flex d-lg-flex align-items-center justify-content-center rounded py-2" style="background-color:#FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
-                            <div class="col-auto fs-sm">
-                                <span>{{$service->job_title}}</span>
-                            </div>
-                            <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
-                            <div class="col-auto d-flex fs-sm">
-                                <span>₱{{$service->job_fee}}</span>
-                                <span>{{$service->fee_type}}</span>
-                            </div>
-                            <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
-                            <div class="col-end">
-                                @if ($service->isAvailable === true)
-                                <span class="badge text-success fs-smaller fs-md">Available</span>
-                                @else
-                                <span class="badge text-danger fs-smaller fs-md">Not Available</span>
-                                @endif
-                            </div>
+                    <div style="line-height: 1;">
+                        <div>
+                            <span class="mb-0 fs-smaller fs-md text-start" style="white-space:nowrap;">{{ $certificate->title }}</span>
+                        </div>
+                        <div>
+                            <span class="justify-content-start note">{{ $certificate->date }}</span>
                         </div>
                     </div>
-                    @endforeach
                 </div>
-                <div class="row">
-                    <!--Terms of Service-->
-                    <h3 class="mt-3 poppins-medium">Terms of Service</h3>
-                    <div>
-                        @if($user->freelancer->terms_and_conditions != null)
-                        <p class="text-start mt-2 me-2">
-                            {{$user->freelancer->terms_and_conditions}}
-                        </p>
-                        @else
-                        <span class="text-start mt-2 me-2" style="line-height: 1;">
-                            The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. The freelancer will deliver the services with reasonable skill, care, and diligence.
-                        </span>
-                        @endif
-                    </div>
-
-                </div>
+                @endforeach
+                @endif
             </div>
         </div>
+        <div class="col-7 col-md-8 col-lg-8 ps-3">
+            <h3 class=" poppins-medium mt-3">Services</h3>
+            <div class="container row">
+                <!--Services -->
+
+                <!--Team -->
+                <div class="my-3">
+                    @if($user->freelancer->team)
+                    <div class="d-flex justify-content-start align-items-start">
+                        <img src="{{asset('storage/'. $user->freelancer->team->team_profilepic)}}" alt="Team picture" class="ms-2 rounded-circle" style="max-width: 40px; max-height: 40px; object-fit: cover;">
+                        <div class="row" style="line-height:1.3 ;">
+                            <a href="{{route('team-profile-view', ['id' => $user->freelancer->team->team_id])}}" class="ms-2" style="text-decoration: none; color:black;">{{$user->freelancer->team->team_name}}</a>
+                            <small class="ms-2 note">Admin</small>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+
+                @foreach ($user->freelancer->services as $service)
+                <div class="row mb-2 justify-content-center poppins-regular">
+                    <div class=" d-md-flex d-lg-flex align-items-center justify-content-center rounded py-2" style="background-color:#FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                        <div class="col-auto fs-sm">
+                            <span>{{$service->job_title}}</span>
+                        </div>
+                        <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
+                        <div class="col-auto d-flex fs-sm">
+                            <span>₱{{$service->job_fee}}</span>
+                            <span>{{$service->fee_type}}</span>
+                        </div>
+                        <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
+                        <div class="col-end">
+                            @if ($service->isAvailable === true)
+                            <span class="badge text-success fs-smaller fs-md">Available</span>
+                            @else
+                            <span class="badge text-danger fs-smaller fs-md">Not Available</span>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="row">
+                <!--Terms of Service-->
+                <h3 class="mt-3 poppins-medium">Terms of Service</h3>
+                <div>
+                    @if($user->freelancer->terms_and_conditions != null)
+                    <p class="text-start mt-2 me-2">
+                        {{$user->freelancer->terms_and_conditions}}
+                    </p>
+                    @else
+                    <span class="text-start mt-2 me-2" style="line-height: 1;">
+                        The freelancer agrees to perform the services as outlined in the project brief or as otherwise agreed upon with the client. The freelancer will deliver the services with reasonable skill, care, and diligence.
+                    </span>
+                    @endif
+                </div>
+
+            </div>
+        </div>
+    </div>
 
     <div class="row d-block d-lg-flex justify-content-center pe-3">
         <div class="col col-lg-4 mb-3 pe-0">

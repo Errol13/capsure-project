@@ -1,19 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container py-2 my-3">
     <!-- Profile Header -->
-    <div class="my-4 profile-header">
-        <div class="image ms-4">
-            <img src="{{asset('storage/' .$team->team_profilepic)}}" alt="Party Needs" class="rounded-circle" style="height: 200px; width: 200px; max-width: 200px; max-height: 200px; object-fit: cover;">
-        </div>
-        <div class="details px-4 ms-4">
-            <div class="d-flex">
-                <h1 class="d-flex fs-sm-name fs-md-name text-start mb-0 poppins-medium">{{$team->team_name}}</h1>
-                @if($allMembersVerified)
-                <small style="text-align:end;"> All members verified </small>
-                @endif
+    <div class="container rounded-4 mb-3" style="background-color: #FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+        <div class="row d-flex justify-content-center">
+            <div class="col-5 col-md-4 col-lg-4">
+                <!--Profile Pic and Team Information -->
+                <div class="row my-3">
+                    <div class="profile-container d-flex justify-content-center align-items-center">
+                        <img src="{{asset('storage/' .$team->team_profilepic)}}" alt="Profile Picture"
+                            class="rounded-circle img-fluid">
+                    </div>
+                </div>
             </div>
+            <div class="col-7 col-md-8 col-lg-8 ps-4">
+                <div class="row my-3">
+                    <div class="col">
+                        <!-- Full Name and Verification Status -->
+                        <div class="mt-2 d-flex align-items-center">
+                            <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
+                                {{$team->team_name}}
+                            </h5>
+                            @if($allMembersVerified)
+                            <small style="text-align:end;"> All members verified </small>
+                            @endif
+                        </div>
+                        <span>Team Code: <strong class="badge badge-custom rounded-pill"
+                                style="background-color: #91216C;">{{$team->team_code}}</strong></span>
 
             <!--review details-->
             <div class="d-flex align-items-center mb-3">
@@ -70,110 +84,156 @@
                 Package Offer: <strong>{{$team->package_service}}</strong>
             </div>
 
-            <div class="package-fee mb-3">
-                Package Fee: <strong>Php {{$team->package_price}}</strong>
+                        <div class="package-fee mb-3">
+                            Package Fee: <strong>Php {{$team->package_price}}</strong>
+                        </div>
+                        <small class="description" style="line-height: 1.2;">{{$team->team_description}}</small>
+                    </div>
+                    <div class="col-auto me-3">
+                        <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
+                            <i class="fas fa-pencil"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="description me-4 pe-4">
-                {{$team->team_description}}
-            </div>
-        </div>
-        <div class="align-items-start" style="position: absolute;top: 100px; right: 120px; font-size: 16px;">
-            <i class="fas fa-pencil"></i>
         </div>
     </div>
 
-
-    <!-- Tabs for Profile, Applications, Hiring Request and Jobs -------------------------------------------------------------------------------------------------------------------------------------------------->
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
-        <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="true">Profile</button>
+    <ul class="nav nav-tabs id=" myTab" role="tablist">
+        <li class="nav-item col text-start mb-2 mb-md-0" role="presentation">
+            <button class="nav-link active" id="profile-tab"
+                data-bs-toggle="tab" data-bs-target="#profile"
+                type="button" role="tab" aria-controls="profile"
+                aria-selected="true">Profile</button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="application-tab" data-bs-toggle="tab" data-bs-target="#application" type="button" role="tab" aria-controls="application" aria-selected="false">Application<span class="badge-notification">{{$appliedJobsCount}}</span></button>
+        <li class="nav-item col text-center mb-2 mb-md-0" role="presentation">
+            <button class="nav-link" id="application-tab"
+                data-bs-toggle="tab" data-bs-target="#application"
+                type="button" role="tab" aria-controls="application"
+                aria-selected="false">Application<span class="badge-notification">{{$appliedJobsCount}}</span></button>
         </li>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="hiring-request-tab" data-bs-toggle="tab" data-bs-target="#hiring-request" type="button" role="tab" aria-controls="hiring-request" aria-selected="false">Hiring Request<span class="badge-notification">{{$hiringRequestsCount}}</span></button>
-        <li class="nav-item" role="presentation">
-            <button class="nav-link" id="jobs-tab" data-bs-toggle="tab" data-bs-target="#jobs" type="button" role="tab" aria-controls="jobs" aria-selected="false">Jobs Available<span class="badge-notification">{{$eventsCount}}</span></button>
+        <li class="nav-item col text-center" role="presentation">
+            <button class="nav-link" id="hiring-request-tab"
+                data-bs-toggle="tab" data-bs-target="#hiring-request"
+                type="button" role="tab" aria-controls="hiring-request"
+                aria-selected="false">Hiring Request
+                <span class="badge-notification">{{$hiringRequestsCount}}</span></button>
+        </li>
+        <li class="nav-item col text-center" role="presentation">
+            <button class="nav-link" id="jobs-tab"
+                data-bs-toggle="tab" data-bs-target="#jobs"
+                type="button" role="tab" aria-controls="jobs"
+                aria-selected="false">Jobs Available
+                <span class="badge-notification">{{$eventsCount}}</span></button>
+        </li>
     </ul>
-
     <!-- Tab Content -->
     <div class="tab-content" id="myTabContent">
         <!-- Profile Tab -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
         <div class="tab-pane show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-            <div class="row">
-                <!-- Team Members Section -->
-                <span class="poppins-medium fs-5">Team Members<small>({{$membersCount}})</small></span>
-                <div class="col-lg-6 col-md-6 team-members" style="height: 400px; overflow-y: auto;">
-                    @foreach($teamMembers as $member)
-                    <div class="team-member d-flex justify-content-between align-items-center">
-                        <div class="col member-info d-flex justify-content-start align-items-center">
-                            <img src="{{$member->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
-                            <div>
-                                <p class="member-name" style="margin: 0; line-height: 1; white-space: nowrap;">{{$member->user->fullName()}}</p>
-                                @if($team->team_leader === $member->user_id)
-                                <span class="fw-bold fs-smaller text-start text-purple px-3 py-1">Admin</span>
-                                @else
-                                <span class="badge rounded-pill bg-light text-dark">Member</span>
-                                @endif
-                                </br>
-                                <!--services-->
-                                @foreach($member->services as $service)
-                                <p class="fs-smaller text-muted badge rounded-pill bg-light text-dark" style="margin: 0;">{{$service->job_title}}</p>
-                                @endforeach
-                                @if($member->avg_rating > 0)
-                                <p style="margin: 0;">★ {{ number_format($member->avg_rating, 1) }}</p>
-                                @else
-                                <p style="margin: 0;" class="text-muted fs-smaller">No ratings yet</p>
-                                @endif
+            <div class="row d-block d-lg-flex justify-content-center">
+                <div class="col col-lg-4 my-3">
+                    <div class="flex-grow-1">
+                        <div class="d-flex">
+                            <h5 class="poppins-medium">Team Members</h5>
+                            <small class="ms-1">({{$membersCount}})</small>
+                        </div>
+                    </div>
+                    <div class="col" style="height: 400px; overflow-y: auto;">
+                        <!-- Card container with scroll enabled -->
+                        @foreach($teamMembers as $member)
+                        <div class="p-3 mb-3 rounded-4 border-0" style="background-color:white;">
+                            <div class="col team-member d-flex justify-content-between align-items-center">
+                                <div class=" member-info d-flex justify-content-start align-items-start ms-1">
+                                    <img src="{{$member->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+                                    <div>
+                                        <div style="line-height: 1;">
+                                            <p class="member-name" style="margin: 0; white-space: nowrap;">{{$member->user->fullName()}}</p>
+                                            @if($team->team_leader === $member->user_id)
+                                            <span class="fw-bold fs-smaller text-start txt-purple note py-1">Admin</span>
+                                            @else
+                                            <span class="badge rounded-pill bg-light text-dark">Member</span>
+                                            @endif
+                                        </div>
+                                        @if($member->avg_rating > 0)
+                                        <small style="margin: 0;">★ {{ number_format($member->avg_rating, 1) }}</small>
+                                        @else
+                                        <small style="margin: 0;" class="text-muted fs-smaller fst-italic">No ratings yet</small>
+                                        @endif
+                                        <div class="col">
+                                            @foreach($member->services as $service)
+                                            <span class="text-start badge rounded-pill me-1" style="background-color:aliceblue; color:gray;">
+                                                {{$service->job_title}}
+                                            </span>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-end m-3">
+                                    <div class="status text-center text-success">Available</div>
+                                </div>
                             </div>
                         </div>
-                        <div class="col">
-                            <div class="status text-center text-success">Available</div>
-                        </div>
-
-                        <!--Tooltip for actions -->
-
-                        @if(auth()->user()->id === $team->team_leader && $member->user_id !== $team->team_leader )
-                        <div class="dropdown">
-                            <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Make Admin</a></li>
-                                <li><a class="dropdown-item" href="#">View Profile</a></li>
-                                <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
-                            </ul>
-                        </div>
-                        @elseif(auth()->user()->id === $member->user_id && $member->user_id !== $team->team_leader)
-                        <div class="dropdown">
-                            <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-three-dots"></i>
-                            </button>
-                            <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Edit service</a></li>
-                                <li><a class="dropdown-item text-danger" href="#">Leave team</a></li>
-                            </ul>
-                        </div>
-                        @endif
-
-
-
-
-
+                        @endforeach
                     </div>
-                    @endforeach
                 </div>
-                <div class="col ms-4 ps-2">
-                    <div class="row">
+                <div class="col col-lg-8 poppins-regular my-3">
+                    <div class="row flex-grow-1">
                         <!-- Terms of Service -->
                         <div class="col-lg-12 col-md-6 terms-of-service">
-                            <span class="poppins-medium fs-5">Terms of Services</span>
-                            <p>{{$team->terms_of_services}}</p>
+                            <h5 class="poppins-medium">Terms of Services</h5>
+                            <p class="p-3 rounded-4" style="background-color: white;">{{$team->terms_of_services}}</p>
                         </div>
+                        <div class="col-lg-12 col-md-6">
+                            <section id="team-reviews">
+                                <div class="d-flex justify-content-between align-items-center my-3">
+                                    <div class="d-flex align-items-center">
+                                        <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
+                                        <p class="mb-0 fs-smaller">(1)</p>
+                                    </div>
+                                    <a class="poppins-light text-purple" href="#" style="font-size:small;">See All Reviews</a>
+                                </div>
+                                <p class="text-center my-2">Recent Projects</p>
+                                <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+                                    <div class="row d-flex align-items-center justify-content-center">
+                                        <!-- Review Item  -->
+                                        <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#FCF2F9;">
+                                            <div class="row align-items-center w-100">
+                                                <div class="col">
+                                                    <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Birthday ni Dimple</h2>
+                                                    <span class="note">Date dito</span>
+                                                </div>
+                                                <div class="col-auto ms-auto">
+                                                    <a class="note fw-medium poppins-light text-purple"
+                                                        href="#">See Post</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row d-flex">
+                                            <div class="col-auto text-center my-2 px-0">
+                                                <!-- Profile Picture -->
+                                                <img src="assets/default.svg" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                                            </div>
+                                            <div class="col-10">
+                                                <!-- Review Content -->
+                                                <div>
+                                                    <small class="font-weight-bold mt-3">Phoebe Castro</small>
+                                                </div>
+                                                <div class="star-rating mb-2">
+                                                    <span>5</span>
+                                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                </div>
+                                                <div>
+                                                    <p class="mb-2" style="line-height: 1.2;">"ganda. Nays nays nays nays"</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                        </section>
                     </div>
                 </div>
-
             </div>
         </div>
 
@@ -254,7 +314,7 @@
                     @endforeach
                 </div>
                 @else
-                <p class="text-center mt-5 text-muted fs-4">No Applications</p>
+                <p class="text-center mt-5 text-muted">No Applications</p>
                 @endif
 
             </div>
@@ -300,7 +360,7 @@
                     @endforeach
                 </div>
                 @else
-                <p class="text-muted text-center mt-4 fs-4">No Available Events</p>
+                <p class="text-muted text-center mt-4">No Available Events</p>
                 @endif
             </div>
         </div>
@@ -409,7 +469,7 @@
                 @endforeach
             </div>
             @else
-            <p class="text-muted text-center mt-4 fs-4">No Hiring Requests</p>
+            <p class="text-muted text-center mt-4">No Hiring Requests</p>
             @endif
         </div>
 
@@ -433,14 +493,6 @@
         text-align: center;
     }
 
-    .profile-header {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-    }
-
     .application-item {
         display: flex;
         justify-content: star;
@@ -456,7 +508,7 @@
     /* Tab-specific styling */
     .nav-tabs .nav-link {
         color: black;
-        width: 250px;
+        white-space: nowrap;
     }
 
     .nav-tabs .nav-link.active {
@@ -484,14 +536,6 @@
 
     .tab-content {
         margin-top: 20px;
-    }
-
-    .team-member {
-        padding: 15px;
-        background-color: white;
-        border-radius: 10px;
-        margin-bottom: 10px;
-        box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
     }
 
     .hiring-request-section form {

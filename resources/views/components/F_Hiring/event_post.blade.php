@@ -66,20 +66,21 @@
                         <div>
                             <h5 class="text-start mb-0 poppins-medium me-2">CLIENT</h5>
                         </div>
-                        <a class="fs-sm fs-md poppins-medium txt-review " href="{{route('view-client-profile', ['id' => $event->client_id] ) }}">See Profile</a>
+                        <a class="fs-sm fs-md poppins-medium text-purple" href="{{route('view-client-profile', ['id' => $event->client_id] ) }}">See Profile</a>
                     </div>
 
                     <div class="d-flex">
                         <div class="text-center me-3">
                             <!-- Profile Picture -->
-                            <img src="{{ $clientUser->profile_image_url }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 100px; height: 100px;">
+                            <img src="{{ $clientUser->profile_image_url }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 60px; height: 60px;">
                         </div>
                         <div>
                             <!-- Profile Content -->
-                            <h5 class="fw-bold poppins-medium mb-0">{{$clientUser->first_name}} {{$clientUser->last_name}}</h5>
-                            <p class="fs-sm mt-1 mb-0">{{$clientUser->city}}</p>
+                            <h5 class="poppins-medium mb-0">{{$clientUser->first_name}} {{$clientUser->last_name}}</h5>
+                            <span class="fs-sm mt-1 mb-0">{{$clientUser->city}}</span>
+                            <div>
                             @if($clientUser->client->avg_rating == 0)
-                            <p class="fs-6 open-sans-reg light-color-prof mt-1 fst-italic text-muted">No ratings yet</p>
+                            <small class="open-sans-reg light-color-prof mt-1 fst-italic note">No ratings yet</small>
                             @else
                             <!-- Star Rating Container -->
                             <div class="star-rating mt-0 mt-md-1">
@@ -97,6 +98,7 @@
                                 </div>
                             </div>
                             @endif
+                            </div>
                         </div>
                     </div>
 
@@ -150,13 +152,13 @@
 
                     <!--if the event is closed, the apply button should be disabled-->
                     @if($event->status == 'Open')
-                    <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
+                    <button type="button" class="fs-4 rounded-pill btn-seemore border-0 px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
                         APPLY JOB
                     </button>
 
                     @if($freelancer->team && $freelancer->team->isLeader())
                     <p class="my-1 text-center or-line" style="color: gray;">or</p>
-                    <button type="button" class="fs-4 rounded-pill border-0 btn-verify px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
+                    <button type="button" class="fs-4 btn-confirm border-0 btn-verify px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
                         APPLY AS A TEAM
                     </button>
                     @include('modals.Hiring.team_apply', ['eventJobs' => $eventJobs, 'team' => $freelancer->team, 'completedHiredCounts'=> $completedHiredCounts] )
@@ -169,6 +171,7 @@
 
                 </div>
                 @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
+
 
 
                 <h4>Event Jobs</h4>

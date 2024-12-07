@@ -67,25 +67,22 @@
                                     {{ $job->event->city }}</span><br>
                                 <strong class="note">Budget:</strong><br>
                                 <span> ₱{{ $job->event->budget_min }} - ₱{{ $job->event->budget_max }}</span>
-                                <!-- Divider Line -->
-                                <hr class="my-1" style="margin-bottom: 0; border: 1px solid #ddd;">
 
-                                <div class="mt-auto p-3 mb-2">
+                                <div class="mt-auto mb-2">
                                     <div class="{{ $job->pivot->status == 'Pending' ? 'pending-color' : ($job->pivot->status == 'Accepted' ? 'text-success' : 'text-danger') }} btn-round mb-2 fw-bold"
                                         style="background-color:aliceblue; border-radius:0px;">
                                         {{ $job->pivot->status }}
                                     </div>
+                                    <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+
                                     <a href="{{ route('client-viewpost', ['id' => $job->event->event_id]) }}"
                                         class="confirm mb-2">View Post</a>
                                     @if($job->pivot->status == 'Pending')
                                     <a href="#" class="btn-round text-danger" style="border: 1px solid red;"
                                         wire:click="openModal({{ $job->job_id }})">Cancel</a>
                                     @endif
-
                                 </div>
                             </div>
-
-
                         </div>
                     </div>
 
@@ -115,7 +112,7 @@
                     @endforeach
                 </div>
                 @else
-                <p class="text-center mt-5 text-muted fs-4">No Applications</p>
+                <p class="text-center mt-5 text-muted">No Applications</p>
                 @endif
 
             </div>
@@ -226,7 +223,7 @@
                     @endforeach
                 </div>
                 @else
-                <p class="text-muted text-center mt-4 fs-4">No Hiring Requests</p>
+                <p class="text-muted text-center mt-4">No Hiring Requests</p>
                 @endif
             </div>
 
@@ -241,7 +238,7 @@
                     <div class="col-lg-6 col-xl-4 mb-4">
                         <div class="card h-100 rounded-4 d-flex flex-column"
                             style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                            <div class="card-header d-flex justify-content-center align-items-center"
+                            <div class="card-header d-flex justify-content-start align-items-center"
                                 style="border-bottom: none;">
                                 <small class="note me-2">Service/s required:</small>
                                 <div class="my-1">
@@ -270,7 +267,7 @@
                     @endforeach
                 </div>
                 @else
-                <p class="text-muted text-center mt-4 fs-4">No Available Events</p>
+                <p class="text-muted text-center mt-4">No Available Events</p>
                 @endif
             </div>
         </div>
