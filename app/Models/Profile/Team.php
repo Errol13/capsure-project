@@ -5,6 +5,7 @@ namespace App\Models\Profile;
 use App\Models\Freelancer;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
+use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -42,9 +43,9 @@ class Team extends Model
 
     public function jobApplications()
     {
-        return $this->hasMany(Job_application::class,'team_code', 'team_code');
+        return $this->hasMany(Job_application::class, 'team_code', 'team_code');
     }
-    
+
     public function hiringRequests()
     {
         return $this->hasMany(Hiring_request::class, 'team_code', 'team_code');
@@ -53,6 +54,11 @@ class Team extends Model
     public function transactions()
     {
         return $this->hasMany(Transaction::class, 'team_code', 'team_code');
+    }
+
+    public function reviews()
+    {
+        return $this->hasMany(Review::class, 'team_code', 'team_code');
     }
 
     public function areAllMembersVerified(): bool
@@ -64,10 +70,31 @@ class Team extends Model
             ->exists();
     }
 
+    public function hasMinimumMemberships(): bool
+    {
+        return $this->memberships()->count() >= 2;
+    }
+
+    public function membersCount(): int {
+        return $this->memberships()->count();
+    }
+
     public function isLeader(): bool
     {
         $user = auth()->user(); // Get the currently authenticated user
         return $user && $this->team_leader === $user->freelancer->user_id;
     }
-    
+
+    public function getMyReviews()
+    {
+        return $this->reviews()->where('reviewee_role', 'team')->get();
+    }
+
+    // Update avg_rating
+    public function updateAverageRating()
+    {
+        $average = $this->getMyReviews()->avg('rating');
+        $this->avg_rating = round($average, 1);
+        $this->save();
+    }
 }

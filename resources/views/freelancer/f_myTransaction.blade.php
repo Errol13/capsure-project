@@ -32,7 +32,7 @@
                 $unsettledPayment = $transaction->payment_status !== 'Fully Paid';
                 $noReview = !$transaction->reviews()->where('reviewee_role', 'client')->exists();
                 $isDue = $event->end_date < $today && $transaction->transaction_status === 'Ongoing';
-                @endphp
+                    @endphp
 
                     <!-- Card for Each Event Group -->
                     <div class="col">
@@ -60,7 +60,10 @@
 
                                         <small class="text-muted d-block mt-1">{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                     </div>
-                                    <div class="col-auto ms-auto">
+                                    <div class="col-auto ms-auto d-flex justify-content-between align-items-center">
+                                        @if($transaction->team_code)
+                                        <small class="text-muted">(Team Transaction)</small>
+                                        @endif
                                         <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration: none;">
                                             View Post
                                         </a>
@@ -115,21 +118,37 @@
                                                             <span class="text-danger fw-bold">Unpaid</span>
 
                                                             @elseif($transaction->payment_status === 'Partially Paid')
-                                                            <span class="text-primary fw-bold">Partially Paid</span>
+                                                            <span class="text-primary fw-bold">{!! getPaymentStatus($transaction) !!}</span>
 
                                                             @elseif($latestPaymentProof->payment_type === 'Partial Payment')
+
+                                                            @if(($transaction->team_code && $transaction->team->isLeader()) || $transaction->team_code === null)
+                                                            <!-- Button for team leader or non-team transaction -->
                                                             <button type="button" data-bs-toggle="modal" data-bs-target="#confirmpaymentmodal-{{ $transaction->transaction_id }}"
                                                                 data-paymentproof="{{ $latestPaymentProof->proof_id }}"
-                                                                class="btn-verify rounded-4 py-1 px-3 ">Confirm</button>
+                                                                class="btn-verify rounded-4 py-1 px-3">Confirm</button>
+                                                            @else
+                                                            <!-- Disabled button for non-leaders in team transactions -->
+                                                            <button type="button" class="btn btn-secondary rounded-4 py-1 px-3" disabled>Confirm</button>
+                                                            @endif
 
                                                             @elseif($transaction->payment_status === 'Fully Paid')
                                                             <span class="text-success fw-bold">Fully Paid</span>
 
                                                             @elseif($latestPaymentProof->payment_type === 'Full Payment')
+
+                                                            @if(($transaction->team_code && $transaction->team->isLeader()) || $transaction->team_code === null)
+                                                            <!-- Button for team leader or non-team transaction -->
                                                             <button type="button" data-bs-toggle="modal" data-bs-target="#confirmpaymentmodal-{{ $transaction->transaction_id }}"
                                                                 data-paymentproof="{{ $latestPaymentProof->proof_id }}"
-                                                                class="btn-verify rounded-4 py-1 px-3 ">Confirm</button>
+                                                                class="btn-verify rounded-4 py-1 px-3">Confirm</button>
+                                                            @else
+                                                            <!-- Disabled button for non-leaders in team transactions -->
+                                                            <button type="button" class="btn btn-secondary rounded-4 py-1 px-3" disabled>Confirm</button>
                                                             @endif
+
+                                                            @endif
+
                                                         </td>
 
                                                         <td>
@@ -176,13 +195,24 @@
 
                                 <!--write review -->
                                 @php
+
+                                if ($transaction->team_code) {
+                                // Team transaction
+                                $reviewee_role = 'client';
+                                $reviewee = $transaction->client; 
+                                $review = $transaction->reviews()->where('reviewee_role', 'client')->first();
+                                $asTeamReviewing = $transaction->team->team_code;
+                                }
+                                else{
                                 $reviewee_role = 'client';
                                 $reviewee = $transaction->client;
                                 $review = $transaction->reviews()->where('reviewee_role', 'client')->first(); //the freelancer's review
+                                }
+
                                 @endphp
 
                                 @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
-                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'asTeamReviewing' => $asTeamReviewing ?? null])
 
                                 <!--view review -->
                                 @if($madeaReview)
@@ -191,7 +221,7 @@
                                 @endif
 
 
-                               
+
                             </div>
                         </div>
                     </div>
@@ -223,7 +253,10 @@
 
                                     <small class="text-muted d-block mt-1">{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                 </div>
-                                <div class="col-auto ms-auto">
+                                <div class="col-auto ms-auto d-flex justify-content-between align-items-center">
+                                    @if($transaction->team_code)
+                                    <small class="text-muted">(Team Transaction)</small>
+                                    @endif
                                     <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration: none;">
                                         View Post
                                     </a>
@@ -271,20 +304,35 @@
                                                         <span class="text-danger fw-bold">Unpaid</span>
 
                                                         @elseif($transaction->payment_status === 'Partially Paid')
-                                                        <span class="text-primary fw-bold">Partially Paid</span>
+                                                        <span class="text-primary fw-bold">{!! getPaymentStatus($transaction) !!}</span>
 
                                                         @elseif($latestPaymentProof->payment_type === 'Partial Payment')
+
+                                                        @if(($transaction->team_code && $transaction->team->isLeader()) || $transaction->team_code === null)
+                                                        <!-- Button for team leader or non-team transaction -->
                                                         <button type="button" data-bs-toggle="modal" data-bs-target="#confirmpaymentmodal-{{ $transaction->transaction_id }}"
                                                             data-paymentproof="{{ $latestPaymentProof->proof_id }}"
-                                                            class="btn-verify rounded-4 py-1 px-3 ">Confirm</button>
+                                                            class="btn-verify rounded-4 py-1 px-3">Confirm</button>
+                                                        @else
+                                                        <!-- Disabled button for non-leaders in team transactions -->
+                                                        <button type="button" class="btn btn-secondary rounded-4 py-1 px-3" disabled>Confirm</button>
+                                                        @endif
 
                                                         @elseif($transaction->payment_status === 'Fully Paid')
                                                         <span class="text-success fw-bold">Fully Paid</span>
 
                                                         @elseif($latestPaymentProof->payment_type === 'Full Payment')
+
+                                                        @if(($transaction->team_code && $transaction->team->isLeader()) || $transaction->team_code === null)
+                                                        <!-- Button for team leader or non-team transaction -->
                                                         <button type="button" data-bs-toggle="modal" data-bs-target="#confirmpaymentmodal-{{ $transaction->transaction_id }}"
                                                             data-paymentproof="{{ $latestPaymentProof->proof_id }}"
-                                                            class="btn-verify rounded-4 py-1 px-3 ">Confirm</button>
+                                                            class="btn-verify rounded-4 py-1 px-3">Confirm</button>
+                                                        @else
+                                                        <!-- Disabled button for non-leaders in team transactions -->
+                                                        <button type="button" class="btn btn-secondary rounded-4 py-1 px-3" disabled>Confirm</button>
+                                                        @endif
+
                                                         @endif
                                                     </td>
 
@@ -319,8 +367,6 @@
 
                             <!-- Modals for receipts, payment proof, and reviews -->
                             @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
-                            @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id, 'reviewee_role' => 'client', 'reviewee' => $transaction->client])
-
 
                             @if($transaction->payment_proofs->isNotEmpty())
                             <!--include here the modal for viewing receipt-->
@@ -337,13 +383,22 @@
 
                             <!--write review -->
                             @php
+                            if ($transaction->team_code) {
+                            // Team transaction
+                            $reviewee_role = 'client';
+                            $reviewee = $transaction->client; 
+                            $review = $transaction->reviews()->where('reviewee_role', 'client')->first();
+                            $asTeamReviewing = $transaction->team->team_code;
+                            }
+                            else{
                             $reviewee_role = 'client';
                             $reviewee = $transaction->client;
-                            $review = $transaction->reviews()->where('reviewee_role', 'cleint')->first(); //the client's review
+                            $review = $transaction->reviews()->where('reviewee_role', 'client')->first(); //the freelancer's review
+                            }
                             @endphp
 
                             @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
-                            'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+                            'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'asTeamReviewing' => $asTeamReviewing ?? null])
 
                             <!--view review -->
                             @if($madeaReview)
@@ -380,7 +435,10 @@
 
                                     <small class="text-muted d-block mt-1">{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                 </div>
-                                <div class="col-auto ms-auto">
+                                <div class="col-auto ms-auto d-flex justify-content-between align-items-center">
+                                    @if($transaction->team_code)
+                                    <small class="text-muted">(Team Transaction)</small>
+                                    @endif
                                     <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration: none;">
                                         View Post
                                     </a>
@@ -513,7 +571,7 @@
 
         </div>
         @include('modals.f_review')
-    </div> 
+    </div>
 </div>
 
 

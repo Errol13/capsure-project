@@ -30,7 +30,9 @@
                 $event = $eventGroup['event'];
                 $hasOngoingTransaction = $eventGroup['transactions']->contains(fn($transaction) => $transaction->transaction_status === 'Ongoing');
                 $unsettledPayment = $eventGroup['transactions']->contains(fn($transaction) => $transaction->payment_status !== 'Fully Paid');
-                $noReview = $eventGroup['transactions']->contains(fn($transaction) => !$transaction->reviews()->where('reviewee_role', 'freelancer')->exists());
+                $noReview = $eventGroup['transactions']->contains(fn($transaction) =>
+                !$transaction->reviews()->whereIn('reviewee_role', ['freelancer', 'team'])->exists()
+                );
                 $isDue = $event->end_date < \Carbon\Carbon::now() && $hasOngoingTransaction;
                     @endphp
 
@@ -72,8 +74,88 @@
                                 @foreach($eventGroup['transactions'] as $transaction)
                                 <div class="d-flex align-items-start mb-3">
 
+                                    @if($transaction->team_code)
+                                    <!--for team-->
                                     <div class="flex-grow-1 d-lg-flex">
-                                        <!-- Freelancer Information Section -->
+                                        <!-- Team Information Section -->
+                                        <div class="d-flex me-2 align-items-center w-100">
+                                            <a href="{{route('team-profile-view', ['id' => $transaction->team->team_id])}}"><img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Team Image" width="50" height="50"></a>
+                                            <div>
+                                                <div class="row">
+                                                    <span class="mb-0">{{ $transaction->team->team_name }} (Team)</span>
+                                                    <span><small class="text-muted">Members: {{$transaction->team->membersCount()}}</small></span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="text-muted ">{{ $transaction->team->package_service }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Payment Information Section -->
+                                        <div class="col-lg-9 col-15 mt-3 mt-lg-0 me-lg-2 d-lg-flex">
+                                            <table class="table table-borderless my-2 w-lg-100 me-lg-4">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th class="note" style="white-space: nowrap;">Amount</th>
+                                                        <th class="note" style="white-space: nowrap;">Status</th>
+                                                        <th class="note" style="white-space: nowrap;">Payment Proof</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-center">
+                                                        <td>₱ {{ $transaction->payment_amount }}</td>
+
+                                                        @php
+                                                        $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
+                                                        $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
+                                                        if ($transaction->team_code) {
+                                                        // Check if a review exists for the team
+                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'team')->exists();
+                                                        } else {
+                                                        // Check if a review exists for the freelancer
+                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+                                                        }
+                                                        @endphp
+
+                                                        <td>{!! getPaymentStatus($transaction) !!}</td>
+
+                                                        <td>
+                                                            @if($transaction->payment_proofs->isNotEmpty())
+                                                            <a style="color: #91216C;" data-bs-toggle="modal" data-bs-target="#receiptModal{{ $transaction->transaction_id }}">
+                                                                <i class="fas fa-receipt me-2"></i><u>Receipt/Proof</u>
+                                                            </a>
+                                                            @else
+                                                            <small class=" text-center text-muted text-nowrap">No receipt yet</small>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- Review and Upload buttons-->
+                                            <div class="d-flex mt-2 justify-content-center align-items-center">
+                                                <button class="confirm btn-sm me-2" style="white-space: nowrap; background-color: white; border: 1px solid darkgray; color:#000;" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" @if($transaction->payment_status === 'Fully Paid') disabled @endif>
+                                                    <i class="fas fa-upload me-2"></i>Upload Proof
+                                                </button>
+
+                                                @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
+                                                <button type="button" class="btn-round btn-sm" style="background-color: white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                    @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
+                                                @elseif($madeaReview || $transaction->transaction_status === 'Done' )
+                                                <button type="button" class="btn-round btn-sm" style="background-color: white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                    @elseif($transaction->freelancer_id)
+                                    <!--for solo-->
+                                    <div class="flex-grow-1 d-lg-flex">
+                                        <!-- Solo Freelancer Information Section -->
                                         <div class="d-flex me-2 align-items-center w-100">
                                             <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
                                             <div>
@@ -138,34 +220,54 @@
                                                 @endif
                                             </div>
                                         </div>
+
                                     </div>
+                                    @endif
+
+
+                                    <!-- Modals for receipts, payment proof, and reviews -->
+                                    @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
+                                    @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
+
+
+                                    <!--write review -->
+                                    @php
+                                    if ($transaction->team_code) {
+                                    // Team transaction
+                                    $reviewee_role = 'team';
+                                    $reviewee = $transaction->team; 
+                                    $review = $transaction->reviews()->where('reviewee_role', 'team')->first();
+                                    } else {
+                                    // Solo freelancer transaction
+                                    $reviewee_role = 'freelancer';
+                                    $reviewee = $transaction->freelancer; // Assuming $transaction has a relationship to Freelancer
+                                    $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first();
+                                    }
+                                    @endphp
+
+                                    <!-- Write review modal -->
+                                    @include('modals.Transaction.write_review', [
+                                    'transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role,
+                                    'reviewee' => $reviewee
+                                    ])
+
+                                    @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+
+                                    <!--view review -->
+                                    @if($madeaReview)
+                                    @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
+                                    @endif
+                                    @if (!$loop->last)
+                                    <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                    @endif
+
                                 </div>
-
-                                <!-- Modals for receipts, payment proof, and reviews -->
-                                @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
-                                @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
-                                @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id, 'reviewee_role' => 'freelancer', 'reviewee' => $transaction->freelancer])
-
-                                <!--write review -->
-                                @php
-                                $reviewee_role = 'freelancer';
-                                $reviewee = $transaction->freelancer;
-                                $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first(); //the client's review
-                                @endphp
-
-                                @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
-                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
-
-                                <!--view review -->
-                                @if($madeaReview)
-                                @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
-                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
-                                @endif
-                                @if (!$loop->last)
-                                <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                @endif
                                 @endforeach
                             </div>
+
                         </div>
                     </div>
                     @endforeach
@@ -186,14 +288,16 @@
                 $event = $eventGroup['event'];
                 $hasUpcomingTransaction = $eventGroup['transactions']->contains(fn($transaction) => $transaction->transaction_status === 'Upcoming');
                 $unsettledPayment = $eventGroup['transactions']->contains(fn($transaction) => $transaction->payment_status !== 'Fully Paid');
-                $noReview = $eventGroup['transactions']->contains(fn($transaction) => !$transaction->reviews()->where('reviewee_role', 'freelancer')->exists());
+                $noReview = $eventGroup['transactions']->contains(fn($transaction) =>
+                !$transaction->reviews()->whereIn('reviewee_role', ['freelancer', 'team'])->exists()
+                );
                 $isDue = $event->end_date < \Carbon\Carbon::now() && $hasUpcomingTransaction;
                     @endphp
 
                     <!-- Card for Each Event Group -->
                     <div class="col">
                         <div class="card rounded-4 h-100" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                            <div class="card-header d-flex align-items-center rounded-top-4"  style="background-color: #FCF2F9;">
+                            <div class="card-header d-flex align-items-center rounded-top-4" style="background-color: #FCF2F9;">
                                 <div class="row align-items-center w-100">
                                     <!-- Title and Date Column -->
                                     <div class="col">
@@ -257,7 +361,13 @@
                                                         @php
                                                         $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
                                                         $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
+                                                        if ($transaction->team_code) {
+                                                        // Check if a review exists for the team
+                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'team')->exists();
+                                                        } else {
+                                                        // Check if a review exists for the freelancer
                                                         $madeaReview = $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+                                                        }
                                                         @endphp
 
                                                         <td>{!! getPaymentStatus($transaction) !!}</td>
@@ -297,7 +407,6 @@
                                 <!-- Modals for receipts, payment proof, and reviews -->
                                 @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
                                 @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
-                                @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id, 'reviewee_role' => 'freelancer', 'reviewee' => $transaction->freelancer])
 
                                 <!--write review -->
                                 @php
@@ -343,7 +452,7 @@
                 <!-- Card for Each Event Group -->
                 <div class="col">
                     <div class="card rounded-4 h-100" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
-                        <div class="card-header d-flex align-items-center round-top-4"  style="background-color: #FCF2F9;">
+                        <div class="card-header d-flex align-items-center round-top-4" style="background-color: #FCF2F9;">
                             <div class="row align-items-center w-100">
                                 <!-- Title and Date Column -->
                                 <div class="col">

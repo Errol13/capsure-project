@@ -597,19 +597,21 @@ select#year {
 
 /* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
 
-.btn-seemore {
-    background-color: #91216C;
-    color: white;
-    margin: 0;
+
+.btn-cancel {
+    background-color: none;
+    color: rgb(139, 137, 137);
     text-decoration: none;
+    border-radius: 20px;
+    width: 100px;
+    border: none;
 }
 
-.btn-seemore:enabled {
-    background-color: #91216C; /* Same as enabled state */
-    color: white;
-    opacity: 0.6; /* Optional: make it slightly faded to indicate it's disabled */
-    cursor: not-allowed; /* Show the "not-allowed" cursor */
-    border: 1px solid #91216C;
+.btn-seemore {
+    background-color: #91216C !important;
+    color: white !important;
+    margin: 0;
+    text-decoration: none;
 }
 
 .btn-seemore:hover {
@@ -1087,14 +1089,7 @@ select:disabled {
     border: none;
 }
 
-.btn-cancel {
-    background-color: none;
-    color: rgb(139, 137, 137);
-    text-decoration: none;
-    border-radius: 20px;
-    width: 100px;
-    border: none;
-}
+
 
 .btn-verified {
     background-color: white;

@@ -8,13 +8,23 @@
             </div>
             <div class="modal-body text-center">
                 <!-- User Info -->
+                @if($reviewee_role === 'team')
+                <div class="d-flex align-items-center justify-content-center mb-4">
+                    <img src="{{ asset('storage/' . $reviewee->team_profilepic) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
+                    <div class="text-start">
+                        <h6 class="mb-0">{{$reviewee->team_name}}</h6>
+                        <p class="text-muted mb-0">{{ucfirst($reviewee_role)}}</p>
+                    </div>
+                </div>
+                @else
                 <div class="d-flex align-items-center justify-content-center mb-4">
                     <img src="{{ asset($reviewee->user->profile_image_url) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
                     <div class="text-start">
-                        <h6 class="mb-0">{{ $reviewee->user->first_name }} {{ $reviewee->user->last_name }}</h6>
-                        <p class="text-muted mb-0">{{ ucfirst($reviewee_role) }}</p>
+                        <h6 class="mb-0">{{$reviewee->user->first_name}} {{$reviewee->user->last_name}}</h6>
+                        <p class="text-muted mb-0">{{ucfirst($reviewee_role)}}</p>
                     </div>
                 </div>
+                @endif
                 <!-- Star Rating -->
                 <div class="star-rating mt-1">
                     <div class="d-flex align-items-center mb-3">
@@ -22,7 +32,7 @@
                             <p class="fs-6 mb-0 mt-2 open-sans-reg light-color-prof">Rating:</p>
                             @for ($i = 1; $i <= 5; $i++)
                                 <span class="star {{ $i <= $review->rating ? 'active' : '' }}" data-value="{{ $i }}">&#9733;</span>
-                            @endfor
+                                @endfor
                         </div>
                     </div>
                 </div>
@@ -113,4 +123,3 @@
         });
     });
 </script>
-

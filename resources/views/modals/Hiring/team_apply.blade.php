@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title fs-6 text-muted">Please select a Job you want to apply for and confirm the application.</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" id="cancelTeamButton" aria-label="Close"></button>
+                <button type="button" class="btn-close reset-button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form action="{{ route('team-apply') }}" method="POST" id="apply-job-team-form">
@@ -38,12 +38,16 @@
                     <input type="hidden" id="user_id" name="user_id" value="{{ $team->team_code }}">
                 </form>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
+            <div class="modal-footer d-flex justify-content-between align-items-center">
                 <!-- Confirm Application Button -->
-                <button type="submit" id="confirm-team-application" form="apply-job-team-form" class="flex-grow-1 rounded-pill border-0 btn-cancel poppins-regular fw-light" disabled>
+                <button type="submit" id="confirm-team-application" form="apply-job-team-form"
+                    class="btn btn-cancel flex-grow-1 me-2 rounded-pill" disabled>
                     Confirm Application
                 </button>
-                <button id="cancelTeamButton" type="button" class="flex-grow-1 btn-seeprof" data-bs-dismiss="modal">Cancel</button>
+                <!-- Cancel Button -->
+                <button type="button" class="btn btn-secondary flex-grow-1 ms-2 rounded-pill reset-button" data-bs-dismiss="modal">
+                    Cancel
+                </button>
             </div>
         </div>
     </div>
@@ -95,9 +99,11 @@
         }
 
         // Reset the form when cancelled
-        document.getElementById('cancelTeamButton').addEventListener('click', function() {
-            document.getElementById('apply-job-team-form').reset();
-            checkButtonState(); // Recheck the button state when the modal is reset
+        document.querySelectorAll('.reset-button').forEach(button => {
+            button.addEventListener('click', () => {
+                document.getElementById('apply-job-team-form').reset();
+                checkButtonState();
+            });
         });
 
         // When job is selected, filter the service options and check button state
@@ -179,7 +185,7 @@
                         // Close the applyJobTeamModal
                         $('#applyJobTeamModal').modal('hide');
                         $('#responseTeamModal').modal('show');
-                    } else if (data.success){
+                    } else if (data.success) {
                         modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
                         $('#responseTeamModal').modal('show');
                         document.getElementById('apply-job-team-form').reset();
@@ -187,7 +193,7 @@
                             $('#applyJobTeamModal').modal('hide');
                             $('#responseTeamModal').modal('hide');
                         }, 2000); // Hide both modals after 2 seconds
-                    }else{
+                    } else {
                         modalMessage.innerHTML = '<p class="text-danger">' + data.message + '</p>';
                         $('#responseTeamModal').modal('show'); // Show the error modal
                     }

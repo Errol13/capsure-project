@@ -40,15 +40,18 @@
                                     @endfor
                             </div>
                         </div>
-                        <!-- <div class="col-auto p-0 ms-1">
-                        @if($team->reviews->isNotEmpty())
-                        @if($totalReviews > 1)
-                        <span class="note">({{$totalReviews}})</span>
-                        @else
-                        <span class="note">({{$totalReviews}})</span>
-                        @endif
-                        @endif
-                    </div> -->
+                        @php
+                        $totalReviews = $team->reviews()->where('reviewee_role', 'team')->count();
+                        @endphp
+                        <div class="col-auto p-0 ms-1">
+                            @if($team->reviews->isNotEmpty())
+                            @if($totalReviews > 1)
+                            <span class="note">({{$totalReviews}})</span>
+                            @else
+                            <span class="note">({{$totalReviews}})</span>
+                            @endif
+                            @endif
+                        </div>
 
                     </div>
                 </div>
@@ -56,7 +59,12 @@
                 <div class="team-code ms-4 ps-4">
                     Team Code: <strong>{{$team->team_code}}</strong>
                 </div>
+
             </div>
+            <!--team number of projects-->
+            @if($team->number_of_projects > 0)
+            <span class="text-success fw-light">Number of projects: {{$team->number_of_projects}}</span>
+            @endif
 
             <div class="package-fee mb-3">
                 Package Offer: <strong>{{$team->package_service}}</strong>

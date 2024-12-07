@@ -45,7 +45,7 @@ class Transaction extends Model
 
     public function team()
     {
-        return $this->belongsTo(Team::class, 'team_code');
+        return $this->belongsTo(Team::class, 'team_code', 'team_code');
     }
 
     public function eventjobs()

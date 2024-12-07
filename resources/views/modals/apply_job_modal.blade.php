@@ -39,12 +39,12 @@
                     <input type="hidden" id="user_id" name="user_id" value="{{ $freelancer->user_id }}">
                 </form>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
+            <div class="modal-footer d-flex justify-content-between align-items-center">
                 <!-- Confirm Application Button -->
-                <button type="submit" id="confirm-application" form="apply-job-form" class="flex-grow-1 rounded-pill border-0 btn-cancel poppins-regular fw-light" disabled>
+                <button type="submit" id="confirm-application" form="apply-job-form" class="btn btn-cancel flex-grow-1 me-2 rounded-pill poppins-regular fw-light" disabled>
                     Confirm Application
                 </button>
-                <button id="cancelButton" type="button" class="flex-grow-1 btn-seeprof" data-bs-dismiss="modal">Cancel</button>
+                <button id="cancelButton" type="button" class="btn btn-secondary flex-grow-1 ms-2 rounded-pill" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>

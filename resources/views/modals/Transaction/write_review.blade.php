@@ -10,6 +10,15 @@
                 <form id="reviewForm_{{ $transaction_id }}" action="{{ route('submit.review', ['id' => $transaction_id]) }}" method="POST">
                     @csrf
                     <!-- User Info -->
+                    @if($reviewee_role === 'team')
+                    <div class="d-flex align-items-center justify-content-center mb-4">
+                        <img src="{{ asset('storage/' . $reviewee->team_profilepic) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
+                        <div class="text-start">
+                            <h6 class="mb-0">{{$reviewee->team_name}}</h6>
+                            <p class="text-muted mb-0">{{ucfirst($reviewee_role)}}</p>
+                        </div>
+                    </div>
+                    @else
                     <div class="d-flex align-items-center justify-content-center mb-4">
                         <img src="{{ asset($reviewee->user->profile_image_url) }}" alt="Profile Picture" class="rounded-circle me-3" style="width: 80px; height: 80px;">
                         <div class="text-start">
@@ -17,6 +26,7 @@
                             <p class="text-muted mb-0">{{ucfirst($reviewee_role)}}</p>
                         </div>
                     </div>
+                    @endif
                     <!-- Star Rating -->
                     <div class="star-rating mt-1" id="starRating_{{ $transaction_id }}">
                         <div class="d-flex align-items-center mb-3">
@@ -56,6 +66,14 @@
                     <input type="hidden" name="client_id"
                         value="{{ auth()->user()->id }}"></input>
                     <input type="hidden" name="freelancer_id" value="{{$reviewee->user_id}}"></input>
+                    @elseif($reviewee_role === 'team' )
+                    <input type="hidden" name="client_id"
+                        value="{{ auth()->user()->id }}"></input>
+                    <input type="hidden" name="team_code" value="{{$reviewee->team_code}}"></input>
+                    @elseif($reviewee_role === 'client' && isset($asTeamReviewing) )
+                    <input type="hidden" name="client_id"
+                        value="{{ $reviewee->user_id}}"></input>
+                    <input type="hidden" name="team_code" value="{{$asTeamReviewing}}"></input>
                     @else
                     <input type="hidden" name="client_id"
                         value="{{ $reviewee->user_id }}"></input>
@@ -63,9 +81,10 @@
                     @endif
 
                 </form>
+                
             </div>
             <div class="modal-footer justify-content-center border-0">
-                <button type="button" class="confirm" style="padding: 0.4rem 1.2rem;" onclick="submitReview('{{ $transaction_id }}')">Submit</button>
+                <button type="button" class="confirm" style="padding: 0.4rem 1.2rem;" id="submitTheReview-{{$transaction_id}}" onclick="submitReview('{{ $transaction_id }}')">Submit</button>
             </div>
         </div>
     </div>
@@ -185,6 +204,9 @@
             if (reviewText.length === 0 || rating === "0") {
                 alert("Please provide a rating and a review.");
             } else {
+                var submitButton = document.getElementById('submitTheReview-' + transactionId);
+                submitButton.disabled = true;
+                submitButton.innerHTML = 'Submitting...';
                 form.submit(); // Submit the form
             }
         }

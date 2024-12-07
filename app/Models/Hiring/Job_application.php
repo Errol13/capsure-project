@@ -14,7 +14,7 @@ class Job_application extends Model
     protected $fillable = [
         'freelancer_id',  // Foreign key pointing to the freelancer
         'job_id',   // Foreign key pointing to the job
-        'team_code',
+        'team_code', //foreign key pointing to the team
         'service_id',      //stores service id
         'status',         // Status of the freelancer's application
     ];

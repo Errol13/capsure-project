@@ -153,8 +153,9 @@
                     <button type="button" class="fs-4 rounded-pill border-0 btn-seemore px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobModal">
                         APPLY JOB
                     </button>
-                    <p class="my-1 text-center or-line" style="color: gray;">or</p>
+
                     @if($freelancer->team && $freelancer->team->isLeader())
+                    <p class="my-1 text-center or-line" style="color: gray;">or</p>
                     <button type="button" class="fs-4 rounded-pill border-0 btn-verify px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
                         APPLY AS A TEAM
                     </button>
@@ -168,7 +169,7 @@
 
                 </div>
                 @include('modals.apply_job_modal', ['eventJobs' => $eventJobs, 'freelancer' => $freelancer, 'completedHiredCounts'=> $completedHiredCounts] )
-                
+
 
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
