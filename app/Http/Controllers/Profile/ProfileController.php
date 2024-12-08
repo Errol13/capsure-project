@@ -12,6 +12,7 @@ use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
 use App\Models\hiring\Job_application;
 use App\Models\Profile\Report;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
@@ -317,18 +318,30 @@ class ProfileController extends Controller
   }
 
   //viewAllReviews
-  public function showAllReviews()
+  public function showAllReviews($id)
   {
-    $user = auth()->user();
-    $reviews = collect();
+    //check if its a freelancer and client or team
+    if (is_numeric($id)) {
+      $user = User::find($id); //get the data
+      $reviews = collect(); // container of the reviews
+      $name = null;
 
-    if ($user->user_type === 'freelancer') {
-      $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->get();
-    } else if ($user->user_type === 'client') {
-      $reviews = $user->client->reviews()->where('reviewee_role', 'client')->get();
+      if ($user->user_type === 'freelancer') {
+        $reviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->get();
+        $name = $user->fullName();
+      } elseif ($user->user_type === 'client') {
+        $reviews = $user->client->reviews()->where('reviewee_role', 'client')->get();
+        $name = $user->fullName();
+      }
+
+      return view('components.Profile.viewAllReviews', compact('reviews', 'name'));
+    } else {
+      $team = Team::where('team_name', $id)->first();
+      $reviews = $team->reviews()->where('reviewee_role', 'team')->get();
+      $name = $team->team_name;
+      return view('components.Profile.viewAllReviews', compact('reviews', 'name'));
     }
 
-    return view('components.Profile.viewAllReviews', compact('reviews'));
   }
 
   //showAllPosts

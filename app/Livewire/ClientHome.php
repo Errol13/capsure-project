@@ -23,6 +23,8 @@ class ClientHome extends Component
     public $location = '';
     public $showFilters = false;
     public $firstDisplay = true;
+    public $loading = false; //for spinner
+    public $resultsCount;
 
     public function toggleFilters()
     {
@@ -32,8 +34,10 @@ class ClientHome extends Component
     #[On('filtersApplied')]
     public function updateFilters($filters)
     {
-        Log::info('updateFilters called');
-        Log::info('Filters Updated:', $filters);
+        // Log::info('updateFilters called');
+        // Log::info('Filters Updated:', $filters);
+
+        $this->loading = true;
 
         // Update properties with the new filters
         $this->query = $filters['query'] ?? $this->query;
@@ -45,6 +49,7 @@ class ClientHome extends Component
         $this->location = $filters['location'] ?? $this->location;
         $this->firstDisplay = false;
 
+        $this->loading = false;
         // Call a method to update the users after filters are applied
         $this->fetchFilteredUsers();
     }
@@ -73,70 +78,85 @@ class ClientHome extends Component
             ->orderBy('freelancers.avg_rating', 'desc')
             ->orderBy('number_of_projects', 'desc')
             ->orderBy('user_id')
-            ->select('users.*') 
+            ->select('users.*')
             ->paginate(9);
     }
 
 
     private function fetchFilteredUsers()
     {
-        // Log filter parameters
-        Log::info('Filters Applied Home:', [
-            'query' => $this->query,
-            'category' => $this->category,
-            'feeType' => $this->feeType,
-            'freelancerType' => $this->freelancerType,
-            'feeRange' => $this->feeRange,
-            'rating' => $this->rating,
-            'location' => $this->location
-        ]);
+        $nameParts = explode(' ', $this->query);
+        $firstNamePart = $nameParts[0] ?? '';
+        $lastNamePart = $nameParts[1] ?? '';
 
-        // Filter services based on user input
-        $services = Service::query()
-            ->when($this->query, function ($query) {
-                $query->where('job_title', 'like', '%' . $this->query . '%');
-            })
-            ->when($this->category !== 'any', function ($query) {
-                $query->where('job_category', $this->category);
-            })
-            ->when($this->feeType !== 'any-fee', function ($query) {
-                $query->where('fee_type', $this->feeType);
-            })
-            ->when($this->freelancerType !== 'solo', function ($query) {
-                $query->whereHas('freelancer', function ($query) {
-                    $query->where('in_A_Team', true);
-                });
-            })
-            ->when($this->feeRange !== 'any-range', function ($query) {
-                $query->whereBetween('job_fee', $this->getFeeRange());
-            })
-            ->when($this->rating !== 'any-rate', function ($query) {
-                $query->whereHas('freelancer', function ($query) {
-                    $query->where('avg_rating', '>=', $this->rating);
-                });
-            })
-            ->when($this->location, function ($query) {
-                $query->whereHas('freelancer', function ($query) {
-                    $query->whereHas('user', function ($query) {
-                        $query->where('city', 'like', '%' . $this->location . '%');
+        $query = User::query();
+
+        // Only include users who are freelancers
+        $query->whereHas('freelancer', function ($freelancerQuery) use ($firstNamePart, $lastNamePart) {
+            $freelancerQuery->where(function ($freelancerSubQuery) use ($firstNamePart, $lastNamePart) {
+                // Apply name filter
+                $freelancerSubQuery->when($firstNamePart, function ($nameQuery) use ($firstNamePart, $lastNamePart) {
+                    $nameQuery->whereHas('user', function ($userQuery) use ($firstNamePart, $lastNamePart) {
+                        $userQuery->whereRaw('LOWER(first_name) LIKE ?', ['%' . strtolower($firstNamePart) . '%']);
+                        if ($lastNamePart) {
+                            $userQuery->whereRaw('LOWER(last_name) LIKE ?', ['%' . strtolower($lastNamePart) . '%']);
+                        }
                     });
                 });
-            })
-            ->get();
+            });
 
-        // Log the filtered services
-        Log::info('Filtered Services:', $services->toArray());
+            // Apply job_category filter if selected
+            $freelancerQuery->when($this->category !== 'any', function ($categoryQuery) {
+                $categoryQuery->whereHas('services', function ($serviceQuery) {
+                    $serviceQuery->where('job_category', $this->category);
+                });
+            });
 
-        // Get the user IDs associated with the filtered services
-        $userIds = $services->pluck('freelancer_id');
+            // Apply fee type filter if selected
+            $freelancerQuery->when($this->feeType !== 'any-fee', function ($feeTypeQuery) {
+                $feeTypeQuery->whereHas('services', function ($serviceQuery) {
+                    $serviceQuery->where('fee_type', $this->feeType);
+                });
+            });
 
-        // Load users with eager loading for the freelancer relationship
-        return User::whereIn('id', $userIds)
-            ->with('freelancer') // Eager load the freelancer relationship
-            ->paginate(9);
+            // Apply freelancer type (solo/team)
+            $freelancerQuery->when($this->freelancerType !== 'solo', function ($teamQuery) {
+                $teamQuery->where('isin_A_Team', true);
+            });
 
-        Log::info('Filtered User Count: ' . $this->users->count());
+            // Apply fee range filter if selected
+            $freelancerQuery->when($this->feeRange !== 'any-range', function ($feeRangeQuery) {
+                $feeRangeQuery->whereHas('services', function ($serviceQuery) {
+                    $serviceQuery->whereBetween('job_fee', $this->getFeeRange());
+                });
+            });
+
+            // Apply rating filter if selected
+            $freelancerQuery->when($this->rating !== 'any-rate', function ($ratingQuery) {
+                $ratingQuery->where('avg_rating', '>=', $this->rating);
+            });
+
+            // Apply location filter if selected
+            $freelancerQuery->when($this->location, function ($locationQuery) {
+                $locationQuery->whereHas('user', function ($userQuery) {
+                    $userQuery->where('city', 'like', '%' . $this->location . '%');
+                });
+            });
+        });
+
+        // Eager load freelancer and services
+        $users = $query->with('freelancer.services')->paginate(9);
+
+        // If no results, return empty collection
+        if ($users->isEmpty()) {
+            $users = collect();
+        }
+
+        return $users;
     }
+
+
+
 
     public function toggleFavorite($freelancerId)
     {
@@ -154,18 +174,19 @@ class ClientHome extends Component
         // Initially fetch all freelancers
         if ($this->query === '' && $this->firstDisplay) {
             $users = $this->fetchAllFreelancers();
-            Log::info('Filtered User Count: ', $users->toArray());
+            // Log::info('Filtered User Count: ', $users->toArray());
+            $this->resultsCount = $users->count();
         } else {
             $users = $this->fetchFilteredUsers();
-
+            $this->resultsCount = $users->count();
             // If no results
             if ($users->isEmpty()) {
                 // return empty results
-                $users = collect(); 
+                $users = collect();
             }
         }
 
-        Log::info('category: ' . $this->category);
+        // Log::info('category: ' . $this->category);
 
         return view('livewire.client-home', [
             'users' => $users,

@@ -259,7 +259,7 @@
                         @endif
                     </div>
                     @if($totalReviews > 0)
-                    <a class="poppins-light text-purple" href="{{route('allReviews.show')}}" style="font-size:small;">See All Reviews</a>
+                    <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $user->id])}}" style="font-size:small;">See All Reviews</a>
                     @endif
                 </div>
 
@@ -278,7 +278,7 @@
                 <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                     <div class="row d-flex align-items-center justify-content-center">
                         <!-- Review Item  -->
-                        <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#FCF2F9;">
+                        <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">
                             <div class="row align-items-center w-100">
                                 <div class="col">
                                     <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>

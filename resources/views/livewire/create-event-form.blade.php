@@ -78,7 +78,7 @@
                                 @error('budget_min') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">
-                                <input type="number" id="budget_max" class="form-control" wire:model="budget_max" min="20" placeholder="Max ₱">
+                                <input type="number" id="budget_max" class="form-control"  wire:model.debounce.1000ms="budget_max"   :min="budget_min"  placeholder="Max ₱">
                                 @error('budget_max') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">

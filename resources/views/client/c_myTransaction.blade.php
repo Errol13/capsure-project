@@ -72,7 +72,7 @@
 
                             <div class="card-body">
                                 @foreach($eventGroup['transactions'] as $transaction)
-                                <div class="d-flex align-items-start mb-3">
+                                <div class="d-flex  flex-wrap align-items-start mb-3">
 
                                     @if($transaction->team_code)
                                     <!--for team-->
@@ -225,6 +225,35 @@
                                     @endif
 
 
+                                    <div class="row">
+                                        <!--for members-->
+                                        @if($transaction->members)
+                                        <p>Members:</p>
+                                        <div class="d-flex flex-wrap justify-content-start align-items-start">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                @foreach($transaction->members as $member)
+                                                <div class=" member-info d-flex justify-content-around align-items-start ms-1">
+                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+
+                                                    <div class="row">
+                                                        <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
+                                                        @if($member->freelancer->avg_rating > 0)
+                                                        <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
+                                                        @else
+                                                        <small class="text-muted">No ratings yet</small>
+                                                        @endif
+                                                    </div>
+
+                                                    @foreach($member->services as $service)
+                                                    <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
+                                                    @endforeach
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+
                                     <!-- Modals for receipts, payment proof, and reviews -->
                                     @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
                                     @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
@@ -235,7 +264,7 @@
                                     if ($transaction->team_code) {
                                     // Team transaction
                                     $reviewee_role = 'team';
-                                    $reviewee = $transaction->team; 
+                                    $reviewee = $transaction->team;
                                     $review = $transaction->reviews()->where('reviewee_role', 'team')->first();
                                     } else {
                                     // Solo freelancer transaction
@@ -329,10 +358,91 @@
 
                             <div class="card-body">
                                 @foreach($eventGroup['transactions'] as $transaction)
-                                <div class="d-flex align-items-start mb-3">
+                                <div class="d-flex flex-wrap align-items-start mb-3">
 
+                                    @if($transaction->team_code)
+                                    <!--for team-->
                                     <div class="flex-grow-1 d-lg-flex">
-                                        <!-- Freelancer Information Section -->
+                                        <!-- Team Information Section -->
+                                        <div class="d-flex me-2 align-items-center w-100">
+                                            <a href="{{route('team-profile-view', ['id' => $transaction->team->team_id])}}"><img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Team Image" width="50" height="50"></a>
+                                            <div>
+                                                <div class="row">
+                                                    <span class="mb-0">{{ $transaction->team->team_name }} (Team)</span>
+                                                    <span><small class="text-muted">Members: {{$transaction->team->membersCount()}}</small></span>
+                                                </div>
+                                                <div class="row">
+                                                    <span class="text-muted ">{{ $transaction->team->package_service }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Payment Information Section -->
+                                        <div class="col-lg-9 col-15 mt-3 mt-lg-0 me-lg-2 d-lg-flex">
+                                            <table class="table table-borderless my-2 w-lg-100 me-lg-4">
+                                                <thead>
+                                                    <tr class="text-center">
+                                                        <th class="note" style="white-space: nowrap;">Amount</th>
+                                                        <th class="note" style="white-space: nowrap;">Status</th>
+                                                        <th class="note" style="white-space: nowrap;">Payment Proof</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="text-center">
+                                                        <td>₱ {{ $transaction->payment_amount }}</td>
+
+                                                        @php
+                                                        $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
+                                                        $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
+                                                        if ($transaction->team_code) {
+                                                        // Check if a review exists for the team
+                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'team')->exists();
+                                                        } else {
+                                                        // Check if a review exists for the freelancer
+                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+                                                        }
+                                                        @endphp
+
+                                                        <td>{!! getPaymentStatus($transaction) !!}</td>
+
+                                                        <td>
+                                                            @if($transaction->payment_proofs->isNotEmpty())
+                                                            <a style="color: #91216C;" data-bs-toggle="modal" data-bs-target="#receiptModal{{ $transaction->transaction_id }}">
+                                                                <i class="fas fa-receipt me-2"></i><u>Receipt/Proof</u>
+                                                            </a>
+                                                            @else
+                                                            <small class=" text-center text-muted text-nowrap">No receipt yet</small>
+                                                            @endif
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
+                                            <!-- Review and Upload buttons-->
+                                            <div class="d-flex mt-2 justify-content-center align-items-center">
+                                                <button class="confirm btn-sm me-2" style="white-space: nowrap; background-color: white; border: 1px solid darkgray; color:#000;" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" @if($transaction->payment_status === 'Fully Paid') disabled @endif>
+                                                    <i class="fas fa-upload me-2"></i>Upload Proof
+                                                </button>
+
+                                                @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
+                                                <button type="button" class="btn-round btn-sm" style="background-color: white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                    @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
+                                                @elseif($madeaReview || $transaction->transaction_status === 'Done' )
+                                                <button type="button" class="btn-round btn-sm" style="background-color: white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
+                                                @endif
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    @elseif($transaction->freelancer_id)
+                                    <!--for solo-->
+                                    <div class="flex-grow-1 d-lg-flex">
+                                        <!-- Solo Freelancer Information Section -->
                                         <div class="d-flex me-2 align-items-center w-100">
                                             <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
                                             <div>
@@ -358,16 +468,11 @@
                                                 <tbody>
                                                     <tr class="text-center">
                                                         <td>₱ {{ $transaction->payment_amount }}</td>
+
                                                         @php
                                                         $amountpaidTotal = $transaction->payment_proofs->sum('amount_paid');
                                                         $latestPaymentProof = $transaction->payment_proofs->sortByDesc('created_at')->first();
-                                                        if ($transaction->team_code) {
-                                                        // Check if a review exists for the team
-                                                        $madeaReview = $transaction->reviews()->where('reviewee_role', 'team')->exists();
-                                                        } else {
-                                                        // Check if a review exists for the freelancer
                                                         $madeaReview = $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
-                                                        }
                                                         @endphp
 
                                                         <td>{!! getPaymentStatus($transaction) !!}</td>
@@ -378,13 +483,14 @@
                                                                 <i class="fas fa-receipt me-2"></i><u>Receipt/Proof</u>
                                                             </a>
                                                             @else
-                                                            <small class=" text-center note text-nowrap">No receipt yet</small>
+                                                            <small class=" text-center text-muted text-nowrap">No receipt yet</small>
                                                             @endif
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
 
+                                            <!-- Review and Upload buttons-->
                                             <div class="d-flex mt-2 justify-content-center align-items-center">
                                                 <button class="confirm btn-sm me-2" style="white-space: nowrap; background-color: white; border: 1px solid darkgray; color:#000;" data-bs-toggle="modal" data-bs-target="#uploadPaymentProofModal{{ $transaction->transaction_id }}" @if($transaction->payment_status === 'Fully Paid') disabled @endif>
                                                     <i class="fas fa-upload me-2"></i>Upload Proof
@@ -401,33 +507,83 @@
                                                 @endif
                                             </div>
                                         </div>
+
                                     </div>
+                                    @endif
+
+
+                                    <div class="row">
+                                        <!--for members-->
+                                        @if($transaction->members)
+                                        <p>Members:</p>
+                                        <div class="d-flex flex-wrap justify-content-start align-items-start">
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                @foreach($transaction->members as $member)
+                                                <div class=" member-info d-flex justify-content-around align-items-start ms-1">
+                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+
+                                                    <div class="row">
+                                                        <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
+                                                        @if($member->freelancer->avg_rating > 0)
+                                                        <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
+                                                        @else
+                                                        <small class="text-muted">No ratings yet</small>
+                                                        @endif
+                                                    </div>
+
+                                                    @foreach($member->services as $service)
+                                                    <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
+                                                    @endforeach
+                                                </div>
+                                                @endforeach
+                                            </div>
+                                        </div>
+                                        @endif
+                                    </div>
+
+                                    <!-- Modals for receipts, payment proof, and reviews -->
+                                    @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
+                                    @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
+
+
+                                    <!--write review -->
+                                    @php
+                                    if ($transaction->team_code) {
+                                    // Team transaction
+                                    $reviewee_role = 'team';
+                                    $reviewee = $transaction->team;
+                                    $review = $transaction->reviews()->where('reviewee_role', 'team')->first();
+                                    } else {
+                                    // Solo freelancer transaction
+                                    $reviewee_role = 'freelancer';
+                                    $reviewee = $transaction->freelancer; // Assuming $transaction has a relationship to Freelancer
+                                    $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first();
+                                    }
+                                    @endphp
+
+                                    <!-- Write review modal -->
+                                    @include('modals.Transaction.write_review', [
+                                    'transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role,
+                                    'reviewee' => $reviewee
+                                    ])
+
+                                    @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
+
+                                    <!--view review -->
+                                    @if($madeaReview)
+                                    @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
+                                    'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
+                                    @endif
+                                    @if (!$loop->last)
+                                    <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
+                                    @endif
+
                                 </div>
-
-                                <!-- Modals for receipts, payment proof, and reviews -->
-                                @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
-                                @include('modals.Transaction.upload_payment_proof', ['uniqueId' => $transaction->transaction_id])
-
-                                <!--write review -->
-                                @php
-                                $reviewee_role = 'freelancer';
-                                $reviewee = $transaction->freelancer;
-                                $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first(); //the client's review
-                                @endphp
-
-                                @include('modals.Transaction.write_review', ['transaction_id' => $transaction->transaction_id,
-                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee])
-
-                                <!--view review -->
-                                @if($madeaReview)
-                                @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,
-                                'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
-                                @endif
-                                @if (!$loop->last)
-                                <hr class="my-3" style="margin-bottom: 0; border: 1px solid #ddd;">
-                                @endif
                                 @endforeach
                             </div>
+
                         </div>
                     </div>
                     @endforeach
@@ -476,14 +632,27 @@
                                 <div class="flex-grow-1 d-lg-flex">
                                     <!-- Freelancer Information Section -->
                                     <div class="d-flex me-2 align-items-center w-100">
+                                        @if($transaction->freelancer)
                                         <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                        @elseif($transaction->team)
+                                        <img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                        @endif
                                         <div>
+                                            @if($transaction->freelancer)
                                             <div class="row">
-                                                <span>{{ $transaction->freelancer->user->first_name }} {{ $transaction->freelancer->user->last_name }}</span>
+                                                <span>{{ $transaction->freelancer->user->fullName()}}</span>
                                             </div>
                                             <div class="row">
                                                 <span class="text-muted">{{ $transaction->Hiring_request->serviceDetails()->job_title }}</span>
                                             </div>
+                                            @elseif($transaction->team)
+                                            <div class="row">
+                                                <span>{{ $transaction->team->team_name }}</span>
+                                            </div>
+                                            <div class="row">
+                                                <span class="text-muted">{{ $transaction->team->package_service }}</span>
+                                            </div>
+                                            @endif
                                         </div>
                                     </div>
 
@@ -528,8 +697,40 @@
                                             </button>
                                         </div>
                                     </div>
+
+
+                                </div>
+
+                            </div>
+
+                            <!--for members-->
+                            @if($transaction->members)
+                            <p>Members:</p>
+                            <div class="d-flex flex-column justify-content-start align-items-start">
+                                <div class="d-flex justify-content-between align-items-center">
+                                    @foreach($transaction->members as $member)
+                                    <div class=" member-info d-flex justify-content-around align-items-start ms-1">
+                                        <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+
+                                        <div class="row">
+                                            <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
+                                            @if($member->freelancer->avg_rating > 0)
+                                            <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
+                                            @else
+                                            <small class="text-muted">No ratings yet</small>
+                                            @endif
+                                        </div>
+
+                                        @foreach($member->services as $service)
+                                        <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
+                                        @endforeach
+                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
+
+                            @endif
+
 
                             <!--include modal for viewing receipt-->
                             @include('modals.Transaction.view_receipt',
@@ -539,9 +740,17 @@
                             <!--view review -->
 
                             @php
+                            if ($transaction->team_code) {
+                            // Team transaction
+                            $reviewee_role = 'team';
+                            $reviewee = $transaction->team;
+                            $review = $transaction->reviews()->where('reviewee_role', 'team')->first();
+                            } else {
+                            // Solo freelancer transaction
                             $reviewee_role = 'freelancer';
-                            $reviewee = $transaction->freelancer;
-                            $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first(); //the client's review
+                            $reviewee = $transaction->freelancer; // Assuming $transaction has a relationship to Freelancer
+                            $review = $transaction->reviews()->where('reviewee_role', 'freelancer')->first();
+                            }
                             @endphp
 
                             @include('modals.Transaction.view_review', ['transaction_id' => $transaction->transaction_id,

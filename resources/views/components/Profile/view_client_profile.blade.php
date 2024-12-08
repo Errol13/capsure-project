@@ -59,8 +59,8 @@
                                 <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
                                     @csrf
                                     <input type="hidden" name="recipientId" value="{{ $user->id }}">
-                                   <button type="submit"  class="btn border-0 m-0 p-0"> 
-                                    <i class="fas fa-comment text-purple fs-5 me-4 rounded-end-1 px-3 py-2 me-3 me-md-4" style="background-color: #FCF2F9;cursor: pointer;"></i></button>
+                                    <button type="submit" class="btn border-0 m-0 p-0">
+                                        <i class="fas fa-comment text-purple fs-5 me-4 rounded-end-1 px-3 py-2 me-3 me-md-4" style="background-color: #FCF2F9;cursor: pointer;"></i></button>
                                 </form>
                                 <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportClientModal"
                                     style="color: crimson; cursor: pointer;"></i>
@@ -205,7 +205,7 @@
                         @endif
                     </div>
                     @if($totalReviews > 0)
-                    <a class="poppins-light text-purple" style="font-size:small;" href="{{route('allReviews.show')}}">See All Reviews</a>
+                    <a class="poppins-light text-purple" style="font-size:small;" href="{{route('allReviews.show', ['id' => $user->id] )}}">See All Reviews</a>
                     @endif
                 </div>
 
@@ -220,10 +220,10 @@
                 $end_date_formatted = \Carbon\Carbon::parse($eventsWithReview->end_date)->format('M j, Y');
                 @endphp
 
-                <div class="container card rounded-4" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+                <div class="container card rounded-4 mb-2" style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                     <div class="row d-flex align-items-center justify-content-center">
-                        <!-- Review Item 1 -->
-                        <div class="card-header d-flex align-items-center rounded-top-4" style="border-bottom: none; background-color:#FCF2F9;">
+                        <!-- Reviews -->
+                        <div class="card-header d-flex align-items-center rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">
                             <div class="row align-items-center w-100">
                                 <div class="col">
                                     <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$eventsWithReview->title}}</h2>
@@ -240,13 +240,20 @@
                         @foreach($transaction->reviews as $review)
                         <div class="row card-body d-flex">
                             <div class="col-auto text-center my-2 px-0">
-                                <!-- Profile Picture -->
+                                @if($transaction->team_code)
+                                <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                @else
                                 <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                @endif
                             </div>
                             <div class="col-lg-10 col-9 col-md-9">
                                 <!-- Review Content -->
                                 <div>
+                                    @if($transaction->team_code)
+                                    <span class="font-weight-bold mt-3">{{$review->team->team_name}}<small>(Team)</small></span>
+                                    @else
                                     <span class="font-weight-bold mt-3">{{$review->freelancer->user->first_name}} {{$review->freelancer->user->last_name}}</span>
+                                    @endif
                                 </div>
                                 <div class=" star-rating mb-2">
                                     <span class="ms-1">{{ number_format($review->rating, 1) }}</span>
@@ -271,9 +278,10 @@
                         @endforeach
                     </div>
                 </div>
+                @endforeach
+                @endif
         </div>
-        @endforeach
-        @endif
+
         </section>
 
     </div>

@@ -199,7 +199,7 @@
                                 if ($transaction->team_code) {
                                 // Team transaction
                                 $reviewee_role = 'client';
-                                $reviewee = $transaction->client; 
+                                $reviewee = $transaction->client;
                                 $review = $transaction->reviews()->where('reviewee_role', 'client')->first();
                                 $asTeamReviewing = $transaction->team->team_code;
                                 }
@@ -386,7 +386,7 @@
                             if ($transaction->team_code) {
                             // Team transaction
                             $reviewee_role = 'client';
-                            $reviewee = $transaction->client; 
+                            $reviewee = $transaction->client;
                             $review = $transaction->reviews()->where('reviewee_role', 'client')->first();
                             $asTeamReviewing = $transaction->team->team_code;
                             }
@@ -406,10 +406,11 @@
                             'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
                             @endif
 
-                            @endforeach
+
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
 
             @else
@@ -560,10 +561,11 @@
                             'reviewee_role' => $reviewee_role, 'reviewee' => $reviewee, 'review' => $review])
                             @endif
 
-                            @endforeach
+
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
             @else
             <p>No previous transactions.</p>

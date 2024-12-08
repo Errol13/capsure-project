@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Transaction;
 
 use App\Http\Controllers\Controller;
+use App\Models\Profile\Membership;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -61,7 +62,7 @@ class TransactionController extends Controller
         });
 
 
-        Log::info('Ongoing V: ', $ongoingEvents->toArray());
+        // Log::info('Ongoing V: ', $ongoingEvents->toArray());
 
         $ongoingEvents = $sortEventsByDate($ongoingEvents);
 
@@ -85,6 +86,7 @@ class TransactionController extends Controller
                 return false; // Exclude events with no transactions
             }
 
+
             $hasOngoingTransaction = $event->transactions->contains(function ($transaction) {
                 return $transaction->transaction_status === 'Ongoing';
             });
@@ -92,8 +94,14 @@ class TransactionController extends Controller
             // Check if the client has made a review for each transaction
             $clientMadeReviews = $event->transactions->every(function ($transaction) {
                 // Check if the client has reviewed the freelancer for this transaction
-                return $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+                if ($transaction->freelancer) {
+                    return $transaction->reviews()->where('reviewee_role', 'freelancer')->exists();
+                } elseif ($transaction->team) {
+                    return $transaction->reviews()->where('reviewee_role', 'team')->exists();
+                }
             });
+
+            // dd($clientMadeReviews);
 
             return $event->end_date < $today && (!$hasOngoingTransaction && $clientMadeReviews) || ($hasOngoingTransaction && $clientMadeReviews);
         })->map(function ($event) use ($timezone) {
@@ -103,7 +111,32 @@ class TransactionController extends Controller
         });
         $previousEvents = $sortEventsByDate($previousEvents);
 
+        // Fetch members of the team for each event, filtered by the transaction's created_at
+        $events->each(function ($event) {
+            $event->transactions->each(function ($transaction) {
+                // Only fetch members if the transaction has a team_code (i.e., it is not a solo freelancer)
+                if ($transaction->team_code) {
+                    // Fetch team members based on team_code and the transaction's created_at
+                    $members = Membership::where('team_id', $transaction->team->team_id)
+                        ->where('created_at', '<=', $transaction->created_at)
+                        ->get();
 
+                    // For each member, fetch the associated services
+                    $members->each(function ($member) {
+                        // Fetch services for the member using the getServices method
+                        $member->services = $member->getServices();
+                    });
+
+                    $transaction->members = $members; // Add members with services to each transaction
+                } else {
+                    // If it's a solo freelancer, you can set the members to an empty collection or null
+                    $transaction->members = collect(); // No members for solo freelancers
+                }
+            });
+        });
+
+
+        // dd($previousEvents->count());
         // Get transactions for each event category
         $transactionsByEvent = [
             'ongoing' => $ongoingEvents->map(function ($event) {

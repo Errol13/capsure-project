@@ -48,6 +48,11 @@ class Transaction extends Model
         return $this->belongsTo(Team::class, 'team_code', 'team_code');
     }
 
+    public function activeTeamMembers()
+    {
+        return $this->team->membersAtTransactionTime($this->created_at);
+    }
+
     public function eventjobs()
     {
         return $this->belongsTo(EventJob::class, 'job_id');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Models\Freelancer;
 use App\Models\Profile\Service;
+use App\Models\Profile\Team;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -38,7 +39,12 @@ class HomeController extends Controller
                     ->with(['freelancer.services', 'freelancer.portfolios'])
                     ->orderBy('id')
                     ->paginate(9);
-                return view('client.c_home', compact('users'));
+                //get the team freelancers
+                $teams = Team::get()->filter(function ($team) {
+                    return $team->hasMinimumMemberships();
+                })->sortBy('avg_rating')->sortByDesc('created_at');             
+
+                return view('client.c_home', compact('users', 'teams'));
             } elseif ($user->user_type == 'freelancer') {
                 return view('freelancer.f_home');
             } elseif ($user->user_type == 'admin') {

@@ -106,7 +106,7 @@ class TeamController extends Controller
                     return $jobApplication;
                 });
 
-           
+
             //for the hiring requests
             $hiringRequests = $team->hiringRequests()
                 ->with(['eventjob.event'])
@@ -124,8 +124,19 @@ class TeamController extends Controller
             $eventRecommendations = Event::with('event_jobs')
                 ->where('status', 'Open')
                 ->whereHas('event_jobs', function ($query) use ($team) {
-                    $query->where('service_needed', $team->package_service)->orWhere('job_category', 'Package');
-                })->get();
+                    $query->where('service_needed', $team->package_service)
+                        ->orWhere('job_category', 'Package');
+                })
+                ->whereDoesntHave('transactions', function ($query) use ($team) {
+                    // Exclude events where the team has transactions 
+                    $query->where('team_code', $team->team_code);  
+                })
+                ->whereDoesntHave('event_jobs.jobApplications', function ($query) use ($team) {
+                    // Exclude events where the team has already applied
+                    $query->where('team_code', $team->team_code);  
+                })
+                ->get();
+
 
             foreach ($eventRecommendations as $event) {
                 $event->start_date_formatted = Carbon::parse($event->start_date)->format('M j, Y h:i A');
@@ -133,9 +144,14 @@ class TeamController extends Controller
             }
             $allMembersVerified = $team->areAllMembersVerified();
 
+            //get the freelancer's reviews made by the clients
+            $reviews = $team->reviews()->with('transaction.event')->where('reviewee_role', 'team')->take(2)->get();
 
             //get the members
-            $teamMembers = $team->freelancers;
+            $teamMembers = $team->memberships()->with('freelancer') // Load freelancers through memberships
+                ->orderBy('created_at', 'asc') // Order by the date they joined the team
+                ->get()
+                ->pluck('freelancer'); // Extract the freelancers after ordering
             $membersCount = $teamMembers->count();
             $hiringRequestsCount = $hiringRequests->count();
             $eventsCount = $eventRecommendations->count();
@@ -149,7 +165,8 @@ class TeamController extends Controller
                 'appliedJobs',
                 'appliedJobsCount',
                 'hiringRequests',
-                'hiringRequestsCount'
+                'hiringRequestsCount',
+                'reviews'
             ));
         } else {
             return redirect()->back()->with('error', 'There is no team found!');
@@ -164,6 +181,8 @@ class TeamController extends Controller
         //check if team exists
         if ($team) {
             $allMembersVerified = $team->areAllMembersVerified();
+            //get the freelancer's reviews made by the clients
+            $reviews = $team->reviews()->with('transaction.event')->where('reviewee_role', 'team')->take(2)->get();
 
             //get the members
             $teamMembers = $team->freelancers;
@@ -172,7 +191,8 @@ class TeamController extends Controller
                 'team',
                 'allMembersVerified',
                 'teamMembers',
-                'membersCount'
+                'membersCount',
+                'reviews'
             ));
         } else {
             return redirect()->back()->with('error', 'There is no team found!');
@@ -205,6 +225,10 @@ class TeamController extends Controller
                 'team_id' => $foundTeam->team_id,
                 'services' => json_encode($freelancerServices), // Populate with freelancer's services
             ]);
+
+            //isin_A_Team to true
+            $user->freelancer->isin_A_Team = true;
+            $user->freelancer->save();
 
             //then redirect to the team profile
             return redirect()->route('team-profile');

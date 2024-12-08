@@ -33,11 +33,14 @@
                 <div class="col-12 col-sm-6 col-md-4 mb-3">
                     <div class="card" style="border-radius: 20px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                         <div class="card-body">
-                            <div class="d-flex justify-content-between align-items-center mb-3">
-                                <h4 class="card-title poppins-medium mb-0"  style="line-height: 0.5;">{{ $event->title }}</h4>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <h4 class="card-title poppins-medium mb-0" style="line-height: 0.5;">{{ $event->title }}</h4>
                                 <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge text-uppercase">
                                     {{ $event->status }}
                                 </span>
+                            </div>
+                            <div>
+                            <small class="text-muted mb-3">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
                             </div>
 
                             <span class="fs-6"><strong>Budget:</strong> ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</span>

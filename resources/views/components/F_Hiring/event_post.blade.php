@@ -4,7 +4,6 @@
 <div class="container my-4 pb-2">
     <a href="#" onclick="window.history.back(); return false;" style="text-decoration:none; color:black;">
         <i class="fas fa-arrow-left me-2 mb-4"></i>Back
-
     </a>
 
     <!-- Event Details -->
@@ -14,6 +13,7 @@
                 <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
                 <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
             </div>
+            <small class="text-muted mb-1">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
             <hr>
             <div class="row">
                 <div class="col-md-4">
@@ -79,25 +79,25 @@
                             <h5 class="poppins-medium mb-0">{{$clientUser->first_name}} {{$clientUser->last_name}}</h5>
                             <span class="fs-sm mt-1 mb-0">{{$clientUser->city}}</span>
                             <div>
-                            @if($clientUser->client->avg_rating == 0)
-                            <small class="open-sans-reg light-color-prof mt-1 fst-italic note">No ratings yet</small>
-                            @else
-                            <!-- Star Rating Container -->
-                            <div class="star-rating mt-0 mt-md-1">
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <p class="mb-0 fs-sm fs-md">{{ number_format($clientUser->client->avg_rating, 1) }}</p>
-                                    </div>
-                                    <div class="col">
-                                        <div class="d-flex align-items-center mt-1">
-                                            @for ($i = 1; $i <= 5; $i++)
-                                                <i class="fas fa-star {{ $i <= $clientUser->client->avg_rating ? 'filled' : '' }}"></i>
-                                                @endfor
+                                @if($clientUser->client->avg_rating == 0)
+                                <small class="open-sans-reg light-color-prof mt-1 fst-italic note">No ratings yet</small>
+                                @else
+                                <!-- Star Rating Container -->
+                                <div class="star-rating mt-0 mt-md-1">
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <p class="mb-0 fs-sm fs-md">{{ number_format($clientUser->client->avg_rating, 1) }}</p>
+                                        </div>
+                                        <div class="col">
+                                            <div class="d-flex align-items-center mt-1">
+                                                @for ($i = 1; $i <= 5; $i++)
+                                                    <i class="fas fa-star {{ $i <= $clientUser->client->avg_rating ? 'filled' : '' }}"></i>
+                                                    @endfor
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            @endif
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -158,9 +158,23 @@
 
                     @if($freelancer->team && $freelancer->team->isLeader())
                     <p class="my-1 text-center or-line" style="color: gray;">or</p>
-                    <button type="button" class="fs-4 btn-confirm border-0 btn-verify px-5 text-center mb-2 poppins-medium" data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
+
+                    <!--the team should have 5 members-->
+                    @if($freelancer->team->hasMinimumMemberships())
+                    <button type="button" class="fs-4 border-0 rounded-pill btn-verify px-5 text-center mb-2 poppins-medium"
+                        data-bs-toggle="modal" data-bs-target="#applyJobTeamModal">
                         APPLY AS A TEAM
                     </button>
+                    @else
+                    <button type="button" class="fs-5 border-0 rounded-pill btn btn-secondary px-5 text-center mb-2 poppins-medium" disabled
+                        title="Requires 5 members">
+                        APPLY AS A TEAM
+                    </button>
+                    <div class="text-muted text-center mt-1 fs-smaller">
+                        Note: Requires at least 5 members to apply as a team.
+                    </div>
+                    @endif
+
                     @include('modals.Hiring.team_apply', ['eventJobs' => $eventJobs, 'team' => $freelancer->team, 'completedHiredCounts'=> $completedHiredCounts] )
                     @endif
                     @else

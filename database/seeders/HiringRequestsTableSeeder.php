@@ -29,7 +29,7 @@ class HiringRequestsTableSeeder extends Seeder
                 'freelancer_id' => 4,
                 'job_id' => 2,
                 'client_id' => 1,
-                'client_pricing' => 1000.00,
+                'client_pricing' => 700.00,
                 'freelancer_pricing' => 800.00,
                 'dealer_user_type' => 'Freelancer',
                 'status' => 'Accepted',

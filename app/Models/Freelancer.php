@@ -84,10 +84,9 @@ class Freelancer extends Model
     }
 
 
-
     public function membership()
     {
-        return $this->hasOne(Membership::class, 'freelancer_id');
+        return $this->hasMany(Membership::class, 'freelancer_id');
     }
 
     public function team()

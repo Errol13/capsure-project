@@ -111,7 +111,7 @@ class MyJobs extends Component
         $hiringRequests->each(function ($hiringRequest) {
             $serviceDetails = $hiringRequest->serviceDetails();
 
-            Log::info('service details:', $serviceDetails->toArray()); // the details are correctly retrieved
+            // Log::info('service details:', $serviceDetails->toArray()); // the details are correctly retrieved
             $hiringRequest->serviceDetails = $serviceDetails;
         });
 
