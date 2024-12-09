@@ -51,11 +51,11 @@ class Hiring_request extends Model
                 ->jobApplications()
                 ->where('freelancer_id', $this->freelancer_id)
                 ->first();
-        } elseif ($this->team_id) {
+        } elseif ($this->team_code) {
             // If it's for a team, get the job application for the team
             return $this->eventjob
                 ->jobApplications()
-                ->where('team_id', $this->team_id)
+                ->where('team_code', $this->team_code)
                 ->first();
         }
 
@@ -92,22 +92,29 @@ class Hiring_request extends Model
 
     public function findMatchingService($serviceNeeded)
     {
-        $freelancerServices = $this->freelancer->services;
-        $bestMatch = null;
-        $highestSimilarity = 0;
+        // Check if the user is a freelancer
+        if ($this->freelancer) {
+            $freelancerServices = $this->freelancer->services;
+            $bestMatch = null;
+            $highestSimilarity = 0;
 
-        foreach ($freelancerServices as $service) {
-            similar_text($service->job_title, $serviceNeeded, $percent);
+            foreach ($freelancerServices as $service) {
+                similar_text($service->job_title, $serviceNeeded, $percent);
 
-            // If similarity percentage is above a threshold get the best match
-            if ($percent > 80 && $percent > $highestSimilarity) {
-                $highestSimilarity = $percent;
-                $bestMatch = $service->id;
+                // If similarity percentage is above a threshold get the best match
+                if ($percent > 80 && $percent > $highestSimilarity) {
+                    $highestSimilarity = $percent;
+                    $bestMatch = $service->id;
+                }
             }
+
+            return $bestMatch;
         }
 
-        return $bestMatch;
+        // If the user is not a freelancer (part of a team), return null or appropriate value
+        return null;
     }
+
 
 
     public function serviceDetails()

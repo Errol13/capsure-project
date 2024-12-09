@@ -83,9 +83,10 @@ class Freelancer extends Model
         return $this->hasMany(Transaction::class, 'freelancer_id');
     }
 
+
     public function membership()
     {
-        return $this->hasOne(Membership::class, 'freelancer_id');
+        return $this->hasMany(Membership::class, 'freelancer_id');
     }
 
     public function team()
@@ -99,6 +100,23 @@ class Freelancer extends Model
             'team_id'       // Local key on memberships table
         );
     }
+
+    public function teamTransactions()
+    {
+        // Check if the freelancer is part of a team
+        $team = $this->team;
+
+        if (!$team) {
+            // Return an empty collection if the freelancer is not in a team
+            return collect();
+        }
+
+        // Retrieve transactions associated with the team
+        return Transaction::where('team_code', $team->team_code)
+            ->with(['event', 'client.user', 'payment_proofs', 'reviews'])
+            ->get();
+    }
+
 
     public function getMyReviews()
     {

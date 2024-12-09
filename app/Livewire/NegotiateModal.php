@@ -84,6 +84,7 @@ class NegotiateModal extends Component
         } elseif ($this->dealerUserType === 'freelancer' && $this->isTeam) {
             $this->hiringRequestData->freelancer_pricing = $this->freelancerPricing;
             $this->hiringRequestData->dealer_user_type = 'freelancer';
+            $team = Team::where('team_code', $this->hiringRequestData->team_code)->first();
             $dealee = User::find($this->hiringRequestData->client_id);
         }
 

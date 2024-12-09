@@ -15,7 +15,7 @@
                     <!-- Payment Type -->
                     <div class="form-group mb-3 rounded pe-2">
                         <label for="paymentType{{ $uniqueId }}">Payment Type</label>
-                        <select name="payment_type" id="paymentType{{ $uniqueId }}" class="form-select" style="border: #E1C1D7 solid 1px; "required>
+                        <select name="payment_type" id="paymentType{{ $uniqueId }}" class="form-select" style="border: #E1C1D7 solid 1px; " required>
                             <option class="text-muted" value="" disabled selected>Select</option>
                             <option value="Partial Payment">Partial Payment</option>
                             <option value="Full Payment">Full Payment</option>
@@ -27,8 +27,8 @@
                         <label for="amountPaid{{ $uniqueId }}">Amount:</label>
                         <div class="input-group d-flex justify-content-start align-items-center">
                             <span class="bg-white me-2 fw-bold" style="color:#91216C;">₱</span>
-                            <input type="number" class="form-control" id="amountPaid{{ $uniqueId }}" 
-                            style="border: #E1C1D7 solid 1px;" name="amount_paid" min="0" step="0.01" required>
+                            <input type="number" class="form-control" id="amountPaid{{ $uniqueId }}"
+                                style="border: #E1C1D7 solid 1px;" name="amount_paid" min="0" step="0.01" required>
                         </div>
                     </div>
 
@@ -42,10 +42,12 @@
                     <!-- Preview -->
                     <div id="imagePreview{{ $uniqueId }}" class="d-flex flex-wrap mb-3"></div>
 
+                    <small class="text-danger">All fields required.</small>
+
                     <!-- Form Actions -->
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Submit Proof</button>
+                        <button type="submit" class="btn btn-primary" id="submitReviewButton_{{ $uniqueId }}">Submit Proof</button>
                     </div>
                 </form>
             </div>
@@ -81,5 +83,19 @@
                 reader.readAsDataURL(file);
             }
         });
+
+        // Disable the submit button when clicked
+        document.getElementById('submitReviewButton_{{ $uniqueId }}').addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Disable the button
+            var submitButton = document.getElementById('submitReviewButton_{{ $uniqueId }}');
+            submitButton.disabled = true;
+            submitButton.innerHTML = "Submitting...";
+
+            //submit the form
+            document.getElementById('uploadPaymentProofForm{{ $uniqueId }}').submit();
+        });
+
     });
 </script>

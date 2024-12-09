@@ -52,16 +52,33 @@
 
                 <!-- Responsive Grid Layout -->
                 <div class="row g-3 justify-content-center">
-                    <?php foreach ($cards as $card): ?>
-                        <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
-                            <div class="card shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
-                                <div class="card-body open-sans-reg p-3">
+                    @foreach($teams as $team)
+                    <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
+                        <div class="card shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
+                            <div class="card-body open-sans-reg p-3">
 
-                                    <!-- Package Details Section -->
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <h5 class="card-title poppins-medium mb-0"><?php echo htmlspecialchars($card['title']); ?></h5>
-                                        <h5 class="poppins-medium fs-5 mb-0"><?php echo htmlspecialchars($card['price']); ?></h5>
+                                <!-- Package Details Section -->
+                                <div class="d-flex justify-content-between mb-3">
+                                    <h5 class="card-title poppins-medium mb-0">{{$team->package_service}}</h5>
+                                    <h5 class="poppins-medium fs-5 mb-0">{{$team->package_price}}</h5>
+                                </div>
+
+                                <ul class="list-unstyled text-center mb-3 px-3 py-3" style="background-color: #F6F2F2; width: 100%; height: 150px; object-fit: cover;">
+                                    @foreach($team->getServices() as $service)
+                                    <li>{{$service->job_title}}</li>
+                                    @endforeach
+                                </ul>
+
+                                <div class="d-flex align-items-center">
+                                    <img src="{{asset('storage/' . $team->team_profilepic)}}" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
+                                    <div class="ms-3">
+                                        <p class="card-text open-sans-reg fw-bold mb-0">{{$team->team_name}}</p>
+                                        <p class="card-text open-sans-light small mb-0 text-truncate">{{$team->description}}</p>
+                                        @if($team->number_of_projects)
+                                        <p class="card-text open-sans-light fs-smaller text-success mb-0">No. of projects:{{number_format($team->number_of_projects)}}</p>
+                                        @endif
                                     </div>
+<<<<<<< HEAD
                                     <ul class="list-unstyled text-center mb-3 px-3 py-3" style="background-color: #F6F2F2; width: 100%; height: 150px; object-fit: cover;">
                                         <?php foreach ($card['services'] as $service): ?>
                                             <li><?php echo htmlspecialchars($service); ?></li>
@@ -83,13 +100,24 @@
                                     <div class="d-flex justify-content-between align-items-center mt-3">
                                         <a href="#" class="btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
                                         <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon ms-2">
+=======
+                                    <div class="ms-auto text-end">
+                                        <span class="text-warning me-1">★</span>
+                                        <span class="fw-bold">{{$team->avg_rating}}</span>
+                                        <span class="text-muted small ms-1">({{$team->totalReviews()}})</span>
+>>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                                     </div>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <a href="{{route('team-profile-view', ['id' => $team->team_id])}}" class="btn-round btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
                                 </div>
                             </div>
                         </div>
-                    <?php endforeach; ?>
+                    </div>
+                    @endforeach
                 </div>
-            </div>
+            </div><!--end for team-->
+
         </div>
     </div>
 </div>

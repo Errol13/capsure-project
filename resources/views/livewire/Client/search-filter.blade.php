@@ -5,7 +5,7 @@
             <input type="text" class="form-control fw-lighter rounded-5 py-1 md-3" placeholder="What service do you need?" 
             wire:model.debounce.500ms="query">
             <span class="input-group-text border-0 bg-transparent position-absolute end-0 mx-2 d-flex align-items-center">
-                <i class="fas fa-search m-2 fs-5"></i>
+                <a href="#" class="text-black text-decoration-none"><i class="fas fa-search m-2 fs-5" wire:click="search"></i></a>
                 <i class="fas fa-filter m-2 fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
             </span>
         </div>

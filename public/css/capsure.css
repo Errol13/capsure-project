@@ -581,15 +581,25 @@ select#year {
 
 /* Freelancer Homepage <-------------------------------------------------------------------------------------------------*/
 
+
+.btn-cancel {
+    background-color: none;
+    color: rgb(139, 137, 137);
+    text-decoration: none;
+    border-radius: 20px;
+    width: 100px;
+    border: none;
+}
+
 .btn-seemore {
-    background-color: #91216C;
-    color: white;
+    background-color: #91216C !important;
+    color: white !important;
     margin: 0;
     text-decoration: none;
 }
 
 .btn-seemore:hover {
-    background-color: #ad3d88 !important;
+    background-color: #ad3d6c !important;
     color: white !important;
     border: 1px #ad3d88 solid !important;
 }
@@ -1064,14 +1074,7 @@ select:disabled {
     border: none;
 }
 
-.btn-cancel {
-    background-color: none;
-    color: rgb(139, 137, 137);
-    text-decoration: none;
-    border-radius: 20px;
-    width: 100px;
-    border: none;
-}
+
 
 .btn-verified {
     background-color: white;

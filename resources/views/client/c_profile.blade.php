@@ -176,9 +176,9 @@
                         <h5 class="text-start poppins-medium mb-2 me-2">Freelancer's Reviews</h5>
                         @if($user->client->reviews->isNotEmpty())
                         @if($totalReviews > 1)
-                        <p class="mb-0 fs-smaller">({{$totalReviews}} reviews)</p>
+                        <span class="mb-1 fs-smaller ">({{$totalReviews}} reviews)</span>
                         @else
-                        <p class="mb-0 fs-smaller">({{$totalReviews}} review)</p>
+                        <span class="mb-1 fs-smaller">({{$totalReviews}} review)</span>
                         @endif
                         @endif
                     </div>
@@ -220,12 +220,20 @@
                         <div class="row card-body d-flex">
                             <div class="col-auto text-center my-2 px-0">
                                 <!-- Profile Picture -->
+                                @if($transaction->team_code)
+                                <img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                @else
                                 <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                @endif
                             </div>
                             <div class="col-lg-10 col-9 col-md-9">
                                 <!-- Review Content -->
                                 <div>
+                                    @if($transaction->team_code)
+                                    <span class="font-weight-bold mt-3">{{$review->team->team_name}}<small>(Team)</small></span>
+                                    @else
                                     <span class="font-weight-bold mt-3">{{$review->freelancer->user->first_name}} {{$review->freelancer->user->last_name}}</span>
+                                    @endif
                                 </div>
                                 <div class=" star-rating mb-2">
                                     <span class="ms-1">{{ number_format($review->rating, 1) }}</span>

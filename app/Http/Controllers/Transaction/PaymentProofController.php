@@ -44,8 +44,11 @@ class PaymentProofController extends Controller
             $user = Auth::user();
 
             // notify freelancer
-            if ($transaction->freelancer->user) {
+            if ($transaction->freelancer) {
                 $transaction->freelancer->user->notify(new PaymentProofSent($user->first_name, $user->last_name, $request->input('amount_paid')));
+            }elseif($transaction->team){
+                $leader = User::find($transaction->team->team_leader);
+                $leader->notify(new PaymentProofSent($user->first_name, $user->last_name, $request->input('amount_paid')));
             }
         } else {
             return redirect()->back()->with('error', 'No file attachment!');

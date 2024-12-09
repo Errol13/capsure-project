@@ -26,10 +26,9 @@
                             <small style="text-align:end;"> All members verified </small>
                             @endif
                         </div>
-                        <span>Team Code: <strong class="badge badge-custom rounded-pill"
-                                style="background-color: #91216C;">{{$team->team_code}}</strong></span>
 
-                        <div class="d-flex align-items-center my-2">
+                        <!--review details-->
+                        <div class="d-flex align-items-center mb-1">
                             @if($team->avg_rating == 0)
                             <span class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</span>
                             @else
@@ -42,10 +41,10 @@
                                     </div>
                                     <div class="col-auto p-0">
                                         <div class="d-flex align-items-center mt-1">
-                                            @for ($i = 1; $i <= 5; $i++) @if ($i <=floor($team->avg_rating))
+                                            @for ($i = 1; $i <= 5; $i++)
+                                                @if ($i <=floor($team->avg_rating))
                                                 <i class="fas fa-star filled"></i> <!-- Filled star -->
-                                                @elseif ($i == ceil($team->avg_rating) && $team->avg_rating -
-                                                floor($team->avg_rating) > 0)
+                                                @elseif ($i == ceil($team->avg_rating) && $team->avg_rating - floor($team->avg_rating) > 0)
                                                 <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
                                                 @else
                                                 <i class="far fa-star"></i> <!-- Empty star -->
@@ -53,11 +52,33 @@
                                                 @endfor
                                         </div>
                                     </div>
+                                    @php
+                                    $totalReviews = $team->reviews()->where('reviewee_role', 'team')->count();
+                                    @endphp
+                                    <div class="col-auto p-0 ms-1">
+                                        @if($team->reviews->isNotEmpty())
+                                        @if($totalReviews > 1)
+                                        <span class="note">({{$totalReviews}})</span>
+                                        @else
+                                        <span class="note">({{$totalReviews}})</span>
+                                        @endif
+                                        @endif
+                                    </div>
+
                                 </div>
                             </div>
                             @endif
+                            <div class="team-code ms-4 ps-4">
+                                Team Code: <strong>{{$team->team_code}}</strong>
+                            </div>
+
                         </div>
-                        <div class="package-fee">
+                        <!--team number of projects-->
+                        @if($team->number_of_projects > 0)
+                        <span class="text-success fw-light mb-2">Number of projects: {{$team->number_of_projects}}</span>
+                        @endif
+
+                        <div class="package-fee mb-3">
                             Package Offer: <strong>{{$team->package_service}}</strong>
                         </div>
 
@@ -158,7 +179,11 @@
 
                                 @if(auth()->user()->id === $team->team_leader && $member->user_id !== $team->team_leader )
                                 <div class="dropdown">
+<<<<<<< HEAD
                                     <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+=======
+                                    <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+>>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">
@@ -173,11 +198,20 @@
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">
+<<<<<<< HEAD
                                         <li><a class="dropdown-item" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editServiceModal">Edit Service</a></li>
                                         <li><a class="dropdown-item text-danger" href="#">Leave Team</a></li>
                                     </ul>
                                 </div> @include('modals.editServiceTeam')
                                 @endif
+=======
+                                        <li><a class="dropdown-item" href="#">Edit service</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#">Leave team</a></li>
+                                    </ul>
+                                </div>
+                                @endif
+
+>>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                             </div>
                         </div>
                         @endforeach
@@ -201,50 +235,75 @@
                                 <div class="d-flex justify-content-between align-items-center my-3">
                                     <div class="d-flex align-items-center">
                                         <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
-                                        <p class="mb-0 fs-smaller">(1)</p>
+                                        <p class="mb-0 fs-smaller">({{$reviews->count()}})</p>
                                     </div>
-                                    <a class="poppins-light text-purple" href="#" style="font-size:small;">See All Reviews</a>
+                                    <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $team->team_name])}}" style="font-size:small;">See All Reviews</a>
                                 </div>
                                 <p class="text-center my-2">Recent Projects</p>
+
+                                @if($reviews)
+
+                                @foreach($reviews as $review)
+
+                                @php
+                                $start_date_formatted = \Carbon\Carbon::parse($review->transaction->event->start_date)->format('M j, Y');
+                                $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
+                                @endphp
+
                                 <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
                                     <div class="row d-flex align-items-center justify-content-center">
                                         <!-- Review Item  -->
-                                        <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#FCF2F9;">
+                                        <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">
                                             <div class="row align-items-center w-100">
                                                 <div class="col">
-                                                    <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">Birthday ni Dimple</h2>
-                                                    <span class="note">Date dito</span>
+                                                    <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>
+                                                    <span class="note">{{$start_date_formatted}} {{$end_date_formatted}}</span>
                                                 </div>
                                                 <div class="col-auto ms-auto">
                                                     <a class="note fw-medium poppins-light text-purple"
-                                                        href="#">See Post</a>
+                                                        href="{{route('client-viewpost', ['id' => $review->transaction->event->event_id] )}}">See Post</a>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row d-flex">
                                             <div class="col-auto text-center my-2 px-0">
                                                 <!-- Profile Picture -->
-                                                <img src="assets/default.svg" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
+                                                <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 40px; height: 40px;">
                                             </div>
                                             <div class="col-10">
                                                 <!-- Review Content -->
                                                 <div>
-                                                    <small class="font-weight-bold mt-3">Phoebe Castro</small>
+                                                    <small class="font-weight-bold mt-3">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </small>
                                                 </div>
                                                 <div class="star-rating mb-2">
-                                                    <span>5</span>
-                                                    <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                    <span>{{ number_format($review->rating, 1) }}</span>
+
+                                                    @for ($i = 1; $i <= 5; $i++)
+                                                        @if ($i <=floor($review->rating))
+                                                        <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                        @elseif ($i == ceil($review->rating) && $review->rating - floor($review->rating) > 0)
+                                                        <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                                        @else
+                                                        <i class="far fa-star"></i> <!-- Empty star -->
+                                                        @endif
+                                                        @endfor
                                                 </div>
                                                 <div>
-                                                    <p class="mb-2" style="line-height: 1.2;">"ganda. Nays nays nays nays"</p>
+                                                    <p class="mb-2" style="line-height: 1.2;">"{{$review->content}}"</p>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                @endforeach
+                                @endif
+                            </section>
                         </div>
+<<<<<<< HEAD
                         </section>
                         @include('modals.termsTeam')
+=======
+>>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                     </div>
                 </div>
             </div>
@@ -358,7 +417,7 @@
                             <div class="card-body flex-grow-1">
                                 <span class="fs-5 me-2 poppins-medium">{{ $event->title }}</span><br>
                                 <strong class="note">Date & Time:</strong><br>
-                                <span> {{ $event->start_date_formatted }} - {{ $event->end_date_formatted }}</span><br>
+                                <span class="small"> {{ $event->start_date_formatted }} - {{ $event->end_date_formatted }}</span><br>
                                 <strong class="note">Location:</strong><br>
                                 <span>{{ $event->street }}, {{ $event->barangay }}, {{ $event->city }}</span><br>
                                 <strong class="note">Budget:</strong><br>
@@ -439,7 +498,7 @@
                                 @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
                                 <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"
                                     data-action="accept" data-modal-type="confirm-modal"
-                                    data-hiringid="{{ $job->hiring_request_id }}" class="confirm me-2">Accept
+                                    data-hiringid="{{ $job->hiring_request_id }}" class="confirm btn-verify me-2">Accept
                                 </button>
 
                                 @elseif($job->status == 'Accepted')
@@ -449,7 +508,7 @@
                                 @if($job->status != 'Accepted')
                                 <button data-bs-toggle="modal"
                                     data-bs-target="#negotiateModal-{{$job->hiring_request_id}}"
-                                    class="confirm me-2" style="background-color: #8FE2ED; color: black;">
+                                    class="confirm btn-seemore me-2" style="background-color: #8FE2ED; color: black;">
                                     Negotiate
                                 </button>
                                 <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"

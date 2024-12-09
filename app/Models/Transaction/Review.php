@@ -4,6 +4,7 @@ namespace App\Models\Transaction;
 
 use App\Models\Client;
 use App\Models\Freelancer;
+use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +17,7 @@ class Review extends Model
         'reviewee_role',
         'client_id',
         'freelancer_id',
+        'team_code',
         'transaction_id',
         'rating',
         'content',
@@ -39,12 +41,20 @@ class Review extends Model
         return $this->belongsTo(Transaction::class, 'transaction_id');
     }
 
+    public function team(){
+        return $this->belongsTo(Team::class, 'team_code', 'team_code');
+    }
+
     protected static function booted()
     {
         static::created(function ($review) {
             // Check if the review is for a freelancer
             if ($review->reviewee_role === 'freelancer') {
                 $review->freelancer->updateAverageRating();
+            }
+
+            if ($review->reviewee_role === 'team') {
+                $review->team->updateAverageRating();
             }
             
             // Check if the review is for a client

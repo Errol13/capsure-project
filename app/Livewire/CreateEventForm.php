@@ -148,6 +148,30 @@ class CreateEventForm extends Component
         $this->availableServices = array_values($this->availableServices);
     }
 
+    public function updatedBudgetMin($value)
+    {
+        // Ensure budget_min is a positive number
+        if ($value < 20 && $this->budget_max > 20) {
+            $this->budget_min = 20; //default
+            return;
+        }
+
+        // Set budget_max dynamically to match budget_min if budget_max is smaller
+        if (empty($this->budget_max) || $this->budget_max < $value) {
+            $this->budget_max = $value;
+        }
+    }
+
+    public function updatedBudgetMax($value)
+    {
+        // Ensure budget_max is not less than budget_min
+        if ($value < $this->budget_min) {
+            $this->budget_max = $this->budget_min;
+        }
+    }
+
+
+
     public function saveEvent()
     {
         $this->validate([

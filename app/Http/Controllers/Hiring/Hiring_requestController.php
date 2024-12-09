@@ -179,18 +179,19 @@ class Hiring_requestController extends Controller
 
     public function cancelOffer($hiring_request_id)
     {
+       
+        
         //get the hiring request
         $hiringRequest = Hiring_request::find($hiring_request_id);
 
         //update the application change it from accepted to pending
         $jobApplication = $hiringRequest->getJobApplication();
-
+       
         if ($jobApplication) {
             $jobApplication->status = 'Pending';
             $jobApplication->save();
             // Log::info('Retrieved Job App:', $jobApplication->toArray());
         }
-
 
         //delete the record
         $hiringRequest->delete();

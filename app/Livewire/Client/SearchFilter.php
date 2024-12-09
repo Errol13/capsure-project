@@ -21,6 +21,10 @@ class SearchFilter extends Component
         $this->showFilters = !$this->showFilters;
     }
 
+    public function search()
+    {
+        $this->applyFilters();
+    }
 
     public function applyFilters()
     {
@@ -34,7 +38,7 @@ class SearchFilter extends Component
             'location' => $this->location,
         ];
 
-        Log::info('Filters Applied:', $filters);
+        // Log::info('Filters Applied:', $filters);
 
         $this->dispatch('filtersApplied', $filters);
 
