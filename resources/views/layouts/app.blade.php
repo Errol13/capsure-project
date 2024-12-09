@@ -233,14 +233,9 @@
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}" style="font-size:x-small;">
-                        <i class="fas fa-comment text-purple fs-6"></i>
-                        <div>Messages</div>
-                    </a>
-                </div>
-                <div class="col text-center">
-                    <a class="nav-link" href="#" style="font-size:x-small;">
-                        <i class="fas fa-bell text-purple fs-6"></i>
+                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
+                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
+                        <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
                         <div>Notification</div>
                     </a>
                 </div>
@@ -259,7 +254,7 @@
                 </div>
                 <div class="col text-center">
                     <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
-                        <i class="fas fa-bell txt-purple fs-6"></i>
+                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
                         <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
                         <div>Notification</div>
                     </a>

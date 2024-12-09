@@ -173,6 +173,9 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
 
     #Team Routes
     Route::post('/create-team',[TeamController::class, 'createTeam'])->name('team-create');
+    Route::post('/edit-team',[TeamController::class, 'editTeam'])->name('team-edit');
+    Route::post('/edit-service',[TeamController::class, 'editService'])->name('service-edit');
+    Route::patch('/edit-terms',[TeamController::class, 'editTerms'])->name('terms-edit');
     Route::get('/team-profile', [TeamController::class, 'showTeamProfile'])->name('team-profile');
     Route::get('/team-profile/view/{id}', [TeamController::class, 'viewTeamProfile'])->name('team-profile-view');
     Route::post('/team/join', [TeamController::class, 'joinTeam'])->name('team-join');

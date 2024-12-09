@@ -42,7 +42,7 @@
             @endphp
             <img src="{{ asset('storage/' . $relativePath) }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
             @else
-            <img src="{{ asset('assets/cover.svg') }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
+            <img src="{{ asset('assets/cover_def.png') }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
             @endif
 
 
@@ -70,7 +70,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                    <a href="{{ route('view-freelancer-profile', ['id' => $user->id]) }}" class="btn btn-seeprof rounded-pill w-100 me-2" style="border-color: #91216C; color:#91216C;">See Profile</a>
+                    <a href="{{ route('view-freelancer-profile', ['id' => $user->id]) }}" class="btn-seeprof" style="border-color: #91216C; color:#91216C;">See Profile</a>
                     <button wire:click="toggleFavorite({{ $user->id }})" class="btn">
                         <img src="{{ auth()->user()->client->isFavorite($user->id) ? asset('assets/saved.svg') : asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
                     </button>

@@ -171,7 +171,7 @@
                     @endforeach
             </div>
             @else
-            <p class="fs-5">No ongoing transactions.</p>
+            <p>No ongoing transactions.</p>
             @endif
         </div>
 
@@ -324,7 +324,7 @@
                     @endforeach
             </div>
             @else
-            <p class="fs-5">No upcoming transactions.</p>
+            <p>No upcoming transactions.</p>
             @endif
         </div>
 
@@ -447,7 +447,7 @@
                 @endforeach
             </div>
             @else
-            <p class="fs-5">No previous transactions.</p>
+            <p>No previous transactions.</p>
             @endif
         </div>
 

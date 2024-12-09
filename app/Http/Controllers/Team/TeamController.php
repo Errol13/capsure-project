@@ -433,6 +433,21 @@ class TeamController extends Controller
         return redirect()->route('client-viewpost', ['id' => $event->event_id])->with('success', 'Hiring request was sent successfully!');
     }
 
+    public function editTeam()
+    {
+        return ('edit-team');
+    }
+
+    public function editService()
+    {
+        return ('edit-service');
+    }
+
+    public function editTerms()
+    {
+        return ('edit-terms');
+    }
+
     //team transaction
     public function teamTransaction() {}
 

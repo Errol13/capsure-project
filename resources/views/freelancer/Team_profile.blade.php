@@ -68,7 +68,10 @@
                     </div>
                     <div class="col-auto me-3">
                         <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
-                            <i class="fas fa-pencil"></i>
+                            <i class="fas fa-pencil" data-bs-toggle="modal"
+                                data-bs-target="#editTeamModal"></i>
+
+                            @include('modals.editTeam')
                         </div>
                     </div>
                 </div>
@@ -129,7 +132,7 @@
                                             @if($team->team_leader === $member->user_id)
                                             <span class="fw-bold fs-smaller text-start txt-purple note py-1">Admin</span>
                                             @else
-                                            <span class="badge rounded-pill bg-light text-dark">Member</span>
+                                            <span class="fw-bold fs-smaller text-start text-black note py-1">Member</span>
                                             @endif
                                         </div>
                                         @if($member->avg_rating > 0)
@@ -139,16 +142,42 @@
                                         @endif
                                         <div class="col">
                                             @foreach($member->services as $service)
-                                            <span class="text-start badge rounded-pill me-1" style="background-color:aliceblue; color:gray;">
+                                            <span class="text-start badge rounded-pill me-1" style="background-color:#FCF2F9; color:gray;">
                                                 {{$service->job_title}}
                                             </span>
                                             @endforeach
                                         </div>
                                     </div>
                                 </div>
+
                                 <div class="col-end m-3">
-                                    <div class="status text-center text-success">Available</div>
+                                    <small class="status text-center text-success">Available</small>
                                 </div>
+
+                                <!--Tooltip for actions -->
+
+                                @if(auth()->user()->id === $team->team_leader && $member->user_id !== $team->team_leader )
+                                <div class="dropdown">
+                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#">Make Admin</a></li>
+                                        <li><a class="dropdown-item" href="#">View Profile</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
+                                    </ul>
+                                </div>
+                                @elseif(auth()->user()->id === $member->user_id && $member->user_id !== $team->team_leader)
+                                <div class="dropdown">
+                                    <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="bi bi-three-dots"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editServiceModal">Edit Service</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#">Leave Team</a></li>
+                                    </ul>
+                                </div> @include('modals.editServiceTeam')
+                                @endif
                             </div>
                         </div>
                         @endforeach
@@ -158,7 +187,13 @@
                     <div class="row flex-grow-1">
                         <!-- Terms of Service -->
                         <div class="col-lg-12 col-md-6 terms-of-service">
-                            <h5 class="poppins-medium">Terms of Services</h5>
+                            <div class="d-flex align-items-center">
+                                <h5 class="poppins-medium">Terms of Services</h5>
+                                <!-- Edit Icon -->
+                                <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsTeamModal">
+                                    <i class="ms-0 me-4 fs-6 text-start fas fa-pen fa-solid"></i>
+                                </button>
+                            </div>
                             <p class="p-3 rounded-4" style="background-color: white;">{{$team->terms_of_services}}</p>
                         </div>
                         <div class="col-lg-12 col-md-6">
@@ -209,6 +244,7 @@
                                 </div>
                         </div>
                         </section>
+                        @include('modals.termsTeam')
                     </div>
                 </div>
             </div>

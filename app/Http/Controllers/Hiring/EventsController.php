@@ -301,9 +301,9 @@ class EventsController extends Controller
 
 
         $tabs = [
-            'application' => 'Applications',
-            'hiring-requests' => 'Hiring Requests',
-            'recommendation' => 'Recommendations'
+            'application' => 'Application',
+            'hiring-requests' => 'Hiring Request',
+            'recommendation' => 'Recommendation'
         ];
 
         $badgeCounts = [

@@ -81,7 +81,7 @@
                                         </div>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <a href="#" class="btn-round btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
+                                        <a href="#" class="btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
                                         <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon ms-2">
                                     </div>
                                 </div>

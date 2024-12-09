@@ -71,7 +71,7 @@
                 </div>
                 @endforeach
                 @else
-                <p class="mt-5 text-muted text-center fs-5">No Posts</p>
+                <p class="mt-5 text-muted text-center">No Posts</p>
                 @endif
             </div>
 

@@ -8,14 +8,14 @@
 
     <div class="row d-flex justify-content-center pt-4">
         <div class="col-sm-12 col-md-9 col-lg-8 ">
-            <div class="card p-4 shadow-sm rounded-4">
+            <div class="card p-4 shadow-sm rounded-4" style="background-color: white;">
 
                 <!-- Title and Buttons Inside Form -->
                 <form wire:submit.prevent="saveEvent">
-                    <div class="d-flex justify-content-center align-items-center mb-3 open-sans-reg">
-                        <h3 class="event-title text-purple">Create an Event</h3>
+                    <div class="align-items-center mb-3 open-sans-reg">
+                        <h3 class="event-title text-purple text-center fw-bold">Create an Event</h3>
+                        <small class="open-sans-reg my-2 text-danger text-start fst-italic">All fields are required.</small>
                     </div>
-
                     <!-- Event Information -->
                     <div class="form-group mb-3 open-sans-reg">
                         <label for="title">Title</label>
@@ -162,12 +162,9 @@
 
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
-                    <small class="open-sans-reg my-2 text-danger">All fields are required.</small>
-                    <div class="d-flex justify-content-end my-4 pb-4">
-                        <div class="flex-grow-1"></div>
-                        <button type="button" class="btn-outline open-sans-reg me-2 flex-grow-1 rounded-4" onclick="cancelForm(event)">Cancel</button>
-                        <button class="btn-link open-sans-reg flex-grow-1 rounded-4" style="text-decoration: none;" type="submit">Post</button>
-                        <div class="flex-grow-1"></div>
+                    <div class="d-flex justify-content-end mt-4">
+                        <button class="confirm me-2 w-75" type="submit">Post</button>
+                        <button type="button" class="btn-cancel w-75" onclick="cancelForm(event)">Cancel</button>
                     </div>
                 </form>
 
