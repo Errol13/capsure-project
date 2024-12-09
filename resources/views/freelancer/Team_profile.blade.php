@@ -179,11 +179,7 @@
 
                                 @if(auth()->user()->id === $team->team_leader && $member->user_id !== $team->team_leader )
                                 <div class="dropdown">
-<<<<<<< HEAD
-                                    <button class="btn btn-light border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-=======
                                     <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">

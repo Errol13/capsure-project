@@ -36,13 +36,6 @@
             }
             $portfolio = $user->freelancer->portfolios->first();
             @endphp
-<<<<<<< HEAD
-            <img src="{{ asset('storage/' . $relativePath) }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
-            @else
-            <img src="{{ asset('assets/cover_def.png') }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
-            @endif
-=======
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
 
             <div class="card mx-auto shadow-box my-3" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
                 <div class="col-align px-2 mt-1">
@@ -51,13 +44,6 @@
                     <p class="poppins-medium fs-5 mb-0 right-side fs-6 text-success">₱{{ $service->job_fee}} <small class="text-black text-muted">{{$service->fee_type}}</small> </p>
                     @endif
                 </div>
-<<<<<<< HEAD
-                <div class="d-flex justify-content-between align-items-center">
-                    <a href="{{ route('view-freelancer-profile', ['id' => $user->id]) }}" class="btn-seeprof" style="border-color: #91216C; color:#91216C;">See Profile</a>
-                    <button wire:click="toggleFavorite({{ $user->id }})" class="btn">
-                        <img src="{{ auth()->user()->client->isFavorite($user->id) ? asset('assets/saved.svg') : asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
-                    </button>
-=======
 
                 <!-- Display Freelancer Cover Image -->
                 @if($portfolio)
@@ -112,7 +98,6 @@
                             <img src="{{ auth()->user()->client->isFavorite($user->id) ? asset('assets/saved.svg') : asset('assets/bookmark.svg') }}" alt="Bookmark" class="bookmark-icon" style="width: 40px; height: 40px;">
                         </button>
                     </div>
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                 </div>
             </div>
             @endif
