@@ -194,20 +194,12 @@
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-<<<<<<< HEAD
-                                        <li><a class="dropdown-item" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editServiceModal">Edit Service</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Leave Team</a></li>
-                                    </ul>
-                                </div> @include('modals.editServiceTeam')
-                                @endif
-=======
                                         <li><a class="dropdown-item" href="#">Edit service</a></li>
                                         <li><a class="dropdown-item text-danger" href="#">Leave team</a></li>
                                     </ul>
                                 </div>
                                 @endif
 
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                             </div>
                         </div>
                         @endforeach
@@ -295,11 +287,6 @@
                                 @endif
                             </section>
                         </div>
-<<<<<<< HEAD
-                        </section>
-                        @include('modals.termsTeam')
-=======
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                     </div>
                 </div>
             </div>

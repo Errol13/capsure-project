@@ -7,9 +7,9 @@
                 @method('PATCH') 
 
                 <div class="modal-header poppins-medium" style="border-bottom: none;">
-                    <h4 class="modal-title" id="negotiateModalLabel">Make an Offer</h4>
+                    <h4 class="modal-title" id="negotiateModalLabel">TMake an Offer</h4>
                 </div>
-                <div class="d-flex table-responsive mt-1 mb-2 text-center">
+                <div class="modal-body d-flex table-responsive mt-1 mb-2 text-center">
                     <table class="table table-bordered offer-table" style="table-layout: fixed; width: 100%;">
                         <thead>
                             <tr>

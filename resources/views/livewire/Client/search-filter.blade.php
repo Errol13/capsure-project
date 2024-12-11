@@ -2,8 +2,8 @@
     <div class="search-container rounded-4">
         <!-- Search bar -->
         <div class="input-group search-bar mt-3 mb-3 position-relative">
-            <input type="text" class="form-control fw-lighter rounded-5 py-1 md-3" placeholder="What service do you need?" 
-            wire:model.debounce.500ms="query">
+            <input type="text" class="form-control fw-lighter rounded-5 py-1 md-3" placeholder="What service do you need?"
+                wire:model.debounce.500ms="query">
             <span class="input-group-text border-0 bg-transparent position-absolute end-0 mx-2 d-flex align-items-center">
                 <a href="#" class="text-black text-decoration-none"><i class="fas fa-search m-2 fs-5" wire:click="search"></i></a>
                 <i class="fas fa-filter m-2 fs-5" data-bs-toggle="modal" data-bs-target="#exampleModal"></i>
@@ -12,10 +12,10 @@
 
         <!-- Filter Options Modal -->
         <div class="modal" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog d-flex modal-sm modal-lg position-center py-4 my-4 px-2">
-                <div class="modal-content rounded-4" style="max-height: 75dvh; overflow-y: auto;">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5 poppins-medium" id="exampleModalLabel">Filter Options</h1>
+            <div class="modal-dialog  modal-dialog-centered">
+                <div class="modal-content" style="max-height: 75dvh; overflow-y: auto;">
+                    <div class="modal-header" style="border-bottom:none">
+                        <h3 class="modal-title poppins-medium" id="exampleModalLabel">Filter Options</h3>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -75,19 +75,17 @@
                                     <label><input type="radio" name="rating" value="5" wire:model="rating"> 5 stars</label><br>
                                 </div>
                             </div>
-                            <div class="col-md-12 mb-2 text-start ms-4">
+                            <div class="col mb-2 text-start mx-4">
                                 <h5 class="poppins-regular">Location</h5>
                                 <input type="text" class="form-control location" style="border-radius: 12px; border-color:gray;" placeholder="Put the location here" wire:model="location">
                             </div>
                         </form>
                     </div>
-                    <div class="modal-footer mb-2">
-                        <div class="modal-footer mb-2">
-                            <button type="button" class="btn btn-secondary poppins-medium" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary poppins-medium" wire:click="applyFilters">Save changes</button>
-                        </div>
-
+                    <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <button type="button" class="confirm w-25" style="height: 40px;" wire:click="applyFilters">Save</button>
+                        <button type="button" class="cancel w-25" style="height: 40px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
+
                 </div>
             </div>
         </div>

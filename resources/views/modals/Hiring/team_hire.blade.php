@@ -168,7 +168,7 @@
 
             const formData = new FormData(form); // Create a FormData object from the form
 
-            submitButton.textContent = 'Hiring...';
+            submitButton.textContent = 'Sending...';
 
             fetch('/team/send/hiring-request', {
                     method: 'POST',

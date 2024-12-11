@@ -2,16 +2,7 @@
 
 @section('content')
 <div class="container">
-    <div class="stepper mb-4">
-        <div class="line"></div>
-        <div class="step active">
-            <div class="circle">1</div>
-            <p class="pt-3">VERIFY ID</p>
-        </div>
-        <div class="line"></div>
-    </div>
-
-    <h2 class="mb-4" style="text-align: center;">Verify your Government ID</h2>
+    <h2 class="my-4 pt-4" style="text-align: center;">Verify your Government ID</h2>
 
     <form id="id-form-validation" method="POST" action="{{ url('/validate-id/store') }}" enctype="multipart/form-data" >
         @csrf
@@ -47,7 +38,7 @@
                 <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
                     <div class="upload-section" style="padding: 20px; height: 100%;">
                         <p class="text-center">ID PHOTO ONLY</p>
-                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
+                        <div style="display: flex; justify-content: center; align-items: center; height: 237px;">
                             <img src="{{ asset('assets/validID.png') }}" id="id-photo" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
                         </div>
                         <ul class="note">
@@ -82,7 +73,7 @@
 
             <!-- Confirm Verification Button -->
             <div class="text-center">
-                <button type="submit" id="submit-button-id" class="btn btn-secondary" style="white-space: nowrap; max-width: 200px;" disabled>Submit</button>
+                <button type="submit" id="submit-button-id" class="w-50 confirm" disabled>Submit</button>
                 <p class="note mt-2">Your application will be verified within 2-3 days.</p>
             </div>
 
