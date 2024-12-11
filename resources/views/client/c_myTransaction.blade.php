@@ -83,7 +83,7 @@
                                             <div>
                                                 <div class="row">
                                                     <span class="mb-0">{{ $transaction->team->team_name }} (Team)</span>
-                                                    <span><small class="text-muted">Members: {{$transaction->team->membersCount()}}</small></span>
+                                                    <span><small class="text-muted">Members: {{$transaction->team->membersAtTransactionTime($transaction->created_at)->count()}}</small></span>
                                                 </div>
                                                 <div class="row">
                                                     <span class="text-muted ">{{ $transaction->team->package_service }}</span>
@@ -369,7 +369,7 @@
                                             <div>
                                                 <div class="row">
                                                     <span class="mb-0">{{ $transaction->team->team_name }} (Team)</span>
-                                                    <span><small class="text-muted">Members: {{$transaction->team->membersCount()}}</small></span>
+                                                    <span><small class="text-muted">Members: {{$transaction->team->membersAtTransactionTime($transaction->created_at)->count()}}</small></span>
                                                 </div>
                                                 <div class="row">
                                                     <span class="text-muted ">{{ $transaction->team->package_service }}</span>

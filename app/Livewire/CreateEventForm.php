@@ -148,6 +148,17 @@ class CreateEventForm extends Component
         $this->availableServices = array_values($this->availableServices);
     }
 
+    public function updatedStartDate()
+    {
+        $this->dispatch('inputUpdated');
+    }
+
+    public function updatedEndDate()
+    {
+        $this->dispatch('inputUpdated');
+    }
+
+
     public function updatedBudgetMin($value)
     {
         // Ensure budget_min is a positive number

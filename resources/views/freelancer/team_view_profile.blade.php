@@ -63,6 +63,12 @@
                     </div>
                     <small class="description" style="line-height: 1.2;">{{$team->team_description}}</small>
 
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyTeamModal-{{ $team->team_code }}"
+                        class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">Hire Team</a>
+
+                    <!-- Hire Modal -->
+                    @include('modals.Hiring.team_hire_profile', ['uniqueId' => $team->team_code,'team' => $team,
+                    'events'=> $events])
                 </div>
             </div>
         </div>

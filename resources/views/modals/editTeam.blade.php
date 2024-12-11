@@ -46,11 +46,12 @@
                                     type="text"
                                     name="team_name"
                                     class="form-control"
-                                    id="teamName"
+                                    id="teamNameId"
                                     placeholder="Enter team name"
                                     value="{{ old('team_name', $team->team_name) }}"
                                     style="border-radius: 10px; border: 1px solid #dcdcdc;"
                                     required>
+                                <small id="teamNameFeedbackId" class="form-text"></small>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="packageName">Package Offer</label>
@@ -77,7 +78,7 @@
                                     required>
                             </div>
 
-                            <input type="hidden" name="team_id" value="{{$team->team_id}}"></input>
+                            <input type="hidden" name="team_id" id="teamId" value="{{$team->team_id}}"></input>
 
                         </div>
                     </div>
@@ -108,5 +109,33 @@
 
         const defaultProfilePic = document.getElementById('profilePicPreview').getAttribute('data-default-profilepic');
         document.getElementById('profilePicPreview').src = defaultProfilePic;
+    });
+
+     document.getElementById('teamNameId').addEventListener('input', function () {
+        const teamName = this.value;
+        const feedback = document.getElementById('teamNameFeedbackId');
+
+        if (teamName.length > 0) {
+            fetch("{{ route('check-team-name') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ team_name: teamNameId, team_id: teamId  })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    feedback.textContent = 'Team name is already taken.';
+                    feedback.style.color = 'red';
+                } else {
+                    feedback.textContent = 'Team name is available.';
+                    feedback.style.color = 'green';
+                }
+            });
+        } else {
+            feedback.textContent = '';
+        }
     });
 </script>

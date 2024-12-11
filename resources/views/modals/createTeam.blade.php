@@ -36,6 +36,7 @@
                             <div class="form-group">
                                 <label for="teamName">Team Name</label>
                                 <input type="text" name="team_name" class="form-control" id="teamName" placeholder="Enter team name" style="border-radius: 10px; border: 1px solid #dcdcdc;" required>
+                                <small id="teamNameFeedback" class="form-text"></small>
                             </div>
                             <div class="form-group mt-3">
                                 <label for="packageName">Package Offer</label>
@@ -83,4 +84,34 @@
             reader.readAsDataURL(file);
         }
     });
+
+
+    document.getElementById('teamName').addEventListener('input', function () {
+        const teamName = this.value;
+        const feedback = document.getElementById('teamNameFeedback');
+
+        if (teamName.length > 0) {
+            fetch("{{ route('check-team-name') }}", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}"
+                },
+                body: JSON.stringify({ team_name: teamName, team_id: null})
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.exists) {
+                    feedback.textContent = 'Team name is already taken.';
+                    feedback.style.color = 'red';
+                } else {
+                    feedback.textContent = 'Team name is available.';
+                    feedback.style.color = 'green';
+                }
+            });
+        } else {
+            feedback.textContent = '';
+        }
+    });
+
 </script>

@@ -82,7 +82,7 @@ class Team extends Model
 
     public function hasMinimumMemberships(): bool
     {
-        return $this->memberships()->count() >= 1;
+        return $this->memberships()->where('status', 'active')->count() >= 4;
     }
 
     public function membersCount(): int

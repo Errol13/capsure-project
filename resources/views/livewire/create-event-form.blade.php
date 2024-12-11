@@ -53,17 +53,18 @@
                         <div class="row">
                             <div class="col-5">
                                 <label for="start_date">Start Date & Time:</label>
-                                <input type="datetime-local" id="start_date" class="form-control" wire:model="start_date">
+                                <input type="datetime-local" id="start_date" class="form-control" wire:model="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
                                 @error('start_date') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="px-4 col-1 pt-4">-</div>
                             <div class="col-5">
                                 <label for="end_date">End Date & Time:</label>
-                                <input type="datetime-local" id="end_date" class="form-control" wire:model="end_date">
+                                <input type="datetime-local" id="end_date" class="form-control" wire:model="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
                                 @error('end_date') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
+
 
                     <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
                         <div class="row">
@@ -78,7 +79,7 @@
                                 @error('budget_min') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">
-                                <input type="number" id="budget_max" class="form-control"  wire:model.debounce.1000ms="budget_max"   :min="budget_min"  placeholder="Max ₱">
+                                <input type="number" id="budget_max" class="form-control" wire:model.debounce.1000ms="budget_max" :min="budget_min" placeholder="Max ₱">
                                 @error('budget_max') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-4">
@@ -203,6 +204,25 @@
             var description = document.getElementById('description').value;
             document.getElementById('charCount').innerText = description.length;
         }
+
+        // Function to set the min date for start and end date inputs
+        function setMinDateTime() {
+            var currentDateTime = new Date().toISOString().slice(0, 16); // Get current date-time in the right format
+
+            // Set min attribute for both start and end date inputs
+            document.getElementById('start_date').setAttribute('min', currentDateTime);
+            document.getElementById('end_date').setAttribute('min', currentDateTime);
+        }
+
+        // Initialize when the page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setMinDateTime();
+        });
+
+        // Re-run when Livewire updates the page
+        Livewire.on('inputUpdated', function() {
+            setMinDateTime();
+        });
     </script>
 
 </div>

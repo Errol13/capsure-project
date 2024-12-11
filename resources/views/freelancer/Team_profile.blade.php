@@ -236,8 +236,6 @@
                                     <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $team->team_name])}}" style="font-size:small;">See All Reviews</a>
                                 </div>
 
-
-
                                 <p class="text-center my-2">Recent Projects</p>
                                 @foreach($reviews as $review)
 

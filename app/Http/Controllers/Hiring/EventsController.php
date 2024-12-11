@@ -215,8 +215,11 @@ class EventsController extends Controller
                     $query->where('id', $job->job_id);
                 })
                 ->with('memberships')
-                ->orderBy('avg_rating', 'desc') // Sort by team rating
-                ->get();
+                ->get()
+                ->filter(function ($team) {
+                    return $team->hasMinimumMemberships();
+                })
+                ->sortByDesc('avg_rating');
 
             // Merge team recommendations into the main collection
             $teamRecommendations = $teamRecommendations->merge($teamRecommendationsForJob);

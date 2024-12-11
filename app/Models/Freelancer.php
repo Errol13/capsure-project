@@ -123,6 +123,7 @@ class Freelancer extends Model
         // Collect all the service IDs from the active memberships
         $serviceIds = $this->membership->pluck('services')->flatten()->unique();
         // Fetch the service details based on the service IDs offered in the team
+
         return Service::whereIn('id', $serviceIds)->get();
     }
 

@@ -14,6 +14,8 @@ use App\Http\Middleware\CheckSuspendedUser;
 use App\Livewire\ClientHome;
 use App\Livewire\MyJobs;
 use App\Livewire\ShowServices;
+use Illuminate\Http\Request;
+use App\Models\Profile\Team;
 use App\Models\Profile\Verification;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -172,6 +174,11 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     Route::post('/validate-id/store', [App\Http\Controllers\Validation\ValidateController::class, 'validateIdStore'])->name('validate.id');
 
     #Team Routes
+    Route::post('/check-team-name', function (Request $request) {
+        $exists = Team::where('team_name', $request->team_name)->where('team_code', '!=', $request->team_id)->exists();
+        return response()->json(['exists' => $exists]);
+    })->name('check-team-name');
+
     Route::post('/create-team',[TeamController::class, 'createTeam'])->name('team-create');
     Route::post('/edit-team',[TeamController::class, 'editTeam'])->name('team-edit');
     Route::post('/edit-service',[TeamController::class, 'editService'])->name('service-edit');
@@ -182,6 +189,10 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     Route::post('/team/apply', [TeamController::class, 'applyAsATeam'])->name('team-apply');
     Route::post('/team/cancel-job-application', [TeamController::class, 'cancelTeamApplication'])->name('team-apply-cancel');
     Route::post('/team/send/hiring-request', [TeamController::class, 'teamHiringRequest'])->name('team-hire-send');
+
+    #Leave team
+    Route::post('/team/change/admin', [TeamController::class, 'changeAdmin'])->name('admin-change');
+    Route::post('/team/leave', [TeamController::class, 'leaveTeam'])->name('team-leave');
 
 });
 

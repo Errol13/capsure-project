@@ -25,7 +25,6 @@ class TeamController extends Controller
     public function createTeam(Request $request)
     {
 
-
         // Validate the input data
         $validatedData = $request->validate([
             'team_name' => 'required|string|max:255',
@@ -34,6 +33,12 @@ class TeamController extends Controller
             'team_description' => 'required|string|max:500',
             'team_profilepic' => 'required|image|mimes:jpeg,png,jpg,gif|max:10240',
         ]);
+
+        $exists = Team::where('team_name', $request->team_name)->exists();
+
+        if ($exists) {
+            return redirect()->back()->with('failed', 'Team name is already taken');
+        }
 
         //get authenticated user data
         $user = Auth::user();
@@ -49,6 +54,7 @@ class TeamController extends Controller
 
         $filePath = $profilePicFile->storeAs('team_profiles', $fileName, 'public'); //store in the team_profiles folder
 
+
         // Create the team
         $team = Team::create([
             'team_code' => $teamCode,
@@ -59,6 +65,7 @@ class TeamController extends Controller
             'package_service' => $validatedData['package_service'],
             'package_price' => $validatedData['package_price'],
         ]);
+
 
         //get the services of the one joining the team
         $freelancerServices = $user->freelancer->services()->pluck('id')->toArray();
@@ -184,6 +191,10 @@ class TeamController extends Controller
             //get the freelancer's reviews made by the clients
             $reviews = $team->reviews()->with('transaction.event')->where('reviewee_role', 'team')->take(2)->get();
 
+            // Retrieve the events for the authenticated user
+            $events = auth()->user()->events()->where('status', 'Open')->get();
+            $events = $events->isEmpty() ? null : $events;
+
             //get the members
             $teamMembers = $team->freelancers;
             $membersCount = $teamMembers->count();
@@ -192,7 +203,8 @@ class TeamController extends Controller
                 'allMembersVerified',
                 'teamMembers',
                 'membersCount',
-                'reviews'
+                'reviews',
+                'events'
             ));
         } else {
             return redirect()->back()->with('error', 'There is no team found!');
@@ -216,19 +228,29 @@ class TeamController extends Controller
         $user = Auth::user();
         //if there is, join the membership
         if ($foundTeam) {
-            //get the services of the one joining the team
-            $freelancerServices = $user->freelancer->services()->pluck('id')->toArray();
 
-            // Create a membership record for the team leader
-            Membership::create([
-                'freelancer_id' => $user->id, // add in the membership
-                'team_id' => $foundTeam->team_id,
-                'services' => json_encode($freelancerServices), // Populate with freelancer's services
-            ]);
+            //if rejoining 
+            $membershipExists = $foundTeam->memberships()->where('freelancer_id', $user->id)->exists();
 
-            //isin_A_Team to true
-            $user->freelancer->isin_A_Team = true;
-            $user->freelancer->save();
+            if ($membershipExists) {
+                $membership = Membership::where('freelancer_id', $user->id)->where('team_id', $foundTeam->team_id)->first();
+                $membership->status = 'active'; // re-activate membership
+                $membership->save();
+            } else {
+                //get the services of the one joining the team
+                $freelancerServices = $user->freelancer->services()->pluck('id')->toArray();
+
+                // Create a membership record for the team leader
+                Membership::create([
+                    'freelancer_id' => $user->id, // add in the membership
+                    'team_id' => $foundTeam->team_id,
+                    'services' => $freelancerServices, // Populate with freelancer's services
+                ]);
+
+                //isin_A_Team to true
+                $user->freelancer->isin_A_Team = true;
+                $user->freelancer->save();
+            }
 
             //then redirect to the team profile
             return redirect()->route('team-profile');
@@ -545,14 +567,36 @@ class TeamController extends Controller
         // Find the team
         $team = Team::find($validated['team_id']);
         $team->update($validated);
-       return redirect()->back()->with('success', 'Service availability updated successfully.');
+
+        return redirect()->back()->with('success', 'Service availability updated successfully.');
     }
 
-    //team transaction
-    public function teamTransaction() {}
+    //change admin 
+    public function teamTransaction(Request $request)
+    {
+        $validated = $request->validate([
+            'team_id' => 'required|exists:teams,team_id',
+            'freelancer_id' => 'required',
+        ]);
 
-    //team review
-    public function teamReview() {}
+        //change the tean's admin to the new freelancer/member
+        $team = Team::find($validated['team_id']);
+        $team->team_leader = $validated['freelancer_id'];
+        $team->save();
+
+        return redirect()->back()->with('success', 'Admin changed successfully!');
+    }
+
+    //leave team
+    public function leaveTeam()
+    {
+        $freelancer = auth()->user()->freelancer()->membership()->first();
+        $freelancer->status = 'inactive';
+        $freelancer->save();
+
+        return redirect()->back()->with('success', 'Left team successfully!');
+    }
+
 
     //close team 
     public function closeTeam() {}
