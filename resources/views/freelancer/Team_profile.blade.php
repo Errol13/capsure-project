@@ -484,12 +484,13 @@
                                 <tbody>
                                     <tr class="text-center">
                                         <td>₱{{ $job->freelancer_pricing }}</td>
-                                        <td>₱{{ $job->client_pricing }}</td>
+                                        <td class="fw-bold" style="color:mediumseagreen;">₱{{ $job->client_pricing }}</td>
                                     </tr>
                                 </tbody>
                             </table>
 
                             <!-- Action Buttons -->
+                            @if($team->team_leader === auth()->user()->id)
                             <div class="d-flex justify-content-start">
                                 @if($job->status != 'Rejected')
                                 @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
@@ -532,10 +533,13 @@
                                     message="Are you sure you want to decline this offer?" :actionUrl="''"
                                     method="POST" />
                             </div>
+                           
 
                             <!-- Negotiate Modal-->
                             @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
                             'service' => $team])
+                            @endif
+
                         </div>
                     </div>
                 </div>

@@ -226,30 +226,36 @@
 
 
                                     <div class="row">
-                                        <!--for members-->
+                                        <!-- For members -->
                                         @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
-                                        <div class="d-flex flex-wrap justify-content-start align-items-start">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                @foreach($transaction->members as $member)
-                                                <div class=" member-info d-flex justify-content-around align-items-start ms-1">
+                                        <!-- Container for members that will be grid-based -->
+                                        <div class="row">
+                                            <!-- Loop through each member -->
+                                            @foreach($transaction->members as $member)
+                                            <div class="col-12 col-md-6 col-lg-6 mb-3 ">
+                                                <div class="member-info d-flex justify-content-start align-items-center ms-1">
                                                     <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
 
-                                                    <div class="row">
-                                                        <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
+
+                                                    <div class="d-flex flex-column me-4">
+                                                        <p class="fs-6 mb-0 fs-smaller">{{$member->freelancer->user->fullname()}}</p>
                                                         @if($member->freelancer->avg_rating > 0)
-                                                        <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
+                                                        <small><small class="fs-smaller fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
                                                         @else
                                                         <small class="text-muted">No ratings yet</small>
                                                         @endif
                                                     </div>
 
-                                                    @foreach($member->services as $service)
-                                                    <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
-                                                    @endforeach
+                                                    <div class="d-flex flex-wrap">
+                                                        @foreach($member->freelancer->offeredTeamServices() as $service)
+                                                        <span class="badge rounded-pill bg-info text-dark me-2 mb-2 fs-6">{{$service->job_title}}</span>
+                                                        @endforeach
+                                                    </div>
+
                                                 </div>
-                                                @endforeach
                                             </div>
+                                            @endforeach
                                         </div>
                                         @endif
                                     </div>
@@ -513,33 +519,40 @@
 
 
                                     <div class="row">
-                                        <!--for members-->
+                                        <!-- For members -->
                                         @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
-                                        <div class="d-flex flex-wrap justify-content-start align-items-start">
-                                            <div class="d-flex justify-content-between align-items-center">
-                                                @foreach($transaction->members as $member)
-                                                <div class=" member-info d-flex justify-content-around align-items-start ms-1">
+                                        <!-- Container for members that will be grid-based -->
+                                        <div class="row">
+                                            <!-- Loop through each member -->
+                                            @foreach($transaction->members as $member)
+                                            <div class="col-12 col-md-6 col-lg-6 mb-3 ">
+                                                <div class="member-info d-flex justify-content-start align-items-center ms-1">
                                                     <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
 
-                                                    <div class="row">
-                                                        <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
+
+                                                    <div class="d-flex flex-column me-4">
+                                                        <p class="fs-6 mb-0 fs-smaller">{{$member->freelancer->user->fullname()}}</p>
                                                         @if($member->freelancer->avg_rating > 0)
-                                                        <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
+                                                        <small><small class="fs-smaller fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
                                                         @else
                                                         <small class="text-muted">No ratings yet</small>
                                                         @endif
                                                     </div>
 
-                                                    @foreach($member->services as $service)
-                                                    <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
-                                                    @endforeach
+                                                    <div class="d-flex flex-wrap">
+                                                        @foreach($member->freelancer->offeredTeamServices() as $service)
+                                                        <span class="badge rounded-pill bg-info text-dark me-2 mb-2 small">{{$service->job_title}}</span>
+                                                        @endforeach
+                                                    </div>
+
                                                 </div>
-                                                @endforeach
                                             </div>
+                                            @endforeach
                                         </div>
                                         @endif
                                     </div>
+
 
                                     <!-- Modals for receipts, payment proof, and reviews -->
                                     @include('modals.Transaction.view_receipt', ['transactionId' => $transaction->transaction_id, 'paymentProofs' => $transaction->payment_proofs])
@@ -721,7 +734,7 @@
                                             @endif
                                         </div>
 
-                                        @foreach($member->services as $service)
+                                        @foreach($member->freelancer->offeredTeamServices() as $service)
                                         <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
                                         @endforeach
                                     </div>

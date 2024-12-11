@@ -216,7 +216,7 @@ class TransactionController extends Controller
         // dd($teamTransactions);
         // Merge solo and team transactions
         $transactions = $soloTransactions->merge($teamTransactions);
-
+        // dd($transactions->count());
         // Set the timezone to Asia/Manila
         $timezone = 'Asia/Manila';
         $today = Carbon::now($timezone);
@@ -245,7 +245,7 @@ class TransactionController extends Controller
 
         // Filter for upcoming transactions (start_date is in the future)
         $upcomingTransactions = $transactions->filter(function ($transaction) use ($today) {
-            return Carbon::parse($transaction->event->start_date)->greaterThan($today) && $transaction->status === 'Pending';
+            return Carbon::parse($transaction->event->start_date)->greaterThan($today) && $transaction->transaction_status === 'Pending';
         });
 
         // Filter for previous transactions (end_date is in the past)
@@ -264,8 +264,6 @@ class TransactionController extends Controller
             return Carbon::parse($transaction->event->end_date)->lessThan($today)
                 && $transaction->transaction_status !== 'Ongoing' && $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
         });
-
-        //  dd($ongoingTransactions->count());
 
 
         return view(

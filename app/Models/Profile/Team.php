@@ -37,8 +37,11 @@ class Team extends Model
 
     public function freelancers()
     {
-        return $this->belongsToMany(Freelancer::class, 'memberships', 'team_id', 'freelancer_id');
+        return $this->belongsToMany(Freelancer::class, 'memberships', 'team_id', 'freelancer_id')
+            ->orderByRaw('freelancer_id = ? DESC', [$this->team_leader]) // This ensures the admin is first
+            ->orderBy('created_at'); 
     }
+
 
     public function jobApplications()
     {

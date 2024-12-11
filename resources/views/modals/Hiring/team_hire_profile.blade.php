@@ -82,7 +82,7 @@
                                 <label for="roleRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
                             </div>
                             <div class="col">
-                                <select class="border-secondary-subtle form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
+                                <select class="border-secondary-subtle form-select" id="roleRecomm-<?php echo $uniqueId; ?>" required>
                                     <option value="" selected disabled></option>
                                     @if($team->hasMinimumMemberships() == true)
                                     <option value="{{ $team->team_code }}" data-job-fee="{{ $team->package_price }}" data-job-title="{{ $team->package_service }}">
@@ -121,8 +121,8 @@
 
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-center mb-2">
-                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn btn-cancel w-25 me-2 " style="color:white; background-color:#91216C;" disabled>Hire</button>
-                            <button data-unique-id="<?php echo $uniqueId; ?>" type="button" class="close-form-hire btn btn-secondary w-25" onclick="goToStep1('{{ $uniqueId }}')">Back</button>
+                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn btn-secondary w-100 me-2 " disabled>Send Hire Request</button>
+                            <button data-unique-id="<?php echo $uniqueId; ?>" type="button" class="close-form-hire btn btn-secondary w-100" onclick="goToStep1('{{ $uniqueId }}')">Back</button>
                         </div>
                     </div>
                 </form>
@@ -278,45 +278,6 @@
         document.getElementById('hire-step-1-' + uniqueId).style.display = 'block';
     }
 
-    function updateFee(uniqueId) {
-        const selectElement = document.getElementById('roleRecomm-' + uniqueId);
-        if (!selectElement) {
-            // console.error('Select element not found for roleRecomm-' + uniqueId);
-            return;
-        }
-
-        const selectedOption = selectElement.options[selectElement.selectedIndex];
-        const jobFee = parseFloat(selectedOption.getAttribute('data-job-fee')) || 0;
-        const feeType = selectedOption.getAttribute('data-fee-type');
-
-        let totalFee = 0;
-
-        // Calculate total fee based on fee type
-        if (feeType === '/hour') {
-            totalFee = jobFee * (durationInHours > 0 ? durationInHours : 1);
-        } else if (feeType === '/project') {
-            totalFee = jobFee;
-        }
-
-        // Error handling for totalFee
-        if (isNaN(totalFee)) {
-            // console.error('Total fee calculation error for roleRecomm-' + uniqueId);
-            totalFee = 0;
-        }
-
-        const roundedFee = totalFee.toFixed(2);
-        const formattedFee = parseFloat(roundedFee).toLocaleString('en-US', {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2
-        });
-
-
-        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
-        document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
-        document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
-    }
-
-
     document.addEventListener('DOMContentLoaded', function() {
 
         document.querySelectorAll('.close-form-hire').forEach(function(button) {
@@ -335,7 +296,7 @@
 
             const formData = new FormData(form); // Create a FormData object from the form
 
-            fetch('/hire/applicant', {
+            fetch('/team/send/hiring-request', {
                     method: 'POST',
                     body: formData,
                     headers: {

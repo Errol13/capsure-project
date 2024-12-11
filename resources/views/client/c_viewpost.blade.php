@@ -14,7 +14,7 @@
                 <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
             </div>
             <small class="text-muted mb-1">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
-  
+
             <hr>
             <div class="row">
                 <div class="col-md-4">
@@ -407,6 +407,45 @@
                                     <p>No hiring request data.</p>
                                     @endif
                                 </div>
+
+                                <!-- Action Buttons -->
+                                <div class="d-flex flex-column flex-sm-row align-items-center" style="width: 100%;">
+
+                                    @if($team->hiringRequestData->status != 'Rejected')
+
+                                    <!--if accepted this will be gone-->
+                                    @if($team->hiringRequestData->status != 'Accepted')
+                                    <button class="confirm" data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$team->hiringRequestData->hiring_request_id}}">Negotiate</button>
+                                    @endif
+
+                                    <!-- Negotiate Modal-->
+                                    @livewire('negotiate-modal', ['hiringRequestId' => $team->hiringRequestData->hiring_request_id,
+                                    'service' => $team->details])
+
+                                    @if($team->hiringRequestData->dealer_user_type == 'client' && $team->hiringRequestData->status != 'Accepted')
+                                    <button class="btn btn-primary me-2 mb-2 mb-sm-0" disabled style="flex: 2; width: 100%; color:black; background-color:#CBCACA; border:none; border-radius: 20px">Pending</button>
+                                    @elseif($team->hiringRequestData->dealer_user_type == 'freelancer' && $team->hiringRequestData->status != 'Accepted')
+                                    <button class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%; color:black; background-color:#8FE2ED; border:none; border-radius: 20px"
+                                        data-bs-toggle="modal" data-bs-target="#modal-{{ $team->hiringRequestData->hiring_request_id }}"
+                                        data-action="accept" data-hiringid="{{ $team->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Accept Offer</button>
+                                    @elseif($team->hiringRequestData->status == 'Accepted')
+                                    <a href="{{route('client-transaction')}} " class="btn btn-primary me-2 mb-2 mb-sm-0" style="flex: 2; width: 100%;  color:black; background-color:#8FE2ED; border:none; border-radius: 20px">View Transaction</a>
+                                    @endif
+
+                                    <!--if accepted this will be gone-->
+                                    @if($team->hiringRequestData->status != 'Accepted')
+                                    <button class="btn mb-2 mb-sm-0" style="flex: 1; width: 100%; background-color:none; border-color:darkgrey; border-radius: 20px"
+                                        data-bs-toggle="modal" data-bs-target="#modal-{{ $team->hiringRequestData->hiring_request_id }}"
+                                        data-action="cancel" data-hiringid="{{ $team->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Cancel</button>
+                                    @endif
+
+                                    @elseif($team->hiringRequestData->status == 'Rejected')
+                                    <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold"
+                                        style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
+                                    @endif
+
+                                </div>
+
                             </div>
 
                             <!-- Reusable Modal Component -->
@@ -431,6 +470,10 @@
                                     <div class="d-flex align-items-center">
                                         <small class="note">Hiring as </small>
                                         <span class="fs-6 poppins-medium text-uppercase badge" style="color: #91216C;">{{ $freelancer->serviceDetails->job_title }}</span>
+                                    </div>
+                                    <div> 
+                                        <small class="mb-0">Service Fee:</small><br>
+                                        <span class="fw-bold p-1" style="background-color:whitesmoke; color:mediumseagreen; border-radius:12px;">{{ $freelancer->serviceDetails->job_fee}}</span>
                                     </div>
                                     @else
                                     <p>Service details not available.</p>
