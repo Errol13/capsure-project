@@ -32,26 +32,9 @@
                     <a class="poppins-light fs-5 mb-0 text-purple right-side" href="#">View All</a>
                 </div>
 
-                <?php
-                $cards = [
-                    [
-                        'title' => 'Party Package',
-                        'price' => '₱50,000',
-                        'services' => ['Photographer', 'Make-up Artist', '2 Hosts'],
-                        'profilePic' => '/assets/profilepic.svg',
-                        'name' => 'Party Needs',
-                        'location' => 'Naga City',
-                        'projects' => '10 Projects done',
-                        'rating' => '4.9',
-                        'reviews' => '(10)',
-                        'bookmark' => 'assets/bookmark.svg'
-                    ],
-                    // Add more card data here if needed
-                ];
-                ?>
-
                 <!-- Responsive Grid Layout -->
                 <div class="row g-3 justify-content-center">
+                    @if($teams)
                     @foreach($teams as $team)
                     <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
                         <div class="card shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
@@ -64,8 +47,25 @@
                                 </div>
 
                                 <ul class="list-unstyled text-center mb-3 px-3 py-3" style="background-color: #F6F2F2; width: 100%; height: 150px; object-fit: cover;">
-                                    @foreach($team->getServices() as $service)
-                                    <li>{{$service->job_title}}</li>
+
+                                    <!--count the services-->
+                                    @php
+                                    // Initialize an array to store the count of each service title
+                                    $serviceCount = [];
+
+                                    // Iterate through the team's services
+                                    foreach($team->getServices() as $service) {
+                                    // Count the occurrences of each service title
+                                    if (isset($serviceCount[$service->job_title])) {
+                                    $serviceCount[$service->job_title]++;
+                                    } else {
+                                    $serviceCount[$service->job_title] = 1;
+                                    }
+                                    }
+                                    @endphp
+
+                                    @foreach($serviceCount as $title => $count)
+                                    <p>{{ $count }} {{ $title }}@if($count > 1){{ 's' }}@endif</p>
                                     @endforeach
                                 </ul>
 
@@ -78,35 +78,15 @@
                                         <p class="card-text open-sans-light fs-smaller text-success mb-0">No. of projects:{{number_format($team->number_of_projects)}}</p>
                                         @endif
                                     </div>
-<<<<<<< HEAD
-                                    <ul class="list-unstyled text-center mb-3 px-3 py-3" style="background-color: #F6F2F2; width: 100%; height: 150px; object-fit: cover;">
-                                        <?php foreach ($card['services'] as $service): ?>
-                                            <li><?php echo htmlspecialchars($service); ?></li>
-                                        <?php endforeach; ?>
-                                    </ul>
-                                    <div class="d-flex align-items-center">
-                                        <img src="<?php echo htmlspecialchars($card['profilePic']); ?>" class="rounded-circle" alt="profile" style="width: 50px; height: 50px;">
-                                        <div class="ms-3">
-                                            <p class="card-text open-sans-reg fw-bold mb-0"><?php echo htmlspecialchars($card['name']); ?></p>
-                                            <p class="card-text open-sans-light small mb-0"><?php echo htmlspecialchars($card['location']); ?></p>
-                                            <p class="card-text open-sans-light small text-success mb-0"><?php echo htmlspecialchars($card['projects']); ?></p>
-                                        </div>
-                                        <div class="ms-auto text-end">
-                                            <span class="text-warning me-1">★</span>
-                                            <span class="fw-bold"><?php echo htmlspecialchars($card['rating']); ?></span>
-                                            <span class="text-muted small ms-1"><?php echo htmlspecialchars($card['reviews']); ?></span>
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-between align-items-center mt-3">
-                                        <a href="#" class="btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
-                                        <img src="<?php echo htmlspecialchars($card['bookmark']); ?>" alt="Bookmark" class="bookmark-icon ms-2">
-=======
+                                    @if($team->avg_rating > 0)
                                     <div class="ms-auto text-end">
                                         <span class="text-warning me-1">★</span>
                                         <span class="fw-bold">{{$team->avg_rating}}</span>
                                         <span class="text-muted small ms-1">({{$team->totalReviews()}})</span>
->>>>>>> 2400bbda73edb56d42cba1cedddd7631c485af3d
                                     </div>
+                                    @else
+                                    <p class="text-muted text-nowrap small">No ratings yet</p>
+                                    @endif
                                 </div>
                                 <div class="d-flex justify-content-between align-items-center mt-3">
                                     <a href="{{route('team-profile-view', ['id' => $team->team_id])}}" class="btn-round btn-seeprof" style="border: 1px solid #8b206a; color:#8b206a;">See Profile</a>
@@ -115,6 +95,9 @@
                         </div>
                     </div>
                     @endforeach
+                    @else
+                    <p class="text-muted fs-6 text-center">No team freelancers.</p>
+                    @endif
                 </div>
             </div><!--end for team-->
 

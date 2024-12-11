@@ -71,7 +71,7 @@
     <div class="row d-block d-lg-flex justify-content-center">
         <div class="col col-lg-4 my-3">
             <div class="flex-grow-1">
-                <div class="d-flex">
+                <div class="d-flex justify-content-start">
                     <h5 class="poppins-medium">Team Members</h5>
                     <small class="ms-1">({{$membersCount}})</small>
                 </div>
@@ -98,8 +98,8 @@
                                 <small style="margin: 0;" class="text-muted fs-smaller fst-italic">No ratings yet</small>
                                 @endif
                                 <div class="col">
-                                    @foreach($member->services as $service)
-                                    <span class="text-start badge rounded-pill me-1" style="background-color:aliceblue; color:gray;">
+                                    @foreach($member->offeredTeamServices() as $service)
+                                    <span class="text-start badge rounded-pill me-1" style="background-color:#FCF2F9; color:gray;">
                                         {{$service->job_title}}
                                     </span>
                                     @endforeach
@@ -107,7 +107,11 @@
                             </div>
                         </div>
                         <div class="col-end m-3">
-                            <div class="status text-center text-success">Available</div>
+                            @if($member->offeredTeamServices()->isNotEmpty())
+                            <small class="status text-center text-success">Available</small>
+                            @else
+                            <small class="status text-center text-danger">Not Available</small>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -123,6 +127,7 @@
                 </div>
                 <div class="col-lg-12 col-md-6">
                     <section id="team-reviews">
+                        @if($reviews->isNotEmpty())
                         <div class="d-flex justify-content-between align-items-center my-3">
                             <div class="d-flex align-items-center">
                                 <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
@@ -130,10 +135,10 @@
                             </div>
                             <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $team->team_name])}}" style="font-size:small;">See All Reviews</a>
                         </div>
+
+
+
                         <p class="text-center my-2">Recent Projects</p>
-
-                        @if($reviews)
-
                         @foreach($reviews as $review)
 
                         @php
@@ -187,6 +192,16 @@
                             </div>
                         </div>
                         @endforeach
+                        @else
+                        <div class="d-flex justify-content-between align-items-center my-3">
+                            <div class="d-flex align-items-center">
+                                <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
+                                <p class="mb-0 fs-smaller">({{$reviews->count()}})</p>
+                            </div>
+                        </div>
+
+                        <p class="text-center my-2">No reviews yet</p>
+
                         @endif
                     </section>
                 </div>

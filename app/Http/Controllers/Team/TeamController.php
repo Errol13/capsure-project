@@ -129,11 +129,11 @@ class TeamController extends Controller
                 })
                 ->whereDoesntHave('transactions', function ($query) use ($team) {
                     // Exclude events where the team has transactions 
-                    $query->where('team_code', $team->team_code);  
+                    $query->where('team_code', $team->team_code);
                 })
                 ->whereDoesntHave('event_jobs.jobApplications', function ($query) use ($team) {
                     // Exclude events where the team has already applied
-                    $query->where('team_code', $team->team_code);  
+                    $query->where('team_code', $team->team_code);
                 })
                 ->get();
 
@@ -148,7 +148,7 @@ class TeamController extends Controller
             $reviews = $team->reviews()->with('transaction.event')->where('reviewee_role', 'team')->take(2)->get();
 
             //get the members
-            $teamMembers = $team->memberships()->with('freelancer') // Load freelancers through memberships
+            $teamMembers = $team->memberships()->where('status', 'active')->with('freelancer') // Load freelancers through memberships
                 ->orderBy('created_at', 'asc') // Order by the date they joined the team
                 ->get()
                 ->pluck('freelancer'); // Extract the freelancers after ordering
@@ -457,19 +457,95 @@ class TeamController extends Controller
         return redirect()->route('client-viewpost', ['id' => $event->event_id])->with('success', 'Hiring request was sent successfully!');
     }
 
-    public function editTeam()
+    public function editTeam(Request $request)
     {
-        return ('edit-team');
+        $validated = $request->validate([
+            'team_id' => 'required|exists:teams,team_id',
+            'team_name' => 'nullable|string|max:255',
+            'package_service' => 'nullable|string|max:255',
+            'package_price' => 'nullable|numeric|min:500',
+            'team_description' => 'nullable|string|max:500',
+            'team_profilepic' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:10240',
+        ]);
+
+        // dd($validated);
+
+        // Find the team
+        $team = Team::find($validated['team_id']);
+
+        // Handle profile picture upload
+        if ($request->hasFile('team_profilepic')) {
+            // Delete the old profile picture if it exists
+            if ($team->team_profilepic) {
+                $oldFilePath = public_path('storage/' . $team->team_profilepic);
+                if (file_exists($oldFilePath)) {
+                    unlink($oldFilePath); // Delete the old file
+                }
+            }
+
+            // Upload the new profile picture
+            $profilePicFile = $request->file('team_profilepic');
+            $originalName = pathinfo($profilePicFile->getClientOriginalName(), PATHINFO_FILENAME); // Get the original filename
+            $extension = $profilePicFile->getClientOriginalExtension(); // Get the extension
+            $fileName = $originalName . '_' . $team->team_code . '.' . $extension;
+
+            // Store the new profile picture in the 'team_profiles' folder
+            $filePath = $profilePicFile->storeAs('team_profiles', $fileName, 'public');
+
+            // Update the team with the new profile picture path
+            $validated['team_profilepic'] = 'team_profiles/' . $fileName;
+        }
+
+        $team->update($validated);
+
+        return redirect()->back()->with('success', 'Team edited successfully');
     }
 
-    public function editService()
+
+    public function editService(Request $request)
     {
-        return ('edit-service');
+        // Fetch the authenticated user's freelancer data
+        $user = Auth::user();
+        $freelancer = $user->freelancer;
+
+        // Get the member's current services offered to the team
+        $member = $freelancer->membership->first();
+
+
+        $currentServices = $member->services ?? [];
+        // dd($currentServices);
+        // Retrieve selected services from the form submission
+        $selectedServices = array_keys($request->input('services', []));
+
+        // dd($selectedServices);
+        // Determine services to add and remove
+        $servicesToAdd = array_diff($selectedServices, $currentServices);
+        $servicesToRemove = array_diff($currentServices, $selectedServices);
+
+        // dd('Selected:', $selectedServices, 'To be Removed:', $servicesToRemove);
+        // Update the services JSON
+        $updatedServices = array_diff($currentServices, $servicesToRemove); // Remove unchecked services
+        $updatedServices = array_merge($updatedServices, $servicesToAdd); // Add newly selected services
+
+        // Save the updated services back to the member
+        $member->services = $updatedServices;
+        // dd($member->services); 
+        $member->save();
+
+        return redirect()->back()->with('success', 'Service availability updated successfully.');
     }
 
-    public function editTerms()
+    public function editTerms(Request $request)
     {
-        return ('edit-terms');
+        $validated = $request->validate([
+            'team_id' => 'required|exists:teams,team_id',
+            'terms_of_services' => 'nullable|string|max:500',
+        ]);
+
+        // Find the team
+        $team = Team::find($validated['team_id']);
+        $team->update($validated);
+       return redirect()->back()->with('success', 'Service availability updated successfully.');
     }
 
     //team transaction

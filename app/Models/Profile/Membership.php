@@ -19,6 +19,11 @@ class Membership extends Model
 
     protected $primaryKey = 'membership_id';
 
+    protected $casts = [
+        'services' => 'array',
+    ];
+    
+
     public function freelancer()
     {
         return $this->belongsTo(Freelancer::class, 'freelancer_id');
@@ -32,7 +37,7 @@ class Membership extends Model
     public function getServices()
     {
         // Retrieve service IDs from the services JSON column
-        $serviceIds = json_decode($this->services, true);
+        $serviceIds = $this->services;
 
         // Fetch the services from the Service model based on those IDs
         $services = Service::whereIn('id', $serviceIds)->where('isAvailable', true)->get();

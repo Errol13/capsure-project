@@ -227,7 +227,7 @@
 
                                     <div class="row">
                                         <!--for members-->
-                                        @if($transaction->members)
+                                        @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
                                         <div class="d-flex flex-wrap justify-content-start align-items-start">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -514,7 +514,7 @@
 
                                     <div class="row">
                                         <!--for members-->
-                                        @if($transaction->members)
+                                        @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
                                         <div class="d-flex flex-wrap justify-content-start align-items-start">
                                             <div class="d-flex justify-content-between align-items-center">
@@ -704,7 +704,7 @@
                             </div>
 
                             <!--for members-->
-                            @if($transaction->members)
+                            @if($transaction->members->isNotEmpty())
                             <p>Members:</p>
                             <div class="d-flex flex-column justify-content-start align-items-start">
                                 <div class="d-flex justify-content-between align-items-center">
