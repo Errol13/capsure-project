@@ -177,28 +177,17 @@
                     @endif
                 </div>
 
-                @foreach ($user->freelancer->services as $service)
-                <div class="row mb-2 justify-content-center poppins-regular">
-                    <div class=" d-md-flex d-lg-flex align-items-center justify-content-center rounded py-2" style="background-color:#FCF2F9; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
-                        <div class="col-auto fs-sm">
-                            <span>{{$service->job_title}}</span>
-                        </div>
-                        <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
-                        <div class="col-auto d-flex fs-sm">
-                            <span>₱{{$service->job_fee}}</span>
-                            <span>{{$service->fee_type}}</span>
-                        </div>
-                        <hr class="col m-0 p-0 d-lg-flex d-md-flex d-none">
-                        <div class="col-end">
-                            @if ($service->isAvailable === true)
-                            <span class="badge text-success fs-smaller fs-md">Available</span>
-                            @else
-                            <span class="badge text-danger fs-smaller fs-md">Not Available</span>
-                            @endif
-                        </div>
+                <div class="list-group mb-4">
+                    @foreach($user->freelancer->services as $service)
+                    <div class="list-group-item d-lg-flex d-block justify-content-between align-items-center" style="background-color: #FCF2F9;">
+                        <span class="fw-bold"> {{ $service->job_title }}</span>
+                        <span>₱{{ $service->job_fee }}{{ $service->fee_type }}</span>
+                        <span class="badge poppins-medium {{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
+                            {{ $service->isAvailable ? 'Available' : 'Not Available' }}
+                        </span>
                     </div>
+                    @endforeach
                 </div>
-                @endforeach
             </div>
             <div class="row">
                 <!--Terms of Service-->

@@ -28,10 +28,10 @@
                     <!-- Services List -->
                     <div class="list-group mb-4">
                         @foreach($freelancer->services as $service)
-                        <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
-                            {{ $service->job_title }}
+                        <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #FCF2F9;">
+                            <span class="fw-bold">{{ $service->job_title }}</span>
                             <span>₱{{ $service->job_fee }}{{ $service->fee_type }}</span>
-                            <span class="{{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
+                            <span class="badge poppins-medium {{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
                                 {{ $service->isAvailable ? 'Available' : 'Not Available' }}
                             </span>
                         </div>
@@ -87,8 +87,9 @@
                     </div>
 
                     <!-- Computed Fee -->
-                    <p class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee: ₱0.00</p>
+                    <span class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee:<span style="color: mediumseagreen;"> ₱0.00</span></span><br>
                     <input type="hidden" name="freelancer_pricing" id="fee-hidden-<?php echo $uniqueId; ?>" value="0">
+                    <span class="note">Note: Computed based on event duration and freelancer's rate</span>
 
                     <!-- Offer Input -->
                     <div class="d-flex mb-1 justify-content-between align-items-center">
@@ -111,8 +112,8 @@
 
                     <!-- Action Buttons -->
                     <div class="d-flex justify-content-center mb-1">
-                        <button id="hireRecommSubmit-<?php echo $uniqueId; ?>" type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;" disabled>Hire</button>
-                        <button id="cancelHireButton-{{$uniqueId}}" type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
+                        <button id="hireRecommSubmit-<?php echo $uniqueId; ?>" type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 150px; height: 35px;" disabled>Send Hire Request</button>
+                        <button id="cancelHireButton-{{$uniqueId}}" type="button" class="btn btn-secondary" style="width: 150px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </form>
             </div>

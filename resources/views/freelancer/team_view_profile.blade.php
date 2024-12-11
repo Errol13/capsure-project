@@ -16,55 +16,65 @@
             </div>
             <div class="col-7 col-md-8 col-lg-8 ps-4">
                 <div class="row my-3">
-                    <!-- Full Name and Verification Status -->
-                    <div class="mt-2 d-flex align-items-center">
-                        <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
-                            {{$team->team_name}}
-                        </h5>
-                        @if($allMembersVerified)
-                        <small style="text-align:end;"> All members verified </small>
-                        @endif
-                    </div>
+                    <div class="col">
+                        <!-- Full Name and Verification Status -->
+                        <div class="mt-2 d-flex align-items-center">
+                            <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
+                                {{$team->team_name}}
+                            </h5>
+                            @if($allMembersVerified)
+                            <small style="text-align:end;"> All members verified </small>
+                            @endif
+                        </div>
 
-                    <div class="d-flex align-items-center my-2">
-                        @if($team->avg_rating == 0)
-                        <span class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</span>
-                        @else
-                        <h6 class="fw-bold me-3 mb-0">Rating:</h6>
-                        <!-- Star Rating Container -->
-                        <div class="star-rating ms-2">
-                            <div class="row">
-                                <div class="col-auto p-0 me-1">
-                                    <span class=" fs-sm fs-md">{{ number_format($team->avg_rating, 1) }}</span>
-                                </div>
-                                <div class="col-auto p-0">
-                                    <div class="d-flex align-items-center mt-1">
-                                        @for ($i = 1; $i <= 5; $i++) @if ($i <=floor($team->avg_rating))
-                                            <i class="fas fa-star filled"></i> <!-- Filled star -->
-                                            @elseif ($i == ceil($team->avg_rating) && $team->avg_rating -
-                                            floor($team->avg_rating) > 0)
-                                            <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
-                                            @else
-                                            <i class="far fa-star"></i> <!-- Empty star -->
-                                            @endif
-                                            @endfor
+                        <div class="d-flex align-items-center my-2">
+                            @if($team->avg_rating == 0)
+                            <span class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</span>
+                            @else
+                            <h6 class="fw-bold me-3 mb-0">Rating:</h6>
+                            <!-- Star Rating Container -->
+                            <div class="star-rating ms-2">
+                                <div class="row">
+                                    <div class="col-auto p-0 me-1">
+                                        <span class=" fs-sm fs-md">{{ number_format($team->avg_rating, 1) }}</span>
+                                    </div>
+                                    <div class="col-auto p-0">
+                                        <div class="d-flex align-items-center mt-1">
+                                            @for ($i = 1; $i <= 5; $i++) @if ($i <=floor($team->avg_rating))
+                                                <i class="fas fa-star filled"></i> <!-- Filled star -->
+                                                @elseif ($i == ceil($team->avg_rating) && $team->avg_rating -
+                                                floor($team->avg_rating) > 0)
+                                                <i class="fas fa-star-half-alt filled"></i> <!-- Half star -->
+                                                @else
+                                                <i class="far fa-star"></i> <!-- Empty star -->
+                                                @endif
+                                                @endfor
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                            @endif
                         </div>
-                        @endif
-                    </div>
-                    <div class="package-fee">
-                        Package Offer: <strong>{{$team->package_service}}</strong>
+                        <div class="package-fee">
+                            Package Offer: <strong>{{$team->package_service}}</strong>
+                        </div>
+
+                        <div class="package-fee mb-3">
+                            Package Fee: <strong>Php {{$team->package_price}}</strong>
+                        </div>
+                        <small class="description" style="line-height: 1.2;">{{$team->team_description}}</small>
                     </div>
 
-                    <div class="package-fee mb-3">
-                        Package Fee: <strong>Php {{$team->package_price}}</strong>
+                    <div class="col-auto me-3">
+                        <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
+                            <a href="#"  data-bs-toggle="modal" data-bs-target="#hireDirectlyTeamModal-{{ $team->team_code }}" class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">HIRE THE TEAM</a>
+                            <button type="submit" class="btn border-0 m-0 p-0">
+                                <i class="fas fa-comment text-purple fs-6 me-4 rounded-end-1 border border-1 px-3 py-2 me-3 me-md-4" style="background-color: white;cursor: pointer;"></i>
+                            </button>
+                            <i class="bi bi-person-fill-exclamation fs-4"
+                                style="color: crimson; cursor: pointer;"></i>
+                        </div>
                     </div>
-                    <small class="description" style="line-height: 1.2;">{{$team->team_description}}</small>
-
-                    <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyTeamModal-{{ $team->team_code }}"
-                        class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">Hire Team</a>
 
                     <!-- Hire Modal -->
                     @include('modals.Hiring.team_hire_profile', ['uniqueId' => $team->team_code,'team' => $team,

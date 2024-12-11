@@ -1,16 +1,19 @@
 <!-- Apply Job Modal -->
-<div class="modal fade" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel">
+<div class="modal" id="applyJobModal" tabindex="-1" aria-labelledby="applyJobModalLabel">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fs-6 text-muted">Please select a Job you want to apply for and confirm the application.</h5>
+            <div class="modal-header" style="border-bottom:none;">
+                <h3 class="modal-title">Apply for a Job</h3>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('job.apply') }}" method="POST" id="apply-job-form">
+
+            <div class="modal-body pt-0">
+            <span class="note">Please select a Job you want to apply for and confirm the application.</span>
+
+                <form action="{{ route('job.apply') }}" method="POST" id="apply-job-form" class="mt-4">
                     @csrf
                     <label for="apply_as" class="form-label">Select Available Job</label>
-                    <select class="form-select border border-danger-subtle" id="apply_as" name="apply_as" required>
+                    <select class="form-select border border-subtle" id="apply_as" name="apply_as" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($eventJobs as $eventJob)
                         @php
@@ -25,7 +28,7 @@
                     </select>
 
                     <label for="service_id" class="form-label mt-3">Apply as a/an</label>
-                    <select class="form-select border border-danger-subtle" id="service_id" name="service_id" required>
+                    <select class="form-select border border-subtle" id="service_id" name="service_id" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($freelancer->services as $service)
                         <option value="{{ $service->id }}" data-job-title="{{ $service->job_title }}">

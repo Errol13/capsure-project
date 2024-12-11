@@ -5,8 +5,8 @@
     <div class="row">
         <div class="col-12">
             <div class="row d-flex align-items-center">
-                <div class="col-auto pt-3 poppins-medium">
-                    <h3>My Posts</h3>
+                <div class="col-auto mt-3 poppins-medium">
+                    <h1>My Posts</h1>
                 </div>
                 <div class="col-auto">
                     <a href="{{ url('/events') }}" class="btn btn-primary rounded-5" style="background-color:#8FE2ED; border:none; color:black;">
@@ -63,10 +63,10 @@
                             </div>
 
 
-                            <div class="d-flex justify-content-end mt-3">
-                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm me-2" style="white-space:nowrap;">View Post</a>
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm" style="white-space:nowrap;">View Post</a>
                                 @if($event->status == 'Open')
-                                <a href="#" class="confirm" style="background-color:crimson;" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-event-id="{{ $event->event_id }}" style="border:none;">Close</a>
+                                <a href="#" class="confirm ms-2" style="background-color:crimson;" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-event-id="{{ $event->event_id }}" style="border:none;">Close</a>
                                 @endif
                             </div>
                         </div>

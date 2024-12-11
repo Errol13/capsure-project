@@ -22,7 +22,7 @@
                             pattern="[A-Za-z0-9]{6,}" name="team_code"
                             class="form-control" id="teamCodeInput{{$view}}" placeholder="Input the 6-length code"
                             style="height: 50px; width: 325px; border: 1px solid black;" required>
-                        <button type="submit" class="btn ms-2" style="background-color: #91216C; color:white; height: 50px;">
+                        <button type="submit" class="btn ms-2" style="background-color: #91216C; color:white; height: 50px; white-space:nowrap">
                             Join Team
                         </button>
 

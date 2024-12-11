@@ -227,6 +227,22 @@ input[type="tel"] {
     border-color: #91216C;
     outline: none;
 }
+.cancel{
+    background-color: none;
+    color: rgb(139, 137, 137);
+    text-decoration: none;
+    width: 100%;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    height: 50%;
+    white-space: nowrap;
+}
 
 .confirm {
     padding: 10px 20px;
@@ -1072,6 +1088,7 @@ select:disabled {
     border-radius: 20px;
     width: 100px;
     border: none;
+    white-space: nowrap;
 }
 
 

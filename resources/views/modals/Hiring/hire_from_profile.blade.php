@@ -1,9 +1,9 @@
 <!-- Hire Modal -->
 <div class="modal" id="hireDirectlyModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireDirectlyModalLabel-{{ $uniqueId }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="text-purple text-center">Hire Freelancer</h2>
+        <div class="modal-content rounded-2">
+            <div class="modal-header pt-0" style="border-bottom: none;">
+                <h3 class="poppins-medium">Hire Freelancer</h3>
                 <button data-unique-id="{{$uniqueId}}" type="button" class="close-form-hire btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="goToStep1('{{ $uniqueId }}')"></button>
             </div>
             <div class="modal-body" style="height: auto; overflow-y: auto; overflow-x: hidden;">
@@ -27,13 +27,13 @@
 
                         <!-- Next Button -->
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-seemore rounded-pill w-25" style="color:white; background-color:#91216C;" onclick="goToStep2('{{ $uniqueId }}')">Next</button>
+                            <button type="button" class="btn me-2 " style="background-color: #91216C; border:none; color:white; width: 150px; height: 35px; white-space:nowrap;" onclick="goToStep2('{{ $uniqueId }}')">Next</button>
                         </div>
                     </div>
 
                     <!-- Step 2: Hire Freelancer -->
 
-                    <div id="hire-step-2-{{ $uniqueId }}" style="max-height: 85dvh; overflow-y: auto; overflow-x: hidden; display:none;">
+                    <div class="pt-0" id="hire-step-2-{{ $uniqueId }}" style="max-height: 85dvh; overflow-y: auto; overflow-x: hidden; display:none;">
                         <!-- Profile Section -->
                         <div class="d-flex mb-4 align-items-center">
                             <!-- Profile Image -->
@@ -57,10 +57,10 @@
                         <!-- Services List -->
                         <div class="list-group mb-4">
                             @foreach($freelancer->services as $service)
-                            <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #EEEEEE;">
-                                {{ $service->job_title }}
+                            <div class="list-group-item d-flex justify-content-between align-items-center" style="background-color: #FCF2F9;">
+                                <span class="fw-bold">{{ $service->job_title }}</span>
                                 <span>₱{{ $service->job_fee }}{{ $service->fee_type }}</span>
-                                <span class="{{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
+                                <span class="badge poppins-medium {{ $service->isAvailable ? 'text-success' : 'text-danger' }}">
                                     {{ $service->isAvailable ? 'Available' : 'Not Available' }}
                                 </span>
                             </div>
@@ -99,8 +99,9 @@
                         </div>
 
                         <!-- Computed Fee -->
-                        <p class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee: ₱0.00</p>
+                        <span class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee:<span style="color: mediumseagreen;"> ₱0.00</span></span><br>
                         <input type="hidden" name="freelancer_pricing" id="fee-hidden-<?php echo $uniqueId; ?>" value="0">
+                        <span class="note">Note: Computed based on event duration and freelancer's rate</span>
 
                         <!-- Offer Input -->
                         <div class="d-flex mb-1 justify-content-between align-items-center">
@@ -123,8 +124,8 @@
 
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-center mb-2">
-                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn btn-cancel w-25 me-2 " style="color:white; background-color:#91216C;" disabled>Hire</button>
-                            <button data-unique-id="<?php echo $uniqueId; ?>" type="button" class="close-form-hire btn btn-secondary w-25" onclick="goToStep1('{{ $uniqueId }}')">Back</button>
+                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn me-2 " style="background-color: #91216C; border:none; color:white; width: 150px; height: 35px; white-space:nowrap;" disabled>Send Hire Request</button>
+                            <button data-unique-id="<?php echo $uniqueId; ?>" type="button" class="btn btn-secondary" style="width: 150px; height: 35px;" onclick="goToStep1('{{ $uniqueId }}')">Back</button>
                         </div>
                     </div>
                 </form>
