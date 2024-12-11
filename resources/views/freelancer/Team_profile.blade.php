@@ -88,12 +88,14 @@
                         <small class="description" style="line-height: 1.2;">{{$team->team_description}}</small>
                     </div>
                     <div class="col-auto me-3">
+                        @if($team->team_leader === auth()->user()->id)
                         <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
                             <i class="fas fa-pencil" data-bs-toggle="modal"
                                 data-bs-target="#editTeamModal"></i>
 
                             @include('modals.editTeam')
                         </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -162,7 +164,7 @@
                                         <small style="margin: 0;" class="text-muted fs-smaller fst-italic">No ratings yet</small>
                                         @endif
                                         <div class="col">
-                                            @foreach($member->services as $service)
+                                            @foreach($member->offeredTeamServices() as $service)
                                             <span class="text-start badge rounded-pill me-1" style="background-color:#FCF2F9; color:gray;">
                                                 {{$service->job_title}}
                                             </span>
@@ -172,7 +174,11 @@
                                 </div>
 
                                 <div class="col-end m-3">
+                                    @if($member->offeredTeamServices()->isNotEmpty())
                                     <small class="status text-center text-success">Available</small>
+                                    @else
+                                    <small class="status text-center text-danger">Not Available</small>
+                                    @endif
                                 </div>
 
                                 <!--Tooltip for actions -->
@@ -188,18 +194,17 @@
                                         <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
                                     </ul>
                                 </div>
-                                @elseif(auth()->user()->id === $member->user_id && $member->user_id !== $team->team_leader)
+                                @elseif(auth()->user()->id === $member->user_id)
                                 <div class="dropdown">
                                     <button class="btn btn-light border-0 p-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Edit service</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Leave team</a></li>
+                                        <li><a class="dropdown-item" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editServiceModal">Edit Service</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#">Leave Team</a></li>
                                     </ul>
-                                </div>
+                                </div> @include('modals.editServiceTeam')
                                 @endif
-
                             </div>
                         </div>
                         @endforeach
@@ -211,15 +216,18 @@
                         <div class="col-lg-12 col-md-6 terms-of-service">
                             <div class="d-flex align-items-center">
                                 <h5 class="poppins-medium">Terms of Services</h5>
+                                @if($team->team_leader === auth()->user()->id)
                                 <!-- Edit Icon -->
                                 <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#editTermsTeamModal">
                                     <i class="ms-0 me-4 fs-6 text-start fas fa-pen fa-solid"></i>
                                 </button>
+                                @endif
                             </div>
                             <p class="p-3 rounded-4" style="background-color: white;">{{$team->terms_of_services}}</p>
                         </div>
                         <div class="col-lg-12 col-md-6">
                             <section id="team-reviews">
+                                @if($reviews->isNotEmpty())
                                 <div class="d-flex justify-content-between align-items-center my-3">
                                     <div class="d-flex align-items-center">
                                         <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
@@ -227,10 +235,10 @@
                                     </div>
                                     <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $team->team_name])}}" style="font-size:small;">See All Reviews</a>
                                 </div>
+
+
+
                                 <p class="text-center my-2">Recent Projects</p>
-
-                                @if($reviews)
-
                                 @foreach($reviews as $review)
 
                                 @php
@@ -284,9 +292,21 @@
                                     </div>
                                 </div>
                                 @endforeach
+                                @else
+                                <div class="d-flex justify-content-between align-items-center my-3">
+                                    <div class="d-flex align-items-center">
+                                        <h5 class="text-start poppins-medium mb-0 me-2">Client Reviews</h5>
+                                        <p class="mb-0 fs-smaller">({{$reviews->count()}})</p>
+                                    </div>
+                                </div>
+
+                                <p class="text-center my-2">No reviews yet</p>
+
                                 @endif
                             </section>
                         </div>
+                        </section>
+                        @include('modals.termsTeam')
                     </div>
                 </div>
             </div>
@@ -524,7 +544,7 @@
                 @endforeach
             </div>
             @else
-            <p class="text-muted text-center mt-4">No Hiring Requests</p>
+            <p class="text-muted text-center mt-5">No Hiring Requests</p>
             @endif
         </div>
 

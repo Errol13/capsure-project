@@ -96,9 +96,8 @@ class Team extends Model
         // Flatten the services from each membership
         $allServiceIds = $this->memberships->flatMap(function ($membership) {
             // Decode the services JSON string into an array
-            $services = json_decode($membership->services, true);
+            $services = $membership->services;
 
-            
             return is_array($services) ? $services : [];
         })->unique(); // Get unique service IDs
 
@@ -108,7 +107,7 @@ class Team extends Model
         }
 
         // Fetch services based on the service IDs and filter by availability
-        return Service::whereIn('id', $allServiceIds)->where('isAvailable', true)->get();
+        return Service::whereIn('id', $allServiceIds)->get();
     }
 
 

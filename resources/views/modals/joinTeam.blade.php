@@ -4,7 +4,7 @@
         <div class="modal-content" style="border-radius: 20px; padding: 20px;">
             <div class="modal-header py-0" style="border-bottom:none;">
                 <h4 class="modal-title poppins-medium" id="joinTeamLabel{{$view}}">Join a <span style="color: #91216C;">Team</span></h4>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <p class="mb-4">Ask the page creator for the team code, then enter it here.</p>

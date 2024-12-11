@@ -86,20 +86,21 @@ class Freelancer extends Model
 
     public function membership()
     {
-        return $this->hasMany(Membership::class, 'freelancer_id');
+        return $this->hasMany(Membership::class, 'freelancer_id')->where('status', 'active');
     }
 
     public function team()
     {
         return $this->hasOneThrough(
-            Team::class, //final model to access
-            Membership::class, //intermediate model 
+            Team::class, // Final model to access
+            Membership::class, // Intermediate model
             'freelancer_id', // Foreign key on memberships table
             'team_id',       // Foreign key on teams table
             'user_id',       // Local key on freelancers table
-            'team_id'       // Local key on memberships table
-        );
+            'team_id'        // Local key on memberships table
+        )->where('memberships.status', 'active'); // Filter for active memberships
     }
+
 
     public function teamTransactions()
     {
@@ -115,6 +116,14 @@ class Freelancer extends Model
         return Transaction::where('team_code', $team->team_code)
             ->with(['event', 'client.user', 'payment_proofs', 'reviews'])
             ->get();
+    }
+
+    public function offeredTeamServices()
+    {
+        // Collect all the service IDs from the active memberships
+        $serviceIds = $this->membership->pluck('services')->flatten()->unique();
+        // Fetch the service details based on the service IDs offered in the team
+        return Service::whereIn('id', $serviceIds)->get();
     }
 
 
