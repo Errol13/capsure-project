@@ -25,7 +25,7 @@
                     @endphp
                 
                     <img src="{{ $otherUser->profile_image_url }}" alt="{{ $otherUser->fullName() }}"
-                        class="user-image me-2" />
+                        class="user-image me-2" style="max-width: 30px; max-height: 30px;" />
 
                     <!--contains the latest message -->
                     <div class="d-flex flex-column justify-content-start">

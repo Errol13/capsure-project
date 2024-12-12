@@ -1,7 +1,7 @@
 <div>
     <!-- Chat Header -->
     <div>
-        <h5 class="text-center my-2">User name</h5>
+        <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
     </div>
     <hr class="mb-3 px-0">
     @if($selectedConversationId)
@@ -28,6 +28,12 @@
                             ->timezone('Asia/Manila')
                             ->format('h:i A') }}
                             </small>
+
+                            @if($message['isRead'])
+                            <span class="text-muted fs-smaller">Seen</span>
+                            @else
+                            <span class="text-muted fs-smaller text-white">Delivered</span>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -77,7 +83,7 @@
                 const loadingState = document.querySelector('#loadingState');
                 const messageList = document.querySelector('.chat-messages');
 
-                console.log('Triggered');
+                // console.log('Triggered');
                 messageList.classList.add('d-none');
                 loadingState.classList.remove('d-none');
 
@@ -87,7 +93,7 @@
                 const loadingState = document.querySelector('#loadingState');
                 const messageList = document.querySelector('.chat-messages');
 
-                console.log('Triggered');
+                // console.log('Triggered');
                 loadingState.classList.add('d-none');
                 messageList.classList.remove('d-none');
             });
