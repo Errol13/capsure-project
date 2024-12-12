@@ -10,7 +10,10 @@
     <div class="container row-md-4 d-lg-flex">
         <div class="col-md-8 pb-4" style="border-radius:12px;">
             <div class="d-flex justify-content-between align-items-center mb-0">
-                <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
+                <div class="d-flex justify-content-start align-items-center">
+                    <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
+                    <a href="{{route('event-edit', ['id' => $event->event_id])}}" class="mb-1"><i class="fas fa-edit text-muted ms-2 mt-3"></i></a>
+                </div>
                 <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
             </div>
             <small class="text-muted mb-1">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
@@ -471,7 +474,7 @@
                                         <small class="note">Hiring as </small>
                                         <span class="fs-6 poppins-medium text-uppercase badge" style="color: #91216C;">{{ $freelancer->serviceDetails->job_title }}</span>
                                     </div>
-                                    <div> 
+                                    <div>
                                         <small class="mb-0">Service Fee:</small><br>
                                         <span class="fw-bold p-1" style="background-color:whitesmoke; color:mediumseagreen; border-radius:12px;">{{ $freelancer->serviceDetails->job_fee}}</span>
                                     </div>
@@ -694,6 +697,10 @@
                             </div>
                         </div>
                         @endforeach
+                        @endif
+
+                        @if($teamRecommendations->isEmpty() && $recommendations->isEmpty())
+                        <p class="text-center open-sans-reg">No Recommendations</p>
                         @endif
                     </div>
                 </div>

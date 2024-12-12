@@ -132,6 +132,7 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
 
     #My Events Page Client
     Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
+    Route::get('/eventpost/edit/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'editEventsForm'])->name('event-edit');
     Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
     Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
 
@@ -179,10 +180,10 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
         return response()->json(['exists' => $exists]);
     })->name('check-team-name');
 
-    Route::post('/create-team',[TeamController::class, 'createTeam'])->name('team-create');
-    Route::post('/edit-team',[TeamController::class, 'editTeam'])->name('team-edit');
-    Route::post('/edit-service',[TeamController::class, 'editService'])->name('service-edit');
-    Route::patch('/edit-terms',[TeamController::class, 'editTerms'])->name('terms-edit');
+    Route::post('/create-team', [TeamController::class, 'createTeam'])->name('team-create');
+    Route::post('/edit-team', [TeamController::class, 'editTeam'])->name('team-edit');
+    Route::post('/edit-service', [TeamController::class, 'editService'])->name('service-edit');
+    Route::patch('/edit-terms', [TeamController::class, 'editTerms'])->name('terms-edit');
     Route::get('/team-profile', [TeamController::class, 'showTeamProfile'])->name('team-profile');
     Route::get('/team-profile/view/{id}', [TeamController::class, 'viewTeamProfile'])->name('team-profile-view');
     Route::post('/team/join', [TeamController::class, 'joinTeam'])->name('team-join');
@@ -190,10 +191,21 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
     Route::post('/team/cancel-job-application', [TeamController::class, 'cancelTeamApplication'])->name('team-apply-cancel');
     Route::post('/team/send/hiring-request', [TeamController::class, 'teamHiringRequest'])->name('team-hire-send');
 
-    #Leave team
-    Route::post('/team/change/admin', [TeamController::class, 'changeAdmin'])->name('admin-change');
-    Route::post('/team/leave', [TeamController::class, 'leaveTeam'])->name('team-leave');
+    #team actions
+    Route::patch('/team/change/admin', [TeamController::class, 'changeAdmin'])->name('admin-change');
+    Route::patch('/team/leave', [TeamController::class, 'leaveTeam'])->name('team-leave');
+    Route::patch('/team/remove/member', [TeamController::class, 'removeMember'])->name('member-remove');
 
+    #notifs route
+    Route::get('/notifications/read/{id}', function ($id) {
+        $notification = auth()->user()->notifications()->findOrFail($id);
+
+        // Mark the notification as read
+        $notification->markAsRead();
+
+        // Redirect to the intended action or URL stored in the notification
+        return redirect($notification->data['url'] ?? '/notifications/all');
+    })->name('notifications.read');
 });
 
 #Suspension

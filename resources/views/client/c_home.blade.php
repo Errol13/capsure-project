@@ -29,12 +29,12 @@
                         <img src="assets/team.svg" class="inside-icon me-1" style="width: 40px; height: 40px">
                         <h4 class="poppins-regular mb-0">Team Freelancers</h4>
                     </div>
-                    <a class="poppins-light fs-5 mb-0 text-purple right-side" href="#">View All</a>
+
                 </div>
 
                 <!-- Responsive Grid Layout -->
                 <div class="row g-3 justify-content-center">
-                    @if($teams)
+                    @if($teams->isNotEmpty())
                     @foreach($teams as $team)
                     <div class="col-12 col-md-6 col-lg-4 d-flex justify-content-center">
                         <div class="card shadow-box" style="width: 18rem; border-radius: 15px; border:none; box-shadow:1px 1px 5px rgba(0, 0, 0, 0.3);">
@@ -99,6 +99,12 @@
                     <p class="text-muted fs-6 text-center">No team freelancers.</p>
                     @endif
                 </div>
+
+                <!-- Pagination Links -->
+                <div class="mt-4 d-flex justify-content-center">
+                    {{ $teams->links('vendor.pagination.bootstrap-4') }}
+                </div>
+
             </div><!--end for team-->
 
         </div>

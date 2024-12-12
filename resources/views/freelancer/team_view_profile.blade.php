@@ -66,9 +66,15 @@
                     </div>
 
                     <div class="col-auto me-3">
+                        @if($team->hasMinimumMemberships())
                         <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
-                            <a href="#"  data-bs-toggle="modal" data-bs-target="#hireDirectlyTeamModal-{{ $team->team_code }}" class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">HIRE THE TEAM</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyTeamModal-{{ $team->team_code }}" class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">HIRE THE TEAM</a>
                         </div>
+                        @else
+                        <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
+                            <button data-bs-toggle="modal" data-bs-target="#" class="text-center btn btn-secondary rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm" disabled >HIRE THE TEAM</button>
+                        </div>
+                        @endif
                     </div>
 
                     <!-- Hire Modal -->
@@ -89,6 +95,7 @@
             </div>
             <div class="col" style="height: 400px; overflow-y: auto;">
                 <!-- Card container with scroll enabled -->
+                @if($teamMembers->isNotEmpty())
                 @foreach($teamMembers as $member)
                 <div class=" p-3 mb-3 rounded-4 border-0" style="background-color:white;">
                     <div class="col team-member d-flex justify-content-between align-items-center">
@@ -127,6 +134,9 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                <p class="text-muted text-center">No Team Members</p>
+                @endif
             </div>
         </div>
         <div class="col col-lg-8 poppins-regular my-3">

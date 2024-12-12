@@ -19,7 +19,7 @@
 
             @forelse($notifications as $notification) <!-- Show only the latest 4 notifications -->
                 <li>
-                    <a class="dropdown-item" href="{{ $notification->data['url'] }}">
+                    <a class="dropdown-item"  href="{{ route('notifications.read', $notification->id) }}">
                         <strong class="text-wrap">{{ $notification->data['message'] }}</strong>
                         <br><small class="text-muted">{{ $notification->created_at->diffForHumans() }}</small>
                     </a>

@@ -189,10 +189,17 @@
                                         <i class="bi bi-three-dots"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Make Admin</a></li>
-                                        <li><a class="dropdown-item" href="#">View Profile</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Remove</a></li>
+                                        <li><a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#TeamConfirmationModal-make-admin-{{$member->user_id}}">Make Admin</a></li>
+                                        <li><a class="dropdown-item" href="{{route('view-freelancer-profile', ['id' => $member->user_id])}}">View Profile</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#TeamConfirmationModal-remove-{{$member->user_id}}">Remove</a></li>
                                     </ul>
+
+                                    @include('modals.team_confirmation_modals', [ 'action' => 'make-admin', 'modalTitle' => 'Make Admin',
+                                    'actionURL' => '/team/change/admin', 'team_id' => $team->team_id, 'freelancer_id' => $member->user_id])
+
+                                    @include('modals.team_confirmation_modals', [ 'action' => 'remove', 'modalTitle' => 'Remove Member',
+                                    'actionURL' => '/team/remove/member','team_id' => $team->team_id, 'freelancer_id' => $member->user_id ])
+
                                 </div>
                                 @elseif(auth()->user()->id === $member->user_id)
                                 <div class="dropdown">
@@ -201,9 +208,14 @@
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" style="cursor:pointer;" data-bs-toggle="modal" data-bs-target="#editServiceModal">Edit Service</a></li>
-                                        <li><a class="dropdown-item text-danger" href="#">Leave Team</a></li>
+                                        <li><a class="dropdown-item text-danger" href="#" data-bs-toggle="modal" data-bs-target="#TeamConfirmationModal-leave-{{$member->user_id}}">Leave Team</a></li>
                                     </ul>
-                                </div> @include('modals.editServiceTeam')
+                                </div>
+                                @include('modals.editServiceTeam')
+
+                                @include('modals.team_confirmation_modals', [ 'action' => 'leave', 'modalTitle' => 'Leave Team',
+                                'actionURL' => '/team/leave', 'freelancer_id' => $member->user_id])
+
                                 @endif
                             </div>
                         </div>
@@ -533,7 +545,7 @@
                                     message="Are you sure you want to decline this offer?" :actionUrl="''"
                                     method="POST" />
                             </div>
-                           
+
 
                             <!-- Negotiate Modal-->
                             @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,

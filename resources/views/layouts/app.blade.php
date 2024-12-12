@@ -232,10 +232,14 @@
                         <div>Transaction</div>
                     </a>
                 </div>
+
+                @php
+                $unreadCount = auth()->user()->unreadNotifications->count();
+                @endphp
                 <div class="col text-center">
                     <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
                         <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
-                        <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
+                        <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         <div>Notification</div>
                     </a>
                 </div>

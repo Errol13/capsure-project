@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Team;
 
 use App\Http\Controllers\Controller;
+use App\Models\Freelancer;
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
@@ -155,10 +156,7 @@ class TeamController extends Controller
             $reviews = $team->reviews()->with('transaction.event')->where('reviewee_role', 'team')->take(2)->get();
 
             //get the members
-            $teamMembers = $team->memberships()->where('status', 'active')->with('freelancer') // Load freelancers through memberships
-                ->orderBy('created_at', 'asc') // Order by the date they joined the team
-                ->get()
-                ->pluck('freelancer'); // Extract the freelancers after ordering
+            $teamMembers = $team->freelancers;
             $membersCount = $teamMembers->count();
             $hiringRequestsCount = $hiringRequests->count();
             $eventsCount = $eventRecommendations->count();
@@ -234,6 +232,8 @@ class TeamController extends Controller
 
             if ($membershipExists) {
                 $membership = Membership::where('freelancer_id', $user->id)->where('team_id', $foundTeam->team_id)->first();
+                $membership->services = $user->freelancer->services->pluck('id');
+                $membership->created_at = Carbon::now('Asia/Manila');
                 $membership->status = 'active'; // re-activate membership
                 $membership->save();
             } else {
@@ -572,7 +572,7 @@ class TeamController extends Controller
     }
 
     //change admin 
-    public function teamTransaction(Request $request)
+    public function changeAdmin(Request $request)
     {
         $validated = $request->validate([
             'team_id' => 'required|exists:teams,team_id',
@@ -590,11 +590,51 @@ class TeamController extends Controller
     //leave team
     public function leaveTeam()
     {
-        $freelancer = auth()->user()->freelancer()->membership()->first();
-        $freelancer->status = 'inactive';
-        $freelancer->save();
+        $freelancer = auth()->user()->freelancer;
+        $membership = $freelancer->membership()->first();
 
-        return redirect()->back()->with('success', 'Left team successfully!');
+
+        if ($freelancer->user_id === $membership->team->team_leader) {
+            // Get the next oldest member with active status
+            $nextAdmin = $membership->team->memberships()
+                ->where('status', 'active')
+                ->where('freelancer_id', '!=', $freelancer->user_id)
+                ->orderBy('created_at', 'asc')
+                ->first();
+
+            if ($nextAdmin) {
+                // Assign the nextAdmin as the new team leader
+                $membership->team->team_leader = $nextAdmin->freelancer_id;
+                $membership->team->save();
+            }
+        }
+
+        $freelancer->isin_A_Team = false;
+        $freelancer->save();
+        $membership->services = [];
+        $membership->status = 'inactive';
+        $membership->save();
+
+        return redirect()->route('freelancer-homepage');
+    }
+
+    //remove member
+    public function removeMember(Request $request)
+    {
+        //leader's current team
+        $validated = $request->validate([
+            'team_id' => 'required|exists:teams,team_id',
+            'freelancer_id' => 'required',
+        ]);
+        $team = Team::find($validated['team_id']);
+
+        //remove the memebr
+        $membership = $team->memberships()->where('freelancer_id', $validated['freelancer_id'])->first();
+        $membership->services = [];
+        $membership->status = 'inactive'; // this remove status or not in the team anymore
+        $membership->save();
+
+        return redirect()->back()->with('success', 'Removed from team successfully!');
     }
 
 

@@ -245,13 +245,11 @@ class TransactionController extends Controller
 
         // Filter for upcoming transactions (start_date is in the future)
         $upcomingTransactions = $transactions->filter(function ($transaction) use ($today) {
-            return Carbon::parse($transaction->event->start_date)->greaterThan($today) && $transaction->transaction_status === 'Pending';
+            return Carbon::parse($transaction->event->start_date)->greaterThan($today) || $transaction->transaction_status === 'Pending';
         });
 
         // Filter for previous transactions (end_date is in the past)
         $previousTransactions = $transactions->filter(function ($transaction) use ($today) {
-
-
             $madeaReview = null;
             //if its team
             if ($transaction->team_code) {
@@ -265,7 +263,7 @@ class TransactionController extends Controller
                 && $transaction->transaction_status !== 'Ongoing' && $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
         });
 
-
+        // dd($previousTransactions->count());
         return view(
             'freelancer.f_myTransaction',
             [

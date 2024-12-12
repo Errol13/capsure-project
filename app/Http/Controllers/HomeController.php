@@ -40,9 +40,12 @@ class HomeController extends Controller
                     ->orderBy('id')
                     ->paginate(9);
                 //get the team freelancers
-                $teams = Team::get()->filter(function ($team) {
-                    return $team->hasMinimumMemberships();
-                })->sortBy('avg_rating')->sortByDesc('created_at');             
+                $teams = Team::whereHas('memberships', function ($query) {
+                    $query->where('status', 'active');
+                }, '>=', 4) // Ensure at least 4 active memberships
+                    ->orderBy('avg_rating') // Ascending order by average rating
+                    ->orderByDesc('created_at') // Descending order by creation date
+                    ->paginate(4);
 
                 return view('client.c_home', compact('users', 'teams'));
             } elseif ($user->user_type == 'freelancer') {

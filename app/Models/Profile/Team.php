@@ -37,7 +37,7 @@ class Team extends Model
 
     public function freelancers()
     {
-        return $this->belongsToMany(Freelancer::class, 'memberships', 'team_id', 'freelancer_id')
+        return $this->belongsToMany(Freelancer::class, 'memberships', 'team_id', 'freelancer_id')->has('membership')
             ->orderByRaw('freelancer_id = ? DESC', [$this->team_leader]) // This ensures the admin is first
             ->orderBy('created_at'); 
     }
@@ -85,7 +85,7 @@ class Team extends Model
 
     public function hasMinimumMemberships(): bool
     {
-        return $this->memberships()->where('status', 'active')->count() >= 4;
+        return $this->memberships()->where('status', 'active')->count() >= 5;
     }
 
     public function membersCount(): int

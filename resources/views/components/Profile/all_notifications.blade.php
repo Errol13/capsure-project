@@ -14,7 +14,7 @@
             <div class="card-body mt-3">
                 @forelse($notifications as $index => $notification)
                 <div class="p-3 mb-2 {{ $index % 2 === 0 ? 'bg-light' : 'bg-white' }} rounded" style="box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
-                    <a href="{{ $notification->data['url'] }}" class="text-decoration-none text-dark">
+                    <a  href="{{ route('notifications.read', $notification->id) }}" class="text-decoration-none text-dark">
                         <p class="mb-1 {{$notification->read_at ? 'fw-normal' : 'fw-bold' }}">{{ $notification->data['message'] }}</p>
                         <small class="text-muted">
                             {{ $notification->created_at->diffForHumans() }}

@@ -25,6 +25,11 @@ class EventsController extends Controller
         return view('client.createEvent');
     }
 
+    public function editEventsForm($id)
+    {
+        return view('client.editEvent', ['id' => $id]);
+    }
+
     public function showMyEvents(Request $request)
     {
         /** @var User $user */
