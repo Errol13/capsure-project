@@ -42,7 +42,7 @@
             @forelse($proofImages as $image)
                 @if($image)
                 <!-- Proof Image Card -->
-                <div class="border border-accent p-2 rounded-lg shadow-sm bg-base-100">
+                <div class="border-2  border-accent p-2 rounded-lg shadow-sm bg-base-100">
                     <a href="{{ asset('storage/' . $image) }}" data-fancybox="gallery" data-caption="Proof Image">
                         <img src="{{ asset('storage/' . $image) }}" alt="Proof Image" class="w-full h-32 object-contain rounded-lg cursor-pointer">
                     </a>

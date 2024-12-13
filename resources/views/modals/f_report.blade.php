@@ -50,9 +50,9 @@
                         <textarea name="details" class="form-control" id="otherDetails" rows="3" required></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="attachProof" class="form-label">Attach Proof <span class="note">(Optional)</span></label>
+                        <label for="attachProof" class="form-label">Attach Proof <span class="text-danger">*</span></label>
                         <div class="file-upload">
-                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg,.png" multiple>
+                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg,.png" multiple required>
                             <small class="form-text text-muted">Upload (.jpg or .png format)</small>
                         </div>
                     </div>
@@ -120,10 +120,14 @@
         // Function to check if at least one reason is selected
         function checkTheFields() {
             const reasons = document.querySelectorAll('input[name="reason[]"]:checked');
+            const attachProof = document.querySelector('input[name="proof_image[]"]');
             const details = document.getElementById('otherDetails');
             const reportButton = document.getElementById('report-button');
 
-            if (details.value && reasons.length > 0) {
+            // Check if 'proof_image[]' has files selected
+            const hasProofImage = attachProof && attachProof.files && attachProof.files.length > 0;
+
+            if (details.value && reasons.length > 0 && hasProofImage) {
                 reportButton.disabled = false;
                 reportButton.classList.remove('btn-secondary', 'btn');
                 reportButton.classList.add('confirm');
@@ -137,6 +141,8 @@
         document.querySelectorAll('input[name="reason[]"]').forEach(checkbox => {
             checkbox.addEventListener('change', checkTheFields);
         });
+
+        document.getElementById('attachProof').addEventListener('change', checkTheFields);
 
         document.getElementById('otherDetails').addEventListener('change', checkTheFields);
 
@@ -178,8 +184,8 @@
                         // Close the modal
                         myModal.hide();
 
-                         // Show the success alert
-                         setTimeout(function() {
+                        // Show the success alert
+                        setTimeout(function() {
                             // Show the success alert
                             alert('Report Submitted');
                             location.reload();

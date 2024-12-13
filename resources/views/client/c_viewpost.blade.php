@@ -12,7 +12,14 @@
             <div class="d-flex justify-content-between align-items-center mb-0">
                 <div class="d-flex justify-content-start align-items-center">
                     <h3 class="mt-2 pb-0 poppins-medium pt-2">{{$event->title}}</h3>
-                    <a href="{{route('event-edit', ['id' => $event->event_id])}}" class="mb-1"><i class="fas fa-edit text-muted ms-2 mt-3"></i></a>
+                    @if($eventPostCanBeDeleted)
+                    <!-- Trigger button for the deleteEventmodal -->
+                    <a href="#" data-bs-toggle="modal" data-bs-target="#deleteModal-{{$event->event_id}}" class="ms-2 mb-1 mt-1 fs-5">
+                        <i class="fas fa-trash text-danger ms-2 mt-3"></i>
+                    </a>
+                    @include('modals.deleteEventModal', ['event_id' => $event->event_id])
+                    @endif
+
                 </div>
                 <span class=" {{$event->status == 'Open'? 'text-success': 'text-danger' }} fs-6 fw-bold letter-spacing mt-2 text-uppercase">{{$event->status}}</span>
             </div>

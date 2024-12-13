@@ -15,7 +15,7 @@ class WelcomePageController extends Controller
     {
         if(Auth::check()){
             $user = Auth::user();
-            if($user->user->type === 'client' || $user->user->type === 'freelancer'){
+            if($user->user_type === 'client' || $user->user_type === 'freelancer'){
                 return redirect('/home');
             } elseif($user->user_type === 'admin'){
                 return redirect()->route('filament.admin.pages.dashboard');

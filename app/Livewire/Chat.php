@@ -18,6 +18,7 @@ class Chat extends Component
     public $selectedConversationId;
     public $recipientId;
     public $otherUser;
+  
 
     public function mount($conversationId = null)
     {
@@ -53,8 +54,16 @@ class Chat extends Component
             ->get()
             ->toArray();
 
+        // Mark all messages in the selected conversation as read
+        ProfileChat::where('conversation_id', $this->selectedConversationId)
+            ->where('recipient', Auth::id()) // Only mark messages for the current user as read
+            ->where('isRead', false)
+            ->update(['isRead' => true]);
+
         // Reverse the array to display from oldest to newest in the chat
         $this->messages = array_reverse($this->messages);
+
+        $this->dispatch('updateMessageStatus');
     }
 
 
@@ -62,13 +71,6 @@ class Chat extends Component
     public function loadMoreMessages()
     {
         if (!$this->selectedConversationId) return;
-
-
-        // Mark all messages in the selected conversation as read
-        ProfileChat::where('conversation_id', $this->selectedConversationId)
-            ->where('recipient', Auth::id()) // Only mark messages for the current user as read
-            ->where('isRead', false) // Only update unread messages
-            ->update(['isRead' => true]);
 
         // Load older messages in ascending order
         $olderMessages = ProfileChat::where('conversation_id', $this->selectedConversationId)

@@ -11,4 +11,5 @@ Artisan::command('inspire', function () {
 
 // Schedule commands
 Schedule::command('app:update-transaction-status')->everyMinute();
+Schedule::command('app:update-event-status')->everyMinute();
 

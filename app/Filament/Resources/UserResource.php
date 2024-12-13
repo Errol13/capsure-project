@@ -73,6 +73,17 @@ class UserResource extends Resource
     }
 
 
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('user_type', '!=', 'admin')->count();
+    }
+
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
+
     public static function getRelations(): array
     {
         return [

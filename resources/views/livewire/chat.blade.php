@@ -28,13 +28,23 @@
                             ->timezone('Asia/Manila')
                             ->format('h:i A') }}
                             </small>
+                        </div>
 
-                            @if($message['isRead'])
-                            <span class="text-muted fs-smaller">Seen</span>
-                            @else
+                        @php
+                        $lastMessage = end($messages); // Get the last message
+                        @endphp
+
+                     
+                        <div wire:key="message-{{ $message['id'] }}" wire:target="updateMessageStatus">
+                            @if($message === $lastMessage)
+                            @if($message['isRead'] === true && $message['recipient'] !== auth()->id())
+                            <span class="text-muted fs-smaller">Seen by {{$otherUser->fullName()}}</span>
+                            @elseif($message['isRead'] === false && $message['sender'] === auth()->id())
                             <span class="text-muted fs-smaller text-white">Delivered</span>
                             @endif
+                            @endif
                         </div>
+                    
                     </div>
                 </div>
             </div>
@@ -98,7 +108,7 @@
                 messageList.classList.remove('d-none');
             });
 
-            console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
+            // console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
 
             // Dynamically subscribe to the Echo channel for real-time updates
             window.Echo.private(`chat.{{ auth()->id() }}`)
@@ -170,7 +180,7 @@
             border-radius: 25px 25px 0 25px;
         }
 
-        .bg-receiver{
+        .bg-receiver {
             border-radius: 0 25px 25px 25px;
             background-color: aliceblue;
         }
