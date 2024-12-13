@@ -72,11 +72,11 @@
 
                             <div class="card-body">
                                 @foreach($eventGroup['transactions'] as $transaction)
-                                <div class="d-flex  flex-wrap align-items-start mb-3">
+                                <div class="mb-3">
 
                                     @if($transaction->team_code)
                                     <!--for team-->
-                                    <div class="flex-grow-1 d-lg-flex">
+                                    <div class="d-lg-flex">
                                         <!-- Team Information Section -->
                                         <div class="d-flex me-2 align-items-center w-100">
                                             <a href="{{route('team-profile-view', ['id' => $transaction->team->team_id])}}"><img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Team Image" width="50" height="50"></a>
@@ -225,7 +225,7 @@
                                     @endif
 
 
-                                    <div class="row">
+                                    <div class="m-3">
                                         <!-- For members -->
                                         @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
@@ -233,26 +233,21 @@
                                         <div class="row">
                                             <!-- Loop through each member -->
                                             @foreach($transaction->members as $member)
-                                            <div class="col-12 col-md-6 col-lg-6 mb-3 ">
-                                                <div class="member-info d-flex justify-content-start align-items-center ms-1">
-                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+                                            <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
+                                                <div class=" member-info d-flex justify-content-start align-items-start ms-1">
+                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
 
+                                                    <div>
+                                                        <div class="col" style="white-space: nowrap;">
+                                                            <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>
 
-                                                    <div class="d-flex flex-column me-4">
-                                                        <p class="fs-6 mb-0 fs-smaller">{{$member->freelancer->user->fullname()}}</p>
-                                                        @if($member->freelancer->avg_rating > 0)
-                                                        <small><small class="fs-smaller fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
-                                                        @else
-                                                        <small class="text-muted">No ratings yet</small>
-                                                        @endif
+                                                        </div>
+                                                        <div class="col-auto gap-1 ms-0">
+                                                            @foreach($member->freelancer->offeredTeamServices() as $service)
+                                                            <span class="badge rounded-pill my-1" style="background-color:#91216c;">{{$service->job_title}}</span>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-
-                                                    <div class="d-flex flex-wrap">
-                                                        @foreach($member->freelancer->offeredTeamServices() as $service)
-                                                        <span class="badge rounded-pill bg-info text-dark me-2 mb-2 fs-6">{{$service->job_title}}</span>
-                                                        @endforeach
-                                                    </div>
-
                                                 </div>
                                             </div>
                                             @endforeach
@@ -364,7 +359,7 @@
 
                             <div class="card-body">
                                 @foreach($eventGroup['transactions'] as $transaction)
-                                <div class="d-flex flex-wrap align-items-start mb-3">
+                                <div class="mb-3">
 
                                     @if($transaction->team_code)
                                     <!--for team-->
@@ -373,6 +368,7 @@
                                         <div class="d-flex me-2 align-items-center w-100">
                                             <a href="{{route('team-profile-view', ['id' => $transaction->team->team_id])}}"><img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Team Image" width="50" height="50"></a>
                                             <div>
+
                                                 <div class="row">
                                                     <span class="mb-0">{{ $transaction->team->team_name }} (Team)</span>
                                                     <span><small class="text-muted">Members: {{$transaction->team->membersAtTransactionTime($transaction->created_at)->count()}}</small></span>
@@ -380,12 +376,13 @@
                                                 <div class="row">
                                                     <span class="text-muted ">{{ $transaction->team->package_service }}</span>
                                                 </div>
+                                                <hr class="my-2">
                                             </div>
                                         </div>
 
                                         <!-- Payment Information Section -->
-                                        <div class="col-lg-9 col-15 mt-3 mt-lg-0 me-lg-2 d-lg-flex">
-                                            <table class="table table-borderless my-2 w-lg-100 me-lg-4">
+                                        <div class="col-lg-9 col mt-3 mt-lg-0 me-lg-2 d-lg-flex">
+                                            <table class="table table-borderless">
                                                 <thead>
                                                     <tr class="text-center">
                                                         <th class="note" style="white-space: nowrap;">Amount</th>
@@ -518,7 +515,7 @@
                                     @endif
 
 
-                                    <div class="row">
+                                    <div class="m-3">
                                         <!-- For members -->
                                         @if($transaction->members->isNotEmpty())
                                         <p>Members:</p>
@@ -526,26 +523,21 @@
                                         <div class="row">
                                             <!-- Loop through each member -->
                                             @foreach($transaction->members as $member)
-                                            <div class="col-12 col-md-6 col-lg-6 mb-3 ">
-                                                <div class="member-info d-flex justify-content-start align-items-center ms-1">
-                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+                                            <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
+                                                <div class=" member-info d-flex justify-content-start align-items-start ms-1">
+                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
 
+                                                    <div>
+                                                        <div class="col" style="white-space: nowrap;">
+                                                            <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>
 
-                                                    <div class="d-flex flex-column me-4">
-                                                        <p class="fs-6 mb-0 fs-smaller">{{$member->freelancer->user->fullname()}}</p>
-                                                        @if($member->freelancer->avg_rating > 0)
-                                                        <small><small class="fs-smaller fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
-                                                        @else
-                                                        <small class="text-muted">No ratings yet</small>
-                                                        @endif
+                                                        </div>
+                                                        <div class="col-auto gap-1 ms-0">
+                                                            @foreach($member->freelancer->offeredTeamServices() as $service)
+                                                            <span class="badge rounded-pill my-1" style="background-color:#91216c;">{{$service->job_title}}</span>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
-
-                                                    <div class="d-flex flex-wrap">
-                                                        @foreach($member->freelancer->offeredTeamServices() as $service)
-                                                        <span class="badge rounded-pill bg-info text-dark me-2 mb-2 small">{{$service->job_title}}</span>
-                                                        @endforeach
-                                                    </div>
-
                                                 </div>
                                             </div>
                                             @endforeach
@@ -710,40 +702,38 @@
                                             </button>
                                         </div>
                                     </div>
-
-
                                 </div>
-
                             </div>
 
-                            <!--for members-->
-                            @if($transaction->members->isNotEmpty())
-                            <p>Members:</p>
-                            <div class="d-flex flex-column justify-content-start align-items-start">
-                                <div class="d-flex justify-content-between align-items-center">
+                            <div class="m-3">
+                                <!-- For members -->
+                                @if($transaction->members->isNotEmpty())
+                                <p>Members:</p>
+                                <!-- Container for members that will be grid-based -->
+                                <div class="row">
+                                    <!-- Loop through each member -->
                                     @foreach($transaction->members as $member)
-                                    <div class=" member-info d-flex justify-content-around align-items-start ms-1">
-                                        <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 50px; max-height: 50px; object-fit: cover;">
+                                    <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
+                                        <div class=" member-info d-flex justify-content-start align-items-start ms-1">
+                                            <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
 
-                                        <div class="row">
-                                            <p class="fs-6 mb-0">{{$member->freelancer->user->fullname()}}</p>
-                                            @if($member->freelancer->avg_rating > 0)
-                                            <small><small class="fs-6 text-warning">★</small> {{ number_format($member->freelancer->avg_rating, 1) }}</small>
-                                            @else
-                                            <small class="text-muted">No ratings yet</small>
-                                            @endif
+                                            <div>
+                                                <div class="col" style="white-space: nowrap;">
+                                                    <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>
+
+                                                </div>
+                                                <div class="col-auto gap-1 ms-0">
+                                                    @foreach($member->freelancer->offeredTeamServices() as $service)
+                                                    <span class="badge rounded-pill my-1" style="background-color:#91216c;">{{$service->job_title}}</span>
+                                                    @endforeach
+                                                </div>
+                                            </div>
                                         </div>
-
-                                        @foreach($member->freelancer->offeredTeamServices() as $service)
-                                        <span class="badge rounded-pill bg-info text-dark me-2">{{$service->job_title}}</span>
-                                        @endforeach
                                     </div>
                                     @endforeach
                                 </div>
+                                @endif
                             </div>
-
-                            @endif
-
 
                             <!--include modal for viewing receipt-->
                             @include('modals.Transaction.view_receipt',

@@ -39,7 +39,7 @@
 
                         <div class="d-flex flex-wrap">
                             @foreach($event->event_jobs ?? [] as $event_job)
-                            <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">{{$event_job->service_needed}}</span>
+                            <span class="badge me-1 mb-2" style="font-size:small; background-color: whitesmoke; color:#323232;">{{$event_job->service_needed}}</span>
                             @endforeach
                         </div>
 

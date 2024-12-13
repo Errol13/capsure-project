@@ -257,7 +257,7 @@
                                         <div class="my-1">
                                             @foreach($event->event_jobs as $job)
                                             <span class="badge fs-6 mb-1"
-                                                style="background-color: #8FE2ED; color:#323232;">{{$job->service_needed}}</span>
+                                                style="background-color: aliceblue; color:#323232; border:1px solid lightgray;">{{$job->service_needed}}</span>
                                             @endforeach
                                         </div>
                                     </div>

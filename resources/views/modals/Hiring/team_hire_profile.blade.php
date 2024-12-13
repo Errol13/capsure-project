@@ -2,8 +2,8 @@
 <div class="modal" id="hireDirectlyTeamModal-{{ $uniqueId }}" tabindex="-1" aria-labelledby="hireDirectlyTeamModalLabel-{{ $uniqueId }}" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="text-purple text-center">Hire Freelancer</h2>
+            <div class="modal-header" style="border-bottom: none;">
+                <h2 class="poppins medium">Hire Freelancer</h2>
                 <button data-unique-id="{{$uniqueId}}" type="button" class="close-form-hire btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="goToStep1('{{ $uniqueId }}')"></button>
             </div>
             <div class="modal-body" style="height: auto; overflow-y: auto; overflow-x: hidden;">
@@ -27,7 +27,7 @@
 
                         <!-- Next Button -->
                         <div class="d-flex justify-content-center">
-                            <button type="button" class="btn btn-seemore rounded-pill w-25" style="color:white; background-color:#91216C;" onclick="goToStep2('{{ $uniqueId }}')">Next</button>
+                            <button type="button" class="btn btn-seemore rounded-pill w-50" style="color:white; background-color:#91216C;" onclick="goToStep2('{{ $uniqueId }}')">Next</button>
                         </div>
                     </div>
 

@@ -2,16 +2,18 @@
 <div class="modal fade" id="applyJobTeamModal" tabindex="-1" aria-labelledby="applyJobTeamModalLabel">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title fs-6 text-muted">Please select a Job you want to apply for and confirm the application.</h5>
+            <div class="modal-header" style="border-bottom: none;">
+                <h3 class="modal-title">Apply for a Job</h3>
                 <button type="button" class="btn-close reset-button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body pt-0">
+                <span class="note">Please select a Job you want to apply for and confirm the application.</span>
+
                 <form action="{{ route('team-apply') }}" method="POST" id="apply-job-team-form">
                     @csrf
                     <!-- Apply as a/an -->
                     <label for="team_service_id" class="form-label">Apply as a/an</label>
-                    <select class="form-select border border-danger-subtle" id="team_service_id" name="team_service_id" required>
+                    <select class="form-select border border-subtle" id="team_service_id" name="team_service_id" required>
                         <option value="" disabled selected class="text-muted"></option>
                         <option value="{{ $team->team_id }}" data-job-title="{{ $team->package_service }}">
                             {{ $team->package_service }}
@@ -20,7 +22,7 @@
 
                     <!-- Available Job -->
                     <label for="job_available" class="form-label mt-3">Select Available Job</label>
-                    <select class="form-select border border-danger-subtle" id="job_available" name="job_available" required>
+                    <select class="form-select border border-subtle" id="job_available" name="job_available" required>
                         <option value="" disabled selected class="text-muted"></option>
                         @foreach($eventJobs as $eventJob)
                         @php

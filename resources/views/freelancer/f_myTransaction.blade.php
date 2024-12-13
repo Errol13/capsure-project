@@ -41,29 +41,30 @@
                                 <div class="row align-items-center w-100">
                                     <!-- Title and Date Column -->
                                     <div class="col">
-                                        <span class="fs-5 me-2 poppins-medium">{{ $transaction->event->title }}</span>
+                                        <div class=" align-items-center">
+                                            @if($transaction->team_code)
+                                            <small class="poppins-medium fw-bold text-purple">TEAM </small>
+                                            @endif
+                                            <span class="fs-5 me-2 poppins-medium">{{ $transaction->event->title }}</span>
 
-                                        @if ($isDue)
-                                        @php
-                                        $dueId = 'Modal-' . $event->event_id . '-user-' . auth()->user()->id;
-                                        @endphp
-                                        <span class="text-danger fs-6 fw-bold" data-bs-toggle="modal" data-bs-target="#due{{$dueId}}">
-                                            <i class="fas fa-solid fa-circle-exclamation"></i>
-                                        </span>
-                                        @include('modals.Transaction.due_modal', [
-                                        'id' => $dueId,
-                                        'eventTitle' => $event->title,
-                                        'unsettledPayment' => $unsettledPayment,
-                                        'noReview' => $noReview
-                                        ])
-                                        @endif
-
+                                            @if ($isDue)
+                                            @php
+                                            $dueId = 'Modal-' . $event->event_id . '-user-' . auth()->user()->id;
+                                            @endphp
+                                            <span class="text-danger fs-6 fw-bold" data-bs-toggle="modal" data-bs-target="#due{{$dueId}}">
+                                                <i class="fas fa-solid fa-circle-exclamation"></i>
+                                            </span>
+                                            @include('modals.Transaction.due_modal', [
+                                            'id' => $dueId,
+                                            'eventTitle' => $event->title,
+                                            'unsettledPayment' => $unsettledPayment,
+                                            'noReview' => $noReview
+                                            ])
+                                            @endif
+                                        </div>
                                         <small class="text-muted d-block mt-1">{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                     </div>
                                     <div class="col-auto ms-auto d-flex justify-content-between align-items-center">
-                                        @if($transaction->team_code)
-                                        <small class="text-muted">(Team Transaction)</small>
-                                        @endif
                                         <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration: none;">
                                             View Post
                                         </a>
@@ -432,14 +433,14 @@
                             <div class="row align-items-center w-100">
                                 <!-- Title and Date Column -->
                                 <div class="col">
+                                    @if($transaction->team_code)
+                                    <small class="txt-purple poppins-medium fw-bold">(Team Transaction)</small>
+                                    @endif
                                     <span class="fs-5 me-2 poppins-medium">{{ $transaction->event->title }}</span>
 
                                     <small class="text-muted d-block mt-1">{{$transaction->event->start_date->format('M j Y, h:i A')}} - {{$transaction->event->end_date->format('M j Y, h:i A')}}</small>
                                 </div>
                                 <div class="col-auto ms-auto d-flex justify-content-between align-items-center">
-                                    @if($transaction->team_code)
-                                    <small class="text-muted">(Team Transaction)</small>
-                                    @endif
                                     <a href="{{route('client-viewpost', [ 'id' => $transaction->event->event_id] )}}" class="btn btn-link" style="white-space: nowrap; color: #91216C; text-decoration: none;">
                                         View Post
                                     </a>

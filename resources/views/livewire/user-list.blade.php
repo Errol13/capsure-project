@@ -23,14 +23,14 @@
                     ? $conversation['sender']
                     : $conversation['recipient'];
                     @endphp
-                
+
                     <img src="{{ $otherUser->profile_image_url }}" alt="{{ $otherUser->fullName() }}"
-                        class="user-image me-2" />
+                        class="user-image me-2" style="width: 40px; height: 40px;" />
 
                     <!--contains the latest message -->
-                    <div class="d-flex flex-column justify-content-start">
+                    <div class="d-flex d-none d-lg-block flex-column justify-content-start">
                         <span>{{ $otherUser->fullName() }}</span>
-                        <div style="max-width: 200px; overflow: hidden;" class="text-truncate">
+                        <div style="max-width: 200px; overflow: hidden;" class=" text-truncate">
 
                             @if($conversation->messages->isNotEmpty())
 
@@ -49,7 +49,7 @@
                 </div>
 
                 @if($conversation->last_time_message && $conversation->messages->isNotEmpty())
-                <small class="text-muted time-stamp d-md-inline d-none">
+                <small class="text-muted fs-smaller time-stamp d-md-inline">
                     {{ \Carbon\Carbon::parse($conversation->messages->first()->created_at)->format('h:i A') }}
                 </small>
                 @endif
@@ -77,6 +77,7 @@
         }
 
         @media (max-width: 768px) {
+
             .conversation-details .user-name,
             .conversation-details .latest-message,
             .time-stamp {

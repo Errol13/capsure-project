@@ -4,7 +4,7 @@
 <div class="container">
     <h2 class="my-4 pt-4" style="text-align: center;">Verify your Government ID</h2>
 
-    <form id="id-form-validation" method="POST" action="{{ url('/validate-id/store') }}" enctype="multipart/form-data" >
+    <form id="id-form-validation" method="POST" action="{{ url('/validate-id/store') }}" enctype="multipart/form-data">
         @csrf
         @method('POST')
         <div class="xbox mb-4">
@@ -18,9 +18,25 @@
                 <div style="position: relative; display: flex; align-items: center;">
                     <select name="id_type" class="form-control" style="padding-right: 30px; flex: 1;" required>
                         <option disabled selected>Select ID type</option>
+                        <option>UMID</option>
                         <option>Passport</option>
                         <option>Driver's License</option>
-                        <option>National ID</option>
+                        <option>Philippine Identification (PhilID)</option>
+                        <option>Professional Regulation Commission (PRC) ID</option>
+                        <option>Senior Citizen ID</option>
+                        <option>SSS ID</option>
+                        <option>COMELEC / Voter’s ID</option>
+                        <option>Integrated Bar of the Philippines (IBP) ID</option>
+                        <option>Firearms License</option>
+                        <option>AFPSLAI ID</option>
+                        <option>AFP Beneficiary ID</option>
+                        <option>BIR (TIN)</option>
+                        <option>Pag-ibig ID</option>
+                        <option>Person’s With Disability (PWD) ID</option>
+                        <option>Solo Parent ID</option>
+                        <option>Philippine Postal ID</option>
+                        <option>Phil-health ID</option>
+
                     </select>
                     <i class="fas fa-angle-down" style="position: absolute; right: 10px; pointer-events: none;"></i>
                 </div>
@@ -35,16 +51,21 @@
             <div class="form-row mb-4 d-flex flex-wrap" style="gap: 10px;"> <!-- Small space between columns -->
 
                 <!-- ID Photo Upload -->
-                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                    <div class="upload-section" style="padding: 20px; height: 100%;">
+                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                    <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                         <p class="text-center">ID PHOTO ONLY</p>
-                        <div style="display: flex; justify-content: center; align-items: center; height: 237px;">
-                            <img src="{{ asset('assets/validID.png') }}" id="id-photo" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
+                        <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+                            <img src="{{ asset('assets/validID.png') }}" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
                         </div>
                         <ul class="note">
-                            <i class="fas fa-check me-2" style="color: lightgreen;"></i> Clear photo and details
+                            <i class="fas fa-check me-2" style="color: lightgreen; height:75px;"></i> Clear photo and details
                         </ul>
-                        <label for="idPhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
+                    </div>
+                    <div class="upload-section" style="padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+                            <img src="{{ asset('assets/idphoto_def.svg') }}" id="id-photo" style="height: 180px; width: 100%; max-width: 230px;" alt="Valid ID">
+                        </div>
+                        <label for="idPhoto" class="upload-btn" style="cursor:pointer; display: block; text-align: center; border-radius: 10px; padding: 10px; margin-top: 10px; background-color: #e9ecef;">
                             <i class="fas fa-upload me-2"></i>Upload your ID Photo here
                         </label>
                         <input type="file" name="id_card_image" id="idPhoto" accept="image/*" style="display: none;" required>
@@ -52,24 +73,31 @@
                 </div>
 
                 <!-- Selfie with ID Upload -->
-                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; height: 100%;">
-                    <div class="upload-section" style="padding: 20px; height: 100%;">
+                <div class="col-md-6 mb-3" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; min-height: 400px;">
+                    <div style="padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
                         <p class="text-center">SELFIE WITH ID PHOTO</p>
-                        <div style="display: flex; justify-content: center; align-items: center; height: 100%;">
-                            <img src="{{ asset('assets/selfieID.png') }}" id="selfie-with-id" style="height: 180px; width: 100%; max-width: 230px;" alt="Selfie ID">
+                        <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+                            <img src="{{ asset('assets/selfieID.png') }}" style="height: 180px; width: 100%; max-width: 230px;" alt="Selfie ID">
                         </div>
                         <ul class="note">
                             <i class="fas fa-check me-2" style="color: lightgreen;"></i> Clear photo and ID details</br>
                             <i class="fas fa-check me-2" style="color: lightgreen;"></i> Person in the selfie should be the same person in the ID</br>
                             <i class="fas fa-check me-2" style="color: lightgreen;"></i> Holding the same uploaded government ID</br>
                         </ul>
-                        <label for="selfiePhoto" class="upload-btn" style="display: block; text-align: center; border-radius:10px;padding: 10px; margin-top: 10px; background-color: #e9ecef;">
+                    </div>
+                    <div class="upload-section" style="padding: 10px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between;">
+                        <div style="display: flex; justify-content: center; align-items: center; flex-grow: 1;">
+                            <img src="{{ asset('assets/idphoto_def.svg') }}" id="selfie-with-id" style="height: 180px; width: 100%; max-width: 230px;" alt="Selfie ID">
+                        </div>
+                        <label for="selfiePhoto" class="upload-btn" style="cursor:pointer; display: block; text-align: center; border-radius: 10px; padding: 10px; margin-top: 10px; background-color: #e9ecef;">
                             <i class="fas fa-upload me-2"></i>Upload your Selfie with ID here
                         </label>
                         <input type="file" name="pic_with_id" id="selfiePhoto" accept="image/*" style="display: none;" required>
                     </div>
                 </div>
+
             </div>
+
 
             <!-- Confirm Verification Button -->
             <div class="text-center">
