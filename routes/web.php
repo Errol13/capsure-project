@@ -132,7 +132,8 @@ Route::middleware([CheckSuspendedUser::class])->group(function () {
 
     #My Events Page Client
     Route::get('/events', [App\Http\Controllers\Hiring\EventsController::class, 'showEventsForm'])->name('events');
-    Route::get('/eventpost/edit/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'editEventsForm'])->name('event-edit');
+    Route::delete('/eventpost/delete/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'deleteEventPost'])->name('event-delete');
+    Route::get('/eventpost/reopen/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'reopenEvent'])->name('event-reopen');
     Route::get('client-events', [App\Http\Controllers\Hiring\EventsController::class, 'showMyEvents'])->name('client-events');
     Route::get('client-viewpost/{id}', [App\Http\Controllers\Hiring\EventsController::class, 'showViewPost'])->name('client-viewpost');
 

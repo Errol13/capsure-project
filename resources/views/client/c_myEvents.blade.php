@@ -40,7 +40,7 @@
                                 </span>
                             </div>
                             <div>
-                            <small class="text-muted mb-3">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
+                                <small class="text-muted mb-3">{{ \Carbon\Carbon::parse($event->created_at)->diffForHumans() }}</small>
                             </div>
 
                             <span class="fs-6"><strong>Budget:</strong> ₱{{ $event->budget_min }} - ₱{{ $event->budget_max }}</span>
@@ -62,11 +62,19 @@
                                 </div>
                             </div>
 
+                            <!--checks if the event that are closed can be re-opened-->
+                            @php
+                            // Check if the event's end date is in the future
+                            $canBeReOpened = $event->end_date > now();
+                            @endphp
+
 
                             <div class="d-flex justify-content-center mt-3">
                                 <a href="{{ route('client-viewpost', ['id' => $event->event_id]) }}" class="confirm" style="white-space:nowrap;">View Post</a>
                                 @if($event->status == 'Open')
                                 <a href="#" class="confirm ms-2" style="background-color:crimson;" data-bs-toggle="modal" data-bs-target="#confirmationModal" data-event-id="{{ $event->event_id }}" style="border:none;">Close</a>
+                                @elseif($event->status === 'Closed' && $canBeReOpened)
+                                <a href="{{ route('event-reopen', ['id' => $event->event_id]) }}" class="confirm ms-2" style="background-color:mediumseagreen;" style="border:none;">Re-Open</a>
                                 @endif
                             </div>
                         </div>

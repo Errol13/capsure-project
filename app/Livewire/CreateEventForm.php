@@ -127,7 +127,6 @@ class CreateEventForm extends Component
     }
 
 
-
     public function addJob()
     {
         $this->jobs[] = [

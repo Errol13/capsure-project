@@ -149,6 +149,10 @@ class User extends Authenticatable implements MustVerifyEmail, FilamentUser, Has
         return $this->hasMany(Report::class, 'reporter_id');
     }
 
+    public function receivedReports(){
+        return $this->hasMany(Report::class, 'reported_user_id');
+    }
+
     public function suspension()
     {
         return $this->hasOne(Suspension::class, 'user_id');

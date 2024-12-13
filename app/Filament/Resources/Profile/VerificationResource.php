@@ -32,9 +32,9 @@ class VerificationResource extends Resource
 
     public static function canCreate(): bool
     {
-       return false;
+        return false;
     }
-    
+
     public static function form(Form $form): Form
     {
         return $form
@@ -90,7 +90,6 @@ class VerificationResource extends Resource
             ->actions([
                 Action::make('viewDetails')
                     ->label('View')
-                    ->modalHeading('Verification Details')
                     ->modalDescription('Detailed view of the verification request.')
                     ->modalContent(fn($record) => view('components.verification-modal', ['record' => $record]))
                     ->modalCancelAction(fn(StaticAction $action) => $action->label('Close')->extraAttributes(['class' => 'ml-auto']))
@@ -116,6 +115,23 @@ class VerificationResource extends Resource
             ]);
     }
 
+
+    public static function getNavigationBadge(): ?string
+    {
+        $count = static::getModel()::whereHas('user', function ($query) {
+            $query->where('isVerified', false);
+        })->count();
+
+        return $count > 0 ? (string) $count : null;
+    }
+
+
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -127,8 +143,8 @@ class VerificationResource extends Resource
     {
         return [
             'index' => Pages\ListVerifications::route('/'),
-           // 'create' => Pages\CreateVerification::route('/create'),
-          //  'edit' => Pages\EditVerification::route('/{record}/edit'),
+            // 'create' => Pages\CreateVerification::route('/create'),
+            //  'edit' => Pages\EditVerification::route('/{record}/edit'),
             //'view-id' => Pages\ViewID::route('/{record}/view'),
         ];
     }
@@ -156,7 +172,6 @@ class VerificationResource extends Resource
 
         // Notify the user about successful verification
         $user->notify(new VerificationStatus('Your account has been successfully verified.'));
-
     }
 
     public static function resendVerificationNotice(Verification $record)
@@ -170,6 +185,4 @@ class VerificationResource extends Resource
         // Notify the user about the need to resubmit verification
         $user->notify(new VerificationStatus('Your verification request was denied. Please retry with clear and legitimate information.'));
     }
-
-    
 }

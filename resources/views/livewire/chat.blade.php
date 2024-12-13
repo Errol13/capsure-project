@@ -1,7 +1,7 @@
 <div>
     <!-- Chat Header -->
     <div>
-        <h5 class="text-center my-2">User name</h5>
+        <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
     </div>
     <hr class="mb-3 px-0">
     @if($selectedConversationId)
@@ -29,6 +29,22 @@
                             ->format('h:i A') }}
                             </small>
                         </div>
+
+                        @php
+                        $lastMessage = end($messages); // Get the last message
+                        @endphp
+
+                     
+                        <div wire:key="message-{{ $message['id'] }}" wire:target="updateMessageStatus">
+                            @if($message === $lastMessage)
+                            @if($message['isRead'] === true && $message['recipient'] !== auth()->id())
+                            <span class="text-muted fs-smaller">Seen by {{$otherUser->fullName()}}</span>
+                            @elseif($message['isRead'] === false && $message['sender'] === auth()->id())
+                            <span class="text-muted fs-smaller text-white">Delivered</span>
+                            @endif
+                            @endif
+                        </div>
+                    
                     </div>
                 </div>
             </div>
@@ -77,7 +93,7 @@
                 const loadingState = document.querySelector('#loadingState');
                 const messageList = document.querySelector('.chat-messages');
 
-                console.log('Triggered');
+                // console.log('Triggered');
                 messageList.classList.add('d-none');
                 loadingState.classList.remove('d-none');
 
@@ -87,12 +103,12 @@
                 const loadingState = document.querySelector('#loadingState');
                 const messageList = document.querySelector('.chat-messages');
 
-                console.log('Triggered');
+                // console.log('Triggered');
                 loadingState.classList.add('d-none');
                 messageList.classList.remove('d-none');
             });
 
-            console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
+            // console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
 
             // Dynamically subscribe to the Echo channel for real-time updates
             window.Echo.private(`chat.{{ auth()->id() }}`)
@@ -164,7 +180,7 @@
             border-radius: 25px 25px 0 25px;
         }
 
-        .bg-receiver{
+        .bg-receiver {
             border-radius: 0 25px 25px 25px;
             background-color: aliceblue;
         }

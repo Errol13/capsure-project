@@ -25,9 +25,33 @@ class EventsController extends Controller
         return view('client.createEvent');
     }
 
-    public function editEventsForm($id)
+    public function deleteEventPost($id)
     {
-        return view('client.editEvent', ['id' => $id]);
+        //find the event
+        $eventPost = Event::find($id);
+
+        $withHired = $eventPost->transactions()->exists();
+        $withApplicants = $eventPost->event_jobs()->whereHas('jobApplications')->exists();
+        
+        if($withHired && $withApplicants){
+            return redirect()->back()->with('failed', 'Cannot delete events with hired and applicants');
+        }else{
+            $eventPost->delete();
+        }
+        return redirect()->route('client-events');
+    }
+
+    public function reopenEvent($id){
+        //find the event
+        $eventPost = Event::find($id);
+        $canBeReOpened = $eventPost->end_date > now();
+
+        if($canBeReOpened){
+            $eventPost->status = 'Open';
+            $eventPost->save();
+        }
+
+        return redirect()->back();
     }
 
     public function showMyEvents(Request $request)
@@ -40,9 +64,10 @@ class EventsController extends Controller
 
         // Get events for the authenticated user
         $eventsQuery = Event::where('client_id', $user->id)
-            ->whereHas('event_jobs')
-            ->orderBy('created_at', 'desc'); //displays from oldest to latest
-
+        ->whereHas('event_jobs')  // Ensures only events with related jobs are returned
+        ->orderByRaw("status = 'Closed' ASC")  // Orders by 'status', with 'Open' events first
+        ->orderBy('created_at', 'desc'); // Orders by 'created_at', newest first
+    
         // Apply filtering by status if it's not 'All'
         if ($status != 'All') {
             $eventsQuery->where('status', $status);
@@ -107,6 +132,11 @@ class EventsController extends Controller
 
         // Get all jobs associated with this event
         $jobs = EventJob::where('event_id', $id)->get(); //eventjob
+
+        //get if the eventpost can be deleted or not
+        $withHired = $event->transactions()->exists();
+        $withApplicants = $event->event_jobs()->whereHas('jobApplications')->exists();
+        $eventPostCanBeDeleted = !($withHired || $withApplicants); // Only delete if neither hired freelancers nor applicants exist
 
         // Initialize collections to hold data
         $jobApplications = collect();
@@ -361,7 +391,8 @@ class EventsController extends Controller
                 'durationInHours' => $durationInHours,
                 'teamRecommendations' => $teamRecommendations,
                 'teamApplicants' => $teamApplicants,
-                'teamHiringRequests' => $invitedTeams
+                'teamHiringRequests' => $invitedTeams,
+                'eventPostCanBeDeleted' => $eventPostCanBeDeleted
             ]);
         } elseif ($user->user_type === 'freelancer') {
             return view('components.F_Hiring.event_post', [

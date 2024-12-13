@@ -28,7 +28,7 @@
 
 <body>
     <div class="bg-signup"></div>
-    <div class="container d-flex justify-content-center align-items-center vh-100 txt-smaller poppins-light">
+    <div class="container d-flex justify-content-center align-items-center txt-smaller poppins-light">
         <div class="row justify-content-center w-100">
             <div class="col-12 col-md-7">
                 <div class="card rounded-4 bg-white px-4 mb-4">
@@ -149,7 +149,7 @@
                                 <!-- Job Fee -->
                                 <div class="col-6 col-md-2">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
-                                    <input id="job_fee" type="number" step="0.01" placeholder="Minimum of 20 pesos" class="mx-1 form-control @error('job_fee') is-invalid @enderror" 
+                                    <input id="job_fee" type="number" step="0.01" placeholder="Min. ₱20 " class="mx-1 form-control @error('job_fee') is-invalid @enderror" 
                                     name="job_fee" value="{{ old('job_fee') }}" min="20"  required autocomplete="job_fee">
                                     @error('job_fee')
                                     <span class="invalid-feedback" role="alert">

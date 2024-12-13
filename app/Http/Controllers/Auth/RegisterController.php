@@ -239,6 +239,7 @@ class RegisterController extends Controller
             'job_fee' => $data['job_fee'],
         ]);
 
+        
         return $user;
     }
 

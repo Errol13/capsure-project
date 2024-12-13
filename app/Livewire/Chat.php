@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Profile\Chat as ProfileChat;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
@@ -16,6 +17,8 @@ class Chat extends Component
     public $newMessage;
     public $selectedConversationId;
     public $recipientId;
+    public $otherUser;
+  
 
     public function mount($conversationId = null)
     {
@@ -23,6 +26,7 @@ class Chat extends Component
             $this->selectedConversationId = $conversationId; //make the convo selected based on id in the url
             $this->loadMessages(10);
             $this->setRecipient();
+            $this->otherUser = User::find($this->recipientId);
         }
     }
 
@@ -34,7 +38,7 @@ class Chat extends Component
 
         $this->loadMessages(); // Load new messages
         $this->setRecipient();
-        Log::info('Conversation selected: ' . $conversationId);
+        // Log::info('Conversation selected: ' . $conversationId);
 
         $this->dispatch('hideLoadingState');
     }
@@ -50,8 +54,16 @@ class Chat extends Component
             ->get()
             ->toArray();
 
+        // Mark all messages in the selected conversation as read
+        ProfileChat::where('conversation_id', $this->selectedConversationId)
+            ->where('recipient', Auth::id()) // Only mark messages for the current user as read
+            ->where('isRead', false)
+            ->update(['isRead' => true]);
+
         // Reverse the array to display from oldest to newest in the chat
         $this->messages = array_reverse($this->messages);
+
+        $this->dispatch('updateMessageStatus');
     }
 
 
@@ -88,10 +100,7 @@ class Chat extends Component
         if ($conversation) {
             // Determine recipient ID based on sender and authenticated user
             $this->recipientId = ($conversation->sender_id === Auth::id()) ? $conversation->recipient_id : $conversation->sender_id;
-            Log::info('Recipient ID set: ' . $this->recipientId);
-        } else {
-            Log::error('Conversation not found for ID: ' . $this->selectedConversationId);
-        }
+        } 
     }
 
     // Method to send a new message
@@ -103,7 +112,7 @@ class Chat extends Component
 
         // Check if selectedConversationId is set
         if (is_null($this->selectedConversationId)) {
-            Log::error('Selected Conversation ID is not set while sending message.');
+            // Log::error('Selected Conversation ID is not set while sending message.');
             return;
         }
 

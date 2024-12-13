@@ -97,7 +97,6 @@ class ReportResource extends Resource
                         }
                     })
                     ->html(),
-
             ])
             ->filters([
                 //
@@ -161,11 +160,10 @@ class ReportResource extends Resource
                         if ($record->reportedUser->isSuspended()) {
                             // Call the lift suspension method
                             self::liftSuspension($record);
-                        }
-                        else if (isset($data['duration'])) {
+                        } else if (isset($data['duration'])) {
                             // Apply suspension with specified duration
                             self::suspendUser($record, $data); // Pass the array
-                        } 
+                        }
                     })
                     ->color(fn($record) => $record->reportedUser->isSuspended() ? 'danger' : 'warning')
                     ->requiresConfirmation()
@@ -191,6 +189,17 @@ class ReportResource extends Resource
             ->bulkActions([
                 //
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::where('isArchived', false)->count();
+    }
+
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'primary';
     }
 
     public static function getRelations(): array
@@ -219,7 +228,7 @@ class ReportResource extends Resource
         $suspension->end_at = Carbon::now()->addMinutes($duration);
         $suspension->suspended_reason = $record->reason;
 
-       
+
         // dd('end date sus:', $suspension->end_date->format('Y-m-d H:i:s')); 
         // dd('isSuspended:', $suspension->isSuspended); 
         $suspension->save();

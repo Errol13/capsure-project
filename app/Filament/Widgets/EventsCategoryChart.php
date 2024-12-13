@@ -15,6 +15,7 @@ class EventsCategoryChart extends ChartWidget
     protected static ?int $sort = 3;
 
     protected static string $color = 'indigo';
+    
 
     protected function getData(): array
     {
