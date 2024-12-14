@@ -235,6 +235,7 @@ class EventsController extends Controller
                 ->whereDoesntHave('appliedJobs', function ($query) use ($job) {
                     $query->where('id', $job->job_id); // Exclude those who applied 
                 })
+                ->where('user_id', '!=', auth()->id())
                 ->with(['user', 'services']) // Eager load the user and services relationships
                 ->orderBy('avg_rating', 'desc') // Sort by avg_rating in descending order
                 ->orderBy('user_id', 'asc') // Sort by id in ascending order

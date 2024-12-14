@@ -11,12 +11,13 @@
                     </div>
                 </div>
             </div>
-
+            @if($filtersApplied)
             <div class="col-12" wire:loading.remove>
                 <div class="d-flex justify-content-center">
-                <p class="text-muted badge fs-6">Jobs Result: {{$resultsCount}}</p>
+                    <p class="text-muted badge fs-6">Jobs Result: {{$resultsCount}}</p>
                 </div>
             </div>
+            @endif
 
             @if($events->isNotEmpty())
             @foreach($events as $event)
@@ -69,7 +70,7 @@
             </div>
             @endforeach
             @else
-            <p>No events found.</p>
+            <p class="text-center fs-5">No events found.</p>
             @endif
 
         </div>

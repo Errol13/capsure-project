@@ -69,7 +69,7 @@
         <div class="col-md-8 col-lg-8 poppins-regular">
             <div class="row my-3">
                 <!-- Basic Info -->
-                <form action="/freelancer/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
+                <form action="/client/profile/update/{{$user->id}}" method="POST" id="basic-info-form">
                     @csrf
                     @method('PATCH')
 
@@ -97,7 +97,8 @@
                                 <!-- First Name -->
                                 <label for="first_name" class="form-label mb-0">{{ __('First Name') }}</label>
                                 <input id="first_name" type="text" class="form-control @error('first_name') is-invalid @enderror"
-                                    name="first_name" value="{{ $user->first_name }}" required autocomplete="first_name" autofocus disabled>
+                                    name="first_name" value="{{ $user->first_name }}" required autocomplete="first_name" autofocus disabled
+                                    data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('first_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -107,7 +108,8 @@
                                 <!-- Last Name -->
                                 <label for="last_name" class="form-label mb-0 mt-2">{{ __('Last Name') }}</label>
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                    name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled>
+                                    name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled 
+                                    data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -117,7 +119,8 @@
                                 <!-- Birthdate -->
                                 <label for="birthdate" class="form-label mb-0 mt-2">{{ __('Birthdate') }}</label>
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled>
+                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled 
+                                    data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -248,6 +251,17 @@
     function enableEditModeDesktop() {
         // Enable all input fields in the form
         document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            // Keep email always disabled
+            if (input.id === 'email') {
+                return;
+            }
+
+            // Keep first_name and last_name disabled if the user is verified
+            if ((input.id === 'first_name' || input.id === 'last_name' || input.id === 'birthdate') && input.dataset.verified === 'true') {
+                return;
+            }
+
+            // Enable all other inputs
             input.disabled = false;
         });
 

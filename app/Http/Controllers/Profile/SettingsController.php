@@ -79,9 +79,9 @@ class SettingsController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'birthdate' => 'nullable|date',
             'street' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -96,7 +96,9 @@ class SettingsController extends Controller
         $updateData = $validated;
 
         //Update the age when birthdate is changed
-        $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
+        if(isset($validated['birthdate'])){
+            $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
+        }
 
         // Hash the password only if provided
         if (!empty($validated['password'])) {
@@ -261,9 +263,9 @@ class SettingsController extends Controller
     {
         // Validate the request data
         $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'birthdate' => 'required|date',
+            'first_name' => 'nullable|string|max:255',
+            'last_name' => 'nullable|string|max:255',
+            'birthdate' => 'nullable|date',
             'street' => 'required|string|max:255',
             'barangay' => 'required|string|max:255',
             'city' => 'required|string|max:255',
@@ -278,8 +280,10 @@ class SettingsController extends Controller
         $updateData = $validated;
 
         //Update the age when birthdate is changed
-        $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
-
+        if(isset($validated['birthdate'])){
+            $updateData['age'] = \Carbon\Carbon::parse($validated['birthdate'])->age;
+        }
+       
         // Hash the password only if provided
         if (!empty($validated['password'])) {
             $updateData['password'] = Hash::make($validated['password']);
