@@ -25,11 +25,7 @@
                     @endphp
 
                     <img src="{{ $otherUser->profile_image_url }}" alt="{{ $otherUser->fullName() }}"
-<<<<<<< HEAD
                         class="user-image me-2" style="width: 40px; height: 40px;" />
-=======
-                        class="user-image me-2" style="max-width: 30px; max-height: 30px;" />
->>>>>>> 9185151ed9ba40214d676e0ea334162929488ffe
 
                     <!--contains the latest message -->
                     <div class="d-flex d-none d-lg-block flex-column justify-content-start">
