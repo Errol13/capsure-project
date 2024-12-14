@@ -19,7 +19,7 @@ class FreelancerHome extends Component
 
     public function fetchAllEvents()
     {
-        return Event::with(['client.user', 'event_jobs'])->where('status', 'Open')->orderBy('created_at', 'desc')->paginate(9);
+        return Event::with(['client.user', 'event_jobs'])->where('status', 'Open')->where('client_id', '!=', auth()->id())->orderBy('created_at', 'desc')->paginate(9);
     }
 
     #[On('filterParamsUpdated')]
@@ -101,7 +101,7 @@ class FreelancerHome extends Component
 
         $this->loading = false;
         // return the filtered events
-        return $filteredResults->with(['client.user', 'event_jobs'])->paginate(9);
+        return $filteredResults->with(['client.user', 'event_jobs'])->where('client_id', '!=', auth()->id())->paginate(9);
 
     }
 

@@ -15,6 +15,7 @@ class AcceptedOffer extends Notification
     protected $firstName;
     protected $lastName;
     protected $eventId;
+    protected $eventName;
 
     /**
      * Create a new notification instance.
@@ -26,6 +27,7 @@ class AcceptedOffer extends Notification
         $event = $eventJob->event;
 
         $this->eventId = $event->event_id;
+        $this->eventName = $event->title;
         $this->firstName = $user->first_name;
         $this->lastName = $user->last_name;
     }
@@ -54,7 +56,7 @@ class AcceptedOffer extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('Your offer has been accepted.')
+            ->line("{$this->firstName} {$this->lastName} accepted your offer. Event: {$this->eventName}.")
             ->action('View Details', $this->getUrlBasedOnUserType($notifiable)) // Use dynamic URL
             ->line('Thank you for using our application!');
     }

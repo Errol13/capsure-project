@@ -84,6 +84,7 @@ class MyJobs extends Component
 
         $eventRecommendations = Event::with('event_jobs')
             ->where('status', 'Open')
+            ->where('client_id', '!=', auth()->id())
             ->whereHas('event_jobs', function ($query) use ($freelancer) {
                 $query->whereIn('job_category', $freelancer->services->pluck('job_category'));
             })->get();

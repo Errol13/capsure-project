@@ -75,6 +75,7 @@ class ClientHome extends Component
         return User::whereHas('freelancer')
             ->with('freelancer')
             ->join('freelancers', 'users.id', '=', 'freelancers.user_id')
+            ->where('users.id', auth()->id())
             ->orderBy('freelancers.avg_rating', 'desc')
             ->orderBy('number_of_projects', 'desc')
             ->orderBy('user_id')
@@ -145,7 +146,7 @@ class ClientHome extends Component
         });
 
         // Eager load freelancer and services
-        $users = $query->with('freelancer.services')->paginate(9);
+        $users = $query->with('freelancer.services')->where('id', '!=', auth()->id())->paginate(9);
 
         // If no results, return empty collection
         if ($users->isEmpty()) {
