@@ -93,7 +93,7 @@
                 if (url) {
                     history.pushState(null, '', url);
                 } else {
-                    console.error("Received undefined URL");
+                    // console.error("Received undefined URL");
                 }
             });
         });

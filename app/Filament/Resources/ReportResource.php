@@ -136,8 +136,6 @@ class ReportResource extends Resource
                             $form[] = Select::make('duration')
                                 ->label('Suspension Duration')
                                 ->options([
-                                    1 => '1 Minute',
-                                    5 => '5 Minutes',
                                     60 => '1 Hour',
                                     1440 => '1 Day',
                                     4320 => '3 Days',
@@ -149,8 +147,6 @@ class ReportResource extends Resource
                         return $form;
                     })
                     ->action(function ($record, $data) {
-                        Log::debug('Suspend action triggered for report ID: ' . $record->id);
-                        Log::debug('Data type: ' . gettype($data)); // Log the data type
 
                         // Ensure data is wrapped in an array if it's not already
                         if (!is_array($data)) {

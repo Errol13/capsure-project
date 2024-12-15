@@ -67,7 +67,7 @@
                 .catch(error => {
                     // Handle network or other unexpected errors
                     alert('An unexpected error occurred. Please try again.');
-                    console.error('Error:', error);
+
                     modal.hide(); // Close the modal when alert is shown
                 });
         }

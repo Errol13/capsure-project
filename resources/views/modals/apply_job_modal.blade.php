@@ -157,12 +157,11 @@
                     }
                 })
                 .then(response => {
-                    // Log the raw response to the console
-                    console.log('Response Status:', response.status);
+                    // // Log the raw response to the console
+                    // console.log('Response Status:', response.status);
                     return response.json(); // Parse the JSON response
                 })
                 .then(data => {
-                    console.log('Response Data:', data); // Log the response data to the console
 
                     const modalMessage = document.getElementById('modalMessage');
                     if (data.error) {
@@ -173,7 +172,7 @@
                         $('#responseModal').modal('show'); // Show the warning modal
 
                     } else if (data.conflict) {
-                        console.log(data.event);
+                       
                         modalMessage.innerHTML = '<p class="text-danger">' + data.conflict + '</p>' +
                             '<p class="fs-6">' + 'Conflicting Event: ' + data.event + '</p>' +
                             '<p class="fs-6">' + 'Event Start Date: ' + data.start_date + '</p>' +
@@ -200,7 +199,7 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Fetch Error:', error);
+                    alert('An unexpected error occurred.');
                 });
         });
     });
