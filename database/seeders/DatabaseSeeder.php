@@ -17,17 +17,17 @@ class DatabaseSeeder extends Seeder
         // Truncate tables
         DB::table('events')->truncate();
         DB::table('event_jobs')->truncate();
-        DB::table('job_applications')->truncate();
-        DB::table('hiring_requests')->truncate();
-        DB::table('transactions')->truncate();
+        // DB::table('job_applications')->truncate();
+        // DB::table('hiring_requests')->truncate();
+        // DB::table('transactions')->truncate();
 
         // Seed data
         $this->call(UsersTableSeeder::class);
         $this->call(ServicesTableSeeder::class);
         $this->call(EventsTableSeeder::class);
         $this->call(EventJobsTableSeeder::class);
-        $this->call(JobApplicationsTableSeeder::class);
-        $this->call(HiringRequestsTableSeeder::class);
-        $this->call(TransactionsTableSeeder::class);
+        // $this->call(JobApplicationsTableSeeder::class);
+        // $this->call(HiringRequestsTableSeeder::class);
+        // $this->call(TransactionsTableSeeder::class);
     }
 }

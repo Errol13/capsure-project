@@ -35,7 +35,7 @@ class LoginController extends Controller
         } elseif ($user->user_type == 'freelancer') {
             return redirect()->route('freelancer-homepage');
         } elseif ($user->user_type == 'admin') {
-            return redirect()->route('home');
+            return redirect()->route('filament.admin.pages.dashboard');
         }
 
         // Default redirect if no user_type matches

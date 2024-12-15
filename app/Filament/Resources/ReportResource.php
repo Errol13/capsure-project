@@ -193,7 +193,9 @@ class ReportResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return static::getModel()::where('isArchived', false)->count();
+        $count = static::getModel()::where('isArchived', false)->count();
+
+        return $count > 0 ? (string) $count : null;
     }
 
 

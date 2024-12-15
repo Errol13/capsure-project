@@ -270,8 +270,10 @@
                 </div>
                 <div class="mt-3"> Apply now to start your CAPSURE adventure!</div>
             </small>
+
             <div class="row" style="white-space: nowrap;">
                 <!-- Event Post Card -->
+                @if($events->isNotEmpty())
                 @foreach($events as $event)
                 <div class="col-12 col-md-6 col-lg-4 mb-4" wire:loading.remove>
                     <div class="card shadow-sm rounded-4" style="background-color: white;">
@@ -320,7 +322,47 @@
                     </div>
                 </div>
                 @endforeach
+                @else
+                @foreach(range(1, 3) as $index)
+                <div class="col-12 col-md-6 col-lg-4 mb-4" wire:loading.remove>
+                    <div class="card shadow-sm rounded-4" style="background-color: white;">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between">
+                                <h4 class="card-title poppins-medium text-truncate">Wedding Photography {{$index}}</h4>
+                                <span class="card-text note">{{ now()->subDays($index)->diffForHumans() }}</span>
+                            </div>
+                            <div class="row rw-height-eventdesc mb-2">
+                                <p class="card-text content-color text-truncate">
+                                    Looking for a professional photographer to capture beautiful moments at our wedding ceremony in Central Park. Duration: 5 hours.
+                                </p>
+                            </div>
+                            <div class="d-flex flex-wrap">
+                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">Photography</span>
+                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">Editing</span>
+                            </div>
+                            <hr class="mt-2 border-1 opacity-25">
+                            <div class="d-flex align-items-center mt-3">
+                                <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-circle me-2" width="50">
+                                <div>
+                                    <h6 class="mb-0 poppins-medium">Jane Doe {{$index}}</h6>
+                                    <small class="text-muted">New York City</small>
+                                </div>
+                                <div class="ms-auto d-flex align-items-center">
+                                    <span class="text-warning me-1">★</span>
+                                    <span class="fw-bold">4.{{$index}}</span>
+                                    <span class="text-muted small ms-1">(15)</span>
+                                </div>
+                            </div>
+                            <div class="d-flex align-items-center mt-3">
+                                <a href="#" class="btn-seeprof" style="background-color: #fceef7;border:none;">Interested</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+                @endif
             </div>
+
         </div>
     </section>
 
@@ -340,14 +382,14 @@
                 <div class="row justify-content-center">
                     <img src="assets/build.svg" style="height: 150px; width: 150px;">
                     <strong class="fs-6 text-center poppins-medium px-4">Build Your Profile & Post or Apply</strong>
-                    <p class="px-3 text-center poppins-regular note"  style="font-size: small;">Clients can post events with detailed requirements, while freelancers can showcase their skills and apply for jobs that match their expertise.</p>
+                    <p class="px-3 text-center poppins-regular note" style="font-size: small;">Clients can post events with detailed requirements, while freelancers can showcase their skills and apply for jobs that match their expertise.</p>
                 </div>
             </div>
             <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
                 <div class="row justify-content-center">
                     <img src="assets/review.svg" style="height: 150px; width: 150px;">
                     <strong class="fs-6 text-center poppins-medium px-4">Manage Transactions & Leave Reviews</strong>
-                    <p class="px-3 text-center poppins-regular note"  style="font-size: small;">Track payments, confirm transactions, and share reviews to build credibility and strengthen the Capsure community.</p>
+                    <p class="px-3 text-center poppins-regular note" style="font-size: small;">Track payments, confirm transactions, and share reviews to build credibility and strengthen the Capsure community.</p>
                 </div>
             </div>
         </div>
@@ -361,7 +403,7 @@
                 </div>
                 <div class="toggle-content p-4 poppins-regular" style="font-size: small;">
                     <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 1: Sign Up as a Client</strong><br>
-                     by creating an account as a "Client." After registering, verify your email address to activate your account.<br><br>
+                    by creating an account as a "Client." After registering, verify your email address to activate your account.<br><br>
                     <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 2: Create Your Profile & Verify Your Account</strong><br>
                     Fill in the required details to complete your profile and proceed with the verification process.<br><br>
                     <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 3: Create Your Event Post</strong><br>
@@ -625,6 +667,7 @@
             width: 500px;
             height: 500px;
         }
+
         .toggle-section {
             width: 85%;
         }
