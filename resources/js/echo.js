@@ -16,14 +16,14 @@ window.Echo = new Echo({
 
 
 // Listen for connection events
-window.Echo.connector.pusher.connection.bind('connected', () => {
-    console.log('Connected to Pusher!');
-});
+// window.Echo.connector.pusher.connection.bind('connected', () => {
+//     console.log('Connected to Pusher!');
+// });
 
-window.Echo.connector.pusher.connection.bind('disconnected', () => {
-    console.log('Disconnected from Pusher.');
-});
+// window.Echo.connector.pusher.connection.bind('disconnected', () => {
+//     console.log('Disconnected from Pusher.');
+// });
 
-window.Echo.connector.pusher.connection.bind('failed', () => {
-    console.log('Pusher connection failed.');
-});
+// window.Echo.connector.pusher.connection.bind('failed', () => {
+//     console.log('Pusher connection failed.');
+// });

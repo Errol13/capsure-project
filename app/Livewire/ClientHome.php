@@ -75,7 +75,7 @@ class ClientHome extends Component
         return User::whereHas('freelancer')
             ->with('freelancer')
             ->join('freelancers', 'users.id', '=', 'freelancers.user_id')
-            ->where('users.id', auth()->id())
+            ->where('users.id', '!=', auth()->id())
             ->orderBy('freelancers.avg_rating', 'desc')
             ->orderBy('number_of_projects', 'desc')
             ->orderBy('user_id')

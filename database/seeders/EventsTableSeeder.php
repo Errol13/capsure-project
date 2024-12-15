@@ -17,7 +17,7 @@ class EventsTableSeeder extends Seeder
         // Example data
         $events = [
             [
-                'client_id' => 1,
+                'client_id' => 2,
                 'title' => 'Birthday Party',
                 'description' => 'Description for Event 1',
                 'start_date' => Carbon::now()->addDays(10),
@@ -33,7 +33,7 @@ class EventsTableSeeder extends Seeder
                 'updated_at' => Carbon::now(), // Adding timestamps
             ],
             [
-                'client_id' => 1,
+                'client_id' => 2,
                 'title' => 'Debut',
                 'description' => 'Description for Event 2',
                 'start_date' => Carbon::now(),
@@ -49,20 +49,20 @@ class EventsTableSeeder extends Seeder
                 'updated_at' => Carbon::now(), // Adding timestamps
             ],
             [
-                'client_id' => 1,
+                'client_id' => 2,
                 'title' => 'Music Concert',
                 'description' => 'An outdoor music concert.',
-                'start_date' => Carbon::now()->subDays(10), // 10 days ago
-                'end_date' => Carbon::now()->subDays(9), // Ended 9 days ago
+                'start_date' => Carbon::now()->addDays(4),
+                'end_date' => Carbon::now()->addDays(6),
                 'street' => '789 Concert Blvd',
                 'barangay' => 'Barangay 7',
                 'city' => 'City 4',
                 'payment_method' => 'Cash',
                 'budget_min' => 1000.00,
                 'budget_max' => 4000.00,
-                'status' => 'Closed', // Event is closed
-                'created_at' => Carbon::now()->subDays(15), // Created 15 days ago
-                'updated_at' => Carbon::now()->subDays(9), // Updated when the event ended
+                'status' => 'Open', // Event is open
+                'created_at' => Carbon::now()->subDays(3), // Created 3 days ago
+                'updated_at' => Carbon::now()->subDays(3), // Updated same time as created
             ],
         ];
 

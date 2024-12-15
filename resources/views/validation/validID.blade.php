@@ -155,7 +155,7 @@
         checkFields();
 
         document.getElementById('id-form-validation').addEventListener('submit', function(e) {
-            console.log('Form submitted');
+            // console.log('Form submitted');
         });
     });
 </script>

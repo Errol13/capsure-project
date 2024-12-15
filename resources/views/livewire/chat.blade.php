@@ -113,7 +113,7 @@
             // Dynamically subscribe to the Echo channel for real-time updates
             window.Echo.private(`chat.{{ auth()->id() }}`)
                 .listen('.message.sent', (e) => {
-                    console.log('Message received:', e);
+                    // console.log('Message received:', e);
                     // Dispatch a Livewire event to refresh messages
                     Livewire.dispatch('messageReceived');
                 });

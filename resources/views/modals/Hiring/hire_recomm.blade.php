@@ -145,12 +145,10 @@
 <script>
     function updateFeeRecomm(uniqueId, durationInHours) {
 
-        console.log('Function called for ID:', uniqueId);
-
         const selectElement = document.getElementById('roleHireRecomm-' + uniqueId);
-        console.log(selectElement);
+    
         if (!selectElement) {
-            console.error('Select element not found for roleHireRecomm-' + uniqueId);
+            // console.error('Select element not found for roleHireRecomm-' + uniqueId);
             return;
         }
 
@@ -162,9 +160,7 @@
         const serviceTitle = selectedOption.getAttribute('data-job-title');
 
         let totalFee = 0;
-        console.log('Job Fee:', jobFee, 'Fee type:', feeType);
-        console.log('Title:', serviceTitle);
-        console.log('Service ID', selectedOption.value);
+       
 
 
         // Check fee type and calculate total fee
@@ -177,7 +173,6 @@
 
         // error handling when totalfee is not a valid number
         if (isNaN(totalFee)) {
-            console.error('Total fee calculation error for roleRecomm-' + uniqueId);
             totalFee = 0;
         }
 
@@ -187,7 +182,6 @@
             maximumFractionDigits: 2
         });
 
-        console.log('formattedFee:', formattedFee);
 
         document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
@@ -195,17 +189,6 @@
 
         var freelancerPricing = document.getElementById('fee-hidden-' + uniqueId);
         var clientPricing = document.getElementById('fee-' + uniqueId);
-        if (freelancerPricing) {
-            console.log('Freelancer Pricing:', freelancerPricing.value);
-        } else {
-            console.log('Freelancer Pricing element not found.');
-        }
-
-        if (clientPricing) {
-            console.log('Client Pricing:', clientPricing.value);
-        } else {
-            console.log('Client Pricing element not found.');
-        }
 
     }
 
@@ -265,7 +248,7 @@
                 if (jobTitle) {
                     const jobTitleLower = jobTitle.toLowerCase(); // Convert to lowercase
 
-                    console.log('Title:', jobTitleLower, 'Selected:', selectedJobHire);
+                    // console.log('Title:', jobTitleLower, 'Selected:', selectedJobHire);
 
                     // Only add options that match the selected job title
                     if (jobTitleLower === selectedJobHire) {
@@ -334,7 +317,6 @@
                     }
                 })
                 .catch(error => {
-                    console.error('Error:', error);
                     alert('An unexpected error occurred.'); // Generic error message
                 });
         });

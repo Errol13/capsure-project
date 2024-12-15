@@ -100,8 +100,6 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             window.addEventListener('filtersApplied', (event) => {
-                console.log('Filters applied event received:', event.detail);
-
                 // Use Bootstrap's method to hide the modal
                 $('#exampleModal').modal('hide');
             });

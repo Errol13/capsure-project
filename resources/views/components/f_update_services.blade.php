@@ -139,13 +139,10 @@
     }
 
     function saveService(serviceId) {
-        console.log('saveService called with ID:', serviceId);
 
         const form = document.getElementById(`services-form-${serviceId}`);
         if (form) {
             form.submit();
-        } else {
-            console.error('Form not found for service ID:', serviceId);
         }
     }
 </script>

@@ -41,7 +41,7 @@
                         <div class="row mb-5">
                             <div class="row-md-6">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" style="background-color: white;" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                                    <input class="form-check-input border-2" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                                     <label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
