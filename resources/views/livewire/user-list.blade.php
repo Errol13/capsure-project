@@ -25,7 +25,7 @@
                     @endphp
 
                     <img src="{{ $otherUser->profile_image_url }}" alt="{{ $otherUser->fullName() }}"
-                        class="user-image me-2" style="width: 40px; height: 40px;" />
+                        class="user-image me-2 rounded-circle" style="width: 40px; height: 40px;" />
 
                     <!--contains the latest message -->
                     <div class="d-flex d-none d-lg-block flex-column justify-content-start">

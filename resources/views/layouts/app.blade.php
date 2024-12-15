@@ -83,7 +83,7 @@
 
                         <!--Tutorial Link -->
                         <li class="nav-item">
-                            <a class="nav-link fw-bold text-black " href="#">HOW IT WORKS</a>
+                            <a class="nav-link fw-bold text-black " href="#how-it-works">HOW IT WORKS</a>
                         </li>
 
                         @if (Route::has('login'))

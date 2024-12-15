@@ -29,10 +29,10 @@
 
 <body>
     <div class=" bg-signup"></div>
-    <div class="container d-flex justify-content-center align-items-center vh-100 txt-smaller poppins-light">
+    <div class="container d-flex justify-content-center align-items-center my-4 txt-smaller poppins-light">
         <div class="row justify-content-center w-100">
-            <div class="col-12 col-md-6">
-                <div class="card rounded-4 bg-white px-4 mb-2">
+            <div class="col-12 col-md-7">
+                <div class="card rounded-4 bg-white px-4 mb-4">
                     <div class="card-header border-0 bg-white fs-3 text-center poppins-medium">Sign up as <b class="text-purple poppins-medium">Client</b>
                         <a class="btn-close position-absolute" href="{{ route('choose') }}" style="top: 8px; right: 8px; height: 5px; width: 5px;" aria-label="Close"></a>
                     </div>
@@ -241,12 +241,6 @@
         }
     </script>
 
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-    </style>
 </body>
 
 </html>

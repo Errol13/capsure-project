@@ -28,7 +28,7 @@
 
 <body>
     <div class="bg-signup"></div>
-    <div class="container d-flex justify-content-center align-items-center txt-smaller poppins-light">
+    <div class="container d-flex justify-content-center align-items-center my-4 txt-smaller poppins-light">
         <div class="row justify-content-center w-100">
             <div class="col-12 col-md-7">
                 <div class="card rounded-4 bg-white px-4 mb-4">
@@ -286,8 +286,6 @@
                                     <a href="{{ route('login') }}" class="text-purple fs-6">Log in</a>
                                 </div>
                             </div>
-
-
                         </form>
                     </div>
                 </div>
@@ -356,14 +354,6 @@
             }
         });
     </script>
-
-    <style>
-        html,
-        body {
-            height: 100%;
-        }
-
-    </style>
 </body>
 
 </html>
