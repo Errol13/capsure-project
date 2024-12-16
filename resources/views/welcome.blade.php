@@ -94,7 +94,7 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-2" class="rounded-circle img-fluid" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-2" class="rounded-circle img-fluid" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Aliza Dalisay</h5>
                                     <span class="mt-0">Videographer</span>
 
@@ -106,7 +106,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-4" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-4" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">James Paul Buenavides</h5>
                                     <span class="mt-0">Event Organizer</span>
 
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-6" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-6" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Ferlanie Jade Roxas</h5>
                                     <span class="mt-0">Make-up Artist</span>
 
@@ -130,7 +130,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-8" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-8" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Dulce Dina Co</h5>
                                     <span class="mt-0">English Tutor</span>
 
@@ -146,7 +146,7 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-10" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-10" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Manuel David</h5>
                                     <span class="mt-0">Videographer</span>
 
@@ -158,7 +158,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-12" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-12" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Xavier Ramos</h5>
                                     <span class="mt-0">Party Clown</span>
 
@@ -170,7 +170,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-14" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-14" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Daisy Smith</h5>
                                     <span class="mt-0">Videographer</span>
 
@@ -182,7 +182,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-16" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-16" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Loki Limosa</h5>
                                     <span class="mt-0">Florist</span>
 
@@ -198,7 +198,7 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-18" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-18" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Annaliza Castillo</h5>
                                     <span class="mt-0">Event Singer</span>
 
@@ -210,7 +210,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-20" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-20" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Chinna Garbo</h5>
                                     <span class="mt-0">Bead Artist</span>
 
@@ -222,7 +222,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-22" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-22" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Kevin Azura</h5>
                                     <span class="mt-0">Videographer</span>
 
@@ -234,7 +234,7 @@
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-24" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-24" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Erika Nina Boler</h5>
                                     <span class="mt-0">Host</span>
 
