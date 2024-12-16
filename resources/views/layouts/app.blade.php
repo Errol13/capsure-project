@@ -145,9 +145,25 @@
                             </li>
                             @endif
 
+                            @php
+                            $unreadMessagesCount = auth()->user()->conversations()->whereHas('messages', function ($query) {
+                            $query->where('sender', '!=', auth()->id()) // Exclude messages sent by the authenticated user
+                            ->where('recipient', auth()->id()) // Ensure the message is intended for the authenticated user
+                            ->where('isRead', false); // Check if the message is unread
+                            })->withCount(['messages as unread_messages' => function ($query) {
+                            $query->where('sender', '!=', auth()->id()) // Exclude messages sent by the authenticated user
+                            ->where('recipient', auth()->id()) // Ensure the message is intended for the authenticated user
+                            ->where('isRead', false); // Check if the message is unread
+                            }])->first()->unread_messages ?? 0;
+                            @endphp
+
+
                             <li class="nav-item me-md-0">
                                 <a class="nav-link" href="{{ route('show-chat', ['conversationId' => null]) }}">
                                     <i class="fas fa-comment"></i>
+                                    @if($unreadMessagesCount > 0)
+                                    <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadMessagesCount}}</sup>
+                                    @endif
                                 </a>
                             </li>
 
@@ -199,6 +215,8 @@
         </main>
     </div>
 
+
+
     <nav class="navbar navbar-expand-sm d-sm-none fixed-bottom py-2 navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container justify-content-center">
             <div class="row w-100">
@@ -238,10 +256,17 @@
                 </div>
 
                 <div class="col text-center">
+<<<<<<< HEAD
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
                         <i class="fas fa-bell fs-6"></i>
+=======
+                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
+                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
+                        @if($unreadCount > 0)
+>>>>>>> 18c1f543a4d43e412455efc9fbf1f6bc19b0e46e
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
+                        @endif
                         <div>Notification</div>
                     </a>
                 </div>
@@ -260,11 +285,22 @@
                         <div>Transaction</div>
                     </a>
                 </div>
+                @php
+                $unreadCount = auth()->user()->unreadNotifications->count();
+                @endphp
                 <div class="col text-center">
+<<<<<<< HEAD
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
                         <i class="fas fa-bell fs-6"></i>
                         <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
+=======
+                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
+                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
+                        @if($unreadCount > 0)
+                        <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
+                        @endif
+>>>>>>> 18c1f543a4d43e412455efc9fbf1f6bc19b0e46e
                         <div>Notification</div>
                     </a>
                 </div>

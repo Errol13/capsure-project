@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\hiring;
+namespace App\Models\Hiring;
 
 use App\Models\Freelancer;
 use App\Models\Profile\Team;

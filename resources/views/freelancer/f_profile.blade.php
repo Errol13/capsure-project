@@ -168,10 +168,14 @@
                 <div class="my-3">
                     @if($user->freelancer->team)
                     <div class="d-flex justify-content-start align-items-start">
-                        <img src="{{asset('storage/'. $user->freelancer->team->team_profilepic)}}" alt="Team picture" class="ms-2 rounded-circle" style="max-width: 40px; max-height: 40px; object-fit: cover;">
+                        <img src="{{asset('storage/'. $user->freelancer->team->team_profilepic)}}" alt="Team picture" class="rounded-circle me-1" width="30" height="30">
                         <div class="row" style="line-height:1.3 ;">
                             <a href="{{route('team-profile-view', ['id' => $user->freelancer->team->team_id])}}" class="ms-2" style="text-decoration: none; color:black;">{{$user->freelancer->team->team_name}}</a>
+                            @if($user->freelancer->team->team_leader === auth()->id())
                             <small class="ms-2 note">Admin</small>
+                            @else
+                            <small class="ms-2 note">Member</small>
+                            @endif
                         </div>
                     </div>
                     @endif

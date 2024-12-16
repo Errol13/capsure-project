@@ -1,7 +1,7 @@
 <div class="w-100">
     <input
         type="text"
-        wire:model.debounce.300ms="search"
+        wire:model.live="search"
         placeholder="Search Capsure"
         class="form-control mb-3 mt-3 d-md-block d-block bg-white rounded-4" />
 
@@ -28,7 +28,7 @@
                         class="user-image me-2 rounded-circle" style="width: 40px; height: 40px;" />
 
                     <!--contains the latest message -->
-                    <div class="d-flex d-none d-lg-block flex-column justify-content-start">
+                    <div class="d-flex d-none d-md-block flex-column justify-content-start">
                         <span>{{ $otherUser->fullName() }}</span>
                         <div style="max-width: 200px; overflow: hidden;" class=" text-truncate">
 
@@ -58,7 +58,7 @@
         @endforeach
     </ul>
     @else
-    <p class="text-center">No messages.</p>
+    <p class="text-center">No conversations.</p>
     @endif
 
     <style>

@@ -6,6 +6,7 @@ use App\Events\MessageSent;
 use App\Models\Conversation;
 use App\Models\Profile\Chat as ProfileChat;
 use App\Models\User;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
@@ -18,7 +19,7 @@ class Chat extends Component
     public $selectedConversationId;
     public $recipientId;
     public $otherUser;
-  
+
 
     public function mount($conversationId = null)
     {
@@ -40,6 +41,7 @@ class Chat extends Component
         $this->setRecipient();
         // Log::info('Conversation selected: ' . $conversationId);
 
+        $this->otherUser = User::find($this->recipientId);
         $this->dispatch('hideLoadingState');
     }
 
@@ -63,7 +65,7 @@ class Chat extends Component
         // Reverse the array to display from oldest to newest in the chat
         $this->messages = array_reverse($this->messages);
 
-        $this->dispatch('updateMessageStatus');
+        $this->dispatch('loadToBottom');
     }
 
 
@@ -72,25 +74,52 @@ class Chat extends Component
     {
         if (!$this->selectedConversationId) return;
 
-        // Load older messages in ascending order
+        // If there are no messages yet, just return (nothing to load)
+        if (count($this->messages) === 0) return;
+
+        // Get the timestamp or ID of the most recent message
+        $lastMessage = $this->messages[0];  // Assuming messages are ordered with the most recent at index 0
+        $lastMessageCreatedAt = $lastMessage['created_at'];  // Adjust this depending on how your messages are structured
+
+        $lastMessageCreatedAtCarbon = Carbon::parse($lastMessageCreatedAt)->timezone('Asia/Manila');
+
+        // $first = ProfileChat::where('conversation_id', $this->selectedConversationId)
+        // ->first();
+
+        //  dd('type of format of created_at: ' . $first->created_at , 'Last message created_at: ' . $lastMessageCreatedAtCarbon);
+
+        // Fetch older messages than the most recent one
         $olderMessages = ProfileChat::where('conversation_id', $this->selectedConversationId)
-            ->orderBy('created_at', 'asc') // Order by created_at in ascending order
-            ->skip(count($this->messages)) // Skip already loaded messages
+            ->where('created_at', '<', $lastMessageCreatedAtCarbon) // Fetch messages created before the most recent message
+            ->orderBy('created_at', 'desc') // Ensure messages are ordered correctly
             ->take(10) // Load 10 more messages
             ->get()
             ->toArray();
 
-        // Check for duplicates before merging
-        $existingMessageIds = collect($this->messages)->pluck('id')->toArray(); // Assuming each message has a unique ID
-        $filteredOlderMessages = array_filter($olderMessages, function ($message) use ($existingMessageIds) {
-            return !in_array($message['id'], $existingMessageIds); // Only include new messages
-        });
+        // // Check if we fetched any older messages
+        // Log::info('Fetched messages: ', ['messages' => count($olderMessages)]);
 
-        // Prepend the filtered older messages to the current messages
-        $this->messages = array_merge($this->messages, $filteredOlderMessages);
+        // If no older messages are found, we don't need to do anything
+        if (count($olderMessages) === 0) return;
+
+        // Prepend the older messages to the existing ones
+        $this->messages = array_merge($olderMessages, $this->messages); // Prepend, not append
+
+        $this->dispatch('messagesLoaded');
     }
 
 
+
+    public function updateMessageStatus($messageId)
+    {
+        // Fetch the message and update its status
+        $message = ProfileChat::find($messageId);
+        if ($message && $message->recipient === auth()->id() && !$message->isRead) {
+            $message->update(['isRead' => true]);
+
+            $this->dispatch('messageRead', $messageId); // This event will trigger frontend updates
+        }
+    }
 
 
     // Set the recipient based on the selected conversation
@@ -100,7 +129,7 @@ class Chat extends Component
         if ($conversation) {
             // Determine recipient ID based on sender and authenticated user
             $this->recipientId = ($conversation->sender_id === Auth::id()) ? $conversation->recipient_id : $conversation->sender_id;
-        } 
+        }
     }
 
     // Method to send a new message
@@ -154,6 +183,9 @@ class Chat extends Component
 
     public function render()
     {
-        return view('livewire.chat');
+        return view('livewire.chat', [
+            'messages' => $this->messages,
+            'otherUser' => $this->otherUser,
+        ]);
     }
 }

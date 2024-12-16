@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Transaction\Review;
 use App\Models\Profile\Certificates;
 use App\Models\Profile\Membership;
@@ -121,7 +121,8 @@ class Freelancer extends Model
     public function offeredTeamServices()
     {
         // Collect all the service IDs from the active memberships
-        $serviceIds = $this->membership->pluck('services')->flatten()->unique();
+        $serviceIds = $this->membership->pluck('services')->flatten()
+        ->map(fn($id) => (int) $id)->unique();
         // Fetch the service details based on the service IDs offered in the team
 
         return Service::whereIn('id', $serviceIds)->get();

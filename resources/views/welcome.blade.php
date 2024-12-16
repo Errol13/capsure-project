@@ -94,50 +94,50 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-2" class="rounded-circle img-fluid" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-2" class="rounded-circle img-fluid" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Aliza Dalisay</h5>
                                     <span class="mt-0">Videographer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <a href="#" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-4" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-4" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">James Paul Buenavides</h5>
                                     <span class="mt-0">Event Organizer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-6" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-6" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Ferlanie Jade Roxas</h5>
                                     <span class="mt-0">Make-up Artist</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-8" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-8" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Dulce Dina Co</h5>
                                     <span class="mt-0">English Tutor</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -146,50 +146,50 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-10" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-10" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Manuel David</h5>
                                     <span class="mt-0">Videographer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-12" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-12" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Xavier Ramos</h5>
                                     <span class="mt-0">Party Clown</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-14" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-14" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Daisy Smith</h5>
                                     <span class="mt-0">Videographer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-16" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-16" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Loki Limosa</h5>
                                     <span class="mt-0">Florist</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -198,50 +198,50 @@
                         <div class="row">
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-18" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-18" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Annaliza Castillo</h5>
                                     <span class="mt-0">Event Singer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-20" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-20" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Chinna Garbo</h5>
                                     <span class="mt-0">Bead Artist</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-22" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-22" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Kevin Azura</h5>
                                     <span class="mt-0">Videographer</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
                                 <div class="freelancer-card d-flex flex-column justify-content-center align-items-center">
-                                    <img src="http://127.0.0.1:8000/assets/default.svg" alt="Freelancer-24" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
+                                    <img src="assets/default.svg" alt="Freelancer-24" class="img-fluid rounded-circle" style="width: 70px; height: 70px;">
                                     <h5 class="mb-0 ellipsis">Erika Nina Boler</h5>
                                     <span class="mt-0">Host</span>
 
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +342,7 @@
                             </div>
                             <hr class="mt-2 border-1 opacity-25">
                             <div class="d-flex align-items-center mt-3">
-                                <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-circle me-2" width="50">
+                                <img src="assets/default.svg" alt="Profile" class="rounded-circle me-2" width="50">
                                 <div>
                                     <h6 class="mb-0 poppins-medium">Jane Doe {{$index}}</h6>
                                     <small class="text-muted">New York City</small>
@@ -354,7 +354,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mt-3">
-                                <a href="#" class="btn-seeprof" style="background-color: #fceef7;border:none;">Interested</a>
+                                <a href="{{ route('login') }}" class="btn-seeprof" style="background-color: #fceef7;border:none;">Interested</a>
                             </div>
                         </div>
                     </div>

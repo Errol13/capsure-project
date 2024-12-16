@@ -3,7 +3,7 @@
 namespace App\Models\Hiring;
 
 use App\Models\Freelancer;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
