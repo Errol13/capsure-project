@@ -28,7 +28,7 @@
                         class="user-image me-2 rounded-circle" style="width: 40px; height: 40px;" />
 
                     <!--contains the latest message -->
-                    <div class="d-flex d-none d-lg-block flex-column justify-content-start">
+                    <div class="d-flex d-none d-md-block flex-column justify-content-start">
                         <span>{{ $otherUser->fullName() }}</span>
                         <div style="max-width: 200px; overflow: hidden;" class=" text-truncate">
 
