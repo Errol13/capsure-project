@@ -1,15 +1,37 @@
-<div>
+<div x-data="{
+    messages: @entangle('messages'), // Keep Alpine and Livewire in sync
+    isLoading: false,
+    scrollToBottom() {
+        this.$nextTick(() => {
+            const chatBox = document.querySelector('.chat-messages');
+            chatBox.scrollTop = chatBox.scrollHeight;
+        });
+    },
+    loadMoreMessages() {
+        if (this.isLoading) return;
+        this.isLoading = true;
+        Livewire.dispatch('loadMoreMessages');
+    }
+}"
+    x-init="scrollToBottom()"
+    x-effect="scrollToBottom()">
+
     <!-- Chat Header -->
+    @if($otherUser)
     <div>
         <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
     </div>
+    @endif
     <hr class="mb-3 px-0">
     @if($selectedConversationId)
     <div class="chat-wrapper">
 
         <!-- Display Chat Messages -->
         @if($messages && count($messages) > 0)
-        <div class="chat-messages position-relative" x-data="chatMessages()" x-init="scrollToBottom()" @message.sent.window="scrollToBottom()" @conversationSelected.window="scrollToBottom()">
+        <div class="chat-messages position-relative"
+            x-init="scrollToBottom()"
+            @scroll="if ($event.target.scrollTop === 0) { $wire.loadMoreMessages(); }">
+
             @foreach($messages as $message)
             <div class="message-wrapper {{ $message['sender'] === auth()->id() ? 'message-sent' : 'message-received' }}">
                 <div class="message-content d-flex align-items-start">
@@ -31,20 +53,20 @@
                         </div>
 
                         @php
-                        $lastMessage = end($messages); // Get the last message
+                        // Get the last message in the loop
+                        $isLastMessage = $loop->last;
                         @endphp
 
-                     
-                        <div wire:key="message-{{ $message['id'] }}" wire:target="updateMessageStatus">
-                            @if($message === $lastMessage)
+                        <div wire:key="message-{{ $message['id'] }}" wire:click="updateMessageStatus({{ $message['id'] }})">
+                            <!-- Display 'Seen by' or 'Delivered' for the last message -->
+                            @if($isLastMessage)
                             @if($message['isRead'] === true && $message['recipient'] !== auth()->id())
-                            <span class="text-muted fs-smaller">Seen by {{$otherUser->fullName()}}</span>
+                            <span class="text-muted fs-smaller">Seen by {{ $otherUser->fullName() }}</span>
                             @elseif($message['isRead'] === false && $message['sender'] === auth()->id())
                             <span class="text-muted fs-smaller text-white">Delivered</span>
                             @endif
                             @endif
                         </div>
-                    
                     </div>
                 </div>
             </div>
@@ -56,6 +78,7 @@
         </div>
         @endif
 
+        <!-- Loading Spinner -->
         <div class="text-center d-none" id="loadingState">
             <div class="spinner-border" role="status">
                 <span class="sr-only">Loading...</span>
@@ -66,8 +89,9 @@
         <!-- Send Message Form -->
         <form wire:submit.prevent="sendMessage" class="send-message-form align-items-center">
             <input type="text" wire:model="newMessage" placeholder="Type your message..." />
-            <i class="fas fa-solid fa-paper-plane fs-3 text-purple me-3" type="button"></i>
+            <i class="fas fa-paper-plane fs-3 text-purple me-3" wire:click="sendMessage"></i>
         </form>
+
     </div>
     @else
     <div class="text-center d-flex justify-content-center align-items-center mt-5">
@@ -77,46 +101,77 @@
     </div>
     @endif
 
-
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-
             const chatBox = document.querySelector('.chat-messages');
-            chatBox.addEventListener('scroll', function() {
-                if (chatBox.scrollTop === 0) {
-                    Livewire.dispatch('loadMoreMessages');
+            const loadingState = document.querySelector('#loadingState');
+
+            function showLoadingState() {
+                if (loadingState) {
+                    loadingState.classList.remove('d-none');
+                }
+                if (chatBox) {
+                    chatBox.classList.add('d-none');
+                }
+            }
+
+            function hideLoadingState() {
+                if (loadingState) {
+                    loadingState.classList.add('d-none');
+                }
+                if (chatBox) {
+                    chatBox.classList.remove('d-none');
+                }
+            }
+
+            // Scroll to bottom on load
+            scrollToBottom();
+
+            // Load more messages on scroll up
+            if (chatBox) {
+                chatBox.addEventListener('scroll', function() {
+                    if (chatBox.scrollTop === 0) {
+                        showLoadingState();
+                        Livewire.dispatch('loadMoreMessages');
+                    }
+                });
+            }
+
+            // After messages are loaded, adjust scroll position to keep user at the same point
+            Livewire.on('messagesLoaded', () => {
+                const chatBox = document.querySelector('.chat-messages');
+                // Ensure scroll position remains at the top after loading messages
+                if (chatBox) {
+                    chatBox.scrollTop = chatBox.scrollHeight - chatBox.clientHeight;
                 }
             });
 
-            //listen for loading state
-            document.addEventListener('showLoadingState', function() {
-                const loadingState = document.querySelector('#loadingState');
-                const messageList = document.querySelector('.chat-messages');
 
-                // console.log('Triggered');
-                messageList.classList.add('d-none');
-                loadingState.classList.remove('d-none');
-
+            // Scroll to bottom when a message is sent or received
+            document.addEventListener('loadToBottom', function() {
+                scrollToBottom();
             });
 
-            document.addEventListener('hideLoadingState', function() {
-                const loadingState = document.querySelector('#loadingState');
-                const messageList = document.querySelector('.chat-messages');
-
-                // console.log('Triggered');
-                loadingState.classList.add('d-none');
-                messageList.classList.remove('d-none');
+             // Scroll to bottom when a new conversation selected
+             document.addEventListener('hideLoadingState', function() {
+                scrollToBottom();
             });
 
-            // console.log(`Chat Initialized for User ID: {{ auth()->id() }}`);
+            // Retain scroll position after new message
+            document.addEventListener('scrollToBottom', () => {
+                scrollToBottom();
+            });
 
-            // Dynamically subscribe to the Echo channel for real-time updates
-            window.Echo.private(`chat.{{ auth()->id() }}`)
-                .listen('.message.sent', (e) => {
-                    // console.log('Message received:', e);
-                    // Dispatch a Livewire event to refresh messages
-                    Livewire.dispatch('messageReceived');
-                });
+            function scrollToBottom() {
+                if (chatBox) {
+                    chatBox.scrollTop = chatBox.scrollHeight;
+                }
+            }
+
+            //Dynamically subscribe to te Pusher channel for real time messaging
+            window.Echo.private(`chat.{{auth()->id()}}`).listen('.message.sent', (e) => {
+                Livewire.dispatch('messageReceived');
+            });
         });
     </script>
 
@@ -131,13 +186,17 @@
         .chat-wrapper {
             display: flex;
             flex-direction: column;
+            height: 100%;
         }
 
         .send-message-form {
             display: flex;
             padding: 10px;
+            position: sticky;
+            bottom: 0;
             background-color: whitesmoke;
             border-radius: 20px;
+            z-index: 10;
         }
 
         .send-message-form input[type="text"] {

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Hiring;
 
 use App\Http\Controllers\Controller;
 use App\Models\Hiring\EventJob;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Notifications\ApplicationReceived;

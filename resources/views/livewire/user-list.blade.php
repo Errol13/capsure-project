@@ -1,7 +1,7 @@
 <div class="w-100">
     <input
         type="text"
-        wire:model.debounce.300ms="search"
+        wire:model.live="search"
         placeholder="Search Capsure"
         class="form-control mb-3 mt-3 d-md-block d-block bg-white rounded-4" />
 
@@ -58,7 +58,7 @@
         @endforeach
     </ul>
     @else
-    <p class="text-center">No messages.</p>
+    <p class="text-center">No conversations.</p>
     @endif
 
     <style>

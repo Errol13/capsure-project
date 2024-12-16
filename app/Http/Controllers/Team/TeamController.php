@@ -7,7 +7,7 @@ use App\Models\Freelancer;
 use App\Models\Hiring\Event;
 use App\Models\Hiring\EventJob;
 use App\Models\Hiring\Hiring_request;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Profile\Membership;
 use App\Models\Profile\Team;
 use App\Models\Transaction\Transaction;
