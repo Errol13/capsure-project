@@ -4,7 +4,7 @@ namespace App\Models\Profile;
 
 use App\Models\Freelancer;
 use App\Models\Hiring\Hiring_request;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Transaction\Review;
 use App\Models\Transaction\Transaction;
 use App\Models\User;

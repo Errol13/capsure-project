@@ -65,6 +65,7 @@
                                 <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportClientModal"
                                     style="color: crimson; cursor: pointer;"></i>
                             </div>
+                            
 
                             <!-- Report Modal -->
                             @include('modals.c_report', ['reportee' => $user])

@@ -15,22 +15,25 @@
                 <!-- Change Profile Pic -->
                 <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
                     @csrf
-                    <div class="d-flex justify-content-center align-items-center mb-4 mt-2">
-                        <span class="poppins-regular me-2 note">Change profile</span>
-                        <span class="ms-1">
-                            <a href="#" onclick="showUploadOptions(); return false;">
+                    <div class="d-flex align-items-center justify-content-center my-3">
+                        <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
+                        <span class="ms-2">
+                            <a href="#" class="p-0" onclick="showUploadOptions(); return false;">
                                 <i class="fas fa-solid fa-arrow-up-from-bracket"></i>
                             </a>
                         </span>
                     </div>
+                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
 
-                    <!-- File Input for Profile Picture -->
-                    <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="submitProfilePicForm(event)" />
+                    <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">
+                        <button type="submit" class="btn-verify rounded px-3 me-2">Submit</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                    </div>
                 </form>
                 <!--Verify Buttons -->
                 <div class="col-md-12 d-flex justify-content-center">
                     @if ($user->isVerified)
-                    <button class="btn-round fs-5 poppins-regular h-100 w-75 text-black" disabled>
+                    <button class="btn-round poppins-regular h-100 w-75 text-black" disabled>
                         <i class="fas fa-check-circle me-2" style="color: #8FE2ED;"></i>
                         Verified
                     </button>
@@ -58,7 +61,7 @@
                             Be a Client
                         </button>
                         @elseif($user->user_type === 'freelancer' && $user->client)
-                        <a href="{{route('client-to-freelancer')}}" class="btn btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
+                        <a href="{{route('client-to-freelancer')}}" class="btn-round h-100 w-75" style="background-color: #E1C1D7; color:#91216C">
                             <i class="fas fa-user me-2"></i>
                             Switch to Client
                         </a>
@@ -154,7 +157,7 @@
                                 <!-- Birthdate -->
                                 <label for="birthdate" class="form-label mb-0 mt-2">{{ __('Birthdate') }}</label>
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required  disabled
+                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled
                                     data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
@@ -391,41 +394,30 @@
 </div>
 
 <script>
-    function enableEditModeDesktop() {
-        // Enable all input fields in the form
-        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
-            // Keep email always disabled
-            if (input.id === 'email') {
-                return;
-            }
-
-            // Keep first_name and last_name disabled if the user is verified
-            if ((input.id === 'first_name' || input.id === 'last_name' || input.id === 'birthdate') && input.dataset.verified === 'true') {
-                return;
-            }
-
-            // Enable all other inputs
-            input.disabled = false;
+    function enableEditMode() {
+        // Enable form fields
+        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
+            element.removeAttribute('disabled');
         });
 
         // Show Save and Cancel buttons
-        document.getElementById('form-buttons-dt').style.display = 'block';
+        document.getElementById('form-buttons').style.display = 'block';
 
-        // Optionally hide the edit button to prevent further clicks
-        document.getElementById('edit-button-dt').style.display = 'none';
+        // Hide Edit button
+        document.getElementById('edit-button').style.display = 'none';
     }
 
-    function cancelEditBasicInfo() {
-        // Disable all input fields in the form
-        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
-            input.disabled = true;
+    function cancelEdit() {
+        // Disable form fields
+        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
+            element.setAttribute('disabled', 'true');
         });
 
         // Hide Save and Cancel buttons
-        document.getElementById('form-buttons-dt').style.display = 'none';
+        document.getElementById('form-buttons').style.display = 'none';
 
-        // Show the edit button again
-        document.getElementById('edit-button-dt').style.display = 'block';
+        // Show Edit button
+        document.getElementById('edit-button').style.display = 'block';
     }
 
     function togglePasswordVisibility(fieldId) {
@@ -469,36 +461,8 @@
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
     }
-
-    document.addEventListener('DOMContentLoaded', function() {
-        const showLimitMessageButton = document.getElementById('showLimitMessageButton');
-        const limitMessage = document.getElementById('limitMessage');
-
-        if (showLimitMessageButton) {
-            showLimitMessageButton.addEventListener('click', function() {
-                limitMessage.classList.toggle('d-none');
-            });
-        }
-    });
-
-    // Function to show the file input dialog
-    function showUploadOptions() {
-        document.getElementById('profilePicUpload').click();
-    }
-
-    // Function to preview and submit the form automatically upon selecting a file
-    function submitProfilePicForm(event) {
-        // Optional: Show a preview of the selected image before upload
-        const file = event.target.files[0];
-        if (file) {
-            const preview = document.getElementById('profilePicPreview');
-            preview.src = URL.createObjectURL(file);
-            preview.style.display = 'block';
-        }
-
-        // Submit the form automatically after image selection
-        document.getElementById('profilePicForm').submit();
-    }
 </script>
+
+
 
 @endsection

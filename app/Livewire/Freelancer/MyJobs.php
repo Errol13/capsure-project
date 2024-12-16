@@ -4,7 +4,7 @@ namespace App\Livewire\Freelancer;
 
 use App\Models\Freelancer;
 use App\Models\Hiring\Event;
-use App\Models\hiring\Job_application;
+use App\Models\Hiring\Job_application;
 use App\Models\Transaction\Transaction;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;

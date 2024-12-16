@@ -300,7 +300,7 @@
 
                             <hr class="mt-2 border-1 opacity-25">
                             <div class="d-flex align-items-center mt-3">
-                                <img src="{{ $event->client->user->profile_image_url }}" alt="Profile" class="rounded-circle me-2" width="50">
+                                <img src="{{ $event->client->user->profile_image_url }}" alt="Profile" class="rounded-circle me-2" width="50" height="50">
                                 <div>
                                     <h6 class="mb-0 poppins-medium">{{$event->client->user->fullName()}}</h6>
                                     <small class="text-muted">{{$event->client->user->city}}</small>
@@ -366,72 +366,74 @@
         </div>
     </section>
 
-    <section class="text-content py-4 my-4 rounded-4 justify-content-center" style="background-color: #fceef7;">
-        <div class="row d-block d-md-flex d-lg-flex justify-content-center">
-            <h1 class="letter-spacing text-center poppins-medium">How <span class="text-purple">Capsure</span> Works</h1>
-        </div>
-        <div class="row justify-content-center pb-2">
-            <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
-                <div class="row justify-content-center">
-                    <img src="assets/create.svg" style="height: 150px; width: 150px;">
-                    <strong class="fs-6 text-center poppins-medium">Create Your Account</strong>
-                    <p class="px-3 text-center poppins-regular note" style="font-size: small;">Sign up as a Client or Freelancer and verify your email to access all platform features.</p>
-                </div>
+    <section id="how-it-works" class="p-3">
+        <div class="text-content py-4 my-4 rounded-4 justify-content-center" style="background-color: #fceef7;">
+            <div class="row d-block d-md-flex d-lg-flex justify-content-center">
+                <h1 class="letter-spacing text-center poppins-medium">How <span class="text-purple">Capsure</span> Works</h1>
             </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
-                <div class="row justify-content-center">
-                    <img src="assets/build.svg" style="height: 150px; width: 150px;">
-                    <strong class="fs-6 text-center poppins-medium px-4">Build Your Profile & Post or Apply</strong>
-                    <p class="px-3 text-center poppins-regular note" style="font-size: small;">Clients can post events with detailed requirements, while freelancers can showcase their skills and apply for jobs that match their expertise.</p>
+            <div class="row justify-content-center pb-2">
+                <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
+                    <div class="row justify-content-center">
+                        <img src="assets/create.svg" style="height: 150px; width: 150px;">
+                        <strong class="fs-6 text-center poppins-medium">Create Your Account</strong>
+                        <p class="px-3 text-center poppins-regular note" style="font-size: small;">Sign up as a Client or Freelancer and verify your email to access all platform features.</p>
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
-                <div class="row justify-content-center">
-                    <img src="assets/review.svg" style="height: 150px; width: 150px;">
-                    <strong class="fs-6 text-center poppins-medium px-4">Manage Transactions & Leave Reviews</strong>
-                    <p class="px-3 text-center poppins-regular note" style="font-size: small;">Track payments, confirm transactions, and share reviews to build credibility and strengthen the Capsure community.</p>
+                <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
+                    <div class="row justify-content-center">
+                        <img src="assets/build.svg" style="height: 150px; width: 150px;">
+                        <strong class="fs-6 text-center poppins-medium px-4">Build Your Profile & Post or Apply</strong>
+                        <p class="px-3 text-center poppins-regular note" style="font-size: small;">Clients can post events with detailed requirements, while freelancers can showcase their skills and apply for jobs that match their expertise.</p>
+                    </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="row px-4 mx-1 justify-content-center">
-            <!-- Toggle Section 1 -->
-            <div class="toggle-section p-0 rounded-4">
-                <div class="toggle-header" onclick="toggleSection(this)">
-                    <span class="poppins-medium">For Client Guide</span>
-                    <span class="toggle-arrow"><i class="fas fa-angle-down"></i></span>
-                </div>
-                <div class="toggle-content p-4 poppins-regular" style="font-size: small;">
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 1: Sign Up as a Client</strong><br>
-                    by creating an account as a "Client." After registering, verify your email address to activate your account.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 2: Create Your Profile & Verify Your Account</strong><br>
-                    Fill in the required details to complete your profile and proceed with the verification process.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 3: Create Your Event Post</strong><br>
-                    Provide detailed information about your event, including the services you need. Whether it’s event planning, coordination, or specialized roles, clearly specify your requirements to help freelancers respond accurately.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 4: Hire or Negotiate</strong><br>
-                    Browse available freelancers or you can wait for applicants and choose one that meets your needs. You can hire a freelancer at their listed rate or negotiate the fee to reach a mutually agreeable arrangement.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 5: Manage Transactions & Leave Reviews</strong><br>
-                    Track your hired freelancers and payment status through the "My Transactions" page. After your event is completed, leave a review to help other clients and contribute to the community's growth.<br><br>
+                <div class="col-lg-3 col-md-4 col-sm-6 card rounded-4 m-2 text-center" style="border: none;">
+                    <div class="row justify-content-center">
+                        <img src="assets/review.svg" style="height: 150px; width: 150px;">
+                        <strong class="fs-6 text-center poppins-medium px-4">Manage Transactions & Leave Reviews</strong>
+                        <p class="px-3 text-center poppins-regular note" style="font-size: small;">Track payments, confirm transactions, and share reviews to build credibility and strengthen the Capsure community.</p>
+                    </div>
                 </div>
             </div>
 
-            <!-- Toggle Section 2 -->
-            <div class="toggle-section p-0 rounded-4">
-                <div class="toggle-header" onclick="toggleSection(this)">
-                    <span class="poppins-medium">For Freelancer Guide</span>
-                    <span class="toggle-arrow"><i class="fas fa-angle-down"></i></span>
+            <div class="row px-4 mx-1 justify-content-center">
+                <!-- Toggle Section 1 -->
+                <div class="toggle-section p-0 rounded-4">
+                    <div class="toggle-header" onclick="toggleSection(this)">
+                        <span class="poppins-medium">For Client Guide</span>
+                        <span class="toggle-arrow"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                    <div class="toggle-content p-4 poppins-regular" style="font-size: small;">
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 1: Sign Up as a Client</strong><br>
+                        by creating an account as a "Client." After registering, verify your email address to activate your account.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 2: Create Your Profile & Verify Your Account</strong><br>
+                        Fill in the required details to complete your profile and proceed with the verification process.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 3: Create Your Event Post</strong><br>
+                        Provide detailed information about your event, including the services you need. Whether it’s event planning, coordination, or specialized roles, clearly specify your requirements to help freelancers respond accurately.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 4: Hire or Negotiate</strong><br>
+                        Browse available freelancers or you can wait for applicants and choose one that meets your needs. You can hire a freelancer at their listed rate or negotiate the fee to reach a mutually agreeable arrangement.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 5: Manage Transactions & Leave Reviews</strong><br>
+                        Track your hired freelancers and payment status through the "My Transactions" page. After your event is completed, leave a review to help other clients and contribute to the community's growth.<br><br>
+                    </div>
                 </div>
-                <div class="toggle-content p-4 poppins-regular" style="font-size: small;">
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 1: Sign Up as a Freelancer</strong><br>
-                    Create an account as a "Freelancer" by providing your job role.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 2: Build Your Profile & Portfolio</strong><br>
-                    Enhance your profile by adding details about your skills.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 3: Verify Your Account</strong><br>
-                    Complete the verification process to establish trust and authenticity as a freelancer on the platform.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 4: Apply for Jobs in Events</strong><br>
-                    Browse job event postings and apply for events that match your expertise. Once you submit your application, wait for the client’s response to proceed with negotiations or hiring.<br><br>
-                    <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 5: Manage Transactions & Leave Reviews</strong><br>
-                    Track your client’s payment and confirm through the "My Transactions" page. After completing a job, leave a review to enhance your reputation and help the client gain credibility.<br><br>
+
+                <!-- Toggle Section 2 -->
+                <div class="toggle-section p-0 rounded-4">
+                    <div class="toggle-header" onclick="toggleSection(this)">
+                        <span class="poppins-medium">For Freelancer Guide</span>
+                        <span class="toggle-arrow"><i class="fas fa-angle-down"></i></span>
+                    </div>
+                    <div class="toggle-content p-4 poppins-regular" style="font-size: small;">
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 1: Sign Up as a Freelancer</strong><br>
+                        Create an account as a "Freelancer" by providing your job role.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 2: Build Your Profile & Portfolio</strong><br>
+                        Enhance your profile by adding details about your skills.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 3: Verify Your Account</strong><br>
+                        Complete the verification process to establish trust and authenticity as a freelancer on the platform.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 4: Apply for Jobs in Events</strong><br>
+                        Browse job event postings and apply for events that match your expertise. Once you submit your application, wait for the client’s response to proceed with negotiations or hiring.<br><br>
+                        <strong class="fs-6 txt-purple poppins-medium"><i class="fas fa-thumbtack text-warning me-1"></i> Step 5: Manage Transactions & Leave Reviews</strong><br>
+                        Track your client’s payment and confirm through the "My Transactions" page. After completing a job, leave a review to enhance your reputation and help the client gain credibility.<br><br>
+                    </div>
                 </div>
             </div>
         </div>
