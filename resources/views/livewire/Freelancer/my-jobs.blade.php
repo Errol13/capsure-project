@@ -6,35 +6,37 @@
         <div class="card my-4 p-0 rounded-4">
             <div class="container">
                 <!-- Navigations -->
-                <ul class="card-header nav border-bottom row row-cols-1 row-cols-md-3 justify-content-between px-0 poppins-medium mb-3 rounded-top-4" style="background-color:#fceef7;">
+                <ul class="card-header nav border-bottom row row-cols-1 row-cols-md-3 justify-content-between px-0 poppins-medium mb-3 rounded-top-4"
+                    style="background-color: #fceef7; position: sticky; top: 0; z-index: 1020;">
                     <li class="nav-item col text-start mb-2 mb-md-0">
                         <a wire:click="$set('activeTab', 'application')"
-                        class="nav-link {{ $activeTab === 'application' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
-                            style="background-color: white;" data-bs-toggle="tab" href="#application"
-                            aria-controls="application" aria-selected="true">
+                            class="nav-link {{ $activeTab === 'application' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
+                            style="background-color: white;" data-bs-toggle="tab" href="#application" aria-controls="application"
+                            aria-selected="true">
                             APPLICATION
                             <span class="text-black note text-muted">({{$appliedJobsCount}})</span>
                         </a>
                     </li>
                     <li class="nav-item col text-center mb-2 mb-md-0">
                         <a wire:click="$set('activeTab', 'hiring-request')"
-                        class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
-                            style="background-color: white;" data-bs-toggle="tab" href="#hiring-request"
-                            aria-controls="hiring-request" aria-selected="false">
+                            class="nav-link {{ $activeTab === 'hiring-request' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
+                            style="background-color: white;" data-bs-toggle="tab" href="#hiring-request" aria-controls="hiring-request"
+                            aria-selected="false">
                             HIRE REQUEST
                             <span class="text-black note text-muted">({{$hiringRequestsCount}})</span>
                         </a>
                     </li>
                     <li class="nav-item col text-center">
                         <a wire:click="$set('activeTab', 'recommendation')"
-                        class="nav-link {{ $activeTab === 'recommendation' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
-                            style="background-color: white;" data-bs-toggle="tab" href="#recommendation"
-                            aria-controls="recommendation" aria-selected="false">
+                            class="nav-link {{ $activeTab === 'recommendation' ? 'active' : 'inactive' }} rounded-top-3 px-4 letter-spacing d-flex justify-content-between align-items-center"
+                            style="background-color: white;" data-bs-toggle="tab" href="#recommendation" aria-controls="recommendation"
+                            aria-selected="false">
                             RECOMMENDATION
                             <span class="text-black note text-muted">({{$recommendationsCount}})</span>
                         </a>
                     </li>
                 </ul>
+
 
                 <div class="tab-content">
                     <!-- Application Content ----------------------------------------------------------------------------------------------------------------------------------->

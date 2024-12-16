@@ -205,13 +205,15 @@
                 <div class="col text-center">
                     @auth
                     @if (Auth::user()->user_type == 'client')
-                    <a class="nav-link" href="{{ url('/client-homepage') }}" style="font-size:x-small;">
-                        <i class="fas fa-home text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('client-homepage') ? 'current' : '' }}"
+                        href="{{ url('/client-homepage') }}" style="font-size:x-small;">
+                        <i class="fas fa-home fs-6" style="color:gray;"></i>
                         <div>Services</div>
                     </a>
                     @elseif (Auth::user()->user_type == 'freelancer')
-                    <a class="nav-link" href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
-                        <i class="fas fa-home text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('freelancer-homepage') ? 'current' : '' }}"
+                        href="{{ url('/freelancer-homepage') }}" style="font-size:x-small;">
+                        <i class="fas fa-home fs-6 txt-"></i>
                         <div>Job Postings</div>
                     </a>
                     @endif
@@ -221,44 +223,47 @@
                 @auth
                 @if (Auth::user()->user_type == 'client')
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ route ('client-events') }}" style="font-size:x-small;">
-                        <i class="fas fa-calendar-days text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('client-events') ? 'current' : '' }}"
+                        href="{{ route('client-events') }}" style="font-size:x-small;">
+                        <i class="fas fa-calendar-days fs-6"></i>
                         <div>Event Post</div>
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ url('/client-transaction') }}" style="font-size:x-small;">
-                        <i class="fas fa-handshake text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('client-transaction') ? 'current' : '' }}"
+                        href="{{ url('/client-transaction') }}" style="font-size:x-small;">
+                        <i class="fas fa-handshake fs-6"></i>
                         <div>Transaction</div>
                     </a>
                 </div>
 
-                @php
-                $unreadCount = auth()->user()->unreadNotifications->count();
-                @endphp
                 <div class="col text-center">
-                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
+                    <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
+                        href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
+                        <i class="fas fa-bell fs-6"></i>
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         <div>Notification</div>
                     </a>
                 </div>
                 @elseif (Auth::user()->user_type == 'freelancer')
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ route('my-jobs') }}" style="font-size:x-small;">
-                        <i class="fas fa-briefcase text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('my-jobs') ? 'current' : '' }}"
+                        href="{{ route('my-jobs') }}" style="font-size:x-small;">
+                        <i class="fas fa-briefcase fs-6"></i>
                         <div>Jobs</div>
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="{{ route('freelancer-transaction') }}" style="font-size:x-small;">
-                        <i class="fas fa-handshake text-purple fs-6"></i>
+                    <a class="nav-link {{ request()->is('freelancer-transaction') ? 'current' : '' }}"
+                        href="{{ route('freelancer-transaction') }}" style="font-size:x-small;">
+                        <i class="fas fa-handshake fs-6"></i>
                         <div>Transaction</div>
                     </a>
                 </div>
                 <div class="col text-center">
-                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
+                    <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
+                        href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
+                        <i class="fas fa-bell fs-6"></i>
                         <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
                         <div>Notification</div>
                     </a>
@@ -268,9 +273,24 @@
             </div>
         </div>
     </nav>
-
     @livewireScripts
+    <style>
+        .nav-link.current i {
+            color: #E1C1D7;
+        }
 
+        .nav-link.current div {
+            color: #91216c;
+        }
+
+        .navbar .fa-calendar-days,
+        .navbar .fa-home,
+        .navbar .fa-handshake,
+        .navbar .fa-bell,
+        .navbar .fa-briefcase {
+            color:#91216c;
+        }
+    </style>
 </body>
 
 </html>

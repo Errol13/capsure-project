@@ -462,7 +462,4 @@
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
     }
 </script>
-
-
-
 @endsection
