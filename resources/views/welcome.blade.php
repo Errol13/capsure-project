@@ -101,7 +101,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <a href="#" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -113,7 +113,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -125,7 +125,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -137,7 +137,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +153,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -165,7 +165,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -177,7 +177,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -189,7 +189,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -205,7 +205,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -217,7 +217,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -229,7 +229,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                             <div class="col-6 col-md-4 col-lg-3">
@@ -241,7 +241,7 @@
                                     <div class="d-flex align-items-center mt-1">
                                         <span class="text-muted mb-2">No ratings yet.</span>
                                     </div>
-                                    <button class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</button>
+                                    <a href="{{ route('login') }}" class="mb-2 py-1 btn-seemore fs-6 poppins-regular w-75 border-0 text-nowrap rounded-4">View Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -342,7 +342,7 @@
                             </div>
                             <hr class="mt-2 border-1 opacity-25">
                             <div class="d-flex align-items-center mt-3">
-                                <img src="https://via.placeholder.com/50" alt="Profile" class="rounded-circle me-2" width="50">
+                                <img src="assets/default.svg" alt="Profile" class="rounded-circle me-2" width="50">
                                 <div>
                                     <h6 class="mb-0 poppins-medium">Jane Doe {{$index}}</h6>
                                     <small class="text-muted">New York City</small>
@@ -354,7 +354,7 @@
                                 </div>
                             </div>
                             <div class="d-flex align-items-center mt-3">
-                                <a href="#" class="btn-seeprof" style="background-color: #fceef7;border:none;">Interested</a>
+                                <a href="{{ route('login') }}" class="btn-seeprof" style="background-color: #fceef7;border:none;">Interested</a>
                             </div>
                         </div>
                     </div>

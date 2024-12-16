@@ -65,7 +65,7 @@ class UserList extends Component
 
         // If no conversations match, return an empty array
         if (empty($this->conversations)) {
-            $this->conversations = []; // Empty array if no results found
+            $this->conversations = []; 
         }
     }
 

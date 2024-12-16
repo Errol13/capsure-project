@@ -23,7 +23,7 @@
                                 {{$team->team_name}}
                             </h5>
                             @if($allMembersVerified)
-                            <small style="text-align:end;"> All members verified </small>
+                            <small style="text-align:end;" class="ms-1"> <i class="fas fa-check-circle me-2" style="color: #8FE2ED;"></i>All members verified </small>
                             @endif
                         </div>
 
