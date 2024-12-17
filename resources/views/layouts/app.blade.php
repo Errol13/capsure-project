@@ -225,7 +225,7 @@
                     @if (Auth::user()->user_type == 'client')
                     <a class="nav-link {{ request()->is('client-homepage') ? 'current' : '' }}"
                         href="{{ url('/client-homepage') }}" style="font-size:x-small;">
-                        <i class="fas fa-home fs-6" style="color:gray;"></i>
+                        <i class="fas fa-home fs-6"></i>
                         <div>Services</div>
                     </a>
                     @elseif (Auth::user()->user_type == 'freelancer')
@@ -247,8 +247,8 @@
                         <div>Event Post</div>
                     </a>
                 </div>
-		
-		        @php
+
+                @php
                 $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
                 <div class="col text-center">
@@ -265,7 +265,8 @@
                 <div class="col text-center">
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6"></i>                        @if($unreadCount > 0)
+                        <i class="fas fa-bell fs-6"></i>
+                        @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
                         <div>Notification</div>
