@@ -43,28 +43,23 @@ Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->
 
 
 #suspended middleware
-Route::middleware([CheckSuspendedUser::class])->group(function () {
+Route::middleware(['auth', 'verified', CheckSuspendedUser::class])->group(function () {
 
     #Homepages
     Route::get('/client-homepage', [App\Http\Controllers\HomeController::class, 'index'])
-        ->middleware(['auth', 'verified'])
         ->name('client-homepage');
 
     Route::get('/freelancer-homepage', [App\Http\Controllers\HomeController::class, 'index'])
-        ->middleware(['auth', 'verified'])
         ->name('freelancer-homepage');
 
     #become client and freelancer, also switches between
     Route::get('/freelancer/toclient', [App\Http\Controllers\HomeController::class, 'freelancerToClient'])
-        ->middleware(['auth', 'verified'])
         ->name('freelancer-to-client');
 
     Route::get('/client/tofreelancer', [App\Http\Controllers\HomeController::class, 'clientToFreelancer'])
-        ->middleware(['auth', 'verified'])
         ->name('client-to-freelancer');
 
     Route::post('/become/freelancer/form', [App\Http\Controllers\HomeController::class, 'becomeFreelancer'])
-        ->middleware(['auth', 'verified'])
         ->name('be-freelancer-form');
 
     #Profile
