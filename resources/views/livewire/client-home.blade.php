@@ -106,7 +106,7 @@
 
         <!-- Pagination Links -->
         <div class="mt-4 d-flex justify-content-center">
-            {{ $users->links('vendor.pagination.bootstrap-4') }}
+            {{ $users->links('vendor.livewire.bootstrap') }}
         </div>
     </div>
     <hr class="custom-hr py-4 my-4">
