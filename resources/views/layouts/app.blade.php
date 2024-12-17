@@ -247,6 +247,10 @@
                         <div>Event Post</div>
                     </a>
                 </div>
+		
+		@php
+                $unreadCount = auth()->user()->unreadNotifications->count();
+                @endphp
                 <div class="col text-center">
                     <a class="nav-link {{ request()->is('client-transaction') ? 'current' : '' }}"
                         href="{{ url('/client-transaction') }}" style="font-size:x-small;">
@@ -256,15 +260,9 @@
                 </div>
 
                 <div class="col text-center">
-<<<<<<< HEAD
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6"></i>
-=======
-                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
-                        @if($unreadCount > 0)
->>>>>>> 18c1f543a4d43e412455efc9fbf1f6bc19b0e46e
+                        <i class="fas fa-bell fs-6"></i>                        @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
                         <div>Notification</div>
@@ -289,18 +287,12 @@
                 $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
                 <div class="col text-center">
-<<<<<<< HEAD
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
                         <i class="fas fa-bell fs-6"></i>
-                        <sup class="badge bg-danger" style="border-radius: 50%;">1</sup>
-=======
-                    <a class="nav-link" href="{{route('allNotifications.show')}}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6" style="color: #91216C;"></i>
                         @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
->>>>>>> 18c1f543a4d43e412455efc9fbf1f6bc19b0e46e
                         <div>Notification</div>
                     </a>
                 </div>
