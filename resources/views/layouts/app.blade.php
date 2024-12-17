@@ -247,6 +247,10 @@
                         <div>Event Post</div>
                     </a>
                 </div>
+		
+		        @php
+                $unreadCount = auth()->user()->unreadNotifications->count();
+                @endphp
                 <div class="col text-center">
                     <a class="nav-link {{ request()->is('client-transaction') ? 'current' : '' }}"
                         href="{{ url('/client-transaction') }}" style="font-size:x-small;">
@@ -261,8 +265,7 @@
                 <div class="col text-center">
                     <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6"></i>
-                        @if($unreadCount > 0)
+                        <i class="fas fa-bell fs-6"></i>                        @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
                         <div>Notification</div>
