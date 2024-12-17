@@ -38,7 +38,6 @@ class HomeController extends Controller
                 // Redirect unverified users to the email verification notice
                 return redirect()->route('verification.notice');
             }
-            
             if ($user->user_type == 'client') {
                 // Load client-specific content
                 $users = User::where('user_type', 'freelancer')
