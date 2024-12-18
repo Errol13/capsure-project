@@ -8,6 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <link rel="shortcut icon"  type="image/png" sizes="196x196" href="{{ asset('assets/logotab.png') }}">
     <title>Capsure</title>
 
     <!-- Fonts -->

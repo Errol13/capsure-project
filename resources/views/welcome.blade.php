@@ -528,7 +528,6 @@
     }
 
     .menu-item {
-        cursor: pointer;
         font-family: 'Poppins', sans-serif;
         font-size: 12px;
         color: #5c005c;
