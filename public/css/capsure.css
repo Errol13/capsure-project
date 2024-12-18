@@ -1004,7 +1004,7 @@ tbody td:nth-child(5) {
 }
 
 /* Default bell color */
-.nav-link .fa-bell,
+.nav-link .liv-notif,
 .nav-link .fa-comment,
 .nav-link .fa-bookmark {
     color: darkgray;
@@ -1012,8 +1012,8 @@ tbody td:nth-child(5) {
 }
 
 /* Bell color when hovered or focused */
-.nav-link:hover .fa-bell,
-.nav-link:focus .fa-bell
+.nav-link:hover .liv-notif,
+.nav-link:focus .liv-notif
  {
     color: #91216C;
     /* Change to your desired color */

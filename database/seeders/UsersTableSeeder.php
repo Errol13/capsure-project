@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
         $client = [
             'first_name' => 'Will',
             'last_name' => 'Smith',
-            'email' => 'willsmith@gmail.com',
+            'email' => 'willsmith@example.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password 1234!'),
             'date_joined' => Carbon::now(),
@@ -74,7 +74,7 @@ class UsersTableSeeder extends Seeder
         for ($i = 3; $i <= 32; $i++) {
             $firstName = "Daisy";
             $lastName = "Smith" . $i;
-            $email = strtolower($firstName) . $i . "@gmail.com";
+            $email = strtolower($firstName) . $i . "@example.com";
             $birthdate = Carbon::now()->subYears(rand(20, 40))->format('Y-m-d'); // Random age between 20 and 40
             $age = Carbon::parse($birthdate)->age;
             $isNumberVerified = false;

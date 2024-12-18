@@ -49,14 +49,14 @@
                         </div>
                     </div>
 
-                    <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
-                        <div class="row">
-                            <div class="col-5">
+                    <div class="form-group mb-3 open-sans-reg" style="color: #91216C; white-space:nowrap;">
+                        <div class="row d-flex justify-content-between align-items-center">
+                            <div class="col-5 fs-sm">
                                 <label for="start_date">Start Date & Time:</label>
                                 <input type="datetime-local" id="start_date" class="form-control" wire:model="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
                                 @error('start_date') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="px-4 col-1 pt-4">-</div>
+                            <div class="px-1 col-auto pt-4">-</div>
                             <div class="col-5">
                                 <label for="end_date">End Date & Time:</label>
                                 <input type="datetime-local" id="end_date" class="form-control" wire:model="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
@@ -103,7 +103,7 @@
                         <div class="table-responsive">
                             <table class="table table-borderless create-event-table  ">
                                 <thead>
-                                    <tr class="text-center">
+                                    <tr class="text-center" style="white-space:nowrap;">
                                         <th scope="col col-sm-auto">Job Category</th>
                                         <th scope="col col-sm-auto">Service Needed</th>
                                         <th scope="col col-sm-auto">No. of People</th>
@@ -112,7 +112,7 @@
                                 </thead>
                                 <tbody>
                                     @foreach($jobs as $index => $job)
-                                    <tr style="border-bottom: 0.5px solid; border-color:lightgray;">
+                                    <tr style="border-bottom: 0.5px solid; border-color:lightgray; ">
                                         <td class="align-middle my-1 py-1 px-2">
                                             <select id="job_category" style="background-color:white;" class="form-select w-100" wire:model="jobs.{{ $index }}.job_category" wire:change="updateServiceDropdown({{ $index }})">
                                                 <option value="">Select Category</option>

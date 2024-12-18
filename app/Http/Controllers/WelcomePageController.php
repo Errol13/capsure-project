@@ -13,16 +13,16 @@ class WelcomePageController extends Controller
 
     public function showWelcomePage()
     {
-        if(Auth::check()){
+        if (Auth::check()) {
             $user = Auth::user();
-            if($user->user_type === 'client' || $user->user_type === 'freelancer'){
+            if ($user->user_type === 'client' || $user->user_type === 'freelancer') {
                 return redirect('/home');
-            } elseif($user->user_type === 'admin'){
+            } elseif ($user->user_type === 'admin') {
                 return redirect()->route('filament.admin.pages.dashboard');
             }
-           
         }
-        $freelancers = Freelancer::with(['user', 'services'])->orderBy('avg_rating', 'desc')
+        $freelancers = Freelancer::with(['user', 'services'])->where('user_id', '>', '30')
+            ->orderBy('avg_rating', 'desc')
             ->orderBy('number_of_projects', 'desc')
             ->orderBy('user_id', 'asc')
             ->take(12)

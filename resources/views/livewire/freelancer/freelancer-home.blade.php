@@ -77,7 +77,7 @@
 
         <!-- Pagination -->
         <div class=" mt-4 d-flex justify-content-center">
-            {{ $events->links('vendor.pagination.bootstrap-4') }}
+            {{ $events->links('vendor.livewire.bootstrap') }}
         </div>
 
     </div>

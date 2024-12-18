@@ -18,6 +18,10 @@ class CheckSuspendedUser
     {
          // Check if the user is authenticated and suspended
          if (Auth::check() && Auth::user()->suspension?->isSuspended) {
+
+              if ($request->routeIs('livewire.update')) {
+        return $next($request);
+    }
             return redirect()->route('suspended');
         }
         

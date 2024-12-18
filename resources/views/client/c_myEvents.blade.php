@@ -5,13 +5,15 @@
     <div class="row">
         <div class="col-12">
             <div class="row d-flex align-items-center">
-                <div class="col-auto mt-3 poppins-medium">
-                    <h1>My Posts</h1>
-                </div>
-                <div class="col-auto">
-                    <a href="{{ url('/events') }}" class="btn btn-primary rounded-5" style="background-color:#8FE2ED; border:none; color:black;">
-                        <i class="fas fa-plus"></i>
-                    </a>
+                <div class="d-flex justify-content-start align-items-center">
+                    <div class="col-auto poppins-medium me-2">
+                        <h1>My Posts</h1>
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ url('/events') }}" class="btn btn-primary rounded-5 mb-2" style="background-color:#8FE2ED; border:none; color:black;">
+                            <i class="fas fa-plus"></i>
+                        </a>
+                    </div>
                 </div>
                 <div class="col ms-auto text-end">
                     <div class="dropdown">

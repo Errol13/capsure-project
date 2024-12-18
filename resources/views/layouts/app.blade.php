@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <link rel="shortcut icon"  type="image/png" sizes="196x196" href="{{ asset('assets/logotab.png') }}">
+    <link rel="shortcut icon" type="image/png" sizes="196x196" href="{{ asset('assets/logotab.png') }}">
     <title>Capsure</title>
 
     <!-- Fonts -->
@@ -226,7 +226,7 @@
                     @if (Auth::user()->user_type == 'client')
                     <a class="nav-link {{ request()->is('client-homepage') ? 'current' : '' }}"
                         href="{{ url('/client-homepage') }}" style="font-size:x-small;">
-                        <i class="fas fa-home fs-6" style="color:gray;"></i>
+                        <i class="fas fa-home fs-6"></i>
                         <div>Services</div>
                     </a>
                     @elseif (Auth::user()->user_type == 'freelancer')
@@ -248,8 +248,8 @@
                         <div>Event Post</div>
                     </a>
                 </div>
-		
-		        @php
+
+                @php
                 $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
                 <div class="col text-center">
@@ -264,9 +264,10 @@
                 $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
                 <div class="col text-center">
-                    <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
+                    <a class="nav-link {{ Route::currentRouteName() === 'allNotifications.show' ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6"></i>                        @if($unreadCount > 0)
+                        <i class="notif-class fas fa-bell fs-6"></i>
+                        @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
                         <div>Notification</div>
@@ -291,22 +292,34 @@
                 $unreadCount = auth()->user()->unreadNotifications->count();
                 @endphp
                 <div class="col text-center">
-                    <a class="nav-link {{ request()->is('allNotifications.show') ? 'current' : '' }}"
+                    <a class="nav-link {{ Route::currentRouteName() === 'allNotifications.show' ? 'current' : '' }}"
                         href="{{ route('allNotifications.show') }}" style="font-size:x-small;">
-                        <i class="fas fa-bell fs-6"></i>
+                        <i class="notif-class fas fa-bell fs-6"></i>
                         @if($unreadCount > 0)
                         <sup class="badge bg-danger" style="border-radius: 50%;">{{$unreadCount}}</sup>
                         @endif
                         <div>Notification</div>
                     </a>
                 </div>
+
                 @endif
                 @endauth
             </div>
         </div>
     </nav>
-    @livewireScripts
     <style>
+        .navbar .fa-calendar-days,
+        .navbar .fa-home,
+        .navbar .notif-class.fa-bell,
+        .navbar .fa-handshake,
+        .navbar .fa-briefcase {
+            color: #91216c;
+        }
+
+        .nav-link.current .notif-class {
+            color: #E1C1D7;
+        }
+
         .nav-link.current i {
             color: #E1C1D7;
         }
@@ -314,15 +327,10 @@
         .nav-link.current div {
             color: #91216c;
         }
-
-        .navbar .fa-calendar-days,
-        .navbar .fa-home,
-        .navbar .fa-handshake,
-        .navbar .fa-bell,
-        .navbar .fa-briefcase {
-            color: #91216c;
-        }
     </style>
+
+    @livewireScripts
+
 </body>
 
 </html>

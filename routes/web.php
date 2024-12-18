@@ -6,6 +6,7 @@ use App\Http\Controllers\FreelancerController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Profile\CertificatesController;
 use App\Http\Controllers\Profile\SettingsController;
+use App\Http\Controllers\SendGridController;
 use App\Http\Controllers\Team\TeamController;
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Livewire\AddPortfolio;
@@ -39,7 +40,6 @@ Route::post('/register/freelancer', [RegisterController::class, 'registerFreelan
 #User Auth Routes
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/choose', [App\Http\Controllers\ChooseController::class, 'index'])->name('choose');
-
 
 
 #suspended middleware
@@ -208,3 +208,4 @@ Route::middleware(['auth', 'verified', CheckSuspendedUser::class])->group(functi
 Route::get('/suspended', function () {
     return view('suspended_notice'); // A view that informs the user they are suspended
 })->name('suspended');
+

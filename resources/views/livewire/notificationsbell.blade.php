@@ -1,7 +1,7 @@
 <div>
     <li class="nav-item dropdown mx-1 me-md-0" id="nav-item-mobile">
         <a class="nav-link dropdown-toggle-notif" href="#" id="notificationDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <i class="fas fa-bell"></i>
+            <i class="fas fa-bell liv-notif"></i>
             @if($notifications->count() > 0)
                 <sup class="badge bg-danger" style="border-radius: 50%;">{{ $notifications->count() }}</sup>
             @endif
