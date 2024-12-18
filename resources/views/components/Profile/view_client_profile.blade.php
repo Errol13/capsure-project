@@ -133,10 +133,12 @@
                         <i class="fas fa-sharp fa-thin fa-envelope text-purple"></i>
                         <small class="text-start ms-2">{{$user->email}}</small>
                     </div>
+                    @if($user->contact_number)
                     <div class="col-12 d-flex align-items-center justify-content-start">
                         <i class=" fas fa-solid fa-phone text-purple"></i>
                         <small class="text-start ms-2">{{$user->contact_number}}</small>
                     </div>
+                    @endif
                 </div>
 
                 <p class="mt-3 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
