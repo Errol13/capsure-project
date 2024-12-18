@@ -16,15 +16,16 @@ class CheckSuspendedUser
      */
     public function handle(Request $request, Closure $next): Response
     {
-         // Check if the user is authenticated and suspended
-         if (Auth::check() && Auth::user()->suspension?->isSuspended) {
 
-              if ($request->routeIs('livewire.update')) {
-        return $next($request);
-    }
+        if (!$request->isMethod('get')) {
+            return $next($request); // Skip middleware for non-GET methods
+        }
+
+        // Check if the user is authenticated and suspended
+        if (Auth::check() && Auth::user()->suspension?->isSuspended) {
             return redirect()->route('suspended');
         }
-        
+
 
         return $next($request);
     }

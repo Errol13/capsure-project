@@ -48,17 +48,17 @@ class UsersTableSeeder extends Seeder
         $birthdateClient = Carbon::now()->subYears(rand(20, 40))->format('Y-m-d'); // Random age between 20 and 40
 
         $client = [
-            'first_name' => 'Will',
-            'last_name' => 'Smith',
-            'email' => 'willsmith@example.com',
+            'first_name' => 'Errol John',
+            'last_name' => 'Celis',
+            'email' => 'erroljohncelis13@gmail.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password 1234!'),
             'date_joined' => Carbon::now(),
             'birthdate' => Carbon::now()->subYears(rand(20, 40))->format('Y-m-d'),
             'age' =>  Carbon::parse($birthdateClient)->age,
-            'street' => rand(100, 999) . ' Random St',
-            'barangay' => 'Barangay ' . rand(1, 5),
-            'city' => 'Cityville',
+            'street' => 'Zone 10B',
+            'barangay' => 'Caranan ' . rand(1, 5),
+            'city' => 'Naga City',
             'contact_number' => '09' . rand(100000000, 999999999),
             'isNumberVerified' => true,
             'profile_image' => 'assets/default.svg',
