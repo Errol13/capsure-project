@@ -58,8 +58,8 @@
                                 <option value="{{ $job->job_id }}">
                                     {{ $job->service_needed }}
                                 </option>
-                                @else 
-                                <!--otherwise disable it --> 
+                                @else
+                                <!--otherwise disable it -->
                                 <option value="{{ $job->job_id }}" disabled>
                                     {{ $job->service_needed }}
                                 </option>
@@ -146,7 +146,7 @@
     function updateFeeRecomm(uniqueId, durationInHours) {
 
         const selectElement = document.getElementById('roleHireRecomm-' + uniqueId);
-    
+
         if (!selectElement) {
             // console.error('Select element not found for roleHireRecomm-' + uniqueId);
             return;
@@ -160,7 +160,7 @@
         const serviceTitle = selectedOption.getAttribute('data-job-title');
 
         let totalFee = 0;
-       
+
 
 
         // Check fee type and calculate total fee
@@ -183,7 +183,7 @@
         });
 
 
-        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
+        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: <span style="color: mediumseagreen;">₱' + formattedFee + '</span>';
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
         document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
 
@@ -283,6 +283,9 @@
 
             const formData = new FormData(form); // Create a FormData object from the form
 
+            const confirmButton = document.getElementById('hireRecommSubmit-<?php echo $uniqueId; ?>');
+            confirmButton.innerHTML = '<span id="loading-spinner" class="spinner-border spinner-border-sm d-inline-block me-1" role="status" aria-hidden="true"></span> Sending';
+            confirmButton.disabled = true;
             fetch('/hire/applicant', {
                     method: 'POST',
                     body: formData,
@@ -306,17 +309,24 @@
                     if (data) {
                         // Handle the JSON response
                         if (data.success) {
+                            confirmButton.innerHTML = 'Send Hire Request';
                             alert(data.success);
                             window.location.reload(); // Reload the page on success
                         } else if (data.error) {
                             alert("Error: " + data.error); // Show error message
+                            confirmButton.innerHTML = 'Send Hire Request';
+                            confirmButton.disabled = false;
                         }
                     } else {
                         // If no data (not JSON), reload the page
                         window.location.reload();
+                        confirmButton.innerHTML = 'Send Hire Request';
+                        confirmButton.disabled = false;
                     }
                 })
                 .catch(error => {
+                    confirmButton.innerHTML = 'Send Hire Request';
+                    confirmButton.disabled = false;
                     alert('An unexpected error occurred.'); // Generic error message
                 });
         });

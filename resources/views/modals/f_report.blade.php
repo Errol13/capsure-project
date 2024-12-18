@@ -56,12 +56,12 @@
                             <small class="form-text text-muted">Upload (.jpg or .png format)</small>
                         </div>
                     </div>
-                    <input type="hidden" name="reported_user_id" value="{{ $reportee->id }}">
-                    <input type="hidden" name="reporter_id" value="{{ auth()->user()->id }}">
+                    <input type="hidden" name="reported_user_id" value="{{ $reportee->id }}"></input>
+                    <input type="hidden" name="reporter_id" value="{{ auth()->user()->id }}"></input>
                 </div>
                 <div class="modal-footer">
-                    <span id="loading-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
-                    <button type="submit" id="report-button" class="btn btn-secondary" disabled>Submit</button>
+                    <button type="submit" id="report-button" class="btn btn-secondary" disabled> <span id="loading-spinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
+                        Submit</button>
                 </div>
             </form>
         </div>
@@ -174,9 +174,14 @@
                 .then(data => {
                     // Check if the submission was successful
                     if (data.success) {
+
+                        //hide the spinner
+                        spinner.classList.add('d-none'); 
+
                         // Reset the form
                         document.getElementById('report-id').reset();
                         checkTheFields();
+
 
                         // Get the modal element
                         var myModal = new bootstrap.Modal(document.getElementById('reportProfileModal'));
@@ -191,11 +196,19 @@
                             location.reload();
                         }, 300);
                     } else {
+                         //hide the spinner
+                         spinner.classList.add('d-none');
+
                         alert('There was an issue with your submission. Please try again.');
+                       
                     }
                 })
                 .catch(error => {
+                    //hide the spinner
+                    spinner.classList.add('d-none');
+                    
                     alert('An error occurred. Please try again later.');
+                    
                 });
         });
 

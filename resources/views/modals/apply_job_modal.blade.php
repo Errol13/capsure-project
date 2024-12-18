@@ -8,7 +8,7 @@
             </div>
 
             <div class="modal-body pt-0">
-            <span class="note">Please select a Job you want to apply for and confirm the application.</span>
+                <span class="note">Please select a Job you want to apply for and confirm the application.</span>
 
                 <form action="{{ route('job.apply') }}" method="POST" id="apply-job-form" class="mt-4">
                     @csrf
@@ -148,6 +148,8 @@
             const formData = new FormData(form);
             const applyJobUrl = form.action; // Get the form action URL
 
+            confirmButton.innerHTML = '<span id="loading-spinner" class="spinner-border spinner-border-sm d-inline-block me-1" role="status" aria-hidden="true"></span> Sending';
+            confirmButton.disabled = true;
             fetch(applyJobUrl, {
                     method: 'POST',
                     body: formData,
@@ -165,14 +167,20 @@
 
                     const modalMessage = document.getElementById('modalMessage');
                     if (data.error) {
+                        confirmButton.innerHTML = 'Confirm Application';
+                        confirmButton.disabled = false;
                         modalMessage.innerHTML = '<p class="text-danger">' + data.error + '</p>';
                         $('#responseModal').modal('show'); // Show the error modal
                     } else if (data.warning) {
+                        confirmButton.innerHTML = 'Confirm Application';
+                        confirmButton.disabled = false;
                         modalMessage.innerHTML = '<p class="text-warning">' + data.warning + '</p>';
                         $('#responseModal').modal('show'); // Show the warning modal
 
                     } else if (data.conflict) {
-                       
+
+                        confirmButton.innerHTML = 'Confirm Application';
+                        confirmButton.disabled = false;
                         modalMessage.innerHTML = '<p class="text-danger">' + data.conflict + '</p>' +
                             '<p class="fs-6">' + 'Conflicting Event: ' + data.event + '</p>' +
                             '<p class="fs-6">' + 'Event Start Date: ' + data.start_date + '</p>' +
@@ -184,6 +192,8 @@
                         $('#responseModal').modal('show'); // Show the warning modal
 
                     } else if (data.success) {
+                        confirmButton.innerHTML = 'Confirm Application';
+
                         modalMessage.innerHTML = '<p class="text-success">' + data.success + '</p>';
 
                         // Close the applyJobModal
@@ -199,6 +209,8 @@
                     }
                 })
                 .catch(error => {
+                    confirmButton.innerHTML = 'Confirm Application';
+                    confirmButton.disabled = false;
                     alert('An unexpected error occurred.');
                 });
         });

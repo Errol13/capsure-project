@@ -71,19 +71,16 @@
                         <div class="row d-flex mb-1 align-items-center">
 
                             <!-- Select Job -->
-                            <div class="col">
+                            <div class="col-12 col-md-6 mb-3">
                                 <label for="eventjobsRecomm-{{$uniqueId}}" class="form-label">Select Job</label>
-                            </div>
-                            <div class="col">
                                 <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsRecomm-{{$uniqueId}}" required>
-
+                                    <!--options will be populated through js-->
                                 </select>
                             </div>
 
-                            <div class="col">
+                            <!-- Hire as -->
+                            <div class="col-12 col-md-6 mb-3">
                                 <label for="roleRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
-                            </div>
-                            <div class="col">
                                 <select class="border-secondary-subtle form-select" id="roleRecomm-<?php echo $uniqueId; ?>" onchange="updateFee('<?php echo $uniqueId; ?>')" required>
                                     <option value="" selected disabled></option>
                                     @foreach($freelancer->services as $service)
@@ -97,6 +94,7 @@
                             </div>
 
                         </div>
+
 
                         <!-- Computed Fee -->
                         <span class="fw-bold" id="recomm-computed-fee-<?php echo $uniqueId; ?>">Computed Fee:<span style="color: mediumseagreen;"> ₱0.00</span></span><br>
@@ -124,7 +122,8 @@
 
                         <!-- Action Buttons -->
                         <div class="d-flex justify-content-center mb-2">
-                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn me-2 " style="background-color: #91216C; border:none; color:white; width: 150px; height: 35px; white-space:nowrap;" disabled>Send Hire Request</button>
+                            <button id="hire-direct-button{{$uniqueId}}" type="submit" class="btn me-2 " style="background-color: #91216C; border:none; color:white; width: 150px; height: 35px; white-space:nowrap;" disabled>
+                                Send Hire Request</button>
                             <button data-unique-id="<?php echo $uniqueId; ?>" type="button" class="btn btn-secondary" style="width: 150px; height: 35px;" onclick="goToStep1('{{ $uniqueId }}')">Back</button>
                         </div>
                     </div>
@@ -274,12 +273,76 @@
     }
 
 
+    function resetHireAsDropdown(services) {
+        const hireServiceSelect = document.getElementById('roleRecomm-<?php echo $uniqueId; ?>'); // Select the dropdown element
+        hireServiceSelect.innerHTML = ''; // Clear current options
+
+        // Add the first empty option
+        const emptyOption = document.createElement('option');
+        emptyOption.value = '';
+        emptyOption.disabled = true;
+        emptyOption.selected = true;
+        hireServiceSelect.appendChild(emptyOption);
+
+        // Loop through all services and add them back to the dropdown
+        services.forEach(service => {
+            if (service.isAvailable) {
+                const option = document.createElement('option');
+                option.value = service.id;
+                option.text = service.job_title;
+                option.setAttribute('data-job-fee', service.job_fee);
+                option.setAttribute('data-fee-type', service.fee_type);
+                option.setAttribute('data-job-title', service.job_title);
+
+                hireServiceSelect.appendChild(option);
+            }
+        });
+    }
+
+
 
     function goToStep1(uniqueId) {
-        // Hide Step 2 and show Step 1
-        document.getElementById('hire-step-2-' + uniqueId).style.display = 'none';
+        // Reset global duration variable
+        durationInHours = 0;
+
+        // Reset the computed fee display
+        const computedFeeElement = document.getElementById('recomm-computed-fee-' + uniqueId);
+        if (computedFeeElement) {
+            computedFeeElement.innerHTML = 'Computed Fee:<span style="color: mediumseagreen;"> ₱0.00</span>';
+        }
+
+        // Reset the hidden fee input field
+        const hiddenFeeInput = document.getElementById('fee-hidden-' + uniqueId);
+        if (hiddenFeeInput) {
+            hiddenFeeInput.value = "0";
+        }
+
+        // Reset the offer input field
+        const offerInput = document.getElementById('fee-' + uniqueId);
+        if (offerInput) {
+            offerInput.value = "₱0.00";
+        }
+
+        // Reset the job and service selections
+        const jobSelect = document.getElementById('eventjobsRecomm-' + uniqueId);
+        if (jobSelect) {
+            jobSelect.selectedIndex = 0; // Reset to first option
+        }
+
+        var servicesData = <?php echo json_encode($freelancer->services->toArray()); ?>;
+        resetHireAsDropdown(servicesData);
+
+
+        const confirmButton = document.getElementById('hire-direct-button' + uniqueId);
+        if (confirmButton) {
+            confirmButton.disabled = true; // Disable the button when going back to Step 1
+        }
+
+        // Show Step 1 and hide Step 2
         document.getElementById('hire-step-1-' + uniqueId).style.display = 'block';
+        document.getElementById('hire-step-2-' + uniqueId).style.display = 'none';
     }
+
 
     function updateFee(uniqueId) {
         const selectElement = document.getElementById('roleRecomm-' + uniqueId);
@@ -314,7 +377,7 @@
         });
 
 
-        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: ₱' + formattedFee;
+        document.getElementById('recomm-computed-fee-' + uniqueId).innerHTML = 'Computed Fee: <span style="color: mediumseagreen;">₱' + formattedFee + '</span>';
         document.getElementById('fee-hidden-' + uniqueId).value = roundedFee;
         document.getElementById('fee-' + uniqueId).value = '₱' + formattedFee;
     }
@@ -338,6 +401,9 @@
 
             const formData = new FormData(form); // Create a FormData object from the form
 
+            const confirmButton = document.getElementById('hire-direct-button<?php echo $uniqueId; ?>');
+            confirmButton.innerHTML = '<span id="loading-spinner" class="spinner-border spinner-border-sm d-inline-block me-1" role="status" aria-hidden="true"></span> Sending';
+            confirmButton.disabled = true;
             fetch('/hire/applicant', {
                     method: 'POST',
                     body: formData,
@@ -361,18 +427,26 @@
                     if (data) {
                         // Handle the JSON response
                         if (data.success) {
+                            //return to send hire request
+                            confirmButton.innerHTML = 'Send Hire Request';
+
                             alert(data.success);
                             window.location.reload(); // Reload the page on success
                         } else if (data.error) {
+                            confirmButton.disabled = false;
                             alert("Error: " + data.error); // Show error message
                         }
                     } else {
+                        confirmButton.innerHTML = 'Send Hire Request';
+                        confirmButton.disabled = false;
                         // If no data (not JSON), reload the page
                         window.location.reload();
                     }
                 })
                 .catch(error => {
                     // console.error('Error:', error);
+                    confirmButton.innerHTML = 'Send Hire Request';
+                    confirmButton.disabled = false;
                     alert('An unexpected error occurred.'); // Generic error message
                 });
         });

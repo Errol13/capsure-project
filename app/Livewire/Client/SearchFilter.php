@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Client;
 
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 
@@ -15,6 +16,12 @@ class SearchFilter extends Component
     public $feeRange = 'any-range';
     public $rating = 'any-rate';
     public $location = '';
+    public $locationLists = [];
+
+    public function mount(){
+         //set the $locationLists
+         $this->locationLists = User::where('user_type', 'freelancer')->select('city')->distinct()->pluck('city')->toArray();
+    }
 
     public function toggleFilters()
     {

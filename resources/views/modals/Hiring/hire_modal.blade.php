@@ -116,7 +116,7 @@
             maximumFractionDigits: 2
         });
 
-        document.getElementById('computed-fee-' + applicantId).innerHTML = 'Computed Fee: ₱' + formattedFee;
+        document.getElementById('computed-fee-' + applicantId).innerHTML = 'Computed Fee: <span style="color: mediumseagreen;">₱' + formattedFee + '</span>';
         document.getElementById('fee-hidden-' + applicantId).value = roundedFee;
         document.getElementById('fee-' + applicantId).value = '₱' + formattedFee;
     }
@@ -128,7 +128,7 @@
             document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>').reset(); // Reset the form
         });
         const form = document.getElementById('hire-from-jobapp-<?php echo $applicantId; ?>');
-        
+
         form.addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent the default form submission
 
@@ -137,6 +137,8 @@
             hireButton.disabled = true;
             const formData = new FormData(form); // Create a FormData object from the form
 
+            hireButton.innerHTML = '<span id="loading-spinner" class="spinner-border spinner-border-sm d-inline-block me-1" role="status" aria-hidden="true"></span> Sending';
+            hireButton.disabled = true;
             fetch('/hire/applicant', {
                     method: 'POST',
                     body: formData,
@@ -160,17 +162,24 @@
                     if (data) {
                         // Handle the JSON response
                         if (data.success) {
+                            hireButton.innerHTML = 'Send Hire Request';
                             alert(data.success);
                             window.location.reload(); // Reload the page on success
                         } else if (data.error) {
+                            hireButton.innerHTML = 'Send Hire Request';
+                            hireButton.disabled = false;
                             alert("Error: " + data.error); // Show error message
                         }
                     } else {
+                        hireButton.innerHTML = 'Send Hire Request';
+                        hireButton.disabled = false;
                         // If no data (not JSON), reload the page
                         window.location.reload();
                     }
                 })
                 .catch(error => {
+                    hireButton.innerHTML = 'Send Hire Request';
+                    hireButton.disabled = false;
                     // console.error('Error:', error);
                     alert('An unexpected error occurred.'); // Generic error message
                 });

@@ -30,13 +30,14 @@
             @if($user->freelancer)
             @php
 
+            $service = null;
             if(!empty(trim($query))){
             $service = $user->freelancer->services
             ->first(function ($service) use ($query) {
-            return strtolower($service->job_title) === strtolower($query);
+            return str_contains(strtolower($service->job_title), strtolower($query));
             });
 
-            } else {
+            } elseif($service === null) {
             if($category === 'any') {
             $service = $user->freelancer->services->first();
             } else {
@@ -113,12 +114,15 @@
             </div>
             @endif
             @endforeach
+
+
         </div>
 
         <!-- Pagination Links -->
         <div class="mt-4 d-flex justify-content-center">
             {{ $users->links('vendor.livewire.bootstrap') }}
         </div>
+        
     </div>
     <hr class="custom-hr py-4 my-4">
     @endif

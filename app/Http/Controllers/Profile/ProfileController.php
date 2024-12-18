@@ -285,6 +285,7 @@ class ProfileController extends Controller
       'reporter_id' => 'required|exists:users,id',
     ]);
 
+
     // Process the proof images if provided
     $proofImagePaths = [];
     $proofImageOriginalNames = [];

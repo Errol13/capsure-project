@@ -133,7 +133,7 @@
                     </div>
                     <div class="col-auto me-3">
                         <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
-                            <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyModal-{{ $user->user_id }}"
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyModal-{{ $user->id }}"
                                 class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">HIRE FREELANCER</a>
                             <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
                                 @csrf
@@ -146,7 +146,7 @@
                                 style="color: crimson; cursor: pointer;"></i>
                         </div>
                         <!-- Hire Modal -->
-                        @include('modals.Hiring.hire_from_profile', ['uniqueId' => $user->user_id,'freelancer' => $user->freelancer,
+                        @include('modals.Hiring.hire_from_profile', ['uniqueId' => $user->id,'freelancer' => $user->freelancer,
                         'events'=> $events])
 
                         <!-- Report Modal -->

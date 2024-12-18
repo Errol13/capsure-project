@@ -18,7 +18,7 @@
                     </div>
                     <!-- Event Information -->
                     <div class="form-group mb-3 open-sans-reg">
-                        <label for="title">Title</label>
+                        <label for="title" style="color: #91216C;">Title</label>
                         <input type="text" id="title" class="form-control" wire:model="title" placeholder="Enter event title">
                         @error('title') <span class="text-danger">{{ $message }}</span> @enderror
                     </div>

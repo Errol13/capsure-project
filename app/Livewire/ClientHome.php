@@ -5,6 +5,8 @@ namespace App\Livewire;
 use App\Models\Freelancer;
 use App\Models\Profile\Service;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -87,7 +89,7 @@ class ClientHome extends Component
     private function fetchFilteredUsers()
     {
         $nameParts = explode(' ', $this->query);
-        
+
         $firstNamePart = $nameParts[0] ?? '';
         $lastNamePart = $nameParts[1] ?? '';
 
@@ -109,9 +111,16 @@ class ClientHome extends Component
 
             $jobtitle = $this->query ?? '';
 
-            $freelancerQuery->orWhereHas('services', function ($serviceQuery) use ($jobtitle) {
-                $serviceQuery->whereRaw('LOWER(job_title) LIKE ?', ['%' . strtolower($jobtitle) . '%']);
-            });
+            if (!empty($jobtitle)) {
+                $keywords = explode(' ', strtolower($jobtitle)); // Split the query into keywords
+                //  dd($keywords);
+                $freelancerQuery->orWhereHas('services', function ($serviceQuery) use ($keywords) {
+                    foreach ($keywords as $keyword) {
+                        $serviceQuery->whereRaw('LOWER(job_title) LIKE ?', '%' . $keyword . '%'); // for each word, it searches for match
+                        // dd($serviceQuery);
+                    }
+                });
+            }
 
             // Apply job_category filter if selected
             $freelancerQuery->when($this->category !== 'any', function ($categoryQuery) {
@@ -139,10 +148,18 @@ class ClientHome extends Component
                 });
             });
 
-            // Apply rating filter if selected
-            $freelancerQuery->when($this->rating !== 'any-rate', function ($ratingQuery) {
-                $ratingQuery->where('avg_rating', '>=', $this->rating);
-            });
+            //apply rating filter if selected lower or equal to 2
+            if ($this->rating <= 2) {
+                $freelancerQuery->when($this->rating !== 'any-rate', function ($ratingQuery) {
+                    $ratingQuery->where('avg_rating', '<=', $this->rating);
+                });
+            } else {
+                // Apply rating filter if selected higher than 2
+                $freelancerQuery->when($this->rating !== 'any-rate', function ($ratingQuery) {
+                    $ratingQuery->where('avg_rating', '>=', $this->rating);
+                });
+            }
+
 
             // Apply location filter if selected
             $freelancerQuery->when($this->location, function ($locationQuery) {
@@ -182,11 +199,21 @@ class ClientHome extends Component
         // Initially fetch all freelancers
         if ($this->query === '' && $this->firstDisplay) {
             $users = $this->fetchAllFreelancers();
-            // Log::info('Filtered User Count: ', $users->toArray());
-            $this->resultsCount = $users->count();
+
+            //total if pagination otherwise count
+            if ($users instanceof LengthAwarePaginator || $users instanceof Paginator) {
+                $this->resultsCount = $users->total();
+            } else {
+                $this->resultsCount = $users->count();
+            }
         } else {
             $users = $this->fetchFilteredUsers();
-            $this->resultsCount = $users->count();
+            //total if pagination otherwise count
+            if ($users instanceof LengthAwarePaginator || $users instanceof Paginator) {
+                $this->resultsCount = $users->total();
+            } else {
+                $this->resultsCount = $users->count();
+            }
             // If no results
             if ($users->isEmpty()) {
                 // return empty results

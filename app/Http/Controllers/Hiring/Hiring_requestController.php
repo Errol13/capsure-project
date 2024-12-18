@@ -28,8 +28,7 @@ class Hiring_requestController extends Controller
         // Clean and convert client_pricing and freelancer_pricing
         $clientPricing = str_replace(['₱', ','], '', $request->input('client_pricing'));
         $freelancerPricing = str_replace(['₱', ','], '', $request->input('freelancer_pricing'));
-
-
+        
         // Log::info('Cleaned client_pricing:', ['client_pricing' => $clientPricing]);
         // Log::info('Cleaned freelancer_pricing:', ['freelancer_pricing' => $freelancerPricing]);
 
@@ -38,7 +37,6 @@ class Hiring_requestController extends Controller
             'client_pricing' => (float) $clientPricing,
             'freelancer_pricing' => (float) $freelancerPricing,
         ];
-
 
         // Validate the request data with cleaned values
         $validated = $request->merge($cleanedData)->validate([
