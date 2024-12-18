@@ -87,6 +87,7 @@ class ClientHome extends Component
     private function fetchFilteredUsers()
     {
         $nameParts = explode(' ', $this->query);
+        
         $firstNamePart = $nameParts[0] ?? '';
         $lastNamePart = $nameParts[1] ?? '';
 
@@ -104,6 +105,12 @@ class ClientHome extends Component
                         }
                     });
                 });
+            });
+
+            $jobtitle = $this->query ?? '';
+
+            $freelancerQuery->orWhereHas('services', function ($serviceQuery) use ($jobtitle) {
+                $serviceQuery->whereRaw('LOWER(job_title) LIKE ?', ['%' . strtolower($jobtitle) . '%']);
             });
 
             // Apply job_category filter if selected

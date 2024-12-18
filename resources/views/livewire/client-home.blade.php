@@ -29,11 +29,22 @@
             @foreach ($users as $user)
             @if($user->freelancer)
             @php
+
+            if(!empty(trim($query))){
+            $service = $user->freelancer->services
+            ->first(function ($service) use ($query) {
+            return strtolower($service->job_title) === strtolower($query);
+            });
+
+            } else {
             if($category === 'any') {
             $service = $user->freelancer->services->first();
             } else {
             $service = $user->freelancer->services->where('job_category', $category)->first();
             }
+            }
+
+
             $portfolio = $user->freelancer->portfolios->first();
             @endphp
 
