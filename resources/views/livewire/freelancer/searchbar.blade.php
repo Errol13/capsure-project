@@ -4,8 +4,8 @@
         <!-- search bar -->
         <div class="input-group search-bar mt-3 mb-3 position-relative">
             <input type="text" class="form-control fw-lighter rounded-5 py-1 py-md-2" placeholder="Find a Job or Event"
-                wire:model.debounce.500ms="query">
-            <span class="input-group-text border-0 bg-transparent position-absolute end-0">
+                wire:model.debounce.500ms="query" style="padding-right: 50px;">
+            <span class="input-group-text border-0 bg-transparent position-absolute end-0" style="z-index: 10;">
                 <a href="#" class="text-black text-decoration-none"><i class="fas fa-search m-1 fs-5" wire:click="search"></i></a>
                 <i class="fas fa-filter m-3 fs-5" data-bs-toggle="modal" data-bs-target="#filterModal"></i>
             </span>

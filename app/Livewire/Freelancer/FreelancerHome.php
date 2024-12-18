@@ -4,6 +4,8 @@ namespace App\Livewire\Freelancer;
 
 use App\Models\Hiring\Event;
 use App\Models\User;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Pagination\Paginator;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
@@ -55,7 +57,10 @@ class FreelancerHome extends Component
         if (!empty($this->query)) {
             $filteredResults->where(function ($query) {
                 $query->where('title', 'like', '%' . $this->query . '%')
-                    ->orWhere('description', 'like', '%' . $this->query . '%');
+                    ->orWhere('description', 'like', '%' . $this->query . '%')
+                    ->orWhereHas('event_jobs', function ($query) {
+                        $query->whereRaw('LOWER(service_needed) LIKE ?', '%' . strtolower($this->query) . '%');
+                    });
             });
         }
 
@@ -110,10 +115,18 @@ class FreelancerHome extends Component
     {
         if ($this->query === '' && $this->filtersApplied === false) {
             $events = $this->fetchAllEvents();
-            $this->resultsCount = $events->count();
+            if ($events instanceof LengthAwarePaginator || $events instanceof Paginator) {
+                $this->resultsCount = $events->total();
+            } else {
+                $this->resultsCount = $events->count();
+            }
         } else {
             $events = $this->applyFilters();
-            $this->resultsCount = $events->count();
+            if ($events instanceof LengthAwarePaginator || $events instanceof Paginator) {
+                $this->resultsCount = $events->total();
+            } else {
+                $this->resultsCount = $events->count();
+            }
           // dd($events);
         }
 
