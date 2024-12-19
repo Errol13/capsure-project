@@ -228,7 +228,7 @@
                                 <!-- Password Information -->
                                 <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
                                     <h5 class=" mb-0 me-3 poppins-medium setting-color">Password Information</h5>
-                                    <div class="text-start" id="edit-button-dt" onclick=" enableEditModeDesktop()">
+                                    <div class="text-start" id="edit-button" onclick=" enableEditModeDesktop()">
                                         <i class="fas fa-solid fa-pen my-2 me-2"></i>
                                     </div>
                                 </div>
@@ -415,6 +415,7 @@
         document.getElementById('form-buttons-dt').style.display = 'block';
 
         // Optionally hide the edit button to prevent further clicks
+         document.getElementById('edit-button').style.display = 'none';
         document.getElementById('edit-button-dt').style.display = 'none';
     }
 
@@ -428,6 +429,7 @@
         document.getElementById('form-buttons-dt').style.display = 'none';
 
         // Show the edit button again
+        document.getElementById('edit-button').style.display = 'block';
         document.getElementById('edit-button-dt').style.display = 'block';
     }
 
