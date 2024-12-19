@@ -273,7 +273,7 @@
         document.getElementById('form-buttons-dt').style.display = 'block';
 
         // Optionally hide the edit button to prevent further clicks
-        document.getElementById('edit-button-dt').style.display = 'none';
+        document.getElementById('edit-button').style.display = 'none';
     }
 
     function cancelEditBasicInfo() {
@@ -286,7 +286,7 @@
         document.getElementById('form-buttons-dt').style.display = 'none';
 
         // Show the edit button again
-        document.getElementById('edit-button-dt').style.display = 'block';
+        document.getElementById('edit-button').style.display = 'block';
     }
 
     function togglePasswordVisibility(fieldId) {
