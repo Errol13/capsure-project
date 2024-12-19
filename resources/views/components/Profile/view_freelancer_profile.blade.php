@@ -59,10 +59,11 @@
                             $totalReviews = $user->freelancer->reviews()->where('reviewee_role', 'freelancer')->count();
                             @endphp
 
-                            <h6 class="fw-bold me-3 mb-0">Rating:</h6>
+                            
                             @if($user->freelancer->avg_rating == 0)
                             <h6 class="fst-italic text-muted" style="white-space: nowrap;">No ratings yet</h6>
                             @else
+                            <h6 class="fw-bold me-3 mb-0">Rating:</h6>
                             <!-- Star Rating Container -->
                             <div class="star-rating ms-2">
                                 <div class="row">
@@ -131,9 +132,9 @@
                             @endif
                         </div>
 
-                        <p class="mb-2 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
+                        <p class="mb-2 open-sans-reg light-color-prof fs-sm fs-for-mobile">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
                     </div>
-                    <div class="col-auto me-3">
+                    <div class="col-auto me-3 mt-2">
                         <div class="d-flex flex-row justify-content-start align-items-center mt-2 mt-lg-0">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyModal-{{ $user->id }}"
                                 class="text-center btn-seemore rounded-start-1 px-2 fs-for-mobile py-2 py-md-1 px-md-4 poppins-medium fs-sm">HIRE FREELANCER</a>
@@ -166,7 +167,7 @@
             <div class="row text-center">
                 @if($user->freelancer->certificates->isEmpty())
                 <div class="col-12 d-flex align-items-center justify-content-center">
-                    <h6 class="fst-italic text-muted">No Awards</h6>
+                    <h6 class="fst-italic text-muted">No Awards Added</h6>
                 </div>
                 @else
                 @foreach($user->freelancer->certificates as $certificate)
@@ -268,7 +269,7 @@
                 </div>
 
                 @if($user->freelancer->reviews->isEmpty())
-                <h6 class="text-center fst-italic text-muted">No Reviews</h6>
+                <h6 class="text-center fst-italic text-muted mt-4">No Reviews</h6>
                 @else
                 <p class="text-center my-2">Recent Projects</p>
 

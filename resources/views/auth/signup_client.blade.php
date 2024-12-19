@@ -195,7 +195,7 @@
                                 </div>
 
                                 <div class="col-md-4">
-                                    <label for="city" class="form-label mb-0">{{ __('City') }}</label>
+                                    <label for="city" class="form-label mb-0">{{ __('City/Municipality') }}</label>
                                     <input id="city" type="text" class="form-control @error('city') is-invalid @enderror" name="city" value="{{ old('city') }}" required autocomplete="city">
                                     @error('city')
                                     <span class="invalid-feedback" role="alert">
