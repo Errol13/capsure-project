@@ -13,8 +13,8 @@
                 </div>
 
                 <!-- Change Profile Pic -->
-                   <!-- Change Profile Pic -->
-                   <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
+                <!-- Change Profile Pic -->
+                <form action="{{ route('profilepic.update') }}" method="POST" enctype="multipart/form-data" id="profilePicForm">
                     @csrf
                     <div class="d-flex align-items-center justify-content-center my-3">
                         <p class="poppins-regular f6 mb-0 text-muted">Change profile pic</p>
@@ -64,7 +64,7 @@
                             Switch to Freelancer
                         </a>
                         @endif
-                        
+
                     </div>
                 </div>
             </div>
@@ -81,9 +81,9 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex justify-content-start align-items-center">
                             <h5 class="mb-0 me-3 poppins-medium setting-color">Basic Information</h5>
-                            <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
+                            <a href="#" class=" text-muted text-start" id="edit-button" onclick="enableEditModeDesktop()">
                                 <i class="fas fa-solid fa-pen my-2 me-2"></i>
-                            </div>
+                            </a>
                         </div>
                         <!-- Save and Cancel Buttons -->
                         <div class="form-group text-end" id="form-buttons-dt" style="display: none;">
@@ -112,7 +112,7 @@
                                 <!-- Last Name -->
                                 <label for="last_name" class="form-label mb-0 mt-2">{{ __('Last Name') }}</label>
                                 <input id="last_name" type="text" class="form-control @error('last_name') is-invalid @enderror"
-                                    name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled 
+                                    name="last_name" value="{{ $user->last_name }}" required autocomplete="last_name" disabled
                                     data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('last_name')
                                 <span class="invalid-feedback" role="alert">
@@ -123,7 +123,7 @@
                                 <!-- Birthdate -->
                                 <label for="birthdate" class="form-label mb-0 mt-2">{{ __('Birthdate') }}</label>
                                 <input id="birthdate" type="date" class="form-control @error('birthdate') is-invalid @enderror"
-                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled 
+                                    name="birthdate" value="{{ old('birthdate', $user->birthdate) }}" required disabled
                                     data-verified="{{ auth()->user()->isVerified ? 'true' : 'false' }}">
                                 @error('birthdate')
                                 <span class="invalid-feedback" role="alert">
@@ -194,9 +194,9 @@
                                 <!-- Password Information -->
                                 <div class="d-flex justify-content-start align-items-center mt-4 mb-2">
                                     <h5 class=" mb-0 me-3 poppins-medium setting-color">Password Information</h5>
-                                    <div class="text-start" id="edit-button-dt" onclick=" enableEditModeDesktop()">
+                                    <a href="#" class=" text-muted text-start" id="edit-button" onclick="enableEditModeDesktop()">
                                         <i class="fas fa-solid fa-pen my-2 me-2"></i>
-                                    </div>
+                                    </a>
                                 </div>
 
                                 <!-- Password -->
@@ -242,7 +242,7 @@
                 </form>
             </div>
             <div class="row my-3">
-                <div class="col-md-4 col-lg-6">
+                <div class="col-12">
                     <!--Social Media -->
                     @include('components.social_media', ['socmed' => $user->socmed])
                 </div>
@@ -252,30 +252,41 @@
 </div>
 
 <script>
-    function enableEditMode() {
-        // Enable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.removeAttribute('disabled');
+    function enableEditModeDesktop() {
+        // Enable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            // Keep email always disabled
+            if (input.id === 'email') {
+                return;
+            }
+
+            // Keep first_name and last_name disabled if the user is verified
+            if ((input.id === 'first_name' || input.id === 'last_name' || input.id === 'birthdate') && input.dataset.verified === 'true') {
+                return;
+            }
+
+            // Enable all other inputs
+            input.disabled = false;
         });
 
         // Show Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'block';
+        document.getElementById('form-buttons-dt').style.display = 'block';
 
-        // Hide Edit button
-        document.getElementById('edit-button').style.display = 'none';
+        // Optionally hide the edit button to prevent further clicks
+        document.getElementById('edit-button-dt').style.display = 'none';
     }
 
-    function cancelEdit() {
-        // Disable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.setAttribute('disabled', 'true');
+    function cancelEditBasicInfo() {
+        // Disable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = true;
         });
 
         // Hide Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'none';
+        document.getElementById('form-buttons-dt').style.display = 'none';
 
-        // Show Edit button
-        document.getElementById('edit-button').style.display = 'block';
+        // Show the edit button again
+        document.getElementById('edit-button-dt').style.display = 'block';
     }
 
     function togglePasswordVisibility(fieldId) {
@@ -318,6 +329,20 @@
         document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
+    }
+
+    // Function to preview and submit the form automatically upon selecting a file
+    function submitProfilePicForm(event) {
+        // Optional: Show a preview of the selected image before upload
+        const file = event.target.files[0];
+        if (file) {
+            const preview = document.getElementById('profilePicPreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+
+        // Submit the form automatically after image selection
+        document.getElementById('profilePicForm').submit();
     }
 </script>
 @endsection

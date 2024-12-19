@@ -87,6 +87,7 @@
                 </div>
                 <div class="mt-2"> Hire now and make your next event extraordinary!</div>
             </small>
+
             <div id="freelancerCarousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner" style="height: 500px;">
                     <div class="carousel-item active">
@@ -258,6 +259,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
+            
         </div>
     </section>
 
@@ -519,6 +521,7 @@
     }
 
     .menu-list {
+        cursor: pointer;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -528,6 +531,7 @@
     }
 
     .menu-item {
+        cursor: pointer;
         font-family: 'Poppins', sans-serif;
         font-size: 12px;
         color: #5c005c;

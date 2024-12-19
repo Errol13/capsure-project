@@ -1421,4 +1421,8 @@ select:disabled {
         margin-top: 10px;
     }
 
+    .fs-for-mobile{
+        font-size:10px;
+    }
+
 }

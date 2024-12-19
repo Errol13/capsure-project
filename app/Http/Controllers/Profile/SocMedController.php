@@ -32,8 +32,9 @@ class SocMedController extends Controller
 
         // Validate the input
         $request->validate([
-            'url' => 'required|url',
+            'url' => 'nullable|url',
         ]);
+
 
         // Find the social media record by platform and authenticated user
         $socialMedia = ProfileSocialMediaAccount::where('platform', $platform)
@@ -41,7 +42,7 @@ class SocMedController extends Controller
             ->firstOrFail();
 
         // Update the URL
-        $socialMedia->url = $request->input('url');
+        $socialMedia->url = $request->input('url') ?? '';
         $socialMedia->save();
 
         // Redirect back with a success message

@@ -42,10 +42,8 @@
                     <div class="row d-flex mb-1 align-items-center">
 
                         <!-- Select Job -->
-                        <div class="col">
+                        <div class="col-12 col-md-6 mb-3">
                             <label for="eventjobsHireRecomm-<?php echo $uniqueId; ?>" class="form-label">Select Job</label>
-                        </div>
-                        <div class="col">
                             <select class="border-secondary-subtle form-select" name="job_id" id="eventjobsHireRecomm-<?php echo $uniqueId; ?>" required>
                                 <option value="" selected disabled></option>
                                 @foreach($job_services as $job)
@@ -68,10 +66,9 @@
                             </select>
                         </div>
 
-                        <div class="col">
+
+                        <div class="col-12 col-md-6 mb-3">
                             <label for="roleHireRecomm-<?php echo $uniqueId; ?>" class="form-label">Hire as</label>
-                        </div>
-                        <div class="col">
                             <select class="border-secondary-subtle form-select" id="roleHireRecomm-<?php echo $uniqueId; ?>" onchange="updateFeeRecomm('<?php echo $uniqueId; ?>', <?php echo json_encode($durationInHours ?? 0); ?>)" required>
                                 <option value="" selected disabled></option>
                                 @foreach($freelancer->services as $service)

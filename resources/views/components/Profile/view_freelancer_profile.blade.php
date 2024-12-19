@@ -134,14 +134,14 @@
                         <p class="mb-2 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
                     </div>
                     <div class="col-auto me-3">
-                        <div class="d-flex justify-content-start align-items-center mt-2 mt-lg-0">
+                        <div class="d-flex flex-row justify-content-start align-items-center mt-2 mt-lg-0">
                             <a href="#" data-bs-toggle="modal" data-bs-target="#hireDirectlyModal-{{ $user->id }}"
-                                class="text-center btn-seemore rounded-start-1 px-2 py-1 px-md-4 poppins-medium fs-sm">HIRE FREELANCER</a>
+                                class="text-center btn-seemore rounded-start-1 px-2 fs-for-mobile py-2 py-md-1 px-md-4 poppins-medium fs-sm">HIRE FREELANCER</a>
                             <form action="{{ route('chat.redirect') }}" method="POST" id="messageForm">
                                 @csrf
                                 <input type="hidden" name="recipientId" value="{{ $user->id }}">
                                 <button type="submit" class="btn border-0 m-0 p-0">
-                                    <i class="fas fa-comment text-purple fs-6 me-4 rounded-end-1 border border-1 px-3 py-2 me-3 me-md-4" style="background-color: white;cursor: pointer;"></i>
+                                    <i class="fas fa-comment text-purple fs-6 rounded-end-1 border border-1  px-3 py-2 me-1 me-md-4" style="background-color: white;cursor: pointer;"></i>
                                 </button>
                             </form>
                             <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportProfileModal"
@@ -222,7 +222,7 @@
                     </div>
                     @endforeach
                 </div>
-                
+
             </div>
             <div class="row">
                 <!--Terms of Service-->

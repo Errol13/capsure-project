@@ -19,7 +19,7 @@ class EventsTableSeeder extends Seeder
             [
                 'client_id' => 2,
                 'title' => 'Birthday Party',
-                'description' => 'Description for Event 1',
+                'description' => 'Looking for excellent photographer for my nephew\s birthday.',
                 'start_date' => Carbon::now()->addDays(10),
                 'end_date' => Carbon::now()->addDays(15),
                 'street' => '123 Main St',
@@ -35,7 +35,7 @@ class EventsTableSeeder extends Seeder
             [
                 'client_id' => 2,
                 'title' => 'Debut',
-                'description' => 'Description for Event 2',
+                'description' => 'Lf photograpers to hire for my friend\'s debut with a 3 day event celebration.',
                 'start_date' => Carbon::now(),
                 'end_date' => Carbon::now()->addDays(3),
                 'street' => '123 Main St',

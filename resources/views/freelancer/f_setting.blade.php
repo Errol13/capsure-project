@@ -394,30 +394,41 @@
 </div>
 
 <script>
-    function enableEditMode() {
-        // Enable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.removeAttribute('disabled');
+    function enableEditModeDesktop() {
+        // Enable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            // Keep email always disabled
+            if (input.id === 'email') {
+                return;
+            }
+
+            // Keep first_name and last_name disabled if the user is verified
+            if ((input.id === 'first_name' || input.id === 'last_name' || input.id === 'birthdate') && input.dataset.verified === 'true') {
+                return;
+            }
+
+            // Enable all other inputs
+            input.disabled = false;
         });
 
         // Show Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'block';
+        document.getElementById('form-buttons-dt').style.display = 'block';
 
-        // Hide Edit button
-        document.getElementById('edit-button').style.display = 'none';
+        // Optionally hide the edit button to prevent further clicks
+        document.getElementById('edit-button-dt').style.display = 'none';
     }
 
-    function cancelEdit() {
-        // Disable form fields
-        document.querySelectorAll('#basic-info-form input, #basic-info-form button').forEach(function(element) {
-            element.setAttribute('disabled', 'true');
+    function cancelEditBasicInfo() {
+        // Disable all input fields in the form
+        document.querySelectorAll('#basic-info-form input').forEach(function(input) {
+            input.disabled = true;
         });
 
         // Hide Save and Cancel buttons
-        document.getElementById('form-buttons').style.display = 'none';
+        document.getElementById('form-buttons-dt').style.display = 'none';
 
-        // Show Edit button
-        document.getElementById('edit-button').style.display = 'block';
+        // Show the edit button again
+        document.getElementById('edit-button-dt').style.display = 'block';
     }
 
     function togglePasswordVisibility(fieldId) {
@@ -460,6 +471,33 @@
         document.getElementById('profilePicPreview').src = '{{ asset($user->profile_image) }}'; // Reset to original image
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
+    }
+
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const showLimitMessageButton = document.getElementById('showLimitMessageButton');
+        const limitMessage = document.getElementById('limitMessage');
+
+        if (showLimitMessageButton) {
+            showLimitMessageButton.addEventListener('click', function() {
+                limitMessage.classList.toggle('d-none');
+            });
+        }
+    });
+
+
+    // Function to preview and submit the form automatically upon selecting a file
+    function submitProfilePicForm(event) {
+        // Optional: Show a preview of the selected image before upload
+        const file = event.target.files[0];
+        if (file) {
+            const preview = document.getElementById('profilePicPreview');
+            preview.src = URL.createObjectURL(file);
+            preview.style.display = 'block';
+        }
+
+        // Submit the form automatically after image selection
+        document.getElementById('profilePicForm').submit();
     }
 </script>
 @endsection

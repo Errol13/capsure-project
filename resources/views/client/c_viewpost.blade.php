@@ -108,7 +108,7 @@
     <div class="card my-4 p-0 rounded-4">
         <div class="container">
             <!-- Nav tabs -->
-            <ul class="card-header nav border-bottom row row-cols-1 row-cols-md-3 justify-content-between px-0 poppins-medium mb-3 rounded-top-4" style="background-color:#fceef7;">
+            <ul class="card-header nav border-bottom row row-cols-1 row-cols-md-3 justify-content-between px-0 poppins-medium mb-3 rounded-top-4" style="background-color:#fceef7;  position: sticky; top: 0; z-index: 10;">
                 @foreach ($tabs as $tabId => $tabName)
                 <li class="nav-item col text-start mb-2 mb-md-0">
                     <a wire:click="$set('activeTab', 'application')"
