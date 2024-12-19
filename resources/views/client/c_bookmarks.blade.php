@@ -32,7 +32,7 @@
                 @endphp
                 <img src="{{ asset('storage/' . $relativePath) }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
                 @else
-                <img src="{{ asset('assets/cover.svg') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                <img src="{{ asset('assets/cover_def.png') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
                 @endif
 
                 <div class="card-body open-sans-reg p-3">
