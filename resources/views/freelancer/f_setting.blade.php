@@ -115,7 +115,7 @@
                     <div class="d-flex justify-content-between align-items-center mb-2">
                         <div class="d-flex justify-content-start align-items-center">
                             <h5 class="mb-0 me-3 poppins-medium setting-color">Basic Information</h5>
-                            <div class="text-start" id="edit-button" onclick="enableEditModeDesktop()">
+                            <div class="text-start" id="edit-button-dt" onclick="enableEditModeDesktop()">
                                 <i class="fas fa-solid fa-pen my-2 me-2"></i>
                             </div>
                         </div>
