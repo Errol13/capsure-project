@@ -276,6 +276,7 @@ class ProfileController extends Controller
   //store the report to the db
   public function reportStore(Request $request)
   {
+
     $validated = $request->validate([
       'reason' => 'required|array|min:1',
       'reason.*' => 'string',
@@ -285,6 +286,8 @@ class ProfileController extends Controller
       'reported_user_id' => 'required|exists:users,id',
       'reporter_id' => 'required|exists:users,id',
     ]);
+
+    // dd('Report saved!');
 
     Log::info('Report submitted');
     // Process the proof images if provided

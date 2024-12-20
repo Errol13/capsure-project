@@ -52,7 +52,7 @@
                     <div class="mb-3">
                         <label for="attachProof" class="form-label">Attach Proof <span class="text-danger">*</span></label>
                         <div class="file-upload">
-                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg,.png" multiple required>
+                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg,.jpeg,.png" multiple required>
                             <small class="form-text text-muted">Upload (.jpg or .png format)</small>
                         </div>
                     </div>
@@ -207,11 +207,10 @@
                     //hide the spinner
                     spinner.classList.add('d-none');
                     
-                    alert('An error occurred. Please try again later.');
+                    alert('An error occurred. Please try again later.' + error);
                     
                 });
         });
-
 
         // Initial check for button state
         checkTheFields();
