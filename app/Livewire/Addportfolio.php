@@ -28,14 +28,10 @@ class Addportfolio extends Component
     }
 
     #[On('filesSelected')]
-    public function updatedNewFiles()
-    {
-        foreach ($this->newFiles as $file) {
-            $this->files[] = $file; // Append new files
-        }
-        $this->newFiles = []; // Clear the temporary array after appending
+    public function updatedNewFiles(){
+        $this->files = array_unique(array_merge($this->files, $this->newFiles));
+        $this->newFiles = []; // this will clear the holder
     }
-    
 
 
     public function removeFile($index)

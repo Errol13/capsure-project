@@ -22,8 +22,8 @@
             <select class="form-control fs-smaller fs-md"
                 wire:model.defer="serviceData.{{ $service->id }}.fee_type"
                 @if($editingServiceId !=$service->id) disabled @endif>
-                <option value="/hour">/hour</option>
-                <option value="/project">/project</option>
+                <option value="/hour">per hour</option>
+                <option value="/project">per project</option>
             </select>
         </div>
         

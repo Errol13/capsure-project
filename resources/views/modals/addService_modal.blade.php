@@ -57,8 +57,8 @@
                                 <label for="fee_type" class="form-label">Fee Type</label>
                                 <select class="form-select" id="fee_type" name="fee_type">
                                     <option value="" disabled selected></option>
-                                    <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
-                                    <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
+                                    <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>per hr</option>
+                                    <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>per project</option>
                                 </select>
 
                                 @error('fee_type')
@@ -79,7 +79,7 @@
                             <option value="not_available">Not Available</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn-verify px-5">Add Service</button>
+                    <button type="submit" class="btn-verify px-5 rounded">Add Service</button>
                 </form>
             </div>
         </div>
