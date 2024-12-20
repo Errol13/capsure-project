@@ -446,7 +446,7 @@
         }
     }
 
-    function showUploadOptions() {
+     function showUploadOptions() {
         // Show action buttons and hide the upload icon
         document.getElementById('actionButtons').classList.remove('d-none');
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'none';
