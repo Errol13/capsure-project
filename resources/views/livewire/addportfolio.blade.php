@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="albumModal" tabindex="-1" aria-labelledby="albumModalLabel" aria-hidden="true" wire:ignore.self >
+<div class="modal fade" id="albumModal" tabindex="-1" aria-labelledby="albumModalLabel" aria-hidden="true" wire:ignore.self>
     <div class="modal-dialog modal-lg ">
         <div class="modal-content">
             <form wire:submit.prevent="save" id="albumForm" enctype="multipart/form-data">
@@ -22,13 +22,20 @@
                         </div>
                         <div class="mb-4">
                             <!-- File Input -->
-                            <input type="file" id="fileUpload" wire:model="files" multiple accept="image/*,video/*" class="d-none mb-2" />
+                            <input
+                                type="file"
+                                id="fileUpload"
+                                wire:model="newFiles"
+                                multiple
+                                accept="image/*,video/*"
+                                class="d-none mb-2"
+                                onchange="handleFileChange()" required />
+
                             <!-- Custom Upload Button -->
-                            
-                            <button type="button" class="btn-seeprof border-secondary-subtle w-100 mb-1" onclick="document.getElementById('fileUpload').click();">
-                                <i class="fas fa-upload"></i> Upload Images/Videos
+                            <button type="button" class="btn-seeprof border-secondary-subtle w-100 mb-1 fs-for-mobile text-wrap" onclick="document.getElementById('fileUpload').click();">
+                                <i class="fas fa-upload "></i> Upload Images/Videos
                             </button>
-                            <small class="poppins-light text-muted">Attach at least one (1) file. Maximum of 10</small>
+                            <small class="note poppins-light text-muted fs-for-mobile">Attach at least one (1) file. Maximum of 10</small>
                             @if($errors->has('files'))
                             <div class="text-danger mt-2">
                                 <strong>{{ $errors->first('files') }}</strong>
@@ -44,7 +51,7 @@
                         <!-- Post Button -->
                         <button type="submit" class="btn-verify rounded p-2 poppins-regular letter-spacing w-100 mt-4" style="position: relative; bottom: 20px;">Post</button>
                     </div>
-                    
+
                     <div style="width: 2px; background-color: #dee2e6; margin: 0 10px;"></div>
 
                     <!-- Right Column for Previews -->
@@ -81,8 +88,12 @@
 
         // Handle modal hide event to reset form
         albumModal.addEventListener('hidden.bs.modal', function() {
-            Livewire.emit('resetPortfolioForm');
+            Livewire.dispatch('resetPortfolioForm');
         });
+
+        window.handleFileChange = function() {
+            Livewire.dispatch('filesSelected');
+        };
 
         Livewire.on('upload:error', (file, message) => {
             // console.error('File upload error:', file.name, message);

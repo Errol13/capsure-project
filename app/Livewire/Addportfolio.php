@@ -15,6 +15,7 @@ class Addportfolio extends Component
     public $files = [];
     public $freelancer_id;
     public $titleExists = false;
+    public $newFiles = [];
 
     protected $messages = [
         'files.required' => 'Upload at least 1 file.',
@@ -26,12 +27,16 @@ class Addportfolio extends Component
         $this->files = [];
     }
 
-    public function updatedFiles()
+    #[On('filesSelected')]
+    public function updatedNewFiles()
     {
-        // Append new files to the existing ones without duplicating
-        $newFiles = $this->files;
-        $this->files = array_unique(array_merge($this->files, $newFiles), SORT_REGULAR);
+        foreach ($this->newFiles as $file) {
+            $this->files[] = $file; // Append new files
+        }
+        $this->newFiles = []; // Clear the temporary array after appending
     }
+    
+
 
     public function removeFile($index)
     {

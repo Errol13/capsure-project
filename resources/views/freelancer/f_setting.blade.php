@@ -358,7 +358,7 @@
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="mobileActionButton">
                             <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#uploadModal">
-                                <i class="fas fa-upload me-2"></i> Upload Photo
+                                <i class="fas fa-upload me-2"></i> Upload Files
                             </button>
 
                             <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#deleteModal">

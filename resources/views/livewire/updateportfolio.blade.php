@@ -28,12 +28,12 @@
                         </div>
                         <div class="mb-4">
                             <!-- File Input -->
-                            <input type="file" id="fileUploadUpdate" wire:model="files" multiple accept="image/*,video/*" class="d-none" required>
+                            <input type="file" id="fileUploadUpdate" wire:model="newFiles" multiple accept="image/*,video/*" class="d-none" required onchange="handleUpdateFileChange()">
                             <!-- Custom Upload Button -->
-                            <button type="button" class="btn-seeprof border-secondary-subtle w-100" onclick="document.getElementById('fileUploadUpdate').click();">
+                            <button type="button" class="btn-seeprof border-secondary-subtle w-100 fs-for-mobile text-wrap" onclick="document.getElementById('fileUploadUpdate').click();">
                                 <i class="fas fa-upload"></i> Upload Images/Videos
                             </button>
-                            <small class="poppins-light text-muted">Attach at least one (1) file. Maximum of 5</small>
+                            <small class="poppins-light text-muted fs-for-mobile">Attach at least one (1) file. Maximum of 5</small>
                             @if($errors->has('files'))
                             <div class="text-danger mt-2">
                                 <strong>{{ $errors->first('files') }}</strong>
@@ -50,7 +50,7 @@
                     </div>
                     <!-- Vertical Line -->
                     <div style="width: 1px; background-color: #dee2e6; margin: 0 10px;"></div>
-                    <!-- Right Panel for Previews -->
+                    <!-- Right Column for Previews -->
                     <div class="flex-fill" style="max-width: 60%;">
                         <div id="filePreviewContainer" class="d-flex flex-wrap mt-3" style="max-height: 300px; overflow-y: auto;">
                             @foreach($files as $index => $file)
@@ -81,9 +81,13 @@
     document.addEventListener('livewire:load', function() {
         var uploadModal = document.getElementById('uploadModal');
 
+        window.handleUpdateFileChange = function() {
+            Livewire.dispatch('filesUpdated');
+        };
+
         // Handle modal hide event to reset form
         uploadModal.addEventListener('hidden.bs.modal', function() {
-            Livewire.emit('resetForm');
+            Livewire.dispatch('resetForm');
         });
     });
 </script>

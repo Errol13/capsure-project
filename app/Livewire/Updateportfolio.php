@@ -15,6 +15,7 @@ class UpdatePortfolio extends Component
     public $portfolios;
     public $selectedAlbumId;
     public $files = [];
+    public $newFiles = [];
 
     protected $rules = [
         'selectedAlbumId' => 'required|exists:portfolios,portfolio_id',
@@ -23,15 +24,15 @@ class UpdatePortfolio extends Component
 
     public function mount($portfolios)
     {
-        Log::info('Component mounted.');
+        // Log::info('Component mounted.');
         $this->portfolios = $portfolios;
     }
 
     #[On('filesUpdated')]
-    public function updatedFiles()
+    public function updatedNewFiles()
     {
-        // Trigger the preview update
-        $this->dispatch('fileUploaded');
+        $this->files = array_unique(array_merge($this->files, $this->newFiles));
+        $this->newFiles = []; // this will clear the holder
     }
 
     public function updatePortfolio()
