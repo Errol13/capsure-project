@@ -521,7 +521,6 @@
     }
 
     .menu-list {
-        cursor: pointer;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;

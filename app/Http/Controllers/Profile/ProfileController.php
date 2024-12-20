@@ -90,7 +90,7 @@ class ProfileController extends Controller
 
     // Validate the incoming request
     $request->validate([
-      'profile_picture' => 'required|image|mimes:jpg,png,gif|max:10240', // Adjust the max size as needed
+      'profile_picture' => 'required|image|mimes:jpg,jpeg,png,gif|max:10240', // Adjust the max size as needed
     ]);
 
     // dd($request->all());
@@ -286,7 +286,7 @@ class ProfileController extends Controller
       'reporter_id' => 'required|exists:users,id',
     ]);
 
-
+    Log::info('Report submitted');
     // Process the proof images if provided
     $proofImagePaths = [];
     $proofImageOriginalNames = [];
@@ -316,6 +316,8 @@ class ProfileController extends Controller
     $report->isArchived = false;
     $report->save();
 
+    Log::info('Report saved!');
+
     return response()->json(['success' => true]); //shows true to show the alert success 
   }
 
@@ -343,7 +345,6 @@ class ProfileController extends Controller
       $name = $team->team_name;
       return view('components.Profile.viewAllReviews', compact('reviews', 'name'));
     }
-
   }
 
   //showAllPosts

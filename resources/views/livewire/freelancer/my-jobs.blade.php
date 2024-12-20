@@ -186,26 +186,26 @@
                                         </table>
 
                                         <!-- Action Buttons -->
-                                        <div class="d-flex justify-content-start">
+                                        <div class="d-flex flex-column flex-md-row justify-content-start">
                                             @if($job->status != 'Rejected')
                                             @if($job->dealer_user_type == 'freelancer' && $job->status != 'Accepted')
-                                            <button class="pending-color confirm me-2"
+                                            <button class="pending-color confirm me-2 mb-2 mb-md-0"
                                                 disabled style="background-color: #D9D9D9;">Pending</button>
 
                                             @elseif($job->dealer_user_type == 'client' && $job->status != 'Accepted')
                                             <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"
                                                 data-action="accept" data-modal-type="confirm-modal"
-                                                data-hiringid="{{ $job->hiring_request_id }}" class="confirm me-2">Accept
+                                                data-hiringid="{{ $job->hiring_request_id }}" class="confirm me-2 mb-2 mb-md-0">Accept
                                             </button>
 
                                             @elseif($job->status == 'Accepted')
-                                            <a href="{{route('freelancer-transaction')}}" class="confirm">View Transaction</a>
+                                            <a href="{{route('freelancer-transaction')}}" class="confirm me-2 mb-2 mb-md-0">View Transaction</a>
                                             @endif
 
                                             @if($job->status != 'Accepted')
                                             <button data-bs-toggle="modal"
                                                 data-bs-target="#negotiateModal-{{$job->hiring_request_id}}"
-                                                class="confirm me-2" style="background-color: #8FE2ED; color: black;">
+                                                class="confirm me-2 mb-2 mb-md-0" style="background-color: #8FE2ED; color: black;">
                                                 Negotiate
                                             </button>
                                             <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"

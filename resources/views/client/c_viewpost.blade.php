@@ -79,7 +79,7 @@
                 <h4>Event Jobs</h4>
                 <ul class="list-group">
                     @foreach($eventJobs as $eventJob)
-                    <li class="list-group-item d-flex justify-content-between align-items-center" style="background-color: white;">
+                    <li class="list-group-item d-flex fs-for-mobile justify-content-between align-items-center" style="background-color: white;">
                         <span>{{$eventJob->number_of_people}}</span>
                         {{$eventJob->service_needed}}
 
@@ -556,37 +556,37 @@
                                         <p>No hiring request data.</p>
                                         @endif
 
+                                    </div>
 
-                                        <!-- Action Buttons -->
-                                        <div class="d-flex justify-content-start">
+                                    <!-- Action Buttons -->
+                                    <div class="d-flex flex-column flex-md-row justify-content-start">
 
-                                            @if($freelancer->hiringRequestData->status != 'Rejected')
+                                        @if($freelancer->hiringRequestData->status != 'Rejected')
 
-                                            @if($freelancer->hiringRequestData->dealer_user_type == 'client' && $freelancer->hiringRequestData->status != 'Accepted')
-                                            <button class="pending-color confirm me-2" disabled style="background-color: #D9D9D9;">Pending</button>
-                                            @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer' && $freelancer->hiringRequestData->status != 'Accepted')
-                                            <button class="confirm me-2" data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
-                                                data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Accept</button>
-                                            @elseif($freelancer->hiringRequestData->status == 'Accepted')
-                                            <a href="{{route('client-transaction')}}" class="confirm">View Transaction</a>
-                                            @endif
+                                        @if($freelancer->hiringRequestData->dealer_user_type == 'client' && $freelancer->hiringRequestData->status != 'Accepted')
+                                        <button class="pending-color confirm me-2 mb-2 mb-md-0" disabled style="background-color: #D9D9D9;">Pending</button>
+                                        @elseif($freelancer->hiringRequestData->dealer_user_type == 'freelancer' && $freelancer->hiringRequestData->status != 'Accepted')
+                                        <button class="confirm me-2 mb-2 mb-md-0" data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
+                                            data-action="accept" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Accept</button>
+                                        @elseif($freelancer->hiringRequestData->status == 'Accepted')
+                                        <a href="{{route('client-transaction')}}" class="confirm me-2 mb-2 mb-md-0">View Transaction</a>
+                                        @endif
 
-                                            @if($freelancer->hiringRequestData->status != 'Accepted')
-                                            <button class="confirm me-2" style="background-color: #8FE2ED; color: black;" data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$freelancer->hiringRequestData->hiring_request_id}}">Negotiate</button>
-                                            @endif
+                                        @if($freelancer->hiringRequestData->status != 'Accepted')
+                                        <button class="confirm me-2 mb-2 mb-md-0" style="background-color: #8FE2ED; color: black;" data-bs-toggle="modal" data-bs-target="#negotiateModal-{{$freelancer->hiringRequestData->hiring_request_id}}">Negotiate</button>
+                                        @endif
 
-                                            <!--if accepted this will be gone-->
-                                            @if($freelancer->hiringRequestData->status != 'Accepted')
-                                            <button class="confirm" style="background-color:crimson;"
-                                                data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
-                                                data-action="cancel" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Cancel</button>
-                                            @endif
+                                        <!--if accepted this will be gone-->
+                                        @if($freelancer->hiringRequestData->status != 'Accepted')
+                                        <button class="confirm mb-2 mb-md-0" style="background-color:crimson;"
+                                            data-bs-toggle="modal" data-bs-target="#modal-{{ $freelancer->hiringRequestData->hiring_request_id }}"
+                                            data-action="cancel" data-hiringid="{{ $freelancer->hiringRequestData->hiring_request_id }}" data-modal-type="confirm-modal">Cancel</button>
+                                        @endif
 
-                                            @elseif($freelancer->hiringRequestData->status == 'Rejected')
-                                            <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold"
-                                                style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
-                                            @endif
-                                        </div>
+                                        @elseif($freelancer->hiringRequestData->status == 'Rejected')
+                                        <button class="btn btn-cancel me-2 mb-2 mb-sm-0 border border-secondary-subtle fw-bold mb-2 mb-md-0"
+                                            style="flex: 2; width: 100%;  color:red; border:none; border-radius: 20px" disabled>Rejected</button>
+                                        @endif
                                     </div>
                                 </div>
                             </div>

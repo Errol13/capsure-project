@@ -263,13 +263,13 @@ class Hiring_requestController extends Controller
                 if ($user->user_type === 'client') {
                     $freelancer = User::where('id', $hiringRequest->freelancer_id)->first();
                     if ($freelancer) {
-                        Log::info('Notifying freelancer: ' . $freelancer->email);
+                        // Log::info('Notifying freelancer: ' . $freelancer->email);
                         $freelancer->notify(new AcceptedOffer($hiringRequest, $user));
                     }
                 } elseif ($user->user_type === 'freelancer') {
                     $client = User::where('id', $hiringRequest->client_id)->first();
                     if ($client) {
-                        Log::info('Notifying client: ' . $client->email);
+                        // Log::info('Notifying client: ' . $client->email);
                         $client->notify(new AcceptedOffer($hiringRequest, $user));
                     }
                 }
