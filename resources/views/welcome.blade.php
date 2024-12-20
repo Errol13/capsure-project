@@ -14,6 +14,9 @@
                 <div class="d-flex d-lg-block justify-content-center"><a href="/choose" class="btn mb-3">Get Started</a></div>
             </div>
             <div class="col d-flex justify-content-center my-4 my-lg-0">
+
+
+
                 <!-- Bootstrap Carousel -->
                 <div id="carouselServices" class="carousel slide h-100" data-bs-ride="carousel">
                     <div class="carousel-inner">
@@ -608,12 +611,19 @@
 
     .carousel-inner {
         height: 100%;
+        transition: transform 0.3s ease-in-out;
     }
 
     .carousel-item img {
+        display: block;
+        margin: 0 auto;
+        width: 100%;
+        /* Make the image responsive */
         height: 100%;
         object-fit: cover;
     }
+
+    
 
     .carousel-inner img {
         width: 300px;

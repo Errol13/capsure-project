@@ -37,9 +37,9 @@
                         @if($review->team)
                         <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
                         @elseif($review->client)
-                        <img src="{{ asset($review->client->user->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
                         @else
-                        <img src="{{ asset($review->freelancer->user->profile_image) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
                         @endif
                     </div>
                     <div>
