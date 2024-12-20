@@ -8,6 +8,7 @@ use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Notifications\PaymentProofSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentProofController extends Controller
@@ -27,7 +28,8 @@ class PaymentProofController extends Controller
         $filePath = null;
         if ($request->hasFile('proof_file')) {
             $file = $request->file('proof_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();  // Generate unique name
+            
+$fileName = time() . '_' . Str::slug($file->getClientOriginalName(), '_'); // Generate unique name
             $filePath = $file->storeAs('public/paymentproof', $fileName);  // Store file
         }
 
