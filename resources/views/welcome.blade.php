@@ -313,7 +313,7 @@
                                     <span class="fw-bold">{{ number_format($event->client->avg_rating, 1) }}</span>
                                     <span class="text-muted small ms-1">({{ $event->client->reviews()->where('reviewee_role', 'client')->count() }})</span>
                                     @else
-                                    <span class="note me-1">No ratings yet</span>
+                                    <span class="note me-1 fs-for-mobile text-wrap">No ratings yet</span>
                                     @endif
                                 </div>
                             </div>

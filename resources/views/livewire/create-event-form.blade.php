@@ -68,21 +68,21 @@
 
                     <div class="form-group mb-3 open-sans-reg" style="color: #91216C;">
                         <div class="row">
-                            <div class="col-8">
+                            <div class="col-12">
                                 <label for="budget_min">Budget Range:</label>
                             </div>
-                            <div class="col-3" style="white-space: nowrap; font-size:small;">
-                                <label for="payment_method">Payment Method:</label>
-                            </div>
-                            <div class="col-4">
+                            <div class="col-6 mb-2">
                                 <input type="number" id="budget_min" class="form-control" wire:model="budget_min" min="20" placeholder="Min ₱">
                                 @error('budget_min') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-6 mb-2">
                                 <input type="number" id="budget_max" class="form-control" wire:model.debounce.1000ms="budget_max" :min="budget_min" placeholder="Max ₱">
                                 @error('budget_max') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
-                            <div class="col-4">
+                            <div class="col-12" style="white-space: nowrap; font-size:small;">
+                                <label for="payment_method">Payment Method:</label>
+                            </div>
+                            <div class="col-6">
                                 <select id="payment_method" class="form-control" wire:model="payment_method">
                                     <option value="">Select</option>
                                     <option value="Cash">Cash</option>

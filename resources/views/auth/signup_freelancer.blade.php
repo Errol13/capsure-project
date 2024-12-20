@@ -116,7 +116,7 @@
 
                             <div class="row mb-1">
                                 <!-- Job Category -->
-                                <div class="col-sm-4 col-md-4">
+                                <div class="col-6">
                                     <label for="job_category" class="form-label mb-0">{{ __('Job Category') }}</label>
                                     <select id="job_category" class="mx-1 form-select @error('job_category') is-invalid @enderror" name="job_category" required>
                                         <option value="" disabled selected></option>
@@ -132,7 +132,7 @@
                                 </div>
 
                                 <!-- Job Title -->
-                                <div class="col-sm-4 col-md-4">
+                                <div class="col-6">
                                     <label for="job_title" class="form-label mb-0">{{ __('Job Title') }}</label>
                                     <select id="job_title" class="mx-1 form-select @error('job_title') is-invalid @enderror" name="job_title" required>
                                         <option value="" disabled selected></option>
@@ -147,7 +147,7 @@
                                 </div>
 
                                 <!-- Job Fee -->
-                                <div class="col-6 col-md-2">
+                                <div class="col-6">
                                     <label for="job_fee" class="form-label mb-0">{{ __('Job Fee') }}</label>
                                     <input id="job_fee" type="number" step="0.01" placeholder="Min. ₱20 " class="mx-1 form-control @error('job_fee') is-invalid @enderror" 
                                     name="job_fee" value="{{ old('job_fee') }}" min="20"  required autocomplete="job_fee">
@@ -159,12 +159,12 @@
                                 </div>
 
                                 <!-- Fee Type -->
-                                <div class="col-6 col-md-2">
+                                <div class="col-6">
                                     <label for="fee_type" class="form-label mb-0">{{ __('Fee Type') }}</label>
                                     <select id="fee_type" class="mx-0 form-select @error('fee_type') is-invalid @enderror" name="fee_type" required>
                                         <option value="" disabled selected></option>
-                                        <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>/hr</option>
-                                        <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>/project</option>
+                                        <option value="/hour" {{ old('fee_type') == '/hour' ? 'selected' : '' }}>per hour</option>
+                                        <option value="/project" {{ old('fee_type') == '/project' ? 'selected' : '' }}>per project</option>
                                     </select>
                                     @error('fee_type')
                                     <span class="invalid-feedback" role="alert">
