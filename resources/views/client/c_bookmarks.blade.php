@@ -30,7 +30,7 @@
                 $firstImage = $paths[0];
                 $relativePath = str_replace('public/', '', $firstImage);
                 @endphp
-                <img src="{{ asset('storage/' . $relativePath) }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
+                <img src="{{ asset(str_replace('public/', 'storage/', $relativePath)) }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
                 @else
                 <img src="{{ asset('assets/cover_def.png') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
                 @endif

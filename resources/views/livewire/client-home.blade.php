@@ -76,8 +76,8 @@
                 }
                 @endphp
                 @if($firstImage)
-                <img src="{{ asset('storage/' . $firstImage) }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
-             @endif
+                <img src="{{ asset(str_replace('public/', 'storage/', $firstImage)) }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
+                @endif
                 @else
                 <img src="{{ asset('assets/cover_def.png') }}" class="rounded-0" alt="cover" style="border-radius: 15px 15px 0 0; width: 100%; height: 150px; object-fit: cover;">
                 @endif

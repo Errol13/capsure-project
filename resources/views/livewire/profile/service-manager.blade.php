@@ -8,17 +8,17 @@
 
     @foreach ($services as $service)
     <div class="row mt-2 open-sans-reg g-1 rounded-2 p-1 align-items-center" style="background-color:white;" data-id="{{ $service->id }}">
-        <div class="col-sm-4 col">
-            <input type="text" class="form-control fs-smaller fs-md"
+        <div class="col-4 col-md">
+            <input type="text" class="form-control fs-smaller fs-md text-truncate"
                 wire:model.defer="serviceData.{{ $service->id }}.title"
                 readonly disabled>
         </div>
-        <div class="col-sm-3 col">
+        <div class="col-3 col-md">
             <input type="text" class="form-control fs-smaller fs-md"
                 wire:model.defer="serviceData.{{ $service->id }}.fee"
                 @if($editingServiceId !=$service->id) readonly disabled @endif>
         </div>
-        <div class="col-sm-2 col">
+        <div class="col-3 col-md">
             <select class="form-control fs-smaller fs-md"
                 wire:model.defer="serviceData.{{ $service->id }}.fee_type"
                 @if($editingServiceId !=$service->id) disabled @endif>
