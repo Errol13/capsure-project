@@ -234,7 +234,7 @@
                         @endif
                     </div>
                     @if($totalReviews > 0)
-                    <a class="poppins-light text-purple" href="{{route('allReviews.show')}}" style="font-size:small;">See All Reviews</a>
+                    <a class="poppins-light text-purple" href="{{route('allReviews.show', ['id' => $user->id])}}" style="font-size:small;">See All Reviews</a>
                     @endif
                 </div>
 
