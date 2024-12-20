@@ -14,6 +14,7 @@
                             <span class="note">(Check all that apply)</span>
                             <span class="text-danger">*</span>
                         </label>
+                        
                         <div class="row">
                             <div class="col-6">
                                 <div class="form-check d-flex align-items-start">

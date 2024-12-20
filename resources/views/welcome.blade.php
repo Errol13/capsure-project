@@ -259,7 +259,7 @@
                     <span class="visually-hidden">Next</span>
                 </button>
             </div>
-            
+
         </div>
     </section>
 
@@ -521,6 +521,7 @@
     }
 
     .menu-list {
+        cursor: pointer;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
@@ -601,9 +602,23 @@
         max-width: 100%;
     }
 
+    #carouselServices {
+        height: 300px;
+    }
+
+    .carousel-inner {
+        height: 100%;
+    }
+
+    .carousel-item img {
+        height: 100%;
+        object-fit: cover;
+    }
+
     .carousel-inner img {
         width: 300px;
         height: 300px;
+        object-fit: cover;
     }
 
     .text-content .btn {

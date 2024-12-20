@@ -7,7 +7,7 @@
                 <button type="button" id="close-report-form" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form id="report-id" method="POST" action="{{route('report.store')}}" enctype="multipart/form-data">
+            <form id="report-client-id" method="POST" action="{{route('report.store')}}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body">
                     <div class="mb-3">
@@ -52,11 +52,11 @@
                     <div class="mb-3">
                         <label for="attachProof" class="form-label">Attach Proof <span class="text-danger">*</span></label>
                         <div class="file-upload">
-                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg,.png" multiple>
+                            <input type="file" name="proof_image[]" class="form-control" id="attachProof" accept=".jpg, .jpeg, .png" multiple>
                             <small class="form-text text-muted">Upload (.jpg or .png format)</small>
                         </div>
                     </div>
-                    <input type="hidden" name="reported_user_id"></input>
+                    <input type="hidden" name="reported_user_id" value="{{ $reportee->id }}"></input>
 
                     <input type="hidden" name="reporter_id" value="{{ auth()->user()->id }}"></input>
 
@@ -154,12 +154,12 @@
         const closeButton = document.getElementById('close-report-form');
 
         closeButton.addEventListener('click', function() {
-            document.getElementById('report-id').reset();
+            document.getElementById('report-client-id').reset();
             checkTheFields();
         });
 
         // Handle the form submission via AJAX
-        document.getElementById('report-id').addEventListener('submit', function(event) {
+        document.getElementById('report-client-id').addEventListener('submit', function(event) {
             event.preventDefault(); // Prevent default form submission
 
             const formData = new FormData(this);
@@ -181,11 +181,15 @@
                         spinner.classList.add('d-none'); // hide the spinner
 
                         // Reset the form
-                        document.getElementById('report-id').reset();
+                        document.getElementById('report-client-id').reset();
                         checkTheFields();
 
-                        // Close the modal using jQuery
-                        $('#reportClientModal').modal('hide');
+                        // Get the modal element
+                        var myModal = new bootstrap.Modal(document.getElementById('reportClientModal'));
+
+                        // Close the modal
+                        myModal.hide();
+
 
                         // Show the success alert
                         setTimeout(function() {
@@ -204,9 +208,9 @@
                 .catch(error => {
                     //hide the spinner
                     spinner.classList.add('d-none');
-                    
-                    alert('An error occurred. Please try again later.');
-                    
+
+                    alert('An error occurred. Please try again later.' + error);
+
                 });
         });
 

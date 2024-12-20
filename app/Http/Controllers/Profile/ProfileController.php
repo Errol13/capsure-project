@@ -276,7 +276,6 @@ class ProfileController extends Controller
   //store the report to the db
   public function reportStore(Request $request)
   {
-
     $validated = $request->validate([
       'reason' => 'required|array|min:1',
       'reason.*' => 'string',
@@ -287,9 +286,6 @@ class ProfileController extends Controller
       'reporter_id' => 'required|exists:users,id',
     ]);
 
-    // dd('Report saved!');
-
-    Log::info('Report submitted');
     // Process the proof images if provided
     $proofImagePaths = [];
     $proofImageOriginalNames = [];
@@ -318,8 +314,7 @@ class ProfileController extends Controller
     $report->proof_image = json_encode($proofImagePaths); // Store the file paths as JSON
     $report->isArchived = false;
     $report->save();
-
-    Log::info('Report saved!');
+    
 
     return response()->json(['success' => true]); //shows true to show the alert success 
   }
