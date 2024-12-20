@@ -21,15 +21,17 @@ class ValidateController extends Controller
 
     public function validateIdStore(Request $request)
     {
-        Log::info('Gregorio');
+       
 
         // Validate the incoming request
         $request->validate([
             'id_type' => 'required|string',
-            'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'pic_with_id' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'id_card_image' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480',
+            'pic_with_id' => 'required|image|mimes:jpeg,png,jpg,gif|max:20480',
         ]);
 
+         Log::info('ID submitted');
+        
         // Get the user ID
         $userId = auth()->id();
 
