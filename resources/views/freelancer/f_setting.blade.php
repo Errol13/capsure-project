@@ -23,6 +23,7 @@
                             </a>
                         </span>
                     </div>
+                    
                     <input type="file" id="profilePicUpload" name="profile_picture" style="display: none;" accept="image/*" onchange="previewImage(event)" />
 
                     <div id="actionButtons" class="d-flex justify-content-center my-3 d-none">

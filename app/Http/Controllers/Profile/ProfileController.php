@@ -90,9 +90,10 @@ class ProfileController extends Controller
 
     // Validate the incoming request
     $request->validate([
-      'profile_picture' => 'required|image|mimes:jpg,png,gif|max:5120', // Adjust the max size as needed
+      'profile_picture' => 'required|image|mimes:jpg,png,gif|max:10240', // Adjust the max size as needed
     ]);
 
+    // dd($request->all());
     // Handle the uploaded file
     if ($request->hasFile('profile_picture')) {
       // Delete the old profile picture if it exists
