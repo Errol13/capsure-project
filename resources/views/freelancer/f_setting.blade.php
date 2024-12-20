@@ -455,6 +455,15 @@
         document.getElementById('profilePicUpload').click();
     }
 
+    function showUploadOptions() {
+        // Show action buttons and hide the upload icon
+        document.getElementById('actionButtons').classList.remove('d-none');
+        document.querySelector('.fa-arrow-up-from-bracket').style.display = 'none';
+
+        // Trigger the file input
+        document.getElementById('profilePicUpload').click();
+    }
+
     function previewImage(event) {
         const input = event.target;
         const preview = document.getElementById('profilePicPreview');
@@ -474,8 +483,6 @@
         document.getElementById('actionButtons').classList.add('d-none'); // Hide action buttons
         document.querySelector('.fa-arrow-up-from-bracket').style.display = 'inline'; // Show upload icon again
     }
-
-
     document.addEventListener('DOMContentLoaded', function() {
         const showLimitMessageButton = document.getElementById('showLimitMessageButton');
         const limitMessage = document.getElementById('limitMessage');
