@@ -298,9 +298,22 @@
                             </div>
 
                             <div class="d-flex flex-wrap">
-                                @foreach($event->event_jobs ?? [] as $event_job)
-                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">{{$event_job->service_needed}}</span>
+                                @php
+                                $plusMoreCount = $event->event_jobs->count() > 2 ? $event->event_jobs->count() - 2 : null;
+                                @endphp
+
+                                @foreach ($event->event_jobs->take(2) as $event_job)
+                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">
+                                    {{ $event_job->service_needed }}
+                                </span>
                                 @endforeach
+
+                                @if ($plusMoreCount)
+                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">
+                                    +{{ $plusMoreCount }}
+                                </span>
+                                @endif
+
                             </div>
 
                             <hr class="mt-2 border-1 opacity-25">
@@ -623,7 +636,7 @@
         object-fit: cover;
     }
 
-    
+
 
     .carousel-inner img {
         width: 300px;

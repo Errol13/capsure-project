@@ -27,7 +27,7 @@ class PaymentProofController extends Controller
         $filePath = null;
         if ($request->hasFile('proof_file')) {
             $file = $request->file('proof_file');
-            $fileName = time() . '_' . $file->getClientOriginalName();  // Generate unique name
+            $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9\-_\.]/', '_', $file->getClientOriginalName());
             $filePath = $file->storeAs('public/paymentproof', $fileName);  // Store file
         }
 
