@@ -26,11 +26,22 @@ class PaymentProofController extends Controller
 
         // Process the image and store in 'public/paymentproof'
         $filePath = null;
-        if ($request->hasFile('proof_file')) {
-            $file = $request->file('proof_file');
-            $fileName = time() . '_' . Str::slug($file->getClientOriginalName(), '_'); // Generate unique name with csanitized name
-            $filePath = $file->storeAs('public/paymentproof', $fileName);  // Store file
-        }
+      if ($request->hasFile('proof_file')) {
+    $file = $request->file('proof_file');
+    // Get the file name and extension
+    $fileNameWithoutExtension = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+    $fileExtension = $file->getClientOriginalExtension();
+
+    // Sanitize the file name by replacing non-alphanumeric characters (except for hyphens and spaces)
+    $sanitizedFileName = preg_replace('/[^a-zA-Z0-9\s-]/', '_', $fileNameWithoutExtension);
+
+    // Combine the sanitized file name with the original extension
+    $fileName = time() . '_' . $sanitizedFileName . '.' . $fileExtension;
+
+    // Store the file with the new name
+    $filePath = $file->storeAs('public/paymentproof', $fileName);
+}
+
 
         // Store the file path in the database
         if ($filePath) {
