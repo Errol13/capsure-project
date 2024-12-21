@@ -33,7 +33,7 @@
                 @endforelse
             </div>
             <div class="card-footer text-center">
-                {{ $notifications->links() }} <!-- Pagination -->
+                {{ $notifications->links('vendor.pagination.bootstrap-4') }} <!-- Pagination -->
             </div>
 
         </div>
