@@ -26,10 +26,6 @@
                         </small>
                     </a>
                 </div>
-
-                <div class="card-footer text-center">
-                {{ $notifications->links('vendor.pagination.bootstrap-4') }} <!-- Pagination -->
-                </div>
                 
                 @empty
                 <div class="p-3 text-center text-muted">
@@ -38,7 +34,9 @@
                 @endforelse
             </div>
             
-
+                <div class="card-footer text-center">
+                {{ $notifications->links('vendor.pagination.bootstrap-4') }} <!-- Pagination -->
+                </div>
         </div>
     </div>
 </div>
