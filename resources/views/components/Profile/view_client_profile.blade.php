@@ -44,18 +44,15 @@
                     <!-- Full Name and Verification Status -->
                     <div class="col-12 col-md-12 mt-2">
                         <div class="d-flex justify-content-between align-items-center">
-
-                            <div class="mt-2 d-flex align-items-center">
-                                <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
-                                    {{ $fullName }}
-                                </h5>
-                                @if($user->isVerified)
-                                <span class="d-flex align-items-center note">
-                                    <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
-                                    Verified
-                                </span>
-                                @endif
-                            </div>
+                            <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
+                                {{ $fullName }}
+                            </h5>
+                            @if($user->isVerified)
+                            <span class="d-flex align-items-center note">
+                                <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
+                                Verified
+                            </span>
+                            @endif
 
                             <!--Chat and Report-->
                             <div class="d-flex justify-content-start align-items-center me-2 mt-lg-0">
@@ -68,7 +65,7 @@
                                 <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportClientModal"
                                     style="color: crimson; cursor: pointer;"></i>
                             </div>
-
+                            
 
                             <!-- Report Modal -->
                             @include('modals.c_report', ['reportee' => $user])

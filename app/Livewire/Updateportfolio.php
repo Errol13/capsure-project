@@ -49,7 +49,9 @@ class UpdatePortfolio extends Component
         // Handle file uploads
         foreach ($this->files as $file) {
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
+            $sanitizedFileName = preg_replace('/[^a-zA-Z0-9.\s-]/', '_', $fileName);
+            $sanitizedFileName = str_replace('', '_', $sanitizedFileName);
+            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $sanitizedFileName);
             $portfolio->path = json_encode(array_merge(json_decode($portfolio->path, true) ?? [], [$path]));
         }
 

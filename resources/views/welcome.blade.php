@@ -309,7 +309,7 @@
                                 @endforeach
 
                                 @if ($plusMoreCount)
-                                <span class="badge me-1 mb-2" style="font-size:small; background-color: #8FE2ED; color:#323232;">
+                                <span class="badge rounded-pill bg-light text-dark me-1 mb-2">
                                     +{{ $plusMoreCount }}
                                 </span>
                                 @endif

@@ -96,7 +96,7 @@
                     @else
                     <div class="mb-2">
                         @foreach ($user->freelancer->skills as $index => $skill)
-                        <span class="text-start badge badge-custom rounded-pill me-1"
+                        <span class="text-start badge badge-custom rounded-pill me-1 text-wrap"
                             style="background-color: #91216C;">
                             {{ $skill }}
                         </span>
@@ -116,7 +116,7 @@
                         </div>
                         <div class="col-12 d-flex align-items-center justify-content-start my-2">
                             <i class="fas fa-sharp fa-thin fa-envelope text-purple"></i>
-                            <small class="text-start ms-2">{{$user->email}}</small>
+                            <small class="text-start ms-2" style="line-height: 1;"><span style="word-break: break-all;">{{$user->email}}</span></small>
                         </div>
                         @if($user->contact_number)
                         <div class="col-12 d-flex align-items-center justify-content-start">
@@ -131,26 +131,26 @@
             </div>
         </div>
     </div>
-    <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" style="background-color: white;">
-        <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC;">
-            <!--Awards and Certifications -->
+    <div class="row d-flex justify-content-center my-3 mx-2 rounded-4">
+        <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC; min-height: 150px;">
+            <!-- Awards and Certifications -->
             <h5 class="my-3 fs-sm poppins-medium text-center">Awards & Certifications</h5>
-            <div class="row text-center">
+            <div class="row text-center bg-white p-2">
                 @if($user->freelancer->certificates->isEmpty())
-                <div class="col-12 d-flex align-items-center justify-content-center">
+                <div class="col-12 d-flex align-items-center justify-content-center" style="background-color: none;">
                     <h6 class="fst-italic text-muted">No Awards</h6>
                 </div>
                 @else
                 @foreach($user->freelancer->certificates as $certificate)
-                <div class="col-12 d-flex align-items-center justify-content-center p-2">
-                    <div class="d-lg-flex d-none align-items-center">
+                <div class="col-12 d-flex align-items-center justify-content-center p-2 flex-wrap">
+                    <div class="d-flex align-items-center">
                         <a data-fancybox="certificate-gallery" data-caption="{{ $certificate->title }}" href="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}">
-                            <img src="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}" alt="{{ $certificate->title }}" class="me-2 " style="width: 35px; height: 35px;">
+                            <img src="{{ asset('storage/' . str_replace('public/', '', $certificate->image)) }}" alt="{{ $certificate->title }}" class=" img-fluid rounded-1 me-2" style="width: 35px; height: 35px;">
                         </a>
                     </div>
                     <div style="line-height: 1;">
                         <div>
-                            <span class="mb-0 fs-smaller fs-md text-start" style="white-space:nowrap;">{{ $certificate->title }}</span>
+                            <span class="mb-0 fs-smaller fs-md text-start fs-for-mobile">{{ $certificate->title }}</span>
                         </div>
                         <div>
                             <span class="justify-content-start note">{{ $certificate->date }}</span>
@@ -161,7 +161,8 @@
                 @endif
             </div>
         </div>
-        <div class="col-7 col-md-8 col-lg-8 ps-3">
+
+        <div class="col-7 col-md-8 col-lg-8 ps-3 bg-white">
             <h3 class=" poppins-medium mt-3">Services</h3>
             <div class="container row">
                 <!--Services -->

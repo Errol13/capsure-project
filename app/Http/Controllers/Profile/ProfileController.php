@@ -106,8 +106,13 @@ class ProfileController extends Controller
 
       // Create a unique name for the file using the original name and the user's last name
       $fileName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+      // Replace any character that is not alphanumeric, a space, or a hyphen with an underscore
+      $sanitizedFileName = preg_replace('/[^a-zA-Z0-9\s-]/', '_', $fileName);
+      //Replace spaces with underscores 
+      $sanitizedFileName = str_replace(' ', '_', $sanitizedFileName);
+
       $lastName = $user->last_name;
-      $newFileName = "{$fileName}_{$lastName}." . $file->getClientOriginalExtension();
+      $newFileName = "{$sanitizedFileName}_{$lastName}." . $file->getClientOriginalExtension();
 
       // Store the file and get the path
       $path = $file->storeAs('profile_pictures', $newFileName, 'public');
@@ -314,7 +319,7 @@ class ProfileController extends Controller
     $report->proof_image = json_encode($proofImagePaths); // Store the file paths as JSON
     $report->isArchived = false;
     $report->save();
-    
+
 
     return response()->json(['success' => true]); //shows true to show the alert success 
   }

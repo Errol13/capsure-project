@@ -8,6 +8,7 @@ use App\Models\Transaction\Transaction;
 use App\Models\User;
 use App\Notifications\PaymentProofSent;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 
 class PaymentProofController extends Controller
@@ -27,7 +28,7 @@ class PaymentProofController extends Controller
         $filePath = null;
         if ($request->hasFile('proof_file')) {
             $file = $request->file('proof_file');
-            $fileName = time() . '_' . preg_replace('/[^a-zA-Z0-9\-_\.]/', '_', $file->getClientOriginalName());
+            $fileName = time() . '_' . Str::slug($file->getClientOriginalName(), '_'); // Generate unique name with csanitized name
             $filePath = $file->storeAs('public/paymentproof', $fileName);  // Store file
         }
 
@@ -46,7 +47,7 @@ class PaymentProofController extends Controller
             // notify freelancer
             if ($transaction->freelancer) {
                 $transaction->freelancer->user->notify(new PaymentProofSent($user->first_name, $user->last_name, $request->input('amount_paid')));
-            }elseif($transaction->team){
+            } elseif ($transaction->team) {
                 $leader = User::find($transaction->team->team_leader);
                 $leader->notify(new PaymentProofSent($user->first_name, $user->last_name, $request->input('amount_paid')));
             }

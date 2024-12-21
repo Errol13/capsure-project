@@ -38,10 +38,22 @@
                             <p class="card-text text-truncate content-color">{!! nl2br(e($event->description)) !!}</p>
                         </div>
 
-                        <div class="d-flex flex-wrap">
-                            @foreach($event->event_jobs ?? [] as $event_job)
+                        <div class="d-flex flex-wrap justify-content-start align-items-center">
+
+                            @php
+                            $plusMoreCount = $event->event_jobs->count() > 2 ? $event->event_jobs->count() - 2 : null;
+                            @endphp
+
+                            @foreach ($event->event_jobs->take(2) as $event_job)
                             <span class="badge me-1 mb-2" style="font-size:small; background-color: whitesmoke; color:#323232;">{{$event_job->service_needed}}</span>
                             @endforeach
+
+                            @if ($plusMoreCount)
+                            <span class="badge bg-light text-dark me-1 mb-2">
+                                +{{ $plusMoreCount }}
+                            </span>
+                            @endif
+
                         </div>
 
                         <hr class="mt-2 border-1 opacity-25">

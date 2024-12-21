@@ -43,6 +43,7 @@
                         @endif
                     </div>
                     <div>
+                        
                         <!-- Review Content -->
                         @if($review->team)
                         <h5 class="font-weight-bold">{{$review->team->team_name}} (Team)</h5>

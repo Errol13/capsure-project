@@ -12,9 +12,8 @@
                     <span class="text-muted">Date uploaded: {{ $proof->created_at->format('M j Y, h:i A') }}</span>
                     <p><strong>Payment Type:</strong> {{ $proof->payment_type }}</p>
                     <p><strong>Amount:</strong> ₱{{ number_format($proof->amount_paid, 2) }}</p>
-                    <p>{{$proof->file_path}}</p>
-                    <a href="{{ Storage::url($proof->file_path) }}" data-fancybox="gallery" data-caption="Payment Type: {{ $proof->payment_type }} - Amount: ₱{{ number_format($proof->amount_paid, 2) }}">
-                        <img src="{{ Storage::url($proof->file_path) }}" class="img-fluid" alt="Receipt Image" aria-label="Receipt Image for {{ $proof->payment_type }}">
+                    <a href="{{ Storage::url(str_replace('public/', '', $proof->file_path)) }}" data-fancybox="gallery" data-caption="Payment Type: {{ $proof->payment_type }} - Amount: ₱{{ number_format($proof->amount_paid, 2) }}">
+                        <img src="{{ Storage::url(str_replace('public/', '', $proof->file_path)) }}" class="img-fluid" alt="Receipt Image" aria-label="Receipt Image for {{ $proof->payment_type }}">
                     </a>
                 </div>
                 @endforeach
