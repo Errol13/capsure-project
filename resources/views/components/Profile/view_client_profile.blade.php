@@ -44,15 +44,18 @@
                     <!-- Full Name and Verification Status -->
                     <div class="col-12 col-md-12 mt-2">
                         <div class="d-flex justify-content-between align-items-center">
-                            <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
-                                {{ $fullName }}
-                            </h5>
-                            @if($user->isVerified)
-                            <span class="d-flex align-items-center note">
-                                <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
-                                Verified
-                            </span>
-                            @endif
+
+                            <div class="mt-2 d-flex align-items-center">
+                                <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">
+                                    {{ $fullName }}
+                                </h5>
+                                @if($user->isVerified)
+                                <span class="d-flex align-items-center note">
+                                    <i class="fas fa-check-circle verify-icon me-1" title="Verified"></i>
+                                    Verified
+                                </span>
+                                @endif
+                            </div>
 
                             <!--Chat and Report-->
                             <div class="d-flex justify-content-start align-items-center me-2 mt-lg-0">
@@ -65,7 +68,7 @@
                                 <i class="bi bi-person-fill-exclamation fs-4" data-bs-toggle="modal" data-bs-target="#reportClientModal"
                                     style="color: crimson; cursor: pointer;"></i>
                             </div>
-                            
+
 
                             <!-- Report Modal -->
                             @include('modals.c_report', ['reportee' => $user])
@@ -244,9 +247,9 @@
                         <div class="row card-body d-flex">
                             <div class="col-auto text-center my-2 px-0">
                                 @if($transaction->team_code)
-                                <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
                                 @else
-                                <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
                                 @endif
                             </div>
                             <div class="col-lg-10 col-9 col-md-9">

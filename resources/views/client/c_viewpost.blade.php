@@ -426,8 +426,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="text-center">
-                                                    <td class="fw-bold" style="color: mediumseagreen ; ">₱{{$team->hiringRequestData->freelancer_pricing}}</td>
-                                                    <td>₱{{$team->hiringRequestData->client_pricing}}</td>
+                                                    <td class="fw-bold" @if($freelancer->hiringRequestData->dealer_user_type === 'freelancer')style="color: mediumseagreen;" @endif>₱{{$team->hiringRequestData->freelancer_pricing}}</td>
+                                                    <td class="fw-bold" @if($freelancer->hiringRequestData->dealer_user_type === 'client')style="color: mediumseagreen;" @endif>₱{{$team->hiringRequestData->client_pricing}}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -547,8 +547,8 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="text-center">
-                                                    <td>₱{{$freelancer->hiringRequestData->freelancer_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
-                                                    <td class="fw-bold" style="color: mediumseagreen;">₱{{$freelancer->hiringRequestData->client_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
+                                                    <td class="fw-bold" @if($freelancer->hiringRequestData->dealer_user_type === 'freelancer')style="color: mediumseagreen;" @endif>₱{{$freelancer->hiringRequestData->freelancer_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
+                                                    <td class="fw-bold" @if($freelancer->hiringRequestData->dealer_user_type === 'client')style="color: mediumseagreen;" @endif>₱{{$freelancer->hiringRequestData->client_pricing}} {{ $freelancer->serviceDetails->fee_type }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -602,7 +602,7 @@
 
                             <!-- Negotiate Modal-->
                             @livewire('negotiate-modal', ['hiringRequestId' => $freelancer->hiringRequestData->hiring_request_id,
-                            'service' => $freelancer->serviceDetails])
+                            'service' => $freelancer->serviceDetails, 'key' => $freelancer->hiringRequestData->hiring_request_id])
 
                         </div>
                         @endforeach

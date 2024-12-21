@@ -173,14 +173,15 @@
                                         <table class="table table-borderless mb-2 w-100">
                                             <thead>
                                                 <tr class="text-center">
-                                                    <th class="note" style="white-space: nowrap;">Fee</th>
+                                                    <th class="note" style="white-space: nowrap;">Your Offer</th>
                                                     <th class="note" style="white-space: nowrap;">Client's Offer</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="text-center">
-                                                    <td>₱{{ $job->freelancer_pricing }}</td>
-                                                    <td class="fw-bold" style="color: mediumseagreen;">₱{{ $job->client_pricing }}</td>
+
+                                                    <td class="fw-bold" @if($job->dealer_user_type === 'freelancer')style="color: mediumseagreen;" @endif>₱{{ $job->freelancer_pricing }}</td>
+                                                    <td class="fw-bold" @if($job->dealer_user_type === 'client')style="color: mediumseagreen;" @endif>₱{{ $job->client_pricing }}</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -208,6 +209,7 @@
                                                 class="confirm me-2 mb-2 mb-md-0" style="background-color: #8FE2ED; color: black;">
                                                 Negotiate
                                             </button>
+
                                             <button data-bs-toggle="modal" data-bs-target="#modal-{{ $job->hiring_request_id }}"
                                                 data-modal-type="confirm-modal" data-action="decline"
                                                 data-hiringid="{{ $job->hiring_request_id }}" class="confirm"
@@ -222,18 +224,21 @@
                                             </button>
                                             @endif
                                         </div>
-                                        <!--modal component -->
-                                        <div wire:ignore>
-                                            <x-confirmation-modal :id="$job->hiring_request_id" title="Confirmation"
-                                                message="Are you sure you want to decline this offer?" :actionUrl="''"
-                                                method="POST" />
-                                        </div>
 
-                                        <!-- Negotiate Modal-->
-                                        @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
-                                        'service' => $job->serviceDetails])
+
                                     </div>
                                 </div>
+
+                                <!--modal component -->
+                                <div wire:ignore>
+                                    <x-confirmation-modal :id="$job->hiring_request_id" title="Confirmation"
+                                        message="Are you sure you want to decline this offer?" :actionUrl="''"
+                                        method="POST" />
+                                </div>
+
+                                <!-- Negotiate Modal-->
+                                @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
+                                'service' => $job->serviceDetails, 'key' => $job->hiring_request_id])
                             </div>
                             @endforeach
                         </div>

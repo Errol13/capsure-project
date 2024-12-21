@@ -1,4 +1,4 @@
-<div class="modal fade" id="negotiateModal-{{ $hiringRequestId }}" tabindex="-1" aria-labelledby="negotiateModalLabel" aria-hidden="true" wire:ignore>
+<div class="modal fade" id="negotiateModal-{{$hiringRequestId}}" tabindex="-1" aria-labelledby="negotiateModalLabel" aria-hidden="true" wire:ignore>
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form wire:submit.prevent="updateOffer">

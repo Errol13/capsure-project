@@ -20,14 +20,16 @@ class NegotiateModal extends Component
     public $dealerUserType;
     public $isLower = false;
     public $isTeam = false; // for team
+    public $key;
 
-    public function mount($hiringRequestId, $service)
+    public function mount($hiringRequestId, $service, $key)
     {
         $this->hiringRequestId = $hiringRequestId;
         $this->service = $service;
         $this->hiringRequestData = Hiring_request::find($hiringRequestId);
         $this->clientPricing = $this->hiringRequestData->client_pricing;
         $this->freelancerPricing = $this->hiringRequestData->freelancer_pricing;
+        $this->key = $key;
 
         //for team
         if ($this->hiringRequestData->team_code !== null) {
@@ -40,7 +42,7 @@ class NegotiateModal extends Component
 
     public function render()
     {
-        return view('livewire.negotiate-modal');
+        return view('livewire.negotiate-modal')->withKey($this->key);
     }
 
     //show the warning if the freelancer offers lower offer compared to current client offer
