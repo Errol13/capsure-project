@@ -224,9 +224,9 @@
                             <div class="col-auto text-center my-2 px-0">
                                 <!-- Profile Picture -->
                                 @if($transaction->team_code)
-                                <img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                <img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" alt="Reviewer Profile" class="rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px; object-fit: cover;">
                                 @else
-                                <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px; object-fit: cover;">
                                 @endif
                             </div>
                             <div class="col-lg-10 col-9 col-md-9">

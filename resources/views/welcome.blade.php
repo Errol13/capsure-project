@@ -318,7 +318,7 @@
 
                             <hr class="mt-2 border-1 opacity-25">
                             <div class="d-flex align-items-center mt-3">
-                                <img src="{{ $event->client->user->profile_image_url }}" alt="Profile" class="img-fluid rounded-circle me-2" width="50" height="50">
+                                <img src="{{ $event->client->user->profile_image_url }}" alt="Profile" style="width: 50px; height: 50px; object-fit: cover;">
                                 <div>
                                     <h6 class="mb-0 poppins-medium">{{$event->client->user->fullName()}}</h6>
                                     <small class="text-muted">{{$event->client->user->city}}</small>
