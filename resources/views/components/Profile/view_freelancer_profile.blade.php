@@ -301,7 +301,7 @@
                             <div class="col-auto text-center my-2 px-0">
                                 <!-- Profile Picture -->
                                 <a href="{{route('view-client-profile', ['id'=> $review->client->user_id])}}">
-                                    <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                                    <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: 50px;">
                                 </a>
                             </div>
                             <div class="col-10">
