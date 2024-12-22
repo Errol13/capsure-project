@@ -249,7 +249,9 @@
                                 @if($transaction->team_code)
                                 <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
                                 @else
-                                <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                <a href="{{route('view-freelancer-profile', ['id' => $review->freelancer->user_id])}}">
+                                    <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle justify-content-start ms-2" style="align-items:start;width: 50px; height: 50px;">
+                                </a>
                                 @endif
                             </div>
                             <div class="col-lg-10 col-9 col-md-9">

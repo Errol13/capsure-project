@@ -160,13 +160,13 @@
         </div>
     </div>
 
-    <div class="row d-flex justify-content-center my-3 mx-2 rounded-4" >
+    <div class="row d-flex justify-content-center my-3 mx-2 rounded-4">
         <div class="col-5 col-md-4 col-lg-4" style="border-right: 18px solid #F8FAFC; min-height: 150px; height:auto;">
             <!-- Awards and Certifications -->
             <h5 class="my-3 fs-sm poppins-medium text-center">Awards & Certifications</h5>
             <div class="row text-center bg-white p-2">
                 @if($user->freelancer->certificates->isEmpty())
-                <div class="col-12 d-flex align-items-center justify-content-center"  style="background-color: none;">
+                <div class="col-12 d-flex align-items-center justify-content-center" style="background-color: none;">
                     <h6 class="fst-italic text-muted">No Awards</h6>
                 </div>
                 @else
@@ -300,7 +300,9 @@
                         <div class="row d-flex">
                             <div class="col-auto text-center my-2 px-0">
                                 <!-- Profile Picture -->
-                                <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                                <a href="{{route('view-client-profile', ['id'=> $review->client->user_id])}}">
+                                    <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                                </a>
                             </div>
                             <div class="col-10">
                                 <!-- Review Content -->

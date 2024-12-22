@@ -20,7 +20,7 @@
         $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
         @endphp
 
-        <div class="container card rounded-4 border-0 mb-2" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);" >
+        <div class="container card rounded-4 border-0 mb-2" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
             <div class="row d-flex align-items-center justify-content-center">
                 <!-- Review Item  -->
                 <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">
@@ -42,9 +42,13 @@
                         @if($review->team)
                         <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
                         @elseif($review->client)
-                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
+                        <a href="{{route('view-client-profile', ['id'=> $review->client->user_id])}}">
+                            <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
+                        </a>
                         @else
-                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
+                        <a href="{{route('view-freelancer-profile', ['id'=> $review->freelancer->user_id])}}">
+                            <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
+                        </a>
                         @endif
 
                     </div>
