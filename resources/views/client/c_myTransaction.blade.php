@@ -157,7 +157,9 @@
                                     <div class="flex-grow-1 d-lg-flex">
                                         <!-- Solo Freelancer Information Section -->
                                         <div class="d-flex me-2 align-items-center w-100">
-                                            <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                            <a href="{{route('view-freelancer-profile', ['id' => $transaction->freelancer->user_id])}}">
+                                                <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                            </a>
                                             <div>
                                                 <div class="row">
                                                     <span>{{ $transaction->freelancer->user->first_name }} {{ $transaction->freelancer->user->last_name }}</span>
@@ -235,8 +237,9 @@
                                             @foreach($transaction->members as $member)
                                             <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
                                                 <div class=" member-info d-flex justify-content-start align-items-start ms-1">
-                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
-
+                                                    <a href="{{route('view-freelancer-profile', ['id' => $member->freelancer->user_id])}}">
+                                                        <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
+                                                    </a>
                                                     <div>
                                                         <div class="col" style="white-space: nowrap;">
                                                             <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>
@@ -447,7 +450,9 @@
                                     <div class="flex-grow-1 d-lg-flex">
                                         <!-- Solo Freelancer Information Section -->
                                         <div class="d-flex me-2 align-items-center w-100">
-                                            <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                            <a href="{{route('view-freelancer-profile', ['id' => $transaction->freelancer->user_id])}}">
+                                                <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                            </a>
                                             <div>
                                                 <div class="row">
                                                     <span>{{ $transaction->freelancer->user->first_name }} {{ $transaction->freelancer->user->last_name }}</span>
@@ -525,8 +530,10 @@
                                             @foreach($transaction->members as $member)
                                             <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
                                                 <div class=" member-info d-flex justify-content-start align-items-start ms-1">
-                                                    <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
 
+                                                    <a href="{{route('view-freelancer-profile', ['id' => $member->freelancer->user_id])}}">
+                                                        <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
+                                                    </a>
                                                     <div>
                                                         <div class="col" style="white-space: nowrap;">
                                                             <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>
@@ -638,7 +645,9 @@
                                     <!-- Freelancer Information Section -->
                                     <div class="d-flex me-2 align-items-center w-100">
                                         @if($transaction->freelancer)
-                                        <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                        <a href="{{route('view-freelancer-profile', ['id' => $transaction->freelancer->user_id])}}">
+                                            <img src="{{ asset($transaction->freelancer->user->profile_image_url) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
+                                        </a>
                                         @elseif($transaction->team)
                                         <img src="{{ asset('storage/' . $transaction->team->team_profilepic) }}" class="rounded-circle mx-2" alt="Freelancer Image" width="50" height="50">
                                         @endif
@@ -715,8 +724,9 @@
                                     @foreach($transaction->members as $member)
                                     <div class="m-1 col-lg-3 col-md-5 rounded-4 p-2">
                                         <div class=" member-info d-flex justify-content-start align-items-start ms-1">
-                                            <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
-
+                                            <a href="{{route('view-freelancer-profile', ['id' => $member->freelancer->user_id])}}">
+                                                <img src="{{$member->freelancer->user->profile_image_url}}" alt="Member" style="margin-right: 10px; max-width: 30px; max-height: 30px; object-fit: cover;">
+                                            </a>
                                             <div>
                                                 <div class="col" style="white-space: nowrap;">
                                                     <span class="mb-0 fs-small">{{$member->freelancer->user->fullname()}}</span>

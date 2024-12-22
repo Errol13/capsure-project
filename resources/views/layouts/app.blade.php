@@ -111,7 +111,7 @@
                             <a class="nav-link text-black {{ request()->routeIs('client-events') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('client-events') }}">MY EVENTS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->routeIs('client-transaction') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('client-transaction') }}">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->routeIs('client-transaction') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('client-transaction') }}">MY TRANSACTIONS</a>
                         </li>
 
                         @elseif (Auth::user()->user_type == 'freelancer')
@@ -123,7 +123,7 @@
                             <a class="nav-link text-black {{ request()->routeIs('my-jobs') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('my-jobs') }}">MY JOBS</a>
                         </li>
                         <li class="nav-item" id="nav-item-mobile">
-                            <a class="nav-link text-black {{ request()->routeIs('freelancer-transaction') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('freelancer-transaction') }}">MY TRANSACTION</a>
+                            <a class="nav-link text-black {{ request()->routeIs('freelancer-transaction') ? 'active' : '' }}" style="white-space:nowrap;" href="{{ route('freelancer-transaction') }}">MY TRANSACTIONS</a>
                         </li>
                         @endif
 

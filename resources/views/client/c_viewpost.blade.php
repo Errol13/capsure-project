@@ -512,9 +512,14 @@
                                 <!-- Profile Info -->
                                 <div class="card-body flex-grow-1">
                                     <div class=" d-flex align-items-start mb-3">
-                                        <img src="{{ asset($freelancer->user->profile_image_url) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        <a href="{{route('view-freelancer-profile', ['id' => $freelancer->user_id])}}">
+                                            <img src="{{ asset($freelancer->user->profile_image_url) }}" alt="Profile Image" class="rounded-circle ms-2" style="width: 60px; height: 60px; object-fit: cover;">
+                                        </a>
                                         <div class="ms-4">
-                                            <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }} </h6>
+                                            <a href="{{route('view-freelancer-profile', ['id' => $freelancer->user_id])}}"
+                                                class="text-decoration-none text-black">
+                                                <h6 class="mb-0">{{ $freelancer->user->first_name }} {{ $freelancer->user->last_name }} </h6>
+                                            </a>
                                             <p class="text-muted mb-0">{{ $freelancer->user->city }}</p>
                                             @if($freelancer->number_of_projects != 0)
                                             <small class="text-success mb-0">{{ $freelancer->number_of_projects }} Projects done</small>
@@ -602,7 +607,7 @@
 
                             <!-- Negotiate Modal-->
                             @livewire('negotiate-modal', ['hiringRequestId' => $freelancer->hiringRequestData->hiring_request_id,
-                            'service' => $freelancer->serviceDetails, 'key' => $freelancer->hiringRequestData->hiring_request_id])
+                            'service' => $freelancer->serviceDetails] , key($freelancer->hiringRequestData->hiring_request_id))
 
                         </div>
                         @endforeach

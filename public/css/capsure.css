@@ -633,6 +633,14 @@ select#year {
     max-height: 60px;
 }
 
+.rw-height-eventdesc p {
+    display: -webkit-box;
+    -webkit-line-clamp: 3; /* Number of lines before truncation */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+
 .rw-height-eventservices {
     display: -webkit-box;
     -webkit-line-clamp: 3;

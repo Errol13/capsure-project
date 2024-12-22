@@ -51,12 +51,13 @@ class UpdatePortfolio extends Component
             $fileName = time() . '_' . $file->getClientOriginalName();
             $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
 
-// Log the file path
+            // Log the file path
             Log::info('File stored successfully.', [
                 'portfolio_id' => $portfolio->portfolio_id,
                 'file_name' => $fileName,
                 'file_path' => $path,
             ]);
+            
             $portfolio->path = json_encode(array_merge(json_decode($portfolio->path, true) ?? [], [$path]));
         }
 

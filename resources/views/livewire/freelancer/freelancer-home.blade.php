@@ -35,7 +35,7 @@
                             <p class="card-text note">{{ $timeSince }}</p>
                         </div>
                         <div class="row rw-height-eventdesc mb-2">
-                            <p class="card-text text-truncate content-color">{!! nl2br(e($event->description)) !!}</p>
+                            <p class="card-text content-color">{!! nl2br(e($event->description)) !!}</p>
                         </div>
 
                         <div class="d-flex flex-wrap justify-content-start align-items-center">

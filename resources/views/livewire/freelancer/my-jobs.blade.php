@@ -153,7 +153,9 @@
                                     </div>
 
                                     <div class="card-body flex-grow-1">
+                                        <a href="{{route('client-viewpost', ['id' => $job->eventjob->event->event_id])}}" class="text-decoration-none text-black">
                                         <span class="fs-5 me-2 poppins-medium">{{ $job->eventjob->event->title }}</span><br>
+                                        </a>
                                         <strong class="note">Date & Time:</strong><br>
                                         <span> {{ $job->eventjob->event->start_date_formatted }} -
                                             {{ $job->eventjob->event->end_date_formatted }}</span><br>
@@ -204,7 +206,7 @@
                                             @endif
 
                                             @if($job->status != 'Accepted')
-                                            <button data-bs-toggle="modal"
+                                            <button wire:ignore.self data-bs-toggle="modal"
                                                 data-bs-target="#negotiateModal-{{$job->hiring_request_id}}"
                                                 class="confirm me-2 mb-2 mb-md-0" style="background-color: #8FE2ED; color: black;">
                                                 Negotiate
@@ -237,8 +239,8 @@
                                 </div>
 
                                 <!-- Negotiate Modal-->
-                                @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id,
-                                'service' => $job->serviceDetails, 'key' => $job->hiring_request_id])
+                                @livewire('negotiate-modal', ['hiringRequestId' => $job->hiring_request_id, 'service' => $job->serviceDetails], key($job->hiring_request_id))
+
                             </div>
                             @endforeach
                         </div>

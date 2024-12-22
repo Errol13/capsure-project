@@ -22,14 +22,13 @@ class NegotiateModal extends Component
     public $isTeam = false; // for team
     public $key;
 
-    public function mount($hiringRequestId, $service, $key)
+    public function mount($hiringRequestId, $service)
     {
         $this->hiringRequestId = $hiringRequestId;
         $this->service = $service;
         $this->hiringRequestData = Hiring_request::find($hiringRequestId);
         $this->clientPricing = $this->hiringRequestData->client_pricing;
         $this->freelancerPricing = $this->hiringRequestData->freelancer_pricing;
-        $this->key = $key;
 
         //for team
         if ($this->hiringRequestData->team_code !== null) {

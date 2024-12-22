@@ -99,7 +99,16 @@
 
 
                     <div class="d-flex justify-content-center mb-1">
-                        <button type="submit" class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;">Offer</button>
+                        <button class="btn me-2" style="background-color: #91216C; border:none; color:white; width: 120px; height: 35px;" type="button" wire:click="updateOffer">
+                            <div wire:loading wire:target="updateOffer">
+                                <div class="spinner-border spinner-border-sm text-light" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <span wire:loading.remove wire:target="updateOffer">
+                               Send Offer
+                            </span>
+                        </button>
                         <button type="button" class="btn btn-secondary" style="width: 120px; height: 35px;" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>

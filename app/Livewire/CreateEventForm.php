@@ -18,6 +18,7 @@ class CreateEventForm extends Component
     public $jobTitles = [];
     public $selectedCategory;
     public $availableServices = [];
+    public $showSpinner = false;
 
     public function mount()
     {
@@ -184,6 +185,9 @@ class CreateEventForm extends Component
 
     public function saveEvent()
     {
+
+        $this->showSpinner = true; //show the spinner
+
         $this->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -193,8 +197,8 @@ class CreateEventForm extends Component
             'barangay' => 'required|string|max:255',
             'city' => 'required|string|max:255',
             'payment_method' => 'required|string|max:50',
-            'budget_min' => 'required|numeric|min:0',
-            'budget_max' => 'required|numeric|min:0|gte:budget_min',
+            'budget_min' => 'required|numeric|min:20',
+            'budget_max' => 'required|numeric|min:20|gte:budget_min',
             'jobs' => 'required|array|min:1',
             'jobs.*.service_needed' => 'required|string|max:255',
             'jobs.*.custom_service_needed' => 'nullable|string|max:255',
@@ -205,6 +209,7 @@ class CreateEventForm extends Component
 
         Log::info('POST CREATED');
 
+        
 
         /** @var User $user */
         $user = Auth::user();
@@ -240,6 +245,8 @@ class CreateEventForm extends Component
         }
 
         session()->flash('message', 'Event created successfully!');
+
+        $this->showSpinner = false; //hide it again
         return redirect()->to('/client-events');
     }
 

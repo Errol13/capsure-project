@@ -54,13 +54,13 @@
                             <div class="col-5 fs-sm">
                                 <label for="start_date">Start Date & Time:</label>
                                 <input type="datetime-local" id="start_date" class="form-control" wire:model="start_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
-                                @error('start_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                @error('start_date') <span class="text-danger text-wrap">{{ $message }}</span> @enderror
                             </div>
                             <div class="px-1 col-auto pt-4">-</div>
                             <div class="col-5">
                                 <label for="end_date">End Date & Time:</label>
                                 <input type="datetime-local" id="end_date" class="form-control" wire:model="end_date" min="{{ \Carbon\Carbon::now()->format('Y-m-d\TH:i') }}">
-                                @error('end_date') <span class="text-danger">{{ $message }}</span> @enderror
+                                @error('end_date') <span class="text-danger text-wrap">{{ $message }}</span> @enderror
                             </div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                                 @error('budget_min') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-6 mb-2">
-                                <input type="number" id="budget_max" class="form-control" wire:model.debounce.1000ms="budget_max" :min="budget_min" placeholder="Max ₱">
+                                <input type="number" id="budget_max" class="form-control" wire:model.debounce.3000ms="budget_max" :min="budget_min" placeholder="Max ₱">
                                 @error('budget_max') <span class="text-danger">{{ $message }}</span> @enderror
                             </div>
                             <div class="col-12" style="white-space: nowrap; font-size:small;">
@@ -164,7 +164,18 @@
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        <button class="confirm me-2 w-75" type="submit">Post</button>
+                        <button class="confirm me-2 w-75" type="button" wire:click="saveEvent">
+                            <div wire:loading wire:target="saveEvent">
+                                <div class="spinner-border spinner-border-sm text-light" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                            <span wire:loading.remove wire:target="saveEvent">
+                                Post
+                            </span>
+                        </button>
+
+
                         <button type="button" class="btn-cancel w-75" onclick="cancelForm(event)">Cancel</button>
                     </div>
                 </form>
@@ -218,6 +229,7 @@
         document.addEventListener('DOMContentLoaded', function() {
             setMinDateTime();
         });
+
 
         // Re-run when Livewire updates the page
         Livewire.on('inputUpdated', function() {
