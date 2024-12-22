@@ -168,11 +168,17 @@
                                             <!-- Review and Confirm buttons-->
                                             <div class="d-flex mt-2 justify-content-center align-items-center">
                                                 @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
-                                                <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
-                                                    data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
-                                                    @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
+                                                <button type="button" class="btn-round btn-sm pt-1" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal" @if($transaction->payment_status !== 'Fully Paid')
+                                                    data-bs-target="none"
+                                                    @else
+                                                    data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                    @endif
+                                                    data-disable="{{ $transaction->payment_status !== 'Fully Paid' ? 'true' : 'false' }}">
+                                                    Write a Review
+                                                </button>
                                                 @elseif($madeaReview || $transaction->transaction_status === 'Done' )
-                                                <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
+                                                <button type="button" class="btn-round btn-sm m-3" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
                                                     data-bs-toggle="modal"
                                                     data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
                                                 @endif
@@ -353,11 +359,17 @@
                                         <!-- Review and Confirm buttons-->
                                         <div class="d-flex mt-2 justify-content-center align-items-center">
                                             @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
-                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
-                                                data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
-                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
+                                            <button type="button" class="btn-round btn-sm pt-1" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal" @if($transaction->payment_status !== 'Fully Paid')
+                                                    data-bs-target="none"
+                                                    @else
+                                                    data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                    @endif
+                                                    data-disable="{{ $transaction->payment_status !== 'Fully Paid' ? 'true' : 'false' }}">
+                                                    Write a Review
+                                                </button>
                                             @elseif($madeaReview || $transaction->transaction_status === 'Done' )
-                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
+                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
                                             @endif
@@ -521,11 +533,17 @@
                                         <!-- Review and Confirm buttons-->
                                         <div class="d-flex mt-2 justify-content-center align-items-center">
                                             @if($transaction->transaction_status !== 'Done' && $madeaReview === false)
-                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
-                                                data-bs-toggle="modal" data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
-                                                @if($transaction->payment_status !== 'Fully Paid') disabled @endif>Write a Review</button>
+                                            <button type="button" class="btn-round btn-sm pt-1" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
+                                                    data-bs-toggle="modal" @if($transaction->payment_status !== 'Fully Paid')
+                                                    data-bs-target="none"
+                                                    @else
+                                                    data-bs-target="#writeReviewModal_{{$transaction->transaction_id}}"
+                                                    @endif
+                                                    data-disable="{{ $transaction->payment_status !== 'Fully Paid' ? 'true' : 'false' }}">
+                                                    Write a Review
+                                                </button>
                                             @elseif($madeaReview || $transaction->transaction_status === 'Done' )
-                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: white; border: 1px solid darkgray;"
+                                            <button type="button" class="btn-round btn-sm m-3" style="background-color: #91216C; color:white; border: 1px solid darkgray;"
                                                 data-bs-toggle="modal"
                                                 data-bs-target="#reviewModal_{{$transaction->transaction_id}}">View Review</button>
                                             @endif
@@ -577,6 +595,24 @@
     </div>
 </div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Select all buttons with the 'data-disable' attribute
+        const buttons = document.querySelectorAll('.btn-round');
 
+        buttons.forEach(button => {
+            button.addEventListener('click', function(event) {
+                // Check if the data-disable attribute is set to 'true'
+                if (button.getAttribute('data-disable') === 'true') {
+                    // Prevent the modal from opening
+                    event.preventDefault();
+
+                    // Show the alert to the user
+                    alert('Wait for fulll payment first');
+                }
+            });
+        });
+    });
+</script>
 
 @endsection

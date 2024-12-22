@@ -20,7 +20,7 @@
         $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
         @endphp
 
-        <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+        <div class="container card rounded-4 border-0 mb-2" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);" >
             <div class="row d-flex align-items-center justify-content-center">
                 <!-- Review Item  -->
                 <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">

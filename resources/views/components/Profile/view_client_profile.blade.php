@@ -275,7 +275,7 @@
                                         @endfor
                                 </div>
                                 <div>
-                                    <p class="mb-1" style="line-height: 1.2;">"{{$review->content}}"</p>
+                                    <p class="mb-1 text-truncate" style="line-height: 1.2;">"{{$review->content}}"</p>
                                 </div>
                             </div>
                         </div>
