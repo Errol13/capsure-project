@@ -22,6 +22,7 @@
         @if($otherUser->user_type === 'freelancer')
         <a href="{{route('view-freelancer-profile', ['id'=> $otherUser->id])}}" class="text-decoration-none">
             <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
+        </a>
             @else
             <a href="{{route('view-client-profile', ['id'=> $otherUser->id])}}" class="text-decoration-none">
                 <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
