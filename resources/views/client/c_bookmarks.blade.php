@@ -23,17 +23,8 @@
                     <h5 class="poppins-medium fs-5 mb-0 right-side">₱{{ $service->job_fee}}</h5>
                 </div>
                 <!-- Display Freelancer Cover Image -->
-                @if($portfolio)
-                <!--display the first image in their first album -->
-                @php
-                $paths = json_decode($portfolio->path, true);
-                $firstImage = $paths[0];
-                $relativePath = str_replace('public/', '', $firstImage);
-                @endphp
-                <img src="{{ asset(str_replace('public/', 'storage/', $relativePath)) }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
-                @else
                 <img src="{{ asset('assets/cover_def.png') }}" class="card-img-top rounded-0" alt="cover" style="border-radius: 15px 15px 0 0;">
-                @endif
+              
 
                 <div class="card-body open-sans-reg p-3">
                     <div class="d-flex align-items-center mb-2">

@@ -13,7 +13,7 @@
                 <!--Profile Pic and Personal Information -->
                 <div class="row my-3">
                     <div class="profile-container d-flex justify-content-center align-items-center">
-                        <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid" style="align-items:start;width: 50; height: 50; max-width:700px;">
                     </div>
                 </div>
                 <!-- Social Media Accounts -->
@@ -300,7 +300,7 @@
                         <div class="row d-flex">
                             <div class="col-auto text-center my-2 px-0">
                                 <!-- Profile Picture -->
-                                <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="max-width: 300px; width: 100%; height: auto;">
+                                <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
                             </div>
                             <div class="col-10">
                                 <!-- Review Content -->

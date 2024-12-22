@@ -20,39 +20,49 @@
         $end_date_formatted = \Carbon\Carbon::parse($review->transaction->event->end_date)->format('M j, Y');
         @endphp
 
+        <div class="container card rounded-4 border-0" style="background-color: white; box-shadow:1px 1px 2px rgba(0, 0, 0, 0.3);">
+            <div class="row d-flex align-items-center justify-content-center">
+                <!-- Review Item  -->
+                <div class=" card-header d-flex align-items-center justify-content-between rounded-top-4" style="border-bottom: none; background-color:#f8e3f2;">
+                    <div class="row align-items-center w-100">
+                        <div class="col">
+                            <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>
 
-        <div class="col-sm-12 col-md-6 mb-4">
-            <div class="rounded rvw-container p-3">
-                <div class="d-flex align-items-center justify-content-between m-1 mb-0">
-                    <div>
-                        <h2 class="text-start mb-0 fs-sm fs-md poppins-medium me-2">{{$review->transaction->event->title}}</h2>
+                            <span class="note">{{$start_date_formatted}} - {{$end_date_formatted}}</span>
+                        </div>
+                        <div class="col-auto ms-auto">
+                            <a class="note fw-medium poppins-light text-purple"
+                                href="{{route('client-viewpost', ['id' => $review->transaction->event->event_id] )}}">See Post</a>
+                        </div>
                     </div>
-                    <a class="note fw-medium poppins-light text-purple"
-                        href="{{route('client-viewpost', ['id' => $review->transaction->event->event_id] )}}">See Post</a>
                 </div>
-                <p class="fs-sm poppins-light mt-0">{{$start_date_formatted}} - {{$end_date_formatted}}</p>
-                <div class="d-flex">
-                    <div class="text-center me-3">
-                        <!-- Profile Picture -->
+                <div class="row d-flex align-items-center flex-nowrap">
+                    <div class="col-auto text-center my-2 px-0">
+
                         @if($review->team)
-                        <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
                         @elseif($review->client)
-                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
                         @else
-                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 80px; height: 80px;">
+                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
                         @endif
+
                     </div>
-                    <div>
-                        
+                    <div class="col-10">
                         <!-- Review Content -->
-                        @if($review->team)
-                        <h5 class="font-weight-bold">{{$review->team->team_name}} (Team)</h5>
-                        @elseif($review->client)
-                        <h5 class="font-weight-bold">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </h5>
-                        @else
-                        <h5 class="font-weight-bold">{{$review->freelancer->user->first_name}} {{$review->freelancer->user->last_name}} </h5>
-                        @endif
-                        <div class=" star-rating mb-2">
+                        <div>
+                            <!-- Review Content -->
+                            @if($review->team)
+                            <small class="font-weight-bold mt-3">{{$review->team->team_name}} (Team)</small>
+                            @elseif($review->client)
+                            <small class="font-weight-bold mt-3">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </small>
+                            @else
+                            <small class="font-weight-bold mt-3">{{$review->freelancer->user->first_name}} {{$review->freelancer->user->last_name}} </small>
+                            @endif
+                        </div>
+                        <div class="star-rating mb-2">
+                            <span>{{ number_format($review->rating, 1) }}</span>
+
                             @for ($i = 1; $i <= 5; $i++)
                                 @if ($i <=floor($review->rating))
                                 <i class="fas fa-star filled"></i> <!-- Filled star -->
@@ -62,13 +72,16 @@
                                 <i class="far fa-star"></i> <!-- Empty star -->
                                 @endif
                                 @endfor
-                                <span class="ms-1">{{ number_format($review->rating, 1) }}</span>
                         </div>
-                        <p>{{$review->content}}</p>
+                        <div>
+                            <p class="mb-2" style="line-height: 1.2;">"{{$review->content}}"</p>
+                        </div>
                     </div>
                 </div>
+
             </div>
         </div>
+
 
         @endforeach
 

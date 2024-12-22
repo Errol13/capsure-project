@@ -105,11 +105,11 @@ class MyJobs extends Component
         }
 
         $hiringRequests = $freelancer->hiringRequests()
-        ->with(['eventjob.event'])
-        ->orderByRaw("CASE WHEN status != 'Accepted' THEN 0 ELSE 1 END")
-        ->orderBy('created_at', 'asc')
-        ->get();
-    
+            ->with(['eventjob.event'])
+            ->orderByRaw("CASE WHEN status != 'Accepted' THEN 0 ELSE 1 END")
+            ->orderBy('created_at', 'asc')
+            ->get();
+
 
         //Attach service details to each hiring request
         $hiringRequests->each(function ($hiringRequest) {

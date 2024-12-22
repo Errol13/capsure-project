@@ -19,7 +19,15 @@
     <!-- Chat Header -->
     @if($otherUser)
     <div>
-        <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
+        @if($otherUser->user_type === 'freelancer')
+        <a href="{{route('view-freelancer-profile', ['id'=> $otherUser->id])}}" class="text-decoration-none">
+            <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
+            @else
+            <a href="{{route('view-client-profile', ['id'=> $otherUser->id])}}" class="text-decoration-none">
+                <h5 class="text-center my-2">{{$otherUser->fullName()}}</h5>
+            </a>
+            @endif
+
     </div>
     @endif
     <hr class="mb-3 px-0">
@@ -152,8 +160,8 @@
                 scrollToBottom();
             });
 
-             // Scroll to bottom when a new conversation selected
-             document.addEventListener('hideLoadingState', function() {
+            // Scroll to bottom when a new conversation selected
+            document.addEventListener('hideLoadingState', function() {
                 scrollToBottom();
             });
 

@@ -13,7 +13,7 @@
                 <!--Profile Pic and Personal Information -->
                 <div class="row my-3">
                     <div class="profile-container d-flex justify-content-center align-items-center">
-                        <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid">
+                        <img src="{{ $user->profile_image_url}}" alt="Profile Picture" class="rounded-circle img-fluid" style="align-items:start;width: 50; height: 50; max-width:700px;">
                     </div>
                 </div>
 
@@ -43,7 +43,7 @@
                 <div class="row my-3">
                     <!-- Full Name and Verification Status -->
                     <div class="col-12 col-md-12 mt-2">
-                        <div class="d-flex justify-content-between align-items-center">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
 
                             <div class="mt-2 d-flex align-items-center">
                                 <h5 class="fs-md-name text-start mb-0 me-2 poppins-medium">

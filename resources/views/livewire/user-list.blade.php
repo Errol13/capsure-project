@@ -29,6 +29,7 @@
 
                     <!--contains the latest message -->
                     <div class="d-flex d-none d-md-block flex-column justify-content-start">
+                        
                         <span>{{ $otherUser->fullName() }}</span>
                         <div style="max-width: 200px; overflow: hidden;" class=" text-truncate">
 
