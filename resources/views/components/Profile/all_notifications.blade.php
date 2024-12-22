@@ -26,16 +26,17 @@
                         </small>
                     </a>
                 </div>
+                
                 @empty
                 <div class="p-3 text-center text-muted">
                     No notifications found.
                 </div>
                 @endforelse
             </div>
-            <div class="card-footer text-center">
-                {{ $notifications->links() }} <!-- Pagination -->
-            </div>
-
+            
+                <div class="card-footer text-center">
+                {{ $notifications->links('vendor.pagination.bootstrap-4') }} <!-- Pagination -->
+                </div>
         </div>
     </div>
 </div>
