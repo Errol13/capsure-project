@@ -16,6 +16,7 @@ use Filament\Forms\Components\Placeholder;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
+use Filament\Support\Enums\MaxWidth;
 use Filament\Tables;
 use Filament\Tables\Actions\Action;
 use Filament\Tables\Columns\TextColumn;
@@ -27,6 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 class ReportResource extends Resource
 {
+    
     protected static ?string $model = Report::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-exclamation-triangle';
@@ -48,8 +50,16 @@ class ReportResource extends Resource
     {
         return $table
             ->query(
-                Report::query()->with(['reportedUser', 'reporterUser']) // Eager load the related user
-                    ->join('users', 'reports.reported_user_id', '=', 'users.id')->where('isArchived', false)
+                Report::query()
+                    ->with(['reportedUser', 'reporterUser']) // Eager load the related users
+                    ->join('users', 'reports.reported_user_id', '=', 'users.id')
+                    // subquery to get the oldest report per reported_user_id
+                    ->whereIn('reports.id', function ($query) {
+                        $query->selectRaw('MIN(id)')
+                            ->from('reports')
+                            ->where('isArchived', false)
+                            ->groupBy('reported_user_id');
+                    })
                     ->select('reports.*')
             )
             ->headerActions([
@@ -97,6 +107,9 @@ class ReportResource extends Resource
                         }
                     })
                     ->html(),
+                TextColumn::make('nonArchivedReportsCount')
+                    ->label('Reports Count')
+                    ->getStateUsing(fn($record) => $record->reportedUser->receivedReports()->where('isArchived', false)->count()),
             ])
             ->filters([
                 //
@@ -110,7 +123,7 @@ class ReportResource extends Resource
                     ->modalCancelAction(fn(StaticAction $action) => $action->label('Close')->extraAttributes(['class' => 'ml-auto']))
                     ->color('primary')
                     ->modalSubmitAction(false)
-                    ->modalWidth('lg')
+                    ->modalWidth(MaxWidth::Small)
                     ->requiresConfirmation(false),
                 Action::make('suspend')
                     ->label(fn($record) => $record->reportedUser->isSuspended() ? 'Lift Suspension' : 'Suspend')
@@ -140,6 +153,7 @@ class ReportResource extends Resource
                                     1440 => '1 Day',
                                     4320 => '3 Days',
                                     21600 => '15 Days',
+                                    43200 => '30 Days',
                                 ])
                                 ->required();
                         }
@@ -148,7 +162,6 @@ class ReportResource extends Resource
                     })
                     ->action(function ($record, $data) {
 
-                        // Ensure data is wrapped in an array if it's not already
                         if (!is_array($data)) {
                             $data = ['duration' => $data];  // Wrap it in an array
                         }
@@ -180,7 +193,17 @@ class ReportResource extends Resource
                     ->modalHeading('Are you sure you want to archive this report?')
                     ->modalSubmitActionLabel('Archive')
                     ->modalDescription(''),
+
+                    Action::make('archiveAll')
+                    ->label('Archive All')
+                    ->color('danger')
+                    ->action(fn(Report $record) => static::archiveAllReport($record))
+                    ->requiresConfirmation()
+                    ->modalHeading('Are you sure you want to archive all of the reports?')
+                    ->modalSubmitActionLabel('Archive All')
+                    ->modalDescription(''),
             ])
+            ->queryStringIdentifier('reports')
             ->poll('10s')
             ->bulkActions([
                 //
@@ -261,6 +284,16 @@ class ReportResource extends Resource
         $record->isArchived = true;
         $record->save();
     }
+
+    public static function archiveAllReport(Report $record)
+    {
+        // Fetch all reports for the user that are not archived
+        $reports = $record->reportedUser->receivedReports()->where('isArchived', false);
+
+        // Update all reports in one query (batch update)
+        $reports->update(['isArchived' => true]);
+    }
+
 
     // Helper method to schedule report archiving
     private static function scheduleArchiving(Report $record, Carbon $endDate)
