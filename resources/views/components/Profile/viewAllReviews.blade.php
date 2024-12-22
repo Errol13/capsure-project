@@ -40,11 +40,11 @@
                     <div class="col-auto text-center my-2 px-0">
 
                         @if($review->team)
-                        <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                        <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
                         @elseif($review->client)
-                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                        <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
                         @else
-                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="width: 50px; height: auto;">
+                        <img src="{{ asset($review->freelancer->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
                         @endif
 
                     </div>
