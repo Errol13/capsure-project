@@ -45,12 +45,14 @@
                 <button type="submit" class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
             </form>
             </p>
-        </div>
-        <p>If you entered a wrong email, 
+
+            <p>If you entered a wrong email, 
     <a href="{{ route('clear-session') }}" class="btn btn-outline-secondary btn-sm">
         click here to register again
-    </a>.
-        </p>
+    </a>
+            </p>
+            
+        </div>
         
     </div>
 </body>
