@@ -46,6 +46,12 @@
             </form>
             </p>
         </div>
+        <p>If you entered a wrong email, 
+    <a href="{{ route('clear-session') }}" class="btn btn-outline-secondary btn-sm">
+        click here to register again
+    </a>.
+        </p>
+        
     </div>
 </body>
 
