@@ -58,7 +58,7 @@
                             <!-- Review Content -->
                             @if($review->team)
                             <small class="font-weight-bold mt-3">{{$review->team->team_name}} (Team)</small>
-                            @elseif($review->client)
+                            @elseif($review->reviewee_role === 'freelancer')
                             <small class="font-weight-bold mt-3">{{$review->client->user->first_name}} {{$review->client->user->last_name}} </small>
                             @else
                             <small class="font-weight-bold mt-3">{{$review->freelancer->user->first_name}} {{$review->freelancer->user->last_name}} </small>
