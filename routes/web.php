@@ -32,7 +32,7 @@ Auth::routes([
 
 Route::get('/clear-session', function () {
     session()->flush(); // Clear all session data
-    return redirect()->route('register'); // Redirect to the registration page
+    return redirect()->route('choose'); // Redirect to the registration page
 })->name('clear-session');
 
 
