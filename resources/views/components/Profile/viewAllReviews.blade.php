@@ -41,7 +41,7 @@
 
                         @if($review->team)
                         <img src="{{ asset('storage/' . $review->team->team_profilepic) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
-                        @elseif($review->client)
+                        @elseif($review->reviewee_role === 'freelancer')
                         <a href="{{route('view-client-profile', ['id'=> $review->client->user_id])}}">
                             <img src="{{ asset($review->client->user->profile_image_url) }}" alt="Reviewer Profile" class="img-fluid rounded-circle" style="align-items:start;width: 50px; height: 50px;">
                         </a>
