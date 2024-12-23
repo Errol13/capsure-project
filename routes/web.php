@@ -30,6 +30,12 @@ Auth::routes([
     'verify' => true      // Enable email verification routes
 ]);
 
+Route::get('/clear-session', function () {
+    session()->flush(); // Clear all session data
+    return redirect()->route('register'); // Redirect to the registration page
+})->name('clear-session');
+
+
 // Custom registration routes
 Route::get('/register/client', [RegisterController::class, 'showClientRegisterForm'])->name('register.client');
 Route::get('/register/freelancer', [RegisterController::class, 'showFreelancerRegisterForm'])->name('register.freelancer');
