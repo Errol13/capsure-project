@@ -319,7 +319,7 @@
 
                                         <!-- Hire Modal -->
                                         @include('modals.Hiring.hire_modal', ['applicantId' => $applicant['applicant']->user_id,'freelancer' =>
-                                        $applicant['applicant'], $durationInHours = $durationInHours, 'service' => $applicant['service'],
+                                        $applicant['applicant'], $durationInHours = $durationInHours, 'serviceApplicant' => $applicant['service'],
                                         'job_id' => $applicant['job_id'], 'payment_method' => $event->payment_method ])
 
                                         <button type="button"

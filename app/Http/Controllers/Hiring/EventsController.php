@@ -185,11 +185,13 @@ class EventsController extends Controller
             foreach ($jobApplicants as $applicant) {
 
                 //Fetch specific Job Applications for a specific freelancer
+                
                 $freelancerServiceDetails = Job_application::select(['service_id', 'status'])
                     ->where('job_id', $job->job_id)
                     ->where('freelancer_id', $applicant->user_id)
                     ->first();
 
+                   
                 if ($freelancerServiceDetails) {
                     $service = $freelancerServiceDetails->service_id;
                     $status = $freelancerServiceDetails->status;
@@ -197,8 +199,10 @@ class EventsController extends Controller
                     $service = null;
                 }
 
+                
                 // Get the freelancer's service data
                 $freelancerService = $applicant->services()->where('id', $service)->first();
+
 
                 // Add the applicant with additional job details
                 $applicants->push([
