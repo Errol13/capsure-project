@@ -123,7 +123,7 @@ class ReportResource extends Resource
                     ->modalCancelAction(fn(StaticAction $action) => $action->label('Close')->extraAttributes(['class' => 'ml-auto']))
                     ->color('primary')
                     ->modalSubmitAction(false)
-                    ->modalWidth(MaxWidth::Small)
+                    ->modalWidth(MaxWidth::Large)
                     ->requiresConfirmation(false),
                 Action::make('suspend')
                     ->label(fn($record) => $record->reportedUser->isSuspended() ? 'Lift Suspension' : 'Suspend')

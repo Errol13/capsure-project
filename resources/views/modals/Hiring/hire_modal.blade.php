@@ -44,7 +44,6 @@
                             <label for="role-<?php echo $applicantId; ?>" class="form-label">Hire as</label>
                         </div>
                         <div class="col">
-                            <p>{{$serviceApplicant->job_title}}</p>
                             <select class="form-select" id="role-<?php echo $applicantId; ?>" onchange="updateTheFee('<?php echo $applicantId; ?>')" required>
                                 <option value="" selected disabled></option>
                                 <option value="{{ $serviceApplicant->id }}" data-job-fee="{{ $serviceApplicant->job_fee }}" data-fee-type="{{$serviceApplicant->fee_type}}">
