@@ -260,7 +260,8 @@ class TransactionController extends Controller
             }
 
             return Carbon::parse($transaction->event->end_date)->lessThan($today)
-                && $transaction->transaction_status !== 'Ongoing' && $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
+                && ($transaction->transaction_status === 'Ongoing' || $transaction->transaction_status !== 'Ongoing')
+        && $madeaReview; // Exclude "On-going" transactions because of unpaid or unsettled payments or review unless freelancer's transaction is done
         });
 
         // dd($previousTransactions->count());
