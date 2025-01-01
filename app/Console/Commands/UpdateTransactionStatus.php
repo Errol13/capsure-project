@@ -31,7 +31,7 @@ class UpdateTransactionStatus extends Command
      */
     public function handle()
     {
-        $today = Carbon::now();
+        $today = Carbon::now('Asia/Manila');
 
         // Get all transactions with Pending status
         $pendingTransactions = Transaction::where('transaction_status', 'Pending')->get();
