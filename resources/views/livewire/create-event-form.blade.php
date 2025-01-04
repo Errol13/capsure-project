@@ -164,7 +164,7 @@
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        <button class="confirm me-2 w-75" type="button" wire:click="saveEvent">
+                        <button class="confirm me-2 w-75" type="button" wire:loading.attr="disabled"  wire:click="saveEvent">
                             <div wire:loading wire:target="saveEvent">
                                 <div class="spinner-border spinner-border-sm text-light" role="status">
                                     <span class="visually-hidden">Loading...</span>
