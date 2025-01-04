@@ -164,7 +164,7 @@
                         <button type="button" class="btn open-sans-reg mt-2" style="background-color: #8FE2ED; color: black; border: none; font-size: smaller;" wire:click="addJob">Add Job</button>
                     </div>
                     <div class="d-flex justify-content-end mt-4">
-                        <button class="confirm me-2 w-75" type="button" wire:loading.attr="disabled"  wire:click="saveEvent"   onclick="disableButton()">
+                        <button class="confirm me-2 w-75" type="button" wire:loading.attr="disabled"  wire:click="saveEvent"  id="saveButton">
                             <div wire:loading wire:target="saveEvent">
                                 <div class="spinner-border spinner-border-sm text-light" role="status">
                                     <span class="visually-hidden">Loading...</span>
@@ -206,18 +206,17 @@
             }
         });
 
-         let isSubmitting = false;
+        let saveEventTimeout;
 
-    function disableButton() {
-        const button = document.getElementById('postButton');
-        if (isSubmitting) {
-            // If already submitting, prevent action
-            return;
-        }
-        // Disable the button and set the flag
-        isSubmitting = true;
-        button.disabled = true;
-    }
+function disableButton() {
+    clearTimeout(saveEventTimeout);
+    const button = document.getElementById('saveButton');
+    button.disabled = true;
+    saveEventTimeout = setTimeout(() => {
+        button.disabled = false;
+    }, 5000); // Prevent re-enabling for 5 seconds
+}
+
         
         function cancelForm(event) {
             event.preventDefault();
