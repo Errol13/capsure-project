@@ -74,9 +74,6 @@ class ProfileController extends Controller
         $query->where('reviewee_role', 'client');
       }])
         ->where('client_id', $user->id)
-        ->whereHas('transactions', function ($query) {
-          $query->where('transaction_status', 'Done');
-        })
         ->paginate(4);
 
       return view('client.c_profile', compact('user', 'fullName', 'eventsWithReviews', 'socialMediaLinks', 'hiringSuccessRate'));
@@ -204,9 +201,6 @@ class ProfileController extends Controller
         $query->where('reviewee_role', 'client');
       }])
         ->where('client_id', $user->id)
-        ->whereHas('transactions', function ($query) {
-          $query->where('transaction_status', 'Done');
-        })
         ->paginate(4);
 
       return view(
