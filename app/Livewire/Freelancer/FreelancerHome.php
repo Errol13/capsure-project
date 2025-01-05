@@ -8,9 +8,12 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Pagination\Paginator;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class FreelancerHome extends Component
 {
+    use WithPagination;
+    
     public $filtersApplied = false;
     public $query = '';
     public $jobCategory = 'any';
