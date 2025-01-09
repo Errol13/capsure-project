@@ -36,7 +36,7 @@
                     <div class="card" style="border-radius: 20px; background-color:white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
                         <div class="card-body">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <h4 class="card-title poppins-medium mb-0" style="line-height: 0.5;">{{ $event->title }}</h4>
+                                <h4 class="card-title poppins-medium mb-0 text-truncate" style="line-height: 0.5;">{{ $event->title }}</h4>
                                 <span class="{{ $event->status == 'Open' ? 'bg-success' : 'bg-danger' }} badge text-uppercase">
                                     {{ $event->status }}
                                 </span>
