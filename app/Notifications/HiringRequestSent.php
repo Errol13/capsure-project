@@ -46,7 +46,7 @@ class HiringRequestSent extends Notification
                     ->subject('New Hiring Request')
                     ->line("You have received a new hiring request from {$this->clientName}.")
                     ->line("Event: {$this->eventTitle}")
-                    ->action('View Request', url('/hiring-requests')) 
+                    ->action('View Request', url('/my-jobs')) 
                     ->line('Thank you for using our application!');
     }
 

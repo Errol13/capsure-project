@@ -46,14 +46,14 @@
             </form>
             </p>
 
-            <p>If you entered a wrong email, 
-    <a href="{{ route('clear-session') }}" class="btn btn-outline-secondary btn-sm">
-        click here to register again
-    </a>
+            <p class="text-center">If you entered a wrong email,
+                <a href="{{ route('clear-session') }}" class="btn btn-outline-secondary btn-sm">
+                    click here to register again
+                </a>
             </p>
-            
+
         </div>
-        
+
     </div>
 </body>
 
