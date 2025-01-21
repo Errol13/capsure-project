@@ -82,7 +82,7 @@
 
                             <!--Password and Confirm Password -->
                             <div class="row mb-1">
-                                <div class="col-md-6 ">
+                                <div class="col-md-6 form-group">
                                     <label for="password" class="form-label mb-0">{{ __('Password') }}</label>
                                     <div class="input-group m-0 p-0">
                                         <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
@@ -91,11 +91,16 @@
                                         </button>
                                     </div>
 
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    @if ($errors->has('password'))
+                                    @foreach ($errors->get('password') as $error)
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $error }}</strong>
                                     </span>
-                                    @enderror
+                                    @endforeach
+                                    @else
+                                    <span class="note text-muted"> Password must be 8 characters.</span>
+                                    @endif
+
                                 </div>
 
                                 <div class="col-md-6">

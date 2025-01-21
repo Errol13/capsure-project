@@ -83,7 +83,7 @@ class RegisterController extends Controller
         // Merge default and existing job titles (no duplicates)
         $jobTitles = [];
         foreach ($defaultJobTitles as $category => $titles) {
-            // Existing titles for this category
+            // if there is a job titles for each category, store them in an array, otherwise empty array
             $existingTitles = isset($existingJobTitles[$category])
                 ? array_column($existingJobTitles[$category], 'job_title')
                 : [];

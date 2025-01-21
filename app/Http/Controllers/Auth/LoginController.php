@@ -29,7 +29,7 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $user)
     {
-        // Check the user type and redirect accordingly
+        // Check the user type and redirect 
         if ($user->user_type == 'client') {
             return redirect()->route('client-homepage');
         } elseif ($user->user_type == 'freelancer') {

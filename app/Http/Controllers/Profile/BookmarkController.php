@@ -13,7 +13,7 @@ class BookmarkController extends Controller
 {
     public function showBookMark()
     {
-        // Get the client instance (assuming the user is authenticated)
+        // Get the client instance 
         $client = Client::find(auth()->id());
     
         // Decode the favorites JSON into an array

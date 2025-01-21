@@ -78,7 +78,7 @@ class Chat extends Component
         if (count($this->messages) === 0) return;
 
         // Get the timestamp or ID of the most recent message
-        $lastMessage = $this->messages[0];  // Assuming messages are ordered with the most recent at index 0
+        $lastMessage = $this->messages[0];  // messages are ordered with the most recent at index 0
         $lastMessageCreatedAt = $lastMessage['created_at'];  // Adjust this depending on how your messages are structured
 
         $lastMessageCreatedAtCarbon = Carbon::parse($lastMessageCreatedAt)->timezone('Asia/Manila');

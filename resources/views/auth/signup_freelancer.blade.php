@@ -89,11 +89,15 @@
                                         </button>
                                     </div>
 
-                                    @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
+                                    @if ($errors->has('password'))
+                                    @foreach ($errors->get('password') as $error)
+                                    <span class="invalid-feedback d-block" role="alert">
+                                        <strong>{{ $error }}</strong>
                                     </span>
-                                    @enderror
+                                    @endforeach
+                                    @else
+                                    <span class="note text-muted"> Password must be 8 characters.</span>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-6">
