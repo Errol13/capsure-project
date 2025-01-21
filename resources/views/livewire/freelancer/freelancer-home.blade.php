@@ -26,7 +26,7 @@
                     <div class="card-body">
 
                         <div class="d-flex justify-content-between ">
-                            <h4 class="card-title poppins-medium">{{$event->title}}</h4>
+                            <h4 class="card-title poppins-medium text-truncate">{{$event->title}}</h4>
                             <!-- Calculate and display the time since creation -->
                             @php
                             $createdAt = \Carbon\Carbon::parse($event->created_at);
