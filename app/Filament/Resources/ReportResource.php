@@ -149,6 +149,7 @@ class ReportResource extends Resource
                             $form[] = Select::make('duration')
                                 ->label('Suspension Duration')
                                 ->options([
+                                    1 => '1 min',
                                     60 => '1 Hour',
                                     1440 => '1 Day',
                                     4320 => '3 Days',
