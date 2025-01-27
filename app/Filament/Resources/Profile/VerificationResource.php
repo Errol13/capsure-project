@@ -9,6 +9,10 @@ use App\Models\User;
 use App\Notifications\VerificationStatus;
 use Filament\Actions\StaticAction;
 use Filament\Forms;
+use Filament\Forms\Components\CheckboxList;
+use Filament\Forms\Components\Grid;
+use Filament\Forms\Components\Placeholder;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -106,9 +110,44 @@ class VerificationResource extends Resource
                 Action::make('resendVerification')
                     ->label('Resend Verification Notice')
                     ->color('warning')
-                    ->action(fn(Verification $record) => static::resendVerificationNotice($record))
+                    ->form(function ($record) {
+                        $user = $record->user;
+
+                        // Common fields (name and ID)
+                        $form = [
+                            Grid::make(2) // Defines a 2-column grid
+                                ->schema([
+                                    Placeholder::make('user_name')
+                                        ->label('User Name')
+                                        ->content("{$user->first_name} {$user->last_name}"),
+                                    Placeholder::make('user_id')
+                                        ->label('User ID')
+                                        ->content($user->id),
+                                ]),
+                        ];
+
+                        // options here for admin if why the user is not verified
+                        if (!$user->isSuspended()) {
+                            $form[] = CheckboxList::make('reasons')
+                                ->label('Reason for Re-verification:')
+                                ->options([
+                                    'Blurry Image' => 'Blurry Image',
+                                    'Mismatched Profile' => 'Mismatched Profile',
+                                    'Expired ID' => 'Expired ID',
+                                    'Wrong ID uploaded' => 'Wrong ID uploaded',
+                                    'Visible Tampering in ID' => 'Visible Tampering in ID',
+                                ])
+                                ->required();
+                        }
+
+                        return $form;
+                    })
+                    ->action(function (Verification $record, $data) {
+                        static::resendVerificationNotice($record, $data);
+                    })
                     ->requiresConfirmation()
                     ->visible(fn(Verification $record) => !$record->user->isVerified),
+
             ])
             ->bulkActions([
                 //
@@ -160,6 +199,7 @@ class VerificationResource extends Resource
             Action::make('resendVerification')
                 ->label('Resend Verification Notice')
                 ->action('resendVerificationNotice')
+
                 ->requiresConfirmation()
                 ->color('primary'),
         ];
@@ -174,7 +214,7 @@ class VerificationResource extends Resource
         $user->notify(new VerificationStatus('Your account has been successfully verified.'));
     }
 
-    public static function resendVerificationNotice(Verification $record)
+    public static function resendVerificationNotice(Verification $record, array $data)
     {
         $user = $record->user;
 
@@ -182,7 +222,11 @@ class VerificationResource extends Resource
         $user->update(['isVerified' => false]);
         $record->delete();
 
+        $reasons = implode(', ', $data['reasons']);
+        $message = "Your verification request was denied for the following reason(s): {$reasons}. Please retry with clear and legitimate information.";
+
+        // dd($message);
         // Notify the user about the need to resubmit verification
-        $user->notify(new VerificationStatus('Your verification request was denied. Please retry with clear and legitimate information.'));
+        $user->notify(new VerificationStatus($message));
     }
 }

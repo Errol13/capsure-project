@@ -70,14 +70,32 @@ class ProfileController extends Controller
 
     if ($user->user_type == 'client') {
       // Get events with completed transactions and load reviews grouped by event
-      $eventsWithReviews = Event::with(['transactions.reviews' => function ($query) {
+      $eventsWithReviews = Event::whereHas('transactions.reviews', function ($query) {
         $query->where('reviewee_role', 'client');
-      }])
+      })
+        ->with(['transactions.reviews' => function ($query) {
+          $query->where('reviewee_role', 'client');
+        }])
         ->where('client_id', $user->id)
         ->paginate(4);
 
       return view('client.c_profile', compact('user', 'fullName', 'eventsWithReviews', 'socialMediaLinks', 'hiringSuccessRate'));
     }
+  }
+
+  //all suspensions 
+
+  public function showSuspensionHistory()
+  {
+    /** @var User $user */
+    $user = Auth::user();
+
+    $suspensions = $user->notifications()
+      ->where('data', 'LIKE', '%You are suspended%')
+      ->paginate(4);
+
+
+    return view('components.Profile.suspension_history', compact('suspensions'));
   }
 
   public function updateProfilePic(Request $request)
@@ -197,11 +215,15 @@ class ProfileController extends Controller
 
     if ($user->user_type == 'client') {
       // Get events with completed transactions and load reviews grouped by event
-      $eventsWithReviews = Event::with(['transactions.reviews' => function ($query) {
+      $eventsWithReviews = Event::whereHas('transactions.reviews', function ($query) {
         $query->where('reviewee_role', 'client');
-      }])
+      })
+        ->with(['transactions.reviews' => function ($query) {
+          $query->where('reviewee_role', 'client');
+        }])
         ->where('client_id', $user->id)
         ->paginate(4);
+
 
       return view(
         'components.Profile.view_client_profile',
