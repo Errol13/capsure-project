@@ -41,7 +41,7 @@ class CertificateController extends Controller
         // Store the image file with a custom name and update the certificate
         $file = $request->file('image');
         $fileName = $file->getClientOriginalName();
-        $path = $file->storeAs('certificates/' . $certificate->cert_id, $fileName);
+        $path = $file->storeAs('public/certificates/' . $certificate->cert_id, $fileName);
 
         // Update the certificate with the actual image path
         $certificate->image = $path;

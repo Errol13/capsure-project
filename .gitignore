@@ -21,3 +21,9 @@ yarn-error.log
 /storage/*
 /bootstrap/cache/*
 
+.dockerignore
+docker-compose.yml 
+Dockerfile
+nginx.conf
+
+
