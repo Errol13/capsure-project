@@ -49,7 +49,7 @@ class UpdatePortfolio extends Component
         // Handle file uploads
         foreach ($this->files as $file) {
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
+            $path = $file->storeAs('portfolios/' . $portfolio->portfolio_id, $fileName);
 
             // Log the file path
             Log::info('File stored successfully.', [

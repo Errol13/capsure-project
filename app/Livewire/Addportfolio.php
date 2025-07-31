@@ -79,7 +79,7 @@ class Addportfolio extends Component
         foreach ($this->files as $file) {
             // Generate a unique file name to avoid overwriting
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
+            $path = $file->storeAs('portfolios/' . $portfolio->portfolio_id, $fileName);
             $paths[] = $path;
         }
 

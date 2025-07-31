@@ -44,7 +44,7 @@ class PortfolioController extends Controller
         foreach ($request->file('files') as $file) {
             // Generate a unique file name to avoid overwriting
             $fileName = time() . '_' . $file->getClientOriginalName();
-            $path = $file->storeAs('public/portfolios/' . $portfolio->portfolio_id, $fileName);
+            $path = $file->storeAs('portfolios/' . $portfolio->portfolio_id, $fileName);
             $paths[] = $path;
         }
 
@@ -73,7 +73,7 @@ class PortfolioController extends Controller
         $portfolio->delete();
 
         // Delete the directory if empty
-        $directory = 'public/portfolios/' . $portfolio->portfolio_id;
+        $directory = 'portfolios/' . $portfolio->portfolio_id;
         if (Storage::exists($directory) && count(Storage::files($directory)) === 0) {
             Storage::deleteDirectory($directory);
         }
@@ -111,7 +111,7 @@ class PortfolioController extends Controller
 
         foreach ($files as $filePath) {
             // Prepend 'public/' to the relative path for comparison
-            $relativePath = 'public/portfolios/' . $portfolioId . '/' . basename($filePath);
+            $relativePath = 'portfolios/' . $portfolioId . '/' . basename($filePath);
             Log::info("Checking file path: {$relativePath} against stored paths: ", $paths);
 
             // Check if the file exists in the current portfolio paths
