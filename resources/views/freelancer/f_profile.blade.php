@@ -127,7 +127,6 @@
                     </div>
 
                     <p class="mt-3 open-sans-reg light-color-prof fs-sm">Member since <strong>{{date_format($user->date_joined, 'F j, Y')}}</strong></p>
-                    <a href="{{route('suspension-history')}}" class="my-2 txt-purple">View Suspension History</a>
                 </div>
             </div>
         </div>

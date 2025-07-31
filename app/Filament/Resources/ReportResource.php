@@ -8,7 +8,6 @@ use App\Filament\Resources\ReportResource\RelationManagers;
 use App\Jobs\ArchiveReportJob;
 use App\Models\Profile\Report;
 use App\Models\Profile\Suspension;
-use App\Notifications\SuspensionNotice;
 use Carbon\Carbon;
 use Filament\Actions\StaticAction;
 use Filament\Forms;
@@ -29,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 
 class ReportResource extends Resource
 {
-
+    
     protected static ?string $model = Report::class;
 
     protected static ?string $navigationIcon = 'heroicon-s-exclamation-triangle';
@@ -150,11 +149,12 @@ class ReportResource extends Resource
                             $form[] = Select::make('duration')
                                 ->label('Suspension Duration')
                                 ->options([
-                                    4320 => '3 Days',        // 3 days in minutes
-                                    43200 => '1 Month',      // 30 days (1 month) in minutes
-                                    86400 => '2 Months',     // 60 days (2 months) in minutes
-                                    172800 => '4 Months',    // 120 days (4 months) in minutes
-                                    259200 => '6 Months',    // 180 days (6 months) in minutes
+                                    1 => '1 min',
+                                    60 => '1 Hour',
+                                    1440 => '1 Day',
+                                    4320 => '3 Days',
+                                    21600 => '15 Days',
+                                    43200 => '30 Days',
                                 ])
                                 ->required();
                         }
@@ -195,7 +195,7 @@ class ReportResource extends Resource
                     ->modalSubmitActionLabel('Archive')
                     ->modalDescription(''),
 
-                Action::make('archiveAll')
+                    Action::make('archiveAll')
                     ->label('Archive All')
                     ->color('danger')
                     ->action(fn(Report $record) => static::archiveAllReport($record))
@@ -250,18 +250,6 @@ class ReportResource extends Resource
         $suspension->end_at = Carbon::now()->addMinutes($duration);
         $suspension->suspended_reason = $record->reason;
 
-
-        //notify the user with the details, this will serve as the suspension history
-        $user = $record->reportedUser;
-        $reasons = json_decode($record->reason, true);
-        $startDate = $suspension->start_at->format('F d, Y H:i');
-        $endDate = $suspension->end_at->format('F d, Y H:i');
-
-        // Calculate the duration as a Carbon interval
-        $durationInMinutes = $duration; 
-        $durationInterval = Carbon::now()->addMinutes($durationInMinutes)->diffForHumans(Carbon::now(), true);
-
-        $user->notify(new SuspensionNotice($reasons, $durationInterval, $startDate, $endDate));
 
         // dd('end date sus:', $suspension->end_date->format('Y-m-d H:i:s')); 
         // dd('isSuspended:', $suspension->isSuspended); 

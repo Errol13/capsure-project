@@ -148,9 +148,6 @@ Route::middleware(['auth', 'verified', CheckSuspendedUser::class])->group(functi
     #Chat
     Route::get('/chat/{conversationId?}', [App\Http\Controllers\Profile\ProfileController::class, 'showChat'])->name('show-chat')->middleware('auth');
     Route::post('/chat/redirect', [App\Http\Controllers\Profile\ProfileController::class, 'redirectToChat'])->name('chat.redirect')->middleware('auth');
-   
-    #suspension history
-    Route::get('/profile/suspension-history', [App\Http\Controllers\Profile\ProfileController::class, 'showSuspensionHistory'])->name('suspension-history')->middleware('auth');
 
     #Report 
     Route::post('/report', [App\Http\Controllers\Profile\ProfileController::class, 'reportStore'])->name('report.store')->middleware('auth');
