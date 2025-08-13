@@ -50,7 +50,7 @@ class UsersTableSeeder extends Seeder
         $client = [
             'first_name' => 'Phoebe Marion',
             'last_name' => 'Castro',
-            'email' => 'pmcastro@gbox.adnu.edu.ph',
+            'email' => 'pmcastro@example.com',
             'email_verified_at' => Carbon::now(),
             'password' => Hash::make('password 1234!'),
             'date_joined' => Carbon::now(),

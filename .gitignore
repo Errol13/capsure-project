@@ -22,7 +22,7 @@ yarn-error.log
 /bootstrap/cache/*
 
 .dockerignore
-docker-compose.yml 
+#docker-compose.yml 
 Dockerfile
 nginx.conf
 
